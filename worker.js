@@ -327,7 +327,7 @@ IP: ${ip || 'unknown'}
         'Authorization': `Bearer ${env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'Nexify AI <leads@nexifyai.com>',
+        from: 'Nexify AI <onboarding@resend.dev>',
         to: [env.LEAD_NOTIFY_EMAIL],
         subject: subject,
         html: html,

@@ -286,7 +286,7 @@
           </svg>
         </button>
       </div>
-      <div class="nexify-powered">Powered by <a href="https://nexifyai.com" target="_blank">NexifyAI</a></div>
+      <div class="nexify-powered">Powered by <a href="https://nexifyai.org" target="_blank">NexifyAI</a></div>
     `;
     document.body.appendChild(chatWindow);
 
