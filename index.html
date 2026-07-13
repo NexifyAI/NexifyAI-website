@@ -1355,11 +1355,11 @@ function googleCalLink(c){
       };
     }
 
-    // If we haven't started collecting yet, start
+    // If we haven't started collecting yet, start with the first question
     if (currentStep === 0) {
       return {
         reply: leadQuestions[0].q[userLang],
-        shouldAdvance: false
+        shouldAdvance: true
       };
     }
 
