@@ -74,6 +74,12 @@ h1,h2,h3,p{margin:0;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
 .brand{display:flex;align-items:center;gap:.6rem;}
 .brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.brand-logo{mix-blend-mode:normal;}
 .nav{display:flex;gap:var(--space-5);}
 .nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
 .nav a:hover{color:var(--color-primary);}
@@ -646,14 +652,12 @@ h1,h2,h3,p{margin:0;}
 <header class="site-header">
   <div class="container header-inner">
     <div class="brand">
-      <img src="https://nexifyai.org/logo.png" alt="Nexify AI" onerror="this.style.display='none'">
-      <strong>Nexify AI</strong>
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
     </div>
     <nav class="nav" id="site-nav">
-      <a href="#solutions" data-i18n="navSolutions">Solutions</a>
-      <a href="#business" data-i18n="navBusiness">Business</a>
-      <a href="#platform" data-i18n="navPlatform">Service Model</a>
-      <a href="#cases" data-i18n="navCases">Cases</a>
+      <a href="solutions.html" data-i18n="navSolutions">Solutions</a>
+      <a href="platform.html" data-i18n="navPlatform">Service Model</a>
+      <a href="cases.html" data-i18n="navCases">Cases</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -680,45 +684,41 @@ h1,h2,h3,p{margin:0;}
   </div>
 </section>
 
-<!-- ========== Values ========== -->
+<!-- ========== Solutions ========== -->
 <section class="values" id="solutions">
   <div class="container">
-    <div class="values-grid">
+    <div class="sim-head" style="margin-bottom:var(--space-8);">
+      <h2 data-i18n="solTitle">Industry Solutions</h2>
+      <p data-i18n="solSub">Tailored AI customer service solutions for service-heavy industries.</p>
+    </div>
+    <div class="values-grid" style="grid-template-columns:repeat(4,1fr);">
       <div class="value-card" data-color="green">
-        <span class="value-index">01</span>
         <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
         </div>
-        <span class="value-tag" data-i18n="v1Tag">24 / 7</span>
-        <h3 class="value-title" data-i18n="v1Title">Any Time</h3>
-        <p class="value-desc" data-i18n="v1Desc">Always-on, uninterrupted operation. Instant responses—no human constraints, no sleep cycles, no missed calls.</p>
+        <h3 class="value-title" data-i18n="solRestTitle">Restaurants</h3>
+        <p class="value-desc" data-i18n="solRestDesc">Automated reservations, order-taking and menu inquiries across chat, phone and email.</p>
       </div>
       <div class="value-card" data-color="blue">
-        <span class="value-index">02</span>
         <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
         </div>
-        <span class="value-tag" data-i18n="v2Tag">Multilingual</span>
-        <h3 class="value-title" data-i18n="v2Title">Any Language</h3>
-        <p class="value-desc" data-i18n="v2Desc">Native fluency across global dialects. Speak to every customer locally, in their own language.</p>
+        <h3 class="value-title" data-i18n="solDocTitle">General Practice</h3>
+        <p class="value-desc" data-i18n="solDocDesc">Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.</p>
       </div>
       <div class="value-card" data-color="amber">
-        <span class="value-index">03</span>
         <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
         </div>
-        <span class="value-tag" data-i18n="v3Tag">≤ 7 days</span>
-        <h3 class="value-title" data-i18n="v3Title">1 Week Launch</h3>
-        <p class="value-desc" data-i18n="v3Desc">Rapid deployment architecture. Go live in 7 days or less—fully integrated, ready to serve.</p>
+        <h3 class="value-title" data-i18n="solLawTitle">Law Firms</h3>
+        <p class="value-desc" data-i18n="solLawDesc">Intake screening, consultation booking and document requests handled instantly.</p>
+      </div>
+      <div class="value-card" data-color="green">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"></path><path d="M9 21V12h6v9"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="solRealTitle">Real Estate Agencies</h3>
+        <p class="value-desc" data-i18n="solRealDesc">Viewing requests, listing questions and lead qualification, day and night.</p>
       </div>
     </div>
   </div>
@@ -759,7 +759,6 @@ h1,h2,h3,p{margin:0;}
 
     <div class="stage">
       <div class="stage-frame" id="stage-frame"></div>
-
       <div class="cal-card" id="cal-card" hidden>
         <div class="cal-top">
           <span class="cal-check">
@@ -793,6 +792,48 @@ h1,h2,h3,p{margin:0;}
   </div>
 </section>
 
+<!-- ========== Service Model ========== -->
+<section class="values" id="platform">
+  <div class="container">
+    <div class="sim-head" style="margin-bottom:var(--space-8);">
+      <h2 data-i18n="modelTitle">Service Model</h2>
+      <p data-i18n="modelSub">Flexible pricing that fits your business, from pilot to scale.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card" data-color="green">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </div>
+        <h3 class="value-title" data-i18n="modelMonthlyTitle">Monthly Subscription</h3>
+        <p class="value-desc" data-i18n="modelMonthlyDesc">A fixed monthly fee covering usage, updates and support — predictable budgeting.</p>
+      </div>
+      <div class="value-card" data-color="blue">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="modelPayTitle">Pay As You Use</h3>
+        <p class="value-desc" data-i18n="modelPayDesc">Only pay for actual conversations handled — ideal for testing or seasonal demand.</p>
+      </div>
+      <div class="value-card" data-color="amber">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="modelCustomTitle">Fully Customized</h3>
+        <p class="value-desc" data-i18n="modelCustomDesc">Tailored workflows, integrations and pricing built around your specific business needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Cases ========== -->
+<section class="values" id="cases">
+  <div class="container" style="text-align:center;">
+    <h2 data-i18n="casesTitle">Cases</h2>
+    <p class="hero-copy" data-i18n="casesSub" style="margin-top:var(--space-3);">No client cases yet — we are currently inviting select businesses to join our pilot program.</p>
+    <a href="#" id="btn-pilot" class="btn btn-primary" data-i18n="casesCta" style="margin-top:var(--space-6);display:inline-flex;">Apply for Pilot</a>
+  </div>
+</section>
+
 <!-- ========== LIVE CHATBOT WIDGET ========== -->
 <button id="nx-chatbot-bubble" aria-label="Open chat">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -819,48 +860,71 @@ h1,h2,h3,p{margin:0;}
   </div>
   <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
 </div>
-
 <script>
 /* ===== UI copy (header/hero/values) ===== */
 const copy = {
   en: {
-    navSolutions:'Solutions', navBusiness:'Business', navPlatform:'Service Model', navCases:'Cases',
+    navSolutions:'Solutions', navPlatform:'Service Model', navCases:'Cases',
     heroEyebrow:'AI Customer Service Agent',
     heroTitle:"Flawless service, even when you can't be everywhere.",
     heroCopy:"Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.",
     heroCtaPrimary:'Book Demo', heroCtaSecondary:'View Work',
-    v1Tag:'24 / 7', v1Title:'Any Time', v1Desc:"Always-on, uninterrupted operation. Instant responses—no human constraints, no sleep cycles, no missed calls.",
-    v2Tag:'Multilingual', v2Title:'Any Language', v2Desc:"Native fluency across global dialects. Speak to every customer locally, in their own language.",
-    v3Tag:'≤ 7 days', v3Title:'1 Week Launch', v3Desc:"Rapid deployment architecture. Go live in 7 days or less—fully integrated, ready to serve.",
+    solTitle:'Industry Solutions', solSub:'Tailored AI customer service solutions for service-heavy industries.',
+    solRestTitle:'Restaurants', solRestDesc:'Automated reservations, order-taking and menu inquiries across chat, phone and email.',
+    solDocTitle:'General Practice', solDocDesc:'Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.',
+    solLawTitle:'Law Firms', solLawDesc:'Intake screening, consultation booking and document requests handled instantly.',
+    solRealTitle:'Real Estate Agencies', solRealDesc:'Viewing requests, listing questions and lead qualification, day and night.',
     simTitle:'See it in action', simSub:"A multilingual restaurant booking—handled across chat, phone and email, around the clock, in the customer's own language.",
     tabChat:'Chat', tabCall:'Phone', tabEmail:'Email',
-    stat1:'Response time', stat2:'Always available', stat3:'Languages'
+    stat1:'Response time', stat2:'Always available', stat3:'Languages',
+    modelTitle:'Service Model', modelSub:'Flexible pricing that fits your business, from pilot to scale.',
+    modelMonthlyTitle:'Monthly Subscription', modelMonthlyDesc:'A fixed monthly fee covering usage, updates and support — predictable budgeting.',
+    modelPayTitle:'Pay As You Use', modelPayDesc:'Only pay for actual conversations handled — ideal for testing or seasonal demand.',
+    modelCustomTitle:'Fully Customized', modelCustomDesc:'Tailored workflows, integrations and pricing built around your specific business needs.',
+    casesTitle:'Cases', casesSub:'No client cases yet — we are currently inviting select businesses to join our pilot program.',
+    casesCta:'Apply for Pilot'
   },
   nl: {
-    navSolutions:'Oplossingen', navBusiness:'Bedrijven', navPlatform:'Servicemodel', navCases:'Casussen',
+    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navCases:'Casussen',
     heroEyebrow:'AI Klantenservice Agent',
     heroTitle:'Vlekkeloze service, zelfs als u er niet bent.',
     heroCopy:'Elke oproep beantwoord, elke waardevolle bestelling vastgelegd, uw standaarden 24/7 gehandhaafd. Probeer het één keer en u wilt nooit meer terug.',
     heroCtaPrimary:'Demo Boeken', heroCtaSecondary:'Bekijk Werk',
-    v1Tag:'24 / 7', v1Title:'Elk Moment', v1Desc:'Altijd bereikbaar, ononderbroken werking. Directe antwoorden—zonder menselijke beperkingen of slaapcycli.',
-    v2Tag:'Meertalig', v2Title:'Elke Taal', v2Desc:'Moedertaalniveau in wereldwijde dialecten. Spreek met elke klant lokaal, in zijn eigen taal.',
-    v3Tag:'≤ 7 dagen', v3Title:'1 Week Lancering', v3Desc:'Snelle implementatie-architectuur. Go live in 7 dagen of minder—volledig geïntegreerd.',
+    solTitle:'Branche-oplossingen', solSub:'Op maat gemaakte AI-klantenservice voor dienstverlenende sectoren.',
+    solRestTitle:'Restaurants', solRestDesc:'Geautomatiseerde reserveringen, orders en menuvragen via chat, telefoon en e-mail.',
+    solDocTitle:'Huisartsenpraktijk', solDocDesc:'Afspraken plannen, triage-FAQ\'s en follow-ups zonder extra baliepersoneel.',
+    solLawTitle:'Advocatenkantoren', solLawDesc:'Intake, afspraken maken en documentverzoeken direct afgehandeld.',
+    solRealTitle:'Makelaars', solRealDesc:'Bezichtigingsverzoeken, vragen over aanbod en leadkwalificatie, dag en nacht.',
     simTitle:'Zie het in actie', simSub:'Een meertalige restaurantreservering—via chat, telefoon en e-mail, dag en nacht, in de taal van de klant.',
     tabChat:'Chat', tabCall:'Telefoon', tabEmail:'E-mail',
-    stat1:'Reactietijd', stat2:'Altijd beschikbaar', stat3:'Talen'
+    stat1:'Reactietijd', stat2:'Altijd beschikbaar', stat3:'Talen',
+    modelTitle:'Servicemodel', modelSub:'Flexibele prijzen die passen bij uw bedrijf, van pilot tot schaal.',
+    modelMonthlyTitle:'Maandelijks abonnement', modelMonthlyDesc:'Een vast maandelijks tarief inclusief gebruik, updates en support — voorspelbaar budget.',
+    modelPayTitle:'Betalen naar gebruik', modelPayDesc:'Alleen betalen voor daadwerkelijk afgehandelde gesprekken — ideaal om te testen of voor seizoensvraag.',
+    modelCustomTitle:'Volledig op maat', modelCustomDesc:'Op maat gemaakte workflows, integraties en prijzen afgestemd op uw specifieke behoeften.',
+    casesTitle:'Casussen', casesSub:'Nog geen klantcases — we nodigen momenteel geselecteerde bedrijven uit voor ons pilotprogramma.',
+    casesCta:'Aanmelden voor pilot'
   },
   fr: {
-    navSolutions:'Solutions', navBusiness:'Affaires', navPlatform:'Modèle de service', navCases:'Cas',
+    navSolutions:'Solutions', navPlatform:'Modèle de service', navCases:'Cas',
     heroEyebrow:'Agent IA Service Client',
     heroTitle:"Un service irréprochable, même quand vous n'êtes pas là.",
     heroCopy:'Chaque appel trouve réponse, chaque commande importante est capturée, vos normes respectées 24h/24. Essayez une fois et vous ne reviendrez plus en arrière.',
     heroCtaPrimary:'Réserver Démo', heroCtaSecondary:'Voir Projet',
-    v1Tag:'24 / 7', v1Title:'À Tout Moment', v1Desc:'Capacité ininterrompue 24h/24. Réponses instantanées—sans contraintes humaines ni cycles de sommeil.',
-    v2Tag:'Multilingue', v2Title:'Toute Langue', v2Desc:'Maîtrise native des dialectes mondiaux. Parlez à chaque client localement, dans sa langue.',
-    v3Tag:'≤ 7 jours', v3Title:'Lancement 1 Sem', v3Desc:'Architecture de déploiement rapide. Mise en ligne en 7 jours ou moins—pleinement intégré.',
+    solTitle:'Solutions par secteur', solSub:"Service client IA sur mesure pour les secteurs à forte intensité de service.",
+    solRestTitle:'Restaurants', solRestDesc:'Réservations automatisées, prise de commandes et questions sur le menu via chat, téléphone et e-mail.',
+    solDocTitle:'Cabinets de médecine générale', solDocDesc:'Prise de rendez-vous, FAQ de triage et suivis sans personnel supplémentaire.',
+    solLawTitle:'Cabinets d\'avocats', solLawDesc:'Filtrage des demandes, prise de rendez-vous et demandes de documents traitées instantanément.',
+    solRealTitle:'Agences immobilières', solRealDesc:'Demandes de visite, questions sur les annonces et qualification des prospects, jour et nuit.',
     simTitle:'Voir en action', simSub:'Une réservation multilingue—gérée par chat, téléphone et e-mail, jour et nuit, dans la langue du client.',
     tabChat:'Chat', tabCall:'Téléphone', tabEmail:'E-mail',
-    stat1:'Temps de réponse', stat2:'Toujours disponible', stat3:'Langues'
+    stat1:'Temps de réponse', stat2:'Toujours disponible', stat3:'Langues',
+    modelTitle:'Modèle de service', modelSub:'Tarification flexible adaptée à votre entreprise, du pilote à l\'échelle.',
+    modelMonthlyTitle:'Abonnement mensuel', modelMonthlyDesc:'Un tarif mensuel fixe couvrant l\'utilisation, les mises à jour et le support — budget prévisible.',
+    modelPayTitle:'Paiement à l\'usage', modelPayDesc:'Ne payez que pour les conversations réellement gérées — idéal pour tester ou la demande saisonnière.',
+    modelCustomTitle:'Entièrement personnalisé', modelCustomDesc:'Flux de travail, intégrations et tarifs sur mesure adaptés à vos besoins spécifiques.',
+    casesTitle:'Cas', casesSub:"Pas encore de cas clients — nous invitons actuellement des entreprises sélectionnées à rejoindre notre programme pilote.",
+    casesCta:'Postuler au pilote'
   }
 };
 
@@ -914,7 +978,7 @@ const sim = {
   en: {
     label:'English', code:'en', cust:'Customer', agent:'Lina · Agent', roleUser:'Customer', roleBot:'Lina', custName:'Martinez',
     lines:[
-      { who:'user', text:'Hi, I\'d like to book a table for 4 this Saturday at 8pm.' },
+      { who:'user', text:"Hi, I'd like to book a table for 4 this Saturday at 8pm." },
       { who:'bot', text:'Of course! Table for 4, Saturday 8:00 PM. May I have the name for the reservation?' },
       { who:'user', text:'Under Martinez.' },
       { who:'bot', text:'Done, Mr. Martinez — table for 4, Saturday 8:00 PM at La Terrasse. A calendar invite is on its way to your inbox. See you then!' }
@@ -931,11 +995,11 @@ const sim = {
       { who:'user', text:'Bonjour, je voudrais réserver une table pour 4 samedi à 20h.' },
       { who:'bot', text:'Bien sûr ! Table pour 4, samedi 20h00. À quel nom ?' },
       { who:'user', text:'Au nom de Dubois.' },
-      { who:'bot', text:'C\'est fait, M. Dubois — table pour 4, samedi 20h00 à La Terrasse. L\'invitation calendrier a été envoyée par mail. À bientôt !' }
+      { who:'bot', text:"C'est fait, M. Dubois — table pour 4, samedi 20h00 à La Terrasse. L'invitation calendrier a été envoyée par mail. À bientôt !" }
     ],
     email:[
       { who:'user', subject:'Réservation samedi 20h', body:'Bonjour, auriez-vous une table pour 4 samedi à 20h ? — Dubois' },
-      { who:'bot', subject:'Réservation confirmée · La Terrasse (samedi 20h00)', body:'Cher M. Dubois, confirmé : samedi 18 juillet · 20h00, table pour 4. L\'invitation calendrier est jointe. À bientôt !' }
+      { who:'bot', subject:'Réservation confirmée · La Terrasse (samedi 20h00)', body:"Cher M. Dubois, confirmé : samedi 18 juillet · 20h00, table pour 4. L'invitation calendrier est jointe. À bientôt !" }
     ],
     cal:{ title:'Réservation confirmée', rest:'Restaurant', date:'Date', party:'Personnes', name:'Nom', add:'Ajouter au calendrier', dateStr:'Sam 18 juil · 20:00', partyStr:'4 personnes' }
   }
@@ -1035,7 +1099,6 @@ function buildEmailShell(c){
     <div class="email-toolbar"><span class="email-dot"></span><span>Inbox · ${REST}</span><span style="margin-left:auto">${c.label}</span></div>
     <div class="email-thread" id="email-thread"></div>`;
 }
-
 async function runChat(c){
   buildChatShell(c);
   const body = document.getElementById('chat-body');
@@ -1214,9 +1277,8 @@ function googleCalLink(c){
 (function(){
   'use strict';
 
-  // === Configuration - set your worker URL here ===
   const API_URL = ''; // e.g. 'https://your-worker.nexifyai.workers.dev'
-  
+
   const bubble = document.getElementById('nx-chatbot-bubble');
   const windowEl = document.getElementById('nx-chatbot-window');
   const closeBtn = document.getElementById('nx-chat-close');
@@ -1235,7 +1297,6 @@ function googleCalLink(c){
   };
   let leadSubmitted = false;
 
-  // Greeting messages in different languages
   const greetings = {
     en: "Hi there! 👋 I'm the Nexify AI assistant. I can help you learn about our smart customer service solutions and even book a demo for you. What brings you in today?",
     nl: "Hallo! 👋 Ik ben de Nexify AI-assistent. Ik kan je helpen met alles over onze slimme klantenservice oplossingen en zelfs een demo inplannen. Waar kan ik je mee helpen?",
@@ -1244,7 +1305,6 @@ function googleCalLink(c){
     zh: "你好！👋 我是 Nexify AI 助手。我可以帮你了解我们的智能客服解决方案，也可以为你预约演示。请问有什么可以帮你的？"
   };
 
-  // Detect browser language
   function detectLanguage() {
     const lang = (navigator.language || 'en').toLowerCase();
     if (lang.startsWith('zh')) return 'zh';
@@ -1306,8 +1366,6 @@ function googleCalLink(c){
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  // === Smart local response (fallback when no API) ===
-  // Collects leads through a natural conversation flow
   const leadQuestions = [
     { key: 'industry', q: { en: "Great! To better help you, could you tell me what industry your business is in?", nl: "Perfect! Om je beter te kunnen helpen, in welke branche zit je bedrijf?", fr: "Parfait ! Pour mieux vous aider, pourriez-vous me dire dans quel secteur vous exercez ?", es: "¡Perfecto! Para ayudarte mejor, ¿podrías decirme en qué sector está tu negocio?", zh: "好的！为了更好地帮助你，请问你的公司属于哪个行业？" } },
     { key: 'companyName', q: { en: "Got it. And what's your company name?", nl: "Begrepen. En wat is de naam van je bedrijf?", fr: "Compris. Et quel est le nom de votre entreprise ?", es: "Entendido. ¿Y cuál es el nombre de tu empresa?", zh: "好的。请问你的公司名称是？" } },
@@ -1318,19 +1376,36 @@ function googleCalLink(c){
 
   let currentStep = 0;
   let userLang = 'en';
+  let langLocked = false;
+  let messageCount = 0;
 
   function detectUserLang(text) {
-    // Simple language detection from user input
-    const dutch = /(hallo|goedendag|dank|je|wij|ons|bedrijf|klant|reservering|tafel)/i.test(text);
-    const french = /(bonjour|merci|vous|nous|entreprise|client|réservation|table|bonsoir)/i.test(text);
-    const spanish = /(hola|gracias|usted|nosotros|empresa|cliente|reserva|mesa|buenos)/i.test(text);
+    // Once language is locked, never switch
+    if (langLocked) return userLang;
+
+    // Skip email addresses and URLs (pure ASCII, can't detect language)
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text.trim());
+    const isUrl = /^(https?:\/\/|www\.)/i.test(text.trim());
+    if (isEmail || isUrl) return userLang;
+
+    const dutch = /(hallo|goedendag|dank|je|wij|ons|bedrijf|klant|reservering|tafel|alstublieft|sorry|nee|ja|graag)/i.test(text);
+    const french = /(bonjour|merci|vous|nous|entreprise|client|réservation|table|bonsoir|s'il vous plaît|oui|non|d'accord|bon)/i.test(text);
+    const spanish = /(hola|gracias|usted|nosotros|empresa|cliente|reserva|mesa|buenos|por favor|sí|no|quiero|necesito)/i.test(text);
     const chinese = /[\u4e00-\u9fff]/.test(text);
-    
-    if (chinese) return 'zh';
-    if (dutch) return 'nl';
-    if (french) return 'fr';
-    if (spanish) return 'es';
-    return 'en';
+
+    let detected = 'en';
+    if (chinese) detected = 'zh';
+    else if (dutch) detected = 'nl';
+    else if (french) detected = 'fr';
+    else if (spanish) detected = 'es';
+
+    if (detected !== 'en') userLang = detected;
+
+    // Lock language after 2 messages
+    messageCount++;
+    if (messageCount >= 2) langLocked = true;
+
+    return userLang;
   }
 
   const thankYouMessages = {
@@ -1344,18 +1419,15 @@ function googleCalLink(c){
   function getLocalResponse(userMessage) {
     userLang = detectUserLang(userMessage);
 
-    // Check if user is asking a question (not just providing info)
     const isQuestion = /[?？]/.test(userMessage) || /^(what|how|can|do you|is there|wat|hoe|kan|comment|pouvez|qué|cómo|puede|什么|怎么|如何|有没有|是否)/i.test(userMessage);
-    
+
     if (isQuestion && currentStep === 0) {
-      // Answer the question then gently lead into lead collection
       return {
         reply: getQuestionAnswer(userMessage, userLang) + "\n\n" + leadQuestions[0].q[userLang],
         shouldAdvance: true
       };
     }
 
-    // If we haven't started collecting yet, start with the first question
     if (currentStep === 0) {
       return {
         reply: leadQuestions[0].q[userLang],
@@ -1363,13 +1435,11 @@ function googleCalLink(c){
       };
     }
 
-    // User is providing info for current step
     const currentQ = leadQuestions[currentStep - 1];
     if (currentQ && collectedLead[currentQ.key] === null) {
       collectedLead[currentQ.key] = userMessage.trim();
     }
 
-    // Check if we need more info
     if (currentStep < leadQuestions.length) {
       const nextQ = leadQuestions[currentStep];
       return {
@@ -1378,9 +1448,7 @@ function googleCalLink(c){
       };
     }
 
-    // All collected
     leadSubmitted = true;
-    // Store lead locally
     const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
     leads.push({
       ...collectedLead,
@@ -1443,7 +1511,6 @@ function googleCalLink(c){
     if (/language|lang|talen|langue|idioma|语言/.test(q)) {
       return answers[lang].languages;
     }
-    // Generic answer
     return {
       en: "Great question! Nexify AI provides 24/7 smart customer service that handles chat, phone calls, and emails in 30+ languages. We can help your business never miss a customer again. Let me tell you more — ",
       nl: "Goede vraag! Nexify AI biedt 24/7 slimme klantenservice die chat, telefoongesprekken en e-mails afhandelt in 30+ talen. Zo mis je nooit meer een klant. Laat me je meer vertellen — ",
@@ -1453,15 +1520,17 @@ function googleCalLink(c){
     }[lang];
   }
 
-  // === API call (when configured) ===
   async function callAI(userMessage) {
     if (!API_URL) {
-      // Use local smart response as fallback
-      await sleep(800 + Math.random() * 600); // simulate network delay
+      await sleep(800 + Math.random() * 600);
       const result = getLocalResponse(userMessage);
       if (result.shouldAdvance) currentStep++;
       return result.reply;
     }
+
+    // 8-second timeout: abort and fallback to local response
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     try {
       const response = await fetch(API_URL, {
@@ -1471,17 +1540,19 @@ function googleCalLink(c){
           messages: messages,
           collectedLead: collectedLead,
           brandName: 'Nexify AI'
-        })
+        }),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       if (!response.ok) throw new Error('API call failed');
-      
+
       const data = await response.json();
-      
+
       if (data.collectedLead) {
         collectedLead = { ...collectedLead, ...data.collectedLead };
       }
-      
+
       if (data.leadComplete && !leadSubmitted) {
         leadSubmitted = true;
         submitLead(data.collectedLead);
@@ -1489,8 +1560,9 @@ function googleCalLink(c){
 
       return data.reply;
     } catch (error) {
+      clearTimeout(timeoutId);
       console.error('Chatbot API error:', error);
-      // Fallback to local
+      // Timeout or error -> fallback to local smart response
       const result = getLocalResponse(userMessage);
       if (result.shouldAdvance) currentStep++;
       return result.reply;
@@ -1518,16 +1590,19 @@ function googleCalLink(c){
     addUserMessage(text);
     showTyping();
 
-    const reply = await callAI(text);
-    
-    hideTyping();
-    addBotMessage(reply);
-
-    sendBtn.disabled = false;
-    inputEl.focus();
+    try {
+      const reply = await callAI(text);
+      hideTyping();
+      addBotMessage(reply);
+    } catch (e) {
+      hideTyping();
+      addBotMessage('Sorry, something went wrong. Please try again.');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
   }
 
-  // Programmatically send a message (for "Book Demo" button etc.)
   async function sendUserMessage(text) {
     if (!text) return;
     sendBtn.disabled = true;
@@ -1544,16 +1619,12 @@ function googleCalLink(c){
     if (isOpen) inputEl.focus();
   }
 
-  // Start demo booking flow — open chat & trigger lead collection
   async function startDemoFlow() {
-    // Open chat window
     if (!isOpen) {
       toggleChat();
-      // wait a tick for the UI to render
       await new Promise(r => setTimeout(r, 100));
     }
 
-    // Determine greeting language
     const lang = detectLanguage();
     const demoMessages = {
       en: "I'd like to book a demo",
@@ -1563,9 +1634,7 @@ function googleCalLink(c){
       zh: "我想预约一个演示"
     };
 
-    // Only auto-trigger if no conversation has started yet
     if (messages.length <= 1) {
-      // remove the initial greeting so the flow starts clean
       if (messages.length === 1 && messages[0].role === 'assistant') {
         messagesEl.removeChild(messagesEl.lastElementChild);
         messages.pop();
@@ -1576,7 +1645,6 @@ function googleCalLink(c){
     }
   }
 
-  // === Event listeners ===
   bubble.addEventListener('click', toggleChat);
   closeBtn.addEventListener('click', toggleChat);
   sendBtn.addEventListener('click', sendMessage);
@@ -1587,7 +1655,6 @@ function googleCalLink(c){
     }
   });
 
-  // Book Demo button → open chat & start lead collection
   const bookDemoBtn = document.getElementById('btn-book-demo');
   if (bookDemoBtn) {
     bookDemoBtn.addEventListener('click', (e) => {
@@ -1596,7 +1663,14 @@ function googleCalLink(c){
     });
   }
 
-  // Expose API
+  const pilotBtn = document.getElementById('btn-pilot');
+  if (pilotBtn) {
+    pilotBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      startDemoFlow();
+    });
+  }
+
   window.NexifyChatbot = {
     open: () => { if (!isOpen) toggleChat(); },
     close: () => { if (isOpen) toggleChat(); },
