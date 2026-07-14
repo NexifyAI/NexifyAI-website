@@ -169,6 +169,8 @@ h1,h2,h3,p{margin:0;}
 @keyframes iconPop{0%{transform:scale(1);}40%{transform:scale(1.12) rotate(-4deg);}100%{transform:scale(1);}}
 .value-title{font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;line-height:1.1;}
 .value-desc{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.55;}
+.pilot-badge{display:inline-block;margin-top:var(--space-4);padding:.25rem .6rem;font-size:var(--text-xs);font-weight:600;color:var(--color-primary);background:rgba(45,170,88,.1);border-radius:999px;text-transform:uppercase;letter-spacing:.05em;}
+.pilot-badge.pilot-upcoming{color:#f5a623;background:rgba(245,166,35,.12);}
 .value-tag{
   align-self:flex-start;font-size:var(--text-xs);font-weight:700;
   text-transform:uppercase;letter-spacing:.06em;color:var(--value-color);
@@ -640,6 +642,15 @@ h1,h2,h3,p{margin:0;}
   .lang-btn{padding:.4rem .6rem;min-height:38px;}
   .theme-btn,.menu-btn{min-height:38px;width:38px;}
   .scenario-tab{padding:.5rem .8rem;}
+  /* Hero: full-width CTA buttons, bigger tap targets */
+  .hero-actions{flex-direction:column;gap:var(--space-3);}
+  .hero-actions .btn{width:100%;justify-content:center;min-height:48px;}
+  .btn{min-height:44px;padding:.8rem 1.2rem;}
+  /* Simulation: tighter padding on mobile */
+  .sim-section{padding:var(--space-8) 0 var(--space-16);}
+  /* Values: tighter card spacing */
+  .values-grid{gap:var(--space-4);}
+  .value-card{padding:var(--space-5);}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
@@ -655,9 +666,9 @@ h1,h2,h3,p{margin:0;}
       <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
     </div>
     <nav class="nav" id="site-nav">
-      <a href="solutions.html" data-i18n="navSolutions">Solutions</a>
-      <a href="platform.html" data-i18n="navPlatform">Service Model</a>
-      <a href="cases.html" data-i18n="navCases">Cases</a>
+      <a href="#solutions" data-i18n="navSolutions">Solutions</a>
+      <a href="#work" data-i18n="navPlatform">Service Model</a>
+      <a href="#cases" data-i18n="navCases">Cases</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -825,12 +836,40 @@ h1,h2,h3,p{margin:0;}
   </div>
 </section>
 
-<!-- ========== Cases ========== -->
+<!-- ========== Pilot Program ========== -->
 <section class="values" id="cases">
   <div class="container" style="text-align:center;">
-    <h2 data-i18n="casesTitle">Cases</h2>
-    <p class="hero-copy" data-i18n="casesSub" style="margin-top:var(--space-3);">No client cases yet — we are currently inviting select businesses to join our pilot program.</p>
-    <a href="#" id="btn-pilot" class="btn btn-primary" data-i18n="casesCta" style="margin-top:var(--space-6);display:inline-flex;">Apply for Pilot</a>
+    <div class="sim-head" style="margin-bottom:var(--space-8);">
+      <h2 data-i18n="pilotTitle">Pilot Program</h2>
+      <p data-i18n="pilotSub" style="margin-top:var(--space-3);">We're working with a select group of businesses to shape the future of AI customer service. Limited spots available.</p>
+    </div>
+    <div class="values-grid" style="grid-template-columns:repeat(3,1fr);margin-top:var(--space-8);text-align:left;">
+      <div class="value-card" data-color="green">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="pilotRestTitle">Local Restaurant Group</h3>
+        <p class="value-desc" data-i18n="pilotRestDesc">Multilingual reservation &amp; order handling across 3 locations in Amsterdam. Launching Q3 2026.</p>
+        <div class="pilot-badge" data-i18n="pilotStatus">Pilot · In Progress</div>
+      </div>
+      <div class="value-card" data-color="blue">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="pilotClinicTitle">General Practice Clinic</h3>
+        <p class="value-desc" data-i18n="pilotClinicDesc">Dutch &amp; English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.</p>
+        <div class="pilot-badge" data-i18n="pilotStatus">Pilot · In Progress</div>
+      </div>
+      <div class="value-card" data-color="amber">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
+        </div>
+        <h3 class="value-title" data-i18n="pilotLawTitle">Small Law Firm</h3>
+        <p class="value-desc" data-i18n="pilotLawDesc">Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.</p>
+        <div class="pilot-badge pilot-upcoming" data-i18n="pilotUpcoming">Pilot · Starting Soon</div>
+      </div>
+    </div>
+    <a href="#" id="btn-pilot" class="btn btn-primary" data-i18n="pilotCta" style="margin-top:var(--space-8);display:inline-flex;">Apply for Pilot</a>
   </div>
 </section>
 
@@ -881,8 +920,12 @@ const copy = {
     modelMonthlyTitle:'Monthly Subscription', modelMonthlyDesc:'A fixed monthly fee covering usage, updates and support — predictable budgeting.',
     modelPayTitle:'Pay As You Use', modelPayDesc:'Only pay for actual conversations handled — ideal for testing or seasonal demand.',
     modelCustomTitle:'Fully Customized', modelCustomDesc:'Tailored workflows, integrations and pricing built around your specific business needs.',
-    casesTitle:'Cases', casesSub:'No client cases yet — we are currently inviting select businesses to join our pilot program.',
-    casesCta:'Apply for Pilot'
+    pilotTitle:'Pilot Program', pilotSub:"We're working with a select group of businesses to shape the future of AI customer service. Limited spots available.",
+    pilotRestTitle:'Local Restaurant Group', pilotRestDesc:'Multilingual reservation & order handling across 3 locations in Amsterdam. Launching Q3 2026.',
+    pilotClinicTitle:'General Practice Clinic', pilotClinicDesc:'Dutch & English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.',
+    pilotLawTitle:'Small Law Firm', pilotLawDesc:'Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.',
+    pilotStatus:'Pilot · In Progress', pilotUpcoming:'Pilot · Starting Soon',
+    pilotCta:'Apply for Pilot'
   },
   nl: {
     navSolutions:'Oplossingen', navPlatform:'Servicemodel', navCases:'Casussen',
@@ -902,8 +945,12 @@ const copy = {
     modelMonthlyTitle:'Maandelijks abonnement', modelMonthlyDesc:'Een vast maandelijks tarief inclusief gebruik, updates en support — voorspelbaar budget.',
     modelPayTitle:'Betalen naar gebruik', modelPayDesc:'Alleen betalen voor daadwerkelijk afgehandelde gesprekken — ideaal om te testen of voor seizoensvraag.',
     modelCustomTitle:'Volledig op maat', modelCustomDesc:'Op maat gemaakte workflows, integraties en prijzen afgestemd op uw specifieke behoeften.',
-    casesTitle:'Casussen', casesSub:'Nog geen klantcases — we nodigen momenteel geselecteerde bedrijven uit voor ons pilotprogramma.',
-    casesCta:'Aanmelden voor pilot'
+    pilotTitle:'Pilotprogramma', pilotSub:'We werken met een selecte groep bedrijven samen om de toekomst van AI-klantenservice te vormen. Er zijn beperkte plekken beschikbaar.',
+    pilotRestTitle:'Lokale restaurantgroep', pilotRestDesc:'Meertalige reservering &amp; orderafhandeling op 3 locaties in Amsterdam. Lancering Q3 2026.',
+    pilotClinicTitle:'Huisartsenpraktijk', pilotClinicDesc:'Nederlandse &amp; Engelse afsprakenplanning, triage-FAQ\'s en nasluitings follow-up. Lancering Q3 2026.',
+    pilotLawTitle:'Klein advocatenkantoor', pilotLawDesc:'Intake screening, consultatie planning en documentverzoek triage in NL / EN / FR. Lancering Q4 2026.',
+    pilotStatus:'Pilot · Gestart', pilotUpcoming:'Pilot · Binnenkort',
+    pilotCta:'Aanmelden voor pilot'
   },
   fr: {
     navSolutions:'Solutions', navPlatform:'Modèle de service', navCases:'Cas',
@@ -923,8 +970,12 @@ const copy = {
     modelMonthlyTitle:'Abonnement mensuel', modelMonthlyDesc:'Un tarif mensuel fixe couvrant l\'utilisation, les mises à jour et le support — budget prévisible.',
     modelPayTitle:'Paiement à l\'usage', modelPayDesc:'Ne payez que pour les conversations réellement gérées — idéal pour tester ou la demande saisonnière.',
     modelCustomTitle:'Entièrement personnalisé', modelCustomDesc:'Flux de travail, intégrations et tarifs sur mesure adaptés à vos besoins spécifiques.',
-    casesTitle:'Cas', casesSub:"Pas encore de cas clients — nous invitons actuellement des entreprises sélectionnées à rejoindre notre programme pilote.",
-    casesCta:'Postuler au pilote'
+    pilotTitle:'Programme Pilote', pilotSub:"Nous travaillons avec un groupe sélectionné d'entreprises pour façonner l'avenir du service client IA. Places limitées disponibles.",
+    pilotRestTitle:'Groupe de restaurants local', pilotRestDesc:'Réservation multilingue &amp; gestion des commandes sur 3 sites à Amsterdam. Lancement T3 2026.',
+    pilotClinicTitle:'Cabinet de médecine générale', pilotClinicDesc:"Planification de rendez-vous en néerlandais &amp; anglais, FAQ de triage et suivi après les heures. Lancement T3 2026.",
+    pilotLawTitle:'Petit cabinet d\'avocats', pilotLawDesc:"Filtrage des dossiers, prise de rendez-vous et triage des demandes de documents en NL / EN / FR. Lancement T4 2026.",
+    pilotStatus:'Pilote · En cours', pilotUpcoming:'Pilote · Prochainement',
+    pilotCta:'Postuler au pilote'
   }
 };
 
@@ -1645,6 +1696,36 @@ function googleCalLink(c){
     }
   }
 
+  async function startPilotFlow() {
+    if (!isOpen) {
+      toggleChat();
+      await new Promise(r => setTimeout(r, 100));
+    }
+
+    const lang = detectLanguage();
+    const pilotMessages = {
+      en: "I'm interested in joining the pilot program",
+      nl: "Ik ben geïnteresseerd in het pilotprogramma",
+      fr: "Je suis intéressé par le programme pilote",
+      es: "Estoy interesado en el programa piloto",
+      zh: "我对试点计划感兴趣"
+    };
+
+    // Set a flag so the AI/ local engine knows this is a pilot application
+    // (passed via collectedLead context)
+    collectedLead.pilotApplication = true;
+
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
   bubble.addEventListener('click', toggleChat);
   closeBtn.addEventListener('click', toggleChat);
   sendBtn.addEventListener('click', sendMessage);
@@ -1667,7 +1748,7 @@ function googleCalLink(c){
   if (pilotBtn) {
     pilotBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      startDemoFlow();
+      startPilotFlow();
     });
   }
 
@@ -1675,6 +1756,7 @@ function googleCalLink(c){
     open: () => { if (!isOpen) toggleChat(); },
     close: () => { if (isOpen) toggleChat(); },
     startDemo: startDemoFlow,
+    startPilot: startPilotFlow,
     sendMessage: sendUserMessage,
     getLead: () => collectedLead,
     getMessages: () => messages,

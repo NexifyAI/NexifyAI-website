@@ -63,15 +63,58 @@ export default {
       return new Response(null, {
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type',
         },
+      });
+    }
+
+    // Health check endpoint
+    const reqUrl = new URL(request.url);
+    if (request.method === 'GET' && reqUrl.pathname === '/health') {
+      const apiKey = env.AI_API_KEY;
+      const provider = env.AI_PROVIDER || 'gemini';
+      let aiStatus = 'unknown';
+      let aiError = null;
+
+      if (apiKey) {
+        try {
+          const testResponse = await callAI(
+            [{ role: 'system', content: 'Reply with OK' }, { role: 'user', content: 'Say OK' }],
+            env
+          );
+          aiStatus = testResponse ? 'ok' : 'no_response';
+        } catch (e) {
+          aiStatus = 'error';
+          aiError = e.message;
+        }
+      } else {
+        aiStatus = 'not_configured';
+      }
+
+      return new Response(JSON.stringify({
+        status: 'healthy',
+        ai: {
+          provider: provider,
+          model: env.AI_MODEL || getDefaultModel(provider),
+          status: aiStatus,
+          error: aiError
+        },
+        email: {
+          notifyEmail: env.LEAD_NOTIFY_EMAIL ? 'configured' : 'not_configured',
+          resendKey: env.RESEND_API_KEY ? 'configured' : 'not_configured'
+        },
+        timestamp: new Date().toISOString()
+      }), {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
     }
 
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 });
     }
+
+    const startTime = Date.now();
 
     try {
       const body = await request.json();
@@ -127,6 +170,10 @@ export default {
         }
       }
 
+      const duration = Date.now() - startTime;
+      const leadCount = parsedResponse.leadComplete ? 1 : 0;
+      console.log(`Chat request completed in ${duration}ms, leadComplete=${leadCount}`);
+
       return new Response(JSON.stringify(parsedResponse), {
         headers: {
           'Content-Type': 'application/json',
@@ -135,9 +182,34 @@ export default {
       });
 
     } catch (error) {
-      console.error('Worker error:', error);
+      const duration = Date.now() - startTime;
+      console.error(`Worker error after ${duration}ms:`, error.message || error);
+
+      // Classify error type for better debugging
+      let errorType = 'unknown';
+      let userMessage = 'Sorry, something went wrong. Please try again later.';
+
+      const msg = (error.message || '').toLowerCase();
+      if (msg.includes('api key') || msg.includes('apikey') || msg.includes('authentication') || msg.includes('401') || msg.includes('403')) {
+        errorType = 'auth_error';
+        userMessage = 'AI service configuration error. Please try again later.';
+      } else if (msg.includes('not found') || msg.includes('404') || msg.includes('model')) {
+        errorType = 'model_error';
+        userMessage = 'AI model not available. Please try again later.';
+      } else if (msg.includes('timeout') || msg.includes('abort') || msg.includes('network')) {
+        errorType = 'network_error';
+        userMessage = 'AI service timed out. Please try again.';
+      } else if (msg.includes('safety') || msg.includes('blocked') || msg.includes('content')) {
+        errorType = 'safety_filter';
+        userMessage = 'Sorry, I cannot help with that request.';
+      }
+
       return new Response(
-        JSON.stringify({ error: 'Internal server error', reply: 'Sorry, something went wrong. Please try again later.' }),
+        JSON.stringify({
+          error: errorType,
+          errorDetail: error.message || 'Internal server error',
+          reply: userMessage
+        }),
         { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
       );
     }
@@ -198,8 +270,11 @@ async function callAI(messages, env) {
 async function callGemini(messages, apiKey, model) {
   const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
 
-  // Gemini format: separate system instruction from user/assistant messages
-  const systemInstruction = messages.find(m => m.role === 'system');
+  // Gemini format: combine ALL system messages into one systemInstruction
+  // This is critical — otherwise lead state is lost between turns
+  const systemMsgs = messages.filter(m => m.role === 'system');
+  const systemInstructionText = systemMsgs.map(m => m.content).join('\n\n');
+
   const chatMessages = messages
     .filter(m => m.role !== 'system')
     .map(m => ({
@@ -216,9 +291,9 @@ async function callGemini(messages, apiKey, model) {
     }
   };
 
-  if (systemInstruction) {
+  if (systemInstructionText) {
     body.systemInstruction = {
-      parts: [{ text: systemInstruction.content }]
+      parts: [{ text: systemInstructionText }]
     };
   }
 
@@ -231,11 +306,27 @@ async function callGemini(messages, apiKey, model) {
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`Gemini API error (${response.status}):`, errorText);
-    throw new Error(`Gemini API request failed: ${response.status}`);
+    throw new Error(`Gemini API request failed with status ${response.status}: ${errorText.substring(0, 200)}`);
   }
 
   const data = await response.json();
-  return data.candidates[0].content.parts[0].text;
+
+  // Handle safety filter / blocked content
+  if (!data.candidates || data.candidates.length === 0) {
+    const finishReason = data.promptFeedback?.blockReason || 'unknown';
+    console.warn('Gemini response blocked, reason:', finishReason);
+    throw new Error(`Content blocked by safety filter: ${finishReason}`);
+  }
+
+  const candidate = data.candidates[0];
+  // Handle case where content is undefined (safety filter on output)
+  if (!candidate.content || !candidate.content.parts || candidate.content.parts.length === 0) {
+    const finishReason = candidate.finishReason || 'unknown';
+    console.warn('Gemini candidate has no content, finishReason:', finishReason);
+    throw new Error(`No content in response, finishReason: ${finishReason}`);
+  }
+
+  return candidate.content.parts[0].text;
 }
 
 function getDefaultModel(provider) {
