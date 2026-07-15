@@ -277,7 +277,7 @@ async function callAI(messages, env) {
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`AI API error (${response.status}):`, errorText);
-    throw new Error(`AI API request failed: ${response.status}`);
+    throw new Error(`AI API request failed: ${response.status} - ${errorText.substring(0, 300)}`);
   }
 
   const data = await response.json();
