@@ -80,7 +80,7 @@ export default {
       if (apiKey) {
         try {
           const testResponse = await callAI(
-            [{ role: 'system', content: 'Reply with OK' }, { role: 'user', content: 'Say OK' }],
+            [{ role: 'user', content: 'Reply OK' }],
             env
           );
           aiStatus = testResponse ? 'ok' : 'no_response';
@@ -245,12 +245,29 @@ async function callAI(messages, env) {
     'Authorization': `Bearer ${apiKey}`
   };
 
+  // For providers that don't support system messages well (e.g. Groq/Llama),
+  // prepend system content to the first user message
+  let finalMessages = messages;
+  if (provider === 'groq') {
+    const systemMsgs = messages.filter(m => m.role === 'system');
+    const systemText = systemMsgs.map(m => m.content).join('\n\n');
+    if (systemText) {
+      finalMessages = messages.filter(m => m.role !== 'system');
+      // Ensure first message is from user
+      if (finalMessages.length === 0 || finalMessages[0].role !== 'user') {
+        finalMessages.unshift({ role: 'user', content: systemText });
+      } else {
+        finalMessages[0].content = systemText + '\n\n' + finalMessages[0].content;
+      }
+    }
+  }
+
   const response = await fetch(apiUrl, {
     method: 'POST',
     headers,
     body: JSON.stringify({
       model: model,
-      messages: messages,
+      messages: finalMessages,
       temperature: 0.7,
       max_tokens: 1000,
       response_format: { type: "json_object" }
