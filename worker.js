@@ -80,7 +80,7 @@ export default {
       if (apiKey) {
         try {
           const testResponse = await callAI(
-            [{ role: 'user', content: 'Reply OK' }],
+            [{ role: 'user', content: 'Please respond with a simple json object, e.g. {"status":"ok"}' }],
             env
           );
           aiStatus = testResponse ? 'ok' : 'no_response';
