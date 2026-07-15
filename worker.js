@@ -270,17 +270,37 @@ async function callAI(messages, env) {
 async function callGemini(messages, apiKey, model) {
   const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
 
-  // Gemini format: combine ALL system messages into one systemInstruction
-  // This is critical — otherwise lead state is lost between turns
+  // Collect all system messages
   const systemMsgs = messages.filter(m => m.role === 'system');
-  const systemInstructionText = systemMsgs.map(m => m.content).join('\n\n');
+  const systemText = systemMsgs.map(m => m.content).join('\n\n');
 
+  // Convert chat messages to Gemini format
   const chatMessages = messages
     .filter(m => m.role !== 'system')
     .map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }]
     }));
+
+  // Gemini v1 API does NOT support systemInstruction field.
+  // Prepend system prompt to the first user message instead.
+  if (systemText && chatMessages.length > 0) {
+    const firstUserMsg = chatMessages.find(m => m.role === 'user');
+    if (firstUserMsg) {
+      firstUserMsg.parts[0].text = systemText + '\n\n' + firstUserMsg.parts[0].text;
+    } else {
+      // No user message yet, create one with system prompt
+      chatMessages.unshift({
+        role: 'user',
+        parts: [{ text: systemText }]
+      });
+    }
+  } else if (systemText && chatMessages.length === 0) {
+    chatMessages.push({
+      role: 'user',
+      parts: [{ text: systemText }]
+    });
+  }
 
   const body = {
     contents: chatMessages,
@@ -289,12 +309,6 @@ async function callGemini(messages, apiKey, model) {
       maxOutputTokens: 1000
     }
   };
-
-  if (systemInstructionText) {
-    body.systemInstruction = {
-      parts: [{ text: systemInstructionText }]
-    };
-  }
 
   const response = await fetch(url, {
     method: 'POST',
