@@ -286,8 +286,7 @@ async function callGemini(messages, apiKey, model) {
     contents: chatMessages,
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 1000,
-      responseMimeType: 'application/json'
+      maxOutputTokens: 1000
     }
   };
 
