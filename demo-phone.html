@@ -50,19 +50,19 @@
   --shadow-sm:0 8px 24px rgba(0,0,0,.22);
   --shadow-md:0 16px 40px rgba(0,0,0,.30);
   --shadow-lg:0 28px 80px rgba(0,0,0,.38);
-  /* dark-mode body gradient override */
-  body {
-    background:
+}
+[data-theme="dark"] body {
+  background:
       radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 12%, transparent), transparent 38%),
       radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 6%, transparent), transparent 30%),
       linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 85%, #000));
-  }
-  /* dark-mode header override */
-  .site-header {
-    background:color-mix(in oklab,var(--color-bg) 85%,rgba(0,0,0,.55));
-    border-bottom-color:color-mix(in oklab,var(--color-primary) 14%,var(--color-border));
-  }
 }
+
+[data-theme="dark"] .site-header {
+  background:color-mix(in oklab,var(--color-bg) 85%,rgba(0,0,0,.55));
+    border-bottom-color:color-mix(in oklab,var(--color-primary) 14%,var(--color-border));
+}
+
 *, :before, :after { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -1324,7 +1324,61 @@ const copy = {
     "loginNoticeTitle": "Dashboard coming soon",
     "loginNotice": "We’re building the customer dashboard. <strong>Contact us for early access.</strong>",
     "loginContact": "Contact support",
-    "loginBack": "Back to home"
+    "loginBack": "Back to home",
+    footerAbout:'About Us',
+    footerCompany:'Company',
+    footerContact:'Contact',
+    footerDemo:'See It in Action',
+    footerLegal:'Legal',
+    footerPilot:'Pilot Program',
+    footerPricing:'Pricing',
+    footerPrivacy:'Privacy Policy',
+    footerProduct:'Product',
+    footerSignin:'Sign In',
+    footerSignup:'Sign Up',
+    footerSolutions:'Industry Solutions',
+    footerTagline:'24/7 AI customer service for European SMEs.',
+    footerTerms:'Terms of Service',
+    navAbout:'About',
+    navContact:'Contact',
+    navPilot:'Pilot',
+    navSolutions:'Solutions'
+  ,
+    "footerPhoneDemo": "Phone Demo",
+    "footerPilotResults": "Pilot Results",
+    "navDemoLive": "Live Demo",
+    "navDemoPhone": "Phone Demo",
+    "navPilotApply": "Apply",
+    "navPilotResults": "Results",
+    "navPriceCustom": "Custom",
+    "navPricePayg": "Pay As You Use",
+    "navPriceSub": "Subscription",
+    "navSolGP": "General Practice",
+    "navSolLaw": "Law Firms",
+    "navSolRE": "Real Estate",
+    "navSolRestaurants": "Restaurants"
+  ,
+    "pdCtaBtn": "Apply for Pilot",
+    "pdCtaSecondary": "Try Live Chat Demo",
+    "pdCtaSub": "Join our pilot program and get a custom Phone AI setup for your business.",
+    "pdCtaTitle": "Ready to never miss a call?",
+    "pdDemoAgent": "AI Agent",
+    "pdDemoDuration": "Avg. Call Duration",
+    "pdEyebrow": "Phone AI Demo",
+    "pdFeat1Desc": "Human-like voice with natural pauses, intonation, and the ability to handle interruptions.",
+    "pdFeat1Title": "Natural Conversation",
+    "pdFeat2Desc": "When the AI detects an urgent or complex issue, it transfers the call to the right person.",
+    "pdFeat2Title": "Smart Transfers",
+    "pdFeat3Desc": "Automatically detects and responds in the caller's language. Dutch, English, French, and more.",
+    "pdFeat3Title": "Multilingual",
+    "pdFeat4Desc": "Your business phone is covered 24/7. No more missed calls outside business hours.",
+    "pdFeat4Title": "After-Hours Coverage",
+    "pdFeaturesSub": "More than an answering service — a real AI receptionist.",
+    "pdFeaturesTitle": "What Phone AI Can Do",
+    "pdHowSub": "Three steps to never miss a call again.",
+    "pdHowTitle": "How Phone AI Works",
+    "pdSubtitle": "Hear how Nexify AI handles real phone calls — natural, multilingual, and never on hold.",
+    "pdTitle": "Your AI receptionist, on the phone."
   },
   "nl": {
     "navHome": "Home",
@@ -1493,7 +1547,61 @@ const copy = {
     "loginNoticeTitle": "Dashboard komt eraan",
     "loginNotice": "We zijn het klantdashboard aan het bouwen. <strong>Neem contact op voor vroege toegang.</strong>",
     "loginContact": "Contact opnemen",
-    "loginBack": "Terug naar home"
+    "loginBack": "Terug naar home",
+    footerAbout:'Over ons',
+    footerCompany:'Bedrijf',
+    footerContact:'Contact',
+    footerDemo:'Probeer het',
+    footerLegal:'Juridisch',
+    footerPilot:'Pilotprogramma',
+    footerPricing:'Prijzen',
+    footerPrivacy:'Privacybeleid',
+    footerProduct:'Product',
+    footerSignin:'Inloggen',
+    footerSignup:'Aanmelden',
+    footerSolutions:'Branche-oplossingen',
+    footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
+    footerTerms:'Servicevoorwaarden',
+    navAbout:'Over ons',
+    navContact:'Contact',
+    navPilot:'Pilot',
+    navSolutions:'Oplossingen'
+  ,
+    "footerPhoneDemo": "Telefoon Demo",
+    "footerPilotResults": "Pilot Resultaten",
+    "navDemoLive": "Live Demo",
+    "navDemoPhone": "Telefoon Demo",
+    "navPilotApply": "Aanmelden",
+    "navPilotResults": "Resultaten",
+    "navPriceCustom": "Maatwerk",
+    "navPricePayg": "Betalen naar Gebruik",
+    "navPriceSub": "Abonnement",
+    "navSolGP": "Huisartsenpraktijk",
+    "navSolLaw": "Advocaten",
+    "navSolRE": "Vastgoed",
+    "navSolRestaurants": "Restaurants"
+  ,
+    "pdCtaBtn": "Aanmelden voor Pilot",
+    "pdCtaSecondary": "Probeer Live Chat Demo",
+    "pdCtaSub": "Doe mee aan ons pilotprogramma en ontvang een op maat gemaakte Telefoon AI-oplossing.",
+    "pdCtaTitle": "Klaar om nooit meer een gesprek te missen?",
+    "pdDemoAgent": "AI-agent",
+    "pdDemoDuration": "Gem. gespreksduur",
+    "pdEyebrow": "Telefoon AI Demo",
+    "pdFeat1Desc": "Menselijk-achtige stem met natuurlijke pauzes, intonatie en de mogelijkheid om onderbrekingen af te handelen.",
+    "pdFeat1Title": "Natuurlijk Gesprek",
+    "pdFeat2Desc": "Wanneer de AI een dringende of complexe kwestie detecteert, wordt het gesprek doorgeschakeld naar de juiste persoon.",
+    "pdFeat2Title": "Slimme Transfers",
+    "pdFeat3Desc": "Detecteert automatisch en reageert in de taal van de beller. Nederlands, Engels, Frans en meer.",
+    "pdFeat3Title": "Meertalig",
+    "pdFeat4Desc": "Je zakelijke telefoon is 24/7 bereikbaar. Geen gemiste oproepen meer buiten kantooruren.",
+    "pdFeat4Title": "Buiten Kantooruren",
+    "pdFeaturesSub": "Meer dan een beantwoordingsdienst — een echte AI-receptionist.",
+    "pdFeaturesTitle": "Wat Telefoon AI Kan Doen",
+    "pdHowSub": "Drie stappen om nooit meer een gesprek te missen.",
+    "pdHowTitle": "Hoe Telefoon AI Werkt",
+    "pdSubtitle": "Luister hoe Nexify AI echte telefoongesprekken afhandelt — natuurlijk, meertalig en nooit in de wacht.",
+    "pdTitle": "Je AI-receptionist, aan de telefoon."
   },
   "fr": {
     "navHome": "Accueil",
@@ -1607,7 +1715,61 @@ const copy = {
     "loginNoticeTitle": "Tableau de bord bientôt disponible",
     "loginNotice": "Nous sommes en train de construire le tableau de bord client. <strong>Contactez-nous pour un accès anticipé.</strong>",
     "loginContact": "Contacter le support",
-    "loginBack": "Retour à l'accueil"
+    "loginBack": "Retour à l'accueil",
+    footerAbout:'À propos',
+    footerCompany:'Entreprise',
+    footerContact:'Contact',
+    footerDemo:'Essayez-le',
+    footerLegal:'Juridique',
+    footerPilot:'Programme Pilote',
+    footerPricing:'Tarifs',
+    footerPrivacy:'Politique de confidentialité',
+    footerProduct:'Produit',
+    footerSignin:'Connexion',
+    footerSignup:'S\'inscrire',
+    footerSolutions:'Solutions secteur',
+    footerTagline:'Service client IA 24h/24 pour les PME européennes.',
+    footerTerms:'Conditions d\'utilisation',
+    navAbout:'À propos',
+    navContact:'Contact',
+    navPilot:'Pilote',
+    navSolutions:'Solutions'
+  ,
+    "footerPhoneDemo": "Démo Téléphonique",
+    "footerPilotResults": "Résultats Pilote",
+    "navDemoLive": "Démo en direct",
+    "navDemoPhone": "Démo Téléphonique",
+    "navPilotApply": "Postuler",
+    "navPilotResults": "Résultats",
+    "navPriceCustom": "Sur mesure",
+    "navPricePayg": "Paiement à l'usage",
+    "navPriceSub": "Abonnement",
+    "navSolGP": "Médecine Générale",
+    "navSolLaw": "Cabinets Juridiques",
+    "navSolRE": "Immobilier",
+    "navSolRestaurants": "Restaurants"
+  ,
+    "pdCtaBtn": "Postuler au Pilote",
+    "pdCtaSecondary": "Essayer la Démo Chat",
+    "pdCtaSub": "Rejoignez notre programme pilote et recevez une configuration IA Téléphonique sur mesure.",
+    "pdCtaTitle": "Prêt à ne plus jamais manquer d'appel ?",
+    "pdDemoAgent": "Agent IA",
+    "pdDemoDuration": "Durée moy. d'appel",
+    "pdEyebrow": "Démo Téléphonique IA",
+    "pdFeat1Desc": "Voix quasi-humaine avec des pauses naturelles, intonation et capacité à gérer les interruptions.",
+    "pdFeat1Title": "Conversation Naturelle",
+    "pdFeat2Desc": "Quand l'IA détecte un problème urgent ou complexe, elle transfère l'appel à la bonne personne.",
+    "pdFeat2Title": "Transferts Intelligents",
+    "pdFeat3Desc": "Détecte automatiquement et répond dans la langue de l'appelant. Néerlandais, anglais, français et plus.",
+    "pdFeat3Title": "Multilingue",
+    "pdFeat4Desc": "Votre téléphone professionnel est couvert 24h/24. Plus d'appels manqués hors heures ouvrables.",
+    "pdFeat4Title": "Couverture Hors Horaires",
+    "pdFeaturesSub": "Plus qu'un service de répondeur — un vrai réceptionniste IA.",
+    "pdFeaturesTitle": "Ce Que l'IA Téléphonique Peut Faire",
+    "pdHowSub": "Trois étapes pour ne plus jamais manquer d'appel.",
+    "pdHowTitle": "Comment Fonctionne l'IA Téléphonique",
+    "pdSubtitle": "Écoutez comment Nexify AI gère les appels téléphoniques — naturel, multilingue, et jamais en attente.",
+    "pdTitle": "Votre réceptionniste IA, au téléphone."
   }
 };
 

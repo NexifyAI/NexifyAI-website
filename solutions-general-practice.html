@@ -50,19 +50,19 @@
   --shadow-sm:0 8px 24px rgba(0,0,0,.22);
   --shadow-md:0 16px 40px rgba(0,0,0,.30);
   --shadow-lg:0 28px 80px rgba(0,0,0,.38);
-  /* dark-mode body gradient override */
-  body {
-    background:
+}
+[data-theme="dark"] body {
+  background:
       radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 12%, transparent), transparent 38%),
       radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 6%, transparent), transparent 30%),
       linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 85%, #000));
-  }
-  /* dark-mode header override */
-  .site-header {
-    background:color-mix(in oklab,var(--color-bg) 85%,rgba(0,0,0,.55));
-    border-bottom-color:color-mix(in oklab,var(--color-primary) 14%,var(--color-border));
-  }
 }
+
+[data-theme="dark"] .site-header {
+  background:color-mix(in oklab,var(--color-bg) 85%,rgba(0,0,0,.55));
+    border-bottom-color:color-mix(in oklab,var(--color-primary) 14%,var(--color-border));
+}
+
 *, :before, :after { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -1215,7 +1215,25 @@ const copy = {
     footerSignup:'Sign Up',
     footerLegal:'Legal',
     footerPrivacy:'Privacy Policy',
-    footerTerms:'Terms of Service'
+    footerTerms:'Terms of Service',
+    navSolutions:'Solutions'
+  ,
+    footerPhoneDemo:'Phone Demo',
+    footerPilotResults:'Pilot Results',
+    navDemoLive:'Live Demo',
+    navDemoPhone:'Phone Demo',
+    navPilotApply:'Apply',
+    navPilotResults:'Results',
+    navPriceCustom:'Custom',
+    navPricePayg:'Pay As You Use',
+    navPriceSub:'Subscription',
+    navSolGP:'General Practice',
+    navSolLaw:'Law Firms',
+    navSolRE:'Real Estate',
+    navSolRestaurants:'Restaurants'
+  ,
+    navDemo:'See It in Action',
+    navPricing:'Pricing'
   },
   nl: {
     navSolutions:'Oplossingen',
@@ -1300,7 +1318,25 @@ const copy = {
     footerSignup:'Aanmelden',
     footerLegal:'Juridisch',
     footerPrivacy:'Privacybeleid',
-    footerTerms:'Servicevoorwaarden'
+    footerTerms:'Servicevoorwaarden',
+    navSolutions:'Oplossingen'
+  ,
+    footerPhoneDemo:'Telefoon Demo',
+    footerPilotResults:'Pilot Resultaten',
+    navDemoLive:'Live Demo',
+    navDemoPhone:'Telefoon Demo',
+    navPilotApply:'Aanmelden',
+    navPilotResults:'Resultaten',
+    navPriceCustom:'Maatwerk',
+    navPricePayg:'Betalen naar Gebruik',
+    navPriceSub:'Abonnement',
+    navSolGP:'Huisartsenpraktijk',
+    navSolLaw:'Advocaten',
+    navSolRE:'Vastgoed',
+    navSolRestaurants:'Restaurants'
+  ,
+    navDemo:'Probeer het',
+    navPricing:'Prijzen'
   },
   fr: {
     navSolutions:'Solutions',
@@ -1385,7 +1421,25 @@ const copy = {
     footerSignup:'S\'inscrire',
     footerLegal:'Juridique',
     footerPrivacy:'Politique de confidentialité',
-    footerTerms:'Conditions d\'utilisation'
+    footerTerms:'Conditions d\'utilisation',
+    navSolutions:'Solutions'
+  ,
+    footerPhoneDemo:'Démo Téléphonique',
+    footerPilotResults:'Résultats Pilote',
+    navDemoLive:'Démo en direct',
+    navDemoPhone:'Démo Téléphonique',
+    navPilotApply:'Postuler',
+    navPilotResults:'Résultats',
+    navPriceCustom:'Sur mesure',
+    navPricePayg:'Paiement à l'usage',
+    navPriceSub:'Abonnement',
+    navSolGP:'Médecine Générale',
+    navSolLaw:'Cabinets Juridiques',
+    navSolRE:'Immobilier',
+    navSolRestaurants:'Restaurants'
+  ,
+    navDemo:'Essayez-le',
+    navPricing:'Tarifs'
   },
 };
 

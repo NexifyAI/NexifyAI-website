@@ -362,7 +362,7 @@ async function callGemini(messages, apiKey, model) {
 function getDefaultModel(provider) {
   switch (provider) {
     case 'gemini': return 'gemini-2.0-flash';
-    case 'groq': return 'llama-3.1-70b-versatile';
+    case 'groq': return 'llama-3.3-70b-versatile';
     case 'openai': return 'gpt-4o-mini';
     default: return 'gemini-2.0-flash';
   }
