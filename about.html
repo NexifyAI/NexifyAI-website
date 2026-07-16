@@ -49,6 +49,18 @@
   --shadow-sm:0 8px 24px rgba(0,0,0,.22);
   --shadow-md:0 16px 40px rgba(0,0,0,.30);
   --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+  /* dark-mode body gradient override */
+  body {
+    background:
+      radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 12%, transparent), transparent 38%),
+      radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 6%, transparent), transparent 30%),
+      linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 85%, #000));
+  }
+  /* dark-mode header override */
+  .site-header {
+    background:color-mix(in oklab,var(--color-bg) 85%,rgba(0,0,0,.55));
+    border-bottom-color:color-mix(in oklab,var(--color-primary) 14%,var(--color-border));
+  }
 }
 *, :before, :after { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
