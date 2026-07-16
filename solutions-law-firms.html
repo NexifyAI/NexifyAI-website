@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Intake for Law Firms — Nexify AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root, [data-theme="light"] {
+  --text-xs: clamp(.72rem,.68rem+.2vw,.82rem);
+  --text-sm: clamp(.88rem,.82rem+.3vw,1rem);
+  --text-base: clamp(1rem,.96rem+.2vw,1.1rem);
+  --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+  --text-xl: clamp(1.6rem,1.3rem+1vw,2.4rem);
+  --text-2xl: clamp(2.2rem,1.4rem+2.6vw,4rem);
+  --space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;
+  --space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+  --color-bg:#f6fff7;
+  --color-surface:#ffffff;
+  --color-surface-2:#f3fff5;
+  --color-surface-offset:#ebf9ee;
+  --color-border:#cfe7d3;
+  --color-divider:#dbefde;
+  --color-text:#153122;
+  --color-text-muted:#51705d;
+  --color-text-faint:#86a191;
+  --color-text-inverse:#f7fff8;
+  --color-primary:#2daa58;
+  --color-primary-hover:#248746;
+  --color-primary-highlight:#dff6e5;
+  --color-accent:#78df97;
+  --radius-md:.75rem;--radius-lg:1rem;--radius-xl:1.5rem;--radius-full:9999px;
+  --shadow-sm:0 8px 20px rgba(45,170,88,.08);
+  --shadow-md:0 18px 40px rgba(45,170,88,.12);
+  --shadow-lg:0 30px 70px rgba(45,170,88,.16);
+  --font-display:'Zodiak',Georgia,serif;
+  --font-body:'Satoshi',Inter,sans-serif;
+  --content-default:1180px;
+}
+[data-theme="dark"] {
+  --color-bg:#0f1712;--color-surface:#152019;--color-surface-2:#1a281e;
+  --color-surface-offset:#1f2f24;--color-border:#284332;--color-divider:#203626;
+  --color-text:#edf7ef;--color-text-muted:#a7c0ad;--color-text-faint:#708777;
+  --color-text-inverse:#0f1712;--color-primary:#67d889;--color-primary-hover:#52c374;
+  --color-primary-highlight:#183222;--color-accent:#8ce5a5;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 16px 40px rgba(0,0,0,.30);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+}
+*, :before, :after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; font-family:var(--font-body); font-size:var(--text-base); line-height:1.6;
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 24%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 82%, #fff));
+  color:var(--color-text);
+  display:flex; flex-direction:column; min-height:100vh;
+}
+main { flex:1; }
+a{text-decoration:none;color:inherit;}
+button{font:inherit;border:none;background:none;}
+h1,h2,h3,p{margin:0;}
+.container{width:min(calc(100% - 2rem),var(--content-default));margin-inline:auto;}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in oklab,var(--color-bg) 80%,rgba(255,255,255,.55));
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in oklab,var(--color-primary) 14%,white);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
+.brand{display:flex;align-items:center;gap:.6rem;}
+.brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.brand-logo{mix-blend-mode:normal;}
+.nav{display:flex;gap:var(--space-5);}
+.nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
+.nav a:hover{color:var(--color-primary);}
+.nav a.active{color:var(--color-primary);font-weight:600;}
+.actions{display:flex;align-items:center;gap:var(--space-3);}
+.lang-switcher{
+  display:flex;gap:.25rem;padding:.25rem;
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+}
+.lang-btn,.theme-btn,.menu-btn{
+  padding:.55rem .85rem;border-radius:var(--radius-full);cursor:pointer;
+  min-height:44px;color:var(--color-text-muted);transition:all .2s ease;
+}
+.lang-btn.active{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm);font-weight:700;}
+.theme-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:grid;place-items:center;width:44px;
+}
+.menu-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:none;place-items:center;width:44px;padding:10px;color:var(--color-text);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:1rem 1.6rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:700;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{box-shadow:var(--shadow-lg);}
+.btn-secondary{border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);}
+
+/* ---------- Page Hero ---------- */
+.page-hero{padding:clamp(3rem,6vw,5rem) 0 var(--space-12);text-align:center;}
+.page-hero .eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-primary);background:var(--color-primary-highlight);
+  padding:.5rem 1rem;border-radius:var(--radius-full);margin-bottom:var(--space-5);
+}
+.page-hero h1{
+  font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.04;
+  max-width:18ch;margin:0 auto var(--space-5);letter-spacing:-.01em;
+}
+.page-hero .hero-copy{color:var(--color-text-muted);margin:0 auto;font-size:var(--text-lg);line-height:1.5;max-width:55ch;}
+
+/* ---------- Section base ---------- */
+.section{padding:var(--space-16) 0;}
+.section-head{text-align:center;margin-bottom:var(--space-10);}
+.section-head h2{
+  font-family:var(--font-display);font-size:var(--text-xl);line-height:1.15;
+  margin-bottom:var(--space-4);letter-spacing:-.01em;
+}
+.section-head p{color:var(--color-text-muted);font-size:var(--text-base);max-width:55ch;margin:0 auto;}
+
+/* ---------- Steps / How It Works ---------- */
+.steps-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.step-card{
+  position:relative;background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.step-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.step-number{
+  font-family:var(--font-display);font-size:3rem;font-weight:700;line-height:1;
+  color:color-mix(in oklab,var(--color-primary) 85%,var(--color-text));opacity:.18;
+  position:absolute;top:.4rem;right:1.2rem;
+}
+.step-icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:#fff;box-shadow:0 10px 24px color-mix(in oklab,var(--color-primary) 30%,transparent);
+  margin-bottom:var(--space-5);
+}
+.step-icon svg{width:26px;height:26px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.step-card h3{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-3);}
+.step-card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+/* ---------- Feature Cards ---------- */
+.features-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.feature-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.feature-icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  background:var(--color-primary-highlight);color:var(--color-primary);
+  font-size:1.5rem;margin-bottom:var(--space-2);
+}
+.feature-card h3{font-family:var(--font-display);font-size:var(--text-lg);}
+.feature-card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+/* ---------- Pain Points ---------- */
+.pain-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.pain-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
+.pain-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.pain-icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  background:#fff1f0;color:#e8553f;font-size:1.5rem;margin-bottom:var(--space-2);
+}
+.pain-card h3{font-family:var(--font-display);font-size:var(--text-lg);}
+.pain-card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+/* ---------- ROI Story ---------- */
+.roi-section{background:var(--color-surface-offset);}
+.roi-card{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 70%,var(--color-accent)));
+  color:var(--color-text-inverse);
+  border-radius:var(--radius-xl);padding:var(--space-16);
+  text-align:center;box-shadow:var(--shadow-lg);
+}
+.roi-stat{
+  font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:700;line-height:1;margin-bottom:var(--space-4);
+}
+.roi-card h3{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--space-4);}
+.roi-card p{font-size:var(--text-lg);opacity:.9;max-width:60ch;margin:0 auto;}
+
+/* ---------- Benefits Cards ---------- */
+.benefits-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.benefit-card{
+  position:relative;background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
+.benefit-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.benefit-icon{
+  width:64px;height:64px;border-radius:18px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:#fff;box-shadow:0 10px 24px color-mix(in oklab,var(--color-primary) 30%,transparent);
+  font-size:1.6rem;margin-bottom:var(--space-3);
+}
+.benefit-card h3{font-family:var(--font-display);font-size:var(--text-lg);}
+.benefit-card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+/* ---------- Form ---------- */
+.form-section{background:var(--color-surface-offset);}
+.form-wrap{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-10);box-shadow:var(--shadow-md);
+  max-width:720px;margin:0 auto;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);}
+.form-group{display:flex;flex-direction:column;gap:.5rem;}
+.form-group label{
+  font-size:var(--text-sm);font-weight:600;color:var(--color-text);
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;padding:.85rem 1rem;
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:var(--text-sm);font-family:inherit;
+  background:var(--color-surface);color:var(--color-text);
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  outline:none;border-color:var(--color-primary);
+  box-shadow:0 0 0 3px var(--color-primary-highlight);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:var(--color-text-faint);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-submit{margin-top:var(--space-6);}
+
+/* ---------- Timeline ---------- */
+.timeline{
+  max-width:900px;margin:0 auto;position:relative;
+}
+.timeline::before{
+  content:"";position:absolute;top:40px;bottom:40px;left:50%;
+  width:2px;background:var(--color-border);transform:translateX(-50%);
+}
+.timeline-item{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);
+  margin-bottom:var(--space-8);align-items:center;position:relative;
+}
+.timeline-item:last-child{margin-bottom:0;}
+.timeline-item:nth-child(odd) .timeline-content{grid-column:1;text-align:right;}
+.timeline-item:nth-child(even) .timeline-content{grid-column:2;text-align:left;}
+.timeline-dot{
+  position:absolute;left:50%;top:40px;transform:translateX(-50%);
+  width:20px;height:20px;border-radius:50%;
+  background:var(--color-primary);
+  border:4px solid var(--color-surface-offset);
+  box-shadow:0 0 0 2px var(--color-primary);
+  z-index:1;
+}
+.timeline-content{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-6);
+  box-shadow:var(--shadow-sm);
+}
+.timeline-step{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--color-primary);margin-bottom:var(--space-2);
+}
+.timeline-content h3{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:.3rem;}
+.timeline-content p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+/* ---------- FAQ ---------- */
+.faq-section{background:var(--color-surface-offset);}
+.faq-list{
+  max-width:800px;margin:0 auto;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
+.faq-item{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:box-shadow .2s ease;
+}
+.faq-item:hover{box-shadow:var(--shadow-sm);}
+.faq-question{
+  width:100%;padding:var(--space-5) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);
+  cursor:pointer;text-align:left;font-weight:600;font-size:var(--text-sm);
+  color:var(--color-text);background:none;border:none;font-family:inherit;
+}
+.faq-question svg{
+  width:20px;height:20px;flex-shrink:0;
+  color:var(--color-primary);transition:transform .3s ease;
+}
+.faq-item.open .faq-question svg{transform:rotate(180deg);}
+.faq-answer{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  padding:0 var(--space-6);
+}
+.faq-item.open .faq-answer{
+  max-height:300px;
+  padding:0 var(--space-6) var(--space-5);
+}
+.faq-answer p{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;}
+
+/* ---------- Trust Section ---------- */
+.trust-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6);
+  max-width:800px;margin:0 auto;
+}
+.trust-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-8);
+  box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;gap:var(--space-5);align-items:flex-start;
+}
+.trust-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.trust-icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex-shrink:0;
+  background:var(--color-primary-highlight);color:var(--color-primary);
+  font-size:1.5rem;
+}
+.trust-card h4{font-size:var(--text-base);font-weight:700;margin-bottom:.3rem;}
+.trust-card p{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.5;}
+
+/* ---------- CTA Section ---------- */
+.cta-section{
+  padding:var(--space-20) 0;
+}
+.cta-card{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 70%,var(--color-accent)));
+  color:var(--color-text-inverse);
+  border-radius:var(--radius-xl);padding:var(--space-16);
+  text-align:center;box-shadow:var(--shadow-lg);
+}
+.cta-card h2{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  margin-bottom:var(--space-4);
+}
+.cta-card p{font-size:var(--text-lg);opacity:.9;margin-bottom:var(--space-6);max-width:50ch;margin-left:auto;margin-right:auto;}
+.cta-card .btn-secondary{
+  background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:var(--color-text-inverse);
+}
+.cta-card .btn-secondary:hover{
+  background:rgba(255,255,255,.25);
+}
+
+/* ---------- Footer ---------- */
+.site-footer{
+  background:var(--color-surface);border-top:1px solid var(--color-border);
+  margin-top:var(--space-20);
+}
+.footer-main{padding:var(--space-16) 0 var(--space-10);}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);
+}
+.footer-brand .brand{margin-bottom:var(--space-4);}
+.footer-brand p{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;max-width:28ch;
+}
+.footer-col h5{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-text-faint);margin-bottom:var(--space-4);
+}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-col li a{
+  font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;
+}
+.footer-col li a:hover{color:var(--color-primary);}
+.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
+.footer-social a{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--color-surface-offset);color:var(--color-text-muted);
+  transition:all .2s ease;
+}
+.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
+.footer-social svg{width:18px;height:18px;fill:currentColor;}
+
+.footer-bottom{
+  border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);
+}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .menu-btn{display:grid;}
+  .nav{
+    display:none;position:absolute;top:100%;left:0;width:100%;
+    background:var(--color-surface);border-bottom:1px solid var(--color-border);
+    flex-direction:column;padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-md);gap:var(--space-4);z-index:50;
+  }
+  .nav.open{display:flex;}
+  .steps-grid,.benefits-grid,.features-grid,.pain-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .trust-grid{grid-template-columns:1fr;}
+  .timeline::before{left:24px;}
+  .timeline-item{grid-template-columns:1fr;padding-left:60px;}
+  .timeline-item:nth-child(odd) .timeline-content,
+  .timeline-item:nth-child(even) .timeline-content{grid-column:1;text-align:left;}
+  .timeline-dot{left:24px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8);}
+}
+@media (max-width:640px){
+  .header-inner{flex-direction:column;align-items:stretch;}
+  .actions{width:100%;justify-content:space-between;margin-top:var(--space-3);}
+  .lang-switcher{padding:.15rem;}
+  .lang-btn{padding:.4rem .6rem;min-height:38px;}
+  .theme-btn,.menu-btn{min-height:38px;width:38px;}
+  .btn{min-height:44px;padding:.8rem 1.2rem;}
+  .form-wrap{padding:var(--space-6);}
+  .roi-card,.cta-card{padding:var(--space-10) var(--space-6);}
+  .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
+}
+
+
+/* ====================================================== */
+/* ======== LIVE CHATBOT WIDGET (real AI version) ======= */
+/* ====================================================== */
+
+#nx-chatbot-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-body);
+  border: none;
+}
+#nx-chatbot-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent);
+}
+#nx-chatbot-bubble svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+#nx-chatbot-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  height: 560px;
+  max-height: calc(100vh - 120px);
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  font-family: var(--font-body);
+  animation: nxSlideUp 0.3s ease;
+}
+#nx-chatbot-window.open { display: flex; }
+@keyframes nxSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nx-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nx-chat-header-title {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nx-chat-header-status {
+  width: 8px;
+  height: 8px;
+  background: #b7ffb7;
+  border-radius: 50%;
+  animation: nxPulse 2s infinite;
+}
+@keyframes nxPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); }
+}
+.nx-chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.85;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+
+.nx-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--color-surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nx-chat-messages::-webkit-scrollbar { width: 6px; }
+.nx-chat-messages::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.nx-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  animation: nxMsgIn 0.3s ease both;
+}
+@keyframes nxMsgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nx-msg.bot {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.nx-msg.user {
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.nx-typing {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  width: fit-content;
+}
+.nx-typing span {
+  width: 7px;
+  height: 7px;
+  background: var(--color-text-faint);
+  border-radius: 50%;
+  animation: nxTyping 1.3s infinite;
+}
+.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nxTyping {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.nx-chat-input-area {
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+  display: flex;
+  gap: 8px;
+}
+.nx-chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+.nx-chat-input:focus { border-color: var(--color-primary); }
+.nx-chat-input::placeholder { color: var(--color-text-faint); }
+.nx-chat-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: opacity 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.nx-chat-send:hover { transform: scale(1.05); }
+.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nx-chat-send svg { width: 18px; height: 18px; }
+
+.nx-powered {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-faint);
+  padding: 6px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+}
+.nx-powered a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+
+@media (max-width: 480px) {
+  #nx-chatbot-window {
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+    height: 70vh;
+  }
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- ========== Header ========== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display=\'none\'"></span>
+    </a>
+    <nav class="nav" id="site-nav">
+      <a href="index.html#solutions" data-i18n="navSolutions" class="active">Solutions</a>
+      <a href="index.html#work" data-i18n="navPlatform">Service Model</a>
+      <a href="pilot-apply.html" data-i18n="navPilot">Pilot</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
+      <a href="contact.html" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="actions">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<main>
+<!-- ========== Hero ========== -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow" data-i18n="solEyebrow"></span>
+    <h1 data-i18n="solHeroTitle"></h1>
+    <p class="hero-copy" data-i18n="solHeroSub"></p>
+  </div>
+</section>
+
+<!-- ========== Pain Points ========== -->
+<section class="section" id="pain-points">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="solPainTitle"></h2>
+      <p data-i18n="solPainSub"></p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="feature-icon" style="background:#fff1f0;color:#e8553f;">
+          <span data-i18n="solPain1Icon"></span>
+        </div>
+        <h3 data-i18n="solPain1Title"></h3>
+        <p data-i18n="solPain1Desc"></p>
+      </div>
+      <div class="pain-card">
+        <div class="feature-icon" style="background:#fff1f0;color:#e8553f;">
+          <span data-i18n="solPain2Icon"></span>
+        </div>
+        <h3 data-i18n="solPain2Title"></h3>
+        <p data-i18n="solPain2Desc"></p>
+      </div>
+      <div class="pain-card">
+        <div class="feature-icon" style="background:#fff1f0;color:#e8553f;">
+          <span data-i18n="solPain3Icon"></span>
+        </div>
+        <h3 data-i18n="solPain3Title"></h3>
+        <p data-i18n="solPain3Desc"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== How It Works ========== -->
+<section class="section" id="how-it-works" style="background:var(--color-surface-offset);">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="solHowTitle"></h2>
+      <p data-i18n="solHowSub"></p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-number">01</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 data-i18n="solStep1Title"></h3>
+        <p data-i18n="solStep1Desc"></p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">02</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3 data-i18n="solStep2Title"></h3>
+        <p data-i18n="solStep2Desc"></p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">03</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+        </div>
+        <h3 data-i18n="solStep3Title"></h3>
+        <p data-i18n="solStep3Desc"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Key Features ========== -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="solFeaturesTitle"></h2>
+      <p data-i18n="solFeaturesSub"></p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3 data-i18n="solFeat1Title"></h3>
+        <p data-i18n="solFeat1Desc"></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3 data-i18n="solFeat2Title"></h3>
+        <p data-i18n="solFeat2Desc"></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3 data-i18n="solFeat3Title"></h3>
+        <p data-i18n="solFeat3Desc"></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3 data-i18n="solFeat4Title"></h3>
+        <p data-i18n="solFeat4Desc"></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 data-i18n="solFeat5Title"></h3>
+        <p data-i18n="solFeat5Desc"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ROI Story ========== -->
+<section class="section roi-section" id="roi">
+  <div class="container">
+    <div class="roi-card">
+      <div class="roi-stat" data-i18n="solRoiStat"></div>
+      <h3 data-i18n="solRoiTitle"></h3>
+      <p data-i18n="solRoiDesc"></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== Trust & Compliance ========== -->
+<section class="section" id="trust">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="trust_title_key"></h2>
+      <p data-i18n="trust_sub_key"></p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">⚖️</div>
+        <div>
+          <h4 data-i18n="trust1Title"></h4>
+          <p data-i18n="trust1Desc"></p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🔐</div>
+        <div>
+          <h4 data-i18n="trust2Title"></h4>
+          <p data-i18n="trust2Desc"></p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🇪🇺</div>
+        <div>
+          <h4 data-i18n="trust3Title"></h4>
+          <p data-i18n="trust3Desc"></p>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">📜</div>
+        <div>
+          <h4 data-i18n="trust4Title"></h4>
+          <p data-i18n="trust4Desc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section faq-section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="solFaqTitle"></h2>
+      <p data-i18n="solFaqSub"></p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-i18n="solFaq1Q"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="solFaq1A"></p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-i18n="solFaq2Q"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="solFaq2A"></p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-i18n="solFaq3Q"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="solFaq3A"></p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-i18n="solFaq4Q"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="solFaq4A"></p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span data-i18n="solFaq5Q"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="solFaq5A"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Bottom CTA ========== -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2 data-i18n="solCtaTitle"></h2>
+      <p data-i18n="solCtaSub"></p>
+      <a href="pilot-apply.html" class="btn btn-secondary" data-i18n="solCtaBtn"></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <div class="brand">
+            <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+          </div>
+          <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footerProduct">Product</h5>
+          <ul>
+            <li><a href="index.html#solutions" data-i18n="footerSolutions">Industry Solutions</a></li>
+            <li><a href="index.html#demo" data-i18n="footerDemo">See It in Action</a></li>
+            <li><a href="index.html#work" data-i18n="footerPricing">Pricing</a></li>
+            <li><a href="pilot-apply.html" data-i18n="footerPilot">Pilot Program</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footerCompany">Company</h5>
+          <ul>
+            <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
+            <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
+            <li><a href="#" data-i18n="footerSignin">Sign In</a></li>
+            <li><a href="pilot-apply.html" data-i18n="footerSignup">Sign Up</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-i18n="footerLegal">Legal</h5>
+          <ul>
+            <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+            <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter/X">
+              <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:var(--space-4);">
+      <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</footer>
+
+
+
+<!-- ========== LIVE CHATBOT WIDGET ========== -->
+<button id="nx-chatbot-bubble" aria-label="Open chat">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</button>
+
+<div id="nx-chatbot-window">
+  <div class="nx-chat-header">
+    <div class="nx-chat-header-title">
+      <span class="nx-chat-header-status"></span>
+      Nexify AI Assistant
+    </div>
+    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="nx-chat-messages" id="nx-chat-messages"></div>
+  <div class="nx-chat-input-area">
+    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message..." autocomplete="off" />
+    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
+  <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
+</div>
+
+
+<script>
+const copy = {
+  en: {
+    navSolutions:'Solutions',
+    navPlatform:'Service Model',
+    navPilot:'Pilot',
+    navAbout:'About',
+    navContact:'Contact',
+    solEyebrow:'Law Firm Solutions',
+    solHeroTitle:'Qualify Leads While You Sleep',
+    solHeroSub:'AI-powered intake that qualifies new clients, collects case details, and schedules consultations — 24/7, so your lawyers only work on high-quality cases.',
+    solPainTitle:'The Intake Problem for Law Firms',
+    solPainSub:'Your lawyers and staff spend too much time on initial consultations that go nowhere. Potential clients reach out after hours and never come back.',
+    solPain1Icon:'⏱️',
+    solPain1Title:'Qualifying Leads Takes Hours',
+    solPain1Desc:'Every new inquiry requires a phone call, intake form, and assessment. Your staff spends hours weekly screening cases that aren\'t a fit — time better spent on billable work.',
+    solPain2Icon:'🌙',
+    solPain2Title:'After-Hours Inquiries Go Cold',
+    solPain2Desc:'Most potential clients research lawyers in the evening or on weekends. If no one answers their inquiry, they contact the next firm on the list. You lose leads 24/7.',
+    solPain3Icon:'🌍',
+    solPain3Title:'Multilingual Clients Underserved',
+    solPain3Desc:'Clients with limited local language skills struggle with legal intake. They need clear communication in their native language — but multilingual legal staff is expensive.',
+    solHowTitle:'How It Works',
+    solHowSub:'Three steps to AI-powered intake that fills your pipeline with qualified leads.',
+    solStep1Title:'Visitors Reach Out Anytime',
+    solStep1Desc:'Whether it\'s a website chat at 11pm or a phone call on Sunday, potential clients get an immediate, professional response in their preferred language.',
+    solStep2Title:'AI Collects Case Information',
+    solStep2Desc:'The AI guides potential clients through a structured intake — case type, timeline, key facts, documents needed. It assesses whether the case fits your firm\'s practice areas.',
+    solStep3Title:'Qualified Leads Go to Lawyers',
+    solStep3Desc:'Only qualified, relevant leads land in your lawyers\' inboxes — with complete case summaries and scheduled consultations. No more time wasted on tire-kickers.',
+    solFeaturesTitle:'Built for Law Firms',
+    solFeaturesSub:'Every feature designed for legal intake and client communication.',
+    solFeat1Title:'Lead Qualification',
+    solFeat1Desc:'Automatically screens new inquiries against your practice areas, case criteria, and jurisdiction. Only qualified leads reach your lawyers.',
+    solFeat2Title:'Case Information Collection',
+    solFeat2Desc:'Structured intake that collects all essential details — parties involved, timeline, damages, documents — organized in a clear case summary for your review.',
+    solFeat3Title:'Multilingual Intake',
+    solFeat3Desc:'Serve clients in their native language across 30+ languages. Legal concepts explained clearly, ensuring nothing gets lost in translation.',
+    solFeat4Title:'Consultation Scheduling',
+    solFeat4Desc:'Books initial consultations directly into your lawyers\' calendars, with automatic reminders and rescheduling options. No more phone tag.',
+    solFeat5Title:'Attorney-Client Privilege Protection',
+    solFeat5Desc:'All communications are confidential and encrypted. Data stored securely in the EU. We sign NDAs and data processing agreements with every firm.',
+    solFaqTitle:'Frequently Asked Questions',
+    solFaqSub:'Common questions from managing partners and legal operations teams.',
+    solFaq1Q:'Does this replace our intake staff?',
+    solFaq1A:'No — it augments your team. The AI handles the initial screening and data collection, so your staff only spends time on qualified leads. It\'s like having an extra intake paralegal that works 24/7, but your team still controls all decisions and client relationships.',
+    solFaq2Q:'Is the information protected by attorney-client privilege?',
+    solFaq2A:'Yes. All communications are confidential and encrypted. We sign data processing agreements with each law firm, and data is stored in the EU with the highest security standards. The AI is a tool of your firm — information shared with it is protected like any other client communication.',
+    solFaq3Q:'How accurate is the case assessment?',
+    solFaq3A:'The AI is trained on your firm\'s specific practice areas and intake criteria. It follows your exact screening process. For anything borderline or unclear, it marks the lead for human review rather than rejecting it. Your lawyers always make the final call.',
+    solFaq4Q:'Can it handle different practice areas?',
+    solFaq4A:'Absolutely. Whether you specialize in family law, personal injury, corporate law, immigration, or criminal defense — the AI is trained on your specific practice areas and intake criteria. Each practice area can have its own customized intake flow.',
+    solFaq5Q:'What languages does it support?',
+    solFaq5A:'We support 30+ languages natively, including English, Dutch, French, German, Spanish, Arabic, Turkish, Polish, and more. The AI detects the client\'s language automatically and can switch languages mid-conversation if needed.',
+    solRoiStat:'3x higher',
+    solRoiTitle:'lead conversion rate',
+    solRoiDesc:'Law firms using Nexify AI for intake see 3x higher lead-to-client conversion. Lawyers spend time on qualified cases instead of screening calls, and after-hours inquiries no longer go cold.',
+    trust_title_key:'Confidentiality & Compliance',
+    trust_sub_key:'Legal-grade security for the most sensitive client information.',
+    trust1Title:'Attorney-Client Privilege',
+    trust1Desc:'All communications are treated as privileged and confidential. The AI operates as a tool of your firm, maintaining the confidentiality of all client interactions.',
+    trust2Title:'End-to-End Encryption',
+    trust2Desc:'All client communications and data are encrypted in transit and at rest. Military-grade encryption ensures sensitive case information stays secure.',
+    trust3Title:'EU Data Sovereignty',
+    trust3Desc:'All client data stays within the European Union. No data leaves EU jurisdiction, ensuring compliance with European privacy and data protection laws.',
+    trust4Title:'GDPR & Legal Compliance',
+    trust4Desc:'Fully GDPR compliant. We sign DPAs with every client. Regular security audits and compliance monitoring ensure your firm meets all regulatory requirements.',
+    solCtaTitle:'Stop losing leads after hours',
+    solCtaSub:'Join our pilot program and turn every website visitor into a qualified lead — even when your office is closed. Free or heavily discounted for pilot partners.',
+    solCtaBtn:'Apply for Pilot',
+    footerTagline:'24/7 AI customer service for European SMEs.',
+    footerProduct:'Product',
+    footerSolutions:'Industry Solutions',
+    footerDemo:'See It in Action',
+    footerPricing:'Pricing',
+    footerPilot:'Pilot Program',
+    footerCompany:'Company',
+    footerAbout:'About Us',
+    footerContact:'Contact',
+    footerSignin:'Sign In',
+    footerSignup:'Sign Up',
+    footerLegal:'Legal',
+    footerPrivacy:'Privacy Policy',
+    footerTerms:'Terms of Service'
+  },
+  nl: {
+    navSolutions:'Oplossingen',
+    navPlatform:'Servicemodel',
+    navPilot:'Pilot',
+    navAbout:'Over ons',
+    navContact:'Contact',
+    solEyebrow:'Advocatenkantoor Oplossingen',
+    solHeroTitle:'Kwalificeer leads terwijl je slaapt',
+    solHeroSub:'AI-gestuurde intake die nieuwe cliënten kwalificeert, zaakdetails verzamelt en consultaties plant — 24/7, zodat je advocaten alleen werken aan hoogwaardige zaken.',
+    solPainTitle:'Het intake-probleem voor advocatenkantoren',
+    solPainSub:'Je advocaten en personeel besteden te veel tijd aan eerste consulten die niets opleveren. Potentiële cliënten nemen buiten kantooruren contact op en komen nooit terug.',
+    solPain1Icon:'⏱️',
+    solPain1Title:'Leads kwalificeren kost uren',
+    solPain1Desc:'Elke nieuwe aanvraag vereist een telefoontje, intake-formulier en beoordeling. Je personeel besteedt wekelijks uren aan het screenen van zaken die niet passen — tijd beter besteed aan factureerbaar werk.',
+    solPain2Icon:'🌙',
+    solPain2Title:'Aanvragen na kantooruren blijven liggen',
+    solPain2Desc:'De meeste potentiële cliënten onderzoeken advocaten \'s avonds of in het weekend. Als niemand hun vraag beantwoordt, nemen ze contact op met het volgende kantoor. Je verliest 24/7 leads.',
+    solPain3Icon:'🌍',
+    solPain3Title:'Meertalige cliënten slecht bediend',
+    solPain3Desc:'Cliënten met beperkte kennis van de lokale taal worstelen met juridische intake. Ze hebben heldere communicatie in hun moedertaal nodig — maar meertalig juridisch personeel is duur.',
+    solHowTitle:'Hoe het werkt',
+    solHowSub:'Drie stappen naar AI-gestuurde intake die je pijplijn vult met gekwalificeerde leads.',
+    solStep1Title:'Bezoekers nemen altijd contact op',
+    solStep1Desc:'Of het nu een website-chat om 23:00 is of een telefoontje op zondag, potentiële cliënten krijgen direct een professioneel antwoord in hun voorkeurstaal.',
+    solStep2Title:'AI verzamelt zaakinformatie',
+    solStep2Desc:'De AI leidt potentiële cliënten door een gestructureerde intake — zaaktype, tijdlijn, belangrijkste feiten, benodigde documenten. Hij beoordeelt of de zaak past bij je praktijkgebieden.',
+    solStep3Title:'Gekwalificeerde leads gaan naar advocaten',
+    solStep3Desc:'Alleen gekwalificeerde, relevante leads belanden in de inbox van je advocaten — met complete zaaksamenvattingen en geplande consultaties. Geen tijd meer verspild aan vrijblijvende verkenningen.',
+    solFeaturesTitle:'Gemaakt voor advocatenkantoren',
+    solFeaturesSub:'Elke functie is ontworpen voor juridische intake en cliëntcommunicatie.',
+    solFeat1Title:'Leadkwalificatie',
+    solFeat1Desc:'Screen nieuwe aanvragen automatisch op je praktijkgebieden, zaakcriteria en rechtsgebied. Alleen gekwalificeerde leads bereiken je advocaten.',
+    solFeat2Title:'Zaakinformatie verzamelen',
+    solFeat2Desc:'Gestructureerde intake die alle essentiële details verzamelt — betrokken partijen, tijdlijn, schade, documenten — georganiseerd in een heldere zaaksamenvatting voor je beoordeling.',
+    solFeat3Title:'Meertalige intake',
+    solFeat3Desc:'Serveer cliënten in hun moedertaal in 30+ talen. Juridische concepten worden duidelijk uitgelegd, zodat er niets verloren gaat in vertaling.',
+    solFeat4Title:'Consultatieplanning',
+    solFeat4Desc:'Plant eerste consultaties direct in de agenda\'s van je advocaten, met automatische herinneringen en mogelijkheden tot verzetten. Geen telefoontennis meer.',
+    solFeat5Title:'Advocaat-cliënt privilege',
+    solFeat5Desc:'Alle communicatie is vertrouwelijk en versleuteld. Gegevens worden veilig opgeslagen in de EU. We ondertekenen geheimhoudingsverklaringen en verwerkersovereenkomsten met elk kantoor.',
+    solFaqTitle:'Veelgestelde vragen',
+    solFaqSub:'Veelvoorkomende vragen van managing partners en juridische operations teams.',
+    solFaq1Q:'Vervangt dit ons intake-personeel?',
+    solFaq1A:'Nee — het versterkt je team. De AI handelt de eerste screening en gegevensverzameling af, zodat je personeel alleen tijd besteedt aan gekwalificeerde leads. Het is alsof je een extra intake-paralegaal hebt die 24/7 werkt, maar je team behoudt alle beslissingen en cliëntrelaties.',
+    solFaq2Q:'Is de informatie beschermd door advocaat-cliënt privilege?',
+    solFaq2A:'Ja. Alle communicatie is vertrouwelijk en versleuteld. We ondertekenen verwerkersovereenkomsten met elk advocatenkantoor en gegevens worden opgeslagen in de EU met de hoogste beveiligingsstandaarden. De AI is een hulpmiddel van je kantoor — informatie die ermee wordt gedeeld is beschermd zoals elke andere cliëntcommunicatie.',
+    solFaq3Q:'Hoe accuraat is de zaakbeoordeling?',
+    solFaq3A:'De AI is getraind op de specifieke praktijkgebieden en intake-criteria van je kantoor. Hij volgt je exacte screeningsproces. Bij twijfelgevallen of onduidelijkheden markeert hij de lead voor menselijke beoordeling in plaats van hem af te wijzen. Je advocaten nemen altijd de uiteindelijke beslissing.',
+    solFaq4Q:'Kan het verschillende praktijkgebieden aan?',
+    solFaq4A:'Absoluut. Of je nu gespecialiseerd bent in familierecht, letselschade, ondernemingsrecht, immigratie of strafrecht — de AI wordt getraind op jouw specifieke praktijkgebieden en intake-criteria. Elk praktijkgebied kan zijn eigen aangepaste intake-stroom hebben.',
+    solFaq5Q:'Welke talen ondersteunt het?',
+    solFaq5A:'We ondersteunen 30+ talen op moedertaalniveau, waaronder Nederlands, Engels, Frans, Duits, Spaans, Arabisch, Turks, Pools en meer. De AI detecteert automatisch de taal van de cliënt en kan tijdens het gesprek van taal wisselen als dat nodig is.',
+    solRoiStat:'3x hoger',
+    solRoiTitle:'leadconversiepercentage',
+    solRoiDesc:'Advocatenkantoren die Nexify AI gebruiken voor intake zien 3x hogere lead-naar-cliënt conversie. Advocaten besteden tijd aan gekwalificeerde zaken in plaats van screeningsgesprekken, en aanvragen na kantooruren blijven niet meer liggen.',
+    trust_title_key:'Vertrouwelijkheid & Compliance',
+    trust_sub_key:'Beveiliging van juridisch niveau voor de meest gevoelige cliëntinformatie.',
+    trust1Title:'Advocaat-cliënt privilege',
+    trust1Desc:'Alle communicatie wordt behandeld als bevoorrecht en vertrouwelijk. De AI werkt als hulpmiddel van je kantoor en handhaaft de vertrouwelijkheid van alle cliëntinteracties.',
+    trust2Title:'End-to-end encryptie',
+    trust2Desc:'Alle cliëntcommunicatie en -gegevens zijn versleuteld tijdens verzending en bij opslag. Militair-grade encryptie zorgt ervoor dat gevoelige zaakinformatie veilig blijft.',
+    trust3Title:'EU-data-soevereiniteit',
+    trust3Desc:'Alle cliëntgegevens blijven binnen de Europese Unie. Geen gegevens verlaten de EU-jurisdictie, zodat wordt voldaan aan Europese privacy- en gegevensbeschermingswetten.',
+    trust4Title:'AVG & Juridische compliance',
+    trust4Desc:'Volledig AVG-compliant. We ondertekenen VWO\'s met elke cliënt. Regelmatige beveiligingsaudits en compliance-monitoring zorgen ervoor dat je kantoor aan alle wettelijke vereisten voldoet.',
+    solCtaTitle:'Stop met leads verliezen na kantooruren',
+    solCtaSub:'Doe mee met ons pilotprogramma en verander elke websitebezoeker in een gekwalificeerde lead — ook als je kantoor gesloten is. Gratis of met flinke korting voor pilotpartners.',
+    solCtaBtn:'Meld je aan voor Pilot',
+    footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
+    footerProduct:'Product',
+    footerSolutions:'Branche-oplossingen',
+    footerDemo:'Probeer het',
+    footerPricing:'Prijzen',
+    footerPilot:'Pilotprogramma',
+    footerCompany:'Bedrijf',
+    footerAbout:'Over ons',
+    footerContact:'Contact',
+    footerSignin:'Inloggen',
+    footerSignup:'Aanmelden',
+    footerLegal:'Juridisch',
+    footerPrivacy:'Privacybeleid',
+    footerTerms:'Servicevoorwaarden'
+  },
+  fr: {
+    navSolutions:'Solutions',
+    navPlatform:'Modèle de service',
+    navPilot:'Pilote',
+    navAbout:'À propos',
+    navContact:'Contact',
+    solEyebrow:'Solutions Cabinets d\'Avocats',
+    solHeroTitle:'Qualifiez des prospects pendant que vous dormez',
+    solHeroSub:'Une prise de contact alimentée par l\'IA qui qualifie les nouveaux clients, collecte les détails des dossiers et planifie les consultations — 24h/24, pour que vos avocats ne travaillent que sur des dossiers de qualité.',
+    solPainTitle:'Le problème de la prise de contact pour les cabinets',
+    solPainSub:'Vos avocats et votre personnel passent trop de temps sur des consultations initiales qui n\'aboutissent pas. Les clients potentiels vous contactent hors horaires et ne reviennent jamais.',
+    solPain1Icon:'⏱️',
+    solPain1Title:'Qualifier les prospects prend des heures',
+    solPain1Desc:'Chaque nouvelle demande nécessite un appel, un formulaire de prise de contact et une évaluation. Votre personnel passe des heures par semaine à filtrer des dossiers qui ne conviennent pas — du temps mieux dépensé en travail facturable.',
+    solPain2Icon:'🌙',
+    solPain2Title:'Les demandes hors horaires se perdent',
+    solPain2Desc:'La plupart des clients potentiels cherchent un avocat le soir ou le week-end. Si personne ne répond à leur demande, ils contactent le cabinet suivant. Vous perdez des prospects 24h/24.',
+    solPain3Icon:'🌍',
+    solPain3Title:'Clients multilingues mal desservis',
+    solPain3Desc:'Les clients maîtrisant mal la langue locale ont du mal avec la prise de contact juridique. Ils ont besoin d\'une communication claire dans leur langue maternelle — mais le personnel juridique multilingue coûte cher.',
+    solHowTitle:'Comment ça marche',
+    solHowSub:'Trois étapes pour une prise de contact IA qui remplit votre pipeline de prospects qualifiés.',
+    solStep1Title:'Les visiteurs contactent à tout moment',
+    solStep1Desc:'Que ce soit un chat sur le site à 23h ou un appel le dimanche, les clients potentiels obtiennent une réponse immédiate et professionnelle dans leur langue préférée.',
+    solStep2Title:'L\'IA collecte les infos du dossier',
+    solStep2Desc:'L\'IA guide les clients potentiels à travers une prise de contact structurée — type de dossier, chronologie, faits clés, documents nécessaires. Elle évalue si l\'affaire correspond à vos domaines de pratique.',
+    solStep3Title:'Prospects qualifiés pour les avocats',
+    solStep3Desc:'Seuls les prospects qualifiés et pertinents arrivent dans la boîte mail de vos avocats — avec des résumés de dossier complets et des consultations planifiées. Plus de temps perdu sur les demandes sans suite.',
+    solFeaturesTitle:'Conçu pour les cabinets d\'avocats',
+    solFeaturesSub:'Chaque fonctionnalité conçue pour la prise de contact juridique et la communication client.',
+    solFeat1Title:'Qualification des prospects',
+    solFeat1Desc:'Filtre automatiquement les nouvelles demandes selon vos domaines de pratique, critères de dossier et juridiction. Seuls les prospects qualifiés parviennent à vos avocats.',
+    solFeat2Title:'Collecte d\'informations',
+    solFeat2Desc:'Prise de contact structurée qui recueille tous les détails essentiels — parties impliquées, chronologie, préjudices, documents — organisés dans un résumé clair pour votre examen.',
+    solFeat3Title:'Prise de contact multilingue',
+    solFeat3Desc:'Servez les clients dans leur langue maternelle sur 30+ langues. Les concepts juridiques sont expliqués clairement, pour que rien ne se perde en traduction.',
+    solFeat4Title:'Planification des consultations',
+    solFeat4Desc:'Réserve les consultations initiales directement dans les agendas de vos avocats, avec rappels automatiques et possibilités de report. Plus de jeu de téléphone.',
+    solFeat5Title:'Protection secret professionnel',
+    solFeat5Desc:'Toutes les communications sont confidentielles et chiffrées. Données stockées en toute sécurité dans l\'UE. Nous signons des NDAs et contrats de traitement des données avec chaque cabinet.',
+    solFaqTitle:'Questions Fréquentes',
+    solFaqSub:'Questions courantes des associés dirigeants et équipes juridiques.',
+    solFaq1Q:'Est-ce que ça remplace notre équipe d\'intake ?',
+    solFaq1A:'Non — ça renforce votre équipe. L\'IA gère le filtrage initial et la collecte de données, pour que votre personnel ne passe du temps que sur des prospects qualifiés. C\'est comme avoir un paralégal d\'intake supplémentaire qui travaille 24h/24, mais votre équipe garde le contrôle de toutes les décisions et relations clients.',
+    solFaq2Q:'L\'information est-elle protégée par le secret professionnel ?',
+    solFaq2A:'Oui. Toutes les communications sont confidentielles et chiffrées. Nous signons des contrats de traitement de données avec chaque cabinet d\'avocats, et les données sont stockées dans l\'UE avec les normes de sécurité les plus élevées. L\'IA est un outil de votre cabinet — l\'information partagée avec elle est protégée comme toute autre communication client.',
+    solFaq3Q:'Quelle précision pour l\'évaluation des dossiers ?',
+    solFaq3A:'L\'IA est formée sur les domaines de pratique et les critères de prise de contact spécifiques de votre cabinet. Elle suit exactement votre processus de filtrage. Pour tout ce qui est limite ou peu clair, elle marque le prospect pour examen humain plutôt que de le rejeter. Vos avocats prennent toujours la décision finale.',
+    solFaq4Q:'Ça gère différents domaines de pratique ?',
+    solFaq4A:'Absolument. Que vous soyez spécialisé en droit de la famille, préjudice corporel, droit des sociétés, immigration ou droit pénal — l\'IA est formée sur vos domaines et critères spécifiques. Chaque domaine peut avoir son propre flux de prise de contact personnalisé.',
+    solFaq5Q:'Quelles langues sont supportées ?',
+    solFaq5A:'Nous supportons 30+ langues nativement, dont le français, l\'anglais, le néerlandais, l\'allemand, l\'espagnol, l\'arabe, le turc, le polonais et bien d\'autres. L\'IA détecte automatiquement la langue du client et peut changer de langue en milieu de conversation si nécessaire.',
+    solRoiStat:'3x plus élevé',
+    solRoiTitle:'taux de conversion prospects/clients',
+    solRoiDesc:'Les cabinets d\'avocats utilisant Nexify AI pour la prise de contact voient leur taux de conversion prospect-client multiplié par 3. Les avocats passent du temps sur des dossiers qualifiés au lieu d\'appels de filtrage, et les demandes hors horaires ne se perdent plus.',
+    trust_title_key:'Confidentialité & Conformité',
+    trust_sub_key:'Sécurité de niveau juridique pour les informations client les plus sensibles.',
+    trust1Title:'Secret professionnel',
+    trust1Desc:'Toutes les communications sont traitées comme privilégiées et confidentielles. L\'IA opère comme outil de votre cabinet, maintenant la confidentialité de toutes les interactions clients.',
+    trust2Title:'Chiffrement de bout en bout',
+    trust2Desc:'Toutes les communications et données client sont chiffrées en transit et au repos. Un chiffrement de grade militaire garantit la sécurité des informations sensibles des dossiers.',
+    trust3Title:'Souveraineté des données UE',
+    trust3Desc:'Toutes les données client restent dans l\'Union européenne. Aucune donnée ne quitte la juridiction de l\'UE, garantissant la conformité aux lois européennes de protection des données.',
+    trust4Title:'RGPD & Conformité juridique',
+    trust4Desc:'Entièrement conforme RGPD. Nous signons des CTD avec chaque client. Des audits de sécurité réguliers et une surveillance de la conformité garantissent que votre cabinet respecte toutes les exigences réglementaires.',
+    solCtaTitle:'Arrêtez de perdre des prospects hors horaires',
+    solCtaSub:'Rejoignez notre programme pilote et transformez chaque visiteur du site en prospect qualifié — même quand votre cabinet est fermé. Gratuit ou fortement réduit pour les partenaires pilotes.',
+    solCtaBtn:'Postuler au Pilote',
+    footerTagline:'Service client IA 24h/24 pour les PME européennes.',
+    footerProduct:'Produit',
+    footerSolutions:'Solutions secteur',
+    footerDemo:'Essayez-le',
+    footerPricing:'Tarifs',
+    footerPilot:'Programme Pilote',
+    footerCompany:'Entreprise',
+    footerAbout:'À propos',
+    footerContact:'Contact',
+    footerSignin:'Connexion',
+    footerSignup:'S\'inscrire',
+    footerLegal:'Juridique',
+    footerPrivacy:'Politique de confidentialité',
+    footerTerms:'Conditions d\'utilisation'
+  },
+};
+
+
+/* ===== Theme + nav + header language ===== */
+const root = document.documentElement;
+const langButtons = document.querySelectorAll('.lang-btn');
+const navElement = document.getElementById('site-nav');
+const menuToggleBtn = document.querySelector('[data-menu-toggle]');
+let uiLang = localStorage.getItem('nexify_lang') || 'en';
+
+function setUiLanguage(lang){
+  uiLang = lang;
+  root.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(copy[lang] && copy[lang][key]) el.textContent = copy[lang][key];
+  });
+  // Update input placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const key = el.dataset.i18nPh;
+    if(copy[lang] && copy[lang][key]) el.placeholder = copy[lang][key];
+  });
+  langButtons.forEach(btn=>{
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  localStorage.setItem('nexify_lang', lang);
+}
+langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+
+if(menuToggleBtn && navElement) {
+  menuToggleBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const isOpen = navElement.classList.toggle('open');
+    menuToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navElement.querySelectorAll('a').forEach(link=>link.addEventListener('click', ()=>{
+    navElement.classList.remove('open');
+    menuToggleBtn.setAttribute('aria-expanded','false');
+  }));
+  document.addEventListener('click', ()=>{
+    if(navElement.classList.contains('open')){
+      navElement.classList.remove('open');
+      menuToggleBtn.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
+let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const themeBtn = document.querySelector('[data-theme-toggle]');
+function renderTheme(){root.setAttribute('data-theme',theme);}
+if(themeBtn){themeBtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';renderTheme();});}
+
+/* ===== FAQ Accordion ===== */
+document.querySelectorAll('.faq-question').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+
+/* ===== Chatbot Widget ===== */
+(function(){
+  const bubble = document.getElementById('nx-chatbot-bubble');
+  const windowEl = document.getElementById('nx-chatbot-window');
+  const closeBtn = document.getElementById('nx-chat-close');
+  const messagesEl = document.getElementById('nx-chat-messages');
+  const inputEl = document.getElementById('nx-chat-input');
+  const sendBtn = document.getElementById('nx-chat-send');
+
+  let isOpen = false;
+  let messages = [];
+  let collectedLead = { name:null, email:null, company:null, message:null };
+  let currentStep = 0;
+  let leadSubmitted = false;
+  let userLang = 'en';
+
+  const API_URL = '';
+
+  function toggleChat(){
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if(isOpen){
+      if(messages.length === 0){
+        const lang = detectLanguage();
+        const greetings = {
+          en:"Hi there! 👋 I'm the Nexify AI assistant. How can I help you today?",
+          nl:"Hallo! 👋 Ik ben de Nexify AI-assistent. Waar kan ik je vandaag mee helpen?",
+          fr:"Bonjour ! 👋 Je suis l'assistant Nexify AI. Comment puis-je vous aider aujourd'hui ?",
+          es:"¡Hola! 👋 Soy el asistente de Nexify AI. ¿En qué puedo ayudarte hoy?",
+          zh:"你好！👋 我是 Nexify AI 助手，今天有什么可以帮你的？"
+        };
+        addBotMessage(greetings[lang] || greetings.en);
+      }
+      inputEl.focus();
+    }
+  }
+
+  function detectLanguage(){
+    const stored = localStorage.getItem('nexify_lang');
+    if(stored && ['en','nl','fr','es','zh'].includes(stored)) return stored;
+    const browser = navigator.language.toLowerCase();
+    if(browser.startsWith('nl')) return 'nl';
+    if(browser.startsWith('fr')) return 'fr';
+    if(browser.startsWith('es')) return 'es';
+    if(browser.startsWith('zh')) return 'zh';
+    return 'en';
+  }
+
+  function addBotMessage(text){
+    messages.push({role:'assistant', content:text});
+    const div = document.createElement('div');
+    div.className = 'nx-msg bot';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMessage(text){
+    messages.push({role:'user', content:text});
+    const div = document.createElement('div');
+    div.className = 'nx-msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showTyping(){
+    const div = document.createElement('div');
+    div.className = 'nx-typing';
+    div.id = 'nx-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping(){
+    const el = document.getElementById('nx-typing-indicator');
+    if(el) el.remove();
+  }
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+  const leadQuestions = [
+    { key:'name', en:"Great! What's your name?", nl:"Geweldig! Wat is je naam?", fr:"Parfait ! Quel est votre nom ?", es:"¡Genial! ¿Cuál es tu nombre?", zh:"太好了！请问你叫什么名字？" },
+    { key:'email', en:"Nice to meet you! What's your email address so we can follow up?", nl:"Leuk je te ontmoeten! Wat is je e-mailadres zodat we contact kunnen opnemen?", fr:"Enchanté ! Quelle est votre adresse e-mail pour que nous puissions vous recontacter ?", es:"¡Mucho gusto! ¿Cuál es tu correo electrónico para poder contactarte?", zh:"很高兴认识你！请问你的邮箱是什么，以便我们后续联系你？" },
+    { key:'company', en:"And what company do you work for?", nl:"En voor welk bedrijf werk je?", fr:"Et pour quelle entreprise travaillez-vous ?", es:"¿Y para qué empresa trabajas?", zh:"你在哪家公司工作？" },
+    { key:'message', en:"Perfect! Tell us a bit about what you're looking for and our team will get back to you within 24 hours.", nl:"Perfect! Vertel ons een beetje over wat je zoekt en ons team neemt binnen 24 uur contact met je op.", fr:"Parfait ! Dites-nous un peu ce que vous recherchez et notre équipe vous répondra dans les 24 heures.", es:"¡Perfecto! Cuéntanos un poco sobre lo que buscas y nuestro equipo te responderá en 24 horas.", zh:"太好了！请告诉我们你的需求，我们的团队会在24小时内回复你。" }
+  ];
+
+  const thankYouMessages = {
+    en:"Thank you! 🎉 We've received your information and our team will reach out within 24 hours. In the meantime, feel free to ask me anything about Nexify AI!",
+    nl:"Bedankt! 🎉 We hebben je gegevens ontvangen en ons team neemt binnen 24 uur contact met je op. In de tussentijd kun je me gerust alles vragen over Nexify AI!",
+    fr:"Merci ! 🎉 Nous avons reçu vos informations et notre équipe vous contactera dans les 24 heures. En attendant, n'hésitez pas à me poser vos questions sur Nexify AI !",
+    es:"¡Gracias! 🎉 Hemos recibido tu información y nuestro equipo te contactará en 24 horas. Mientras tanto, ¡no dudes en preguntarme cualquier cosa sobre Nexify AI!",
+    zh:"谢谢！🎉 我们已经收到你的信息，我们的团队会在24小时内联系你。同时，你可以随时问我关于 Nexify AI 的任何问题！"
+  };
+
+  function getLocalResponse(userMessage){
+    userLang = detectLanguage();
+    if(!leadSubmitted && currentStep < leadQuestions.length){
+      const q = leadQuestions[currentStep];
+      if(currentStep === 0 && !collectedLead.name){
+        collectedLead.name = userMessage;
+        return { reply: q[userLang], shouldAdvance: false };
+      }
+      if(currentStep === 0){
+        currentStep++;
+      }
+      const prevKey = leadQuestions[currentStep - 1]?.key;
+      if(prevKey){
+        collectedLead[prevKey] = userMessage;
+      }
+      if(currentStep < leadQuestions.length - 1){
+        const nextQ = leadQuestions[currentStep];
+        return { reply: nextQ[userLang], shouldAdvance: true };
+      } else {
+        collectedLead.message = userMessage;
+        leadSubmitted = true;
+        const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+        leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
+        localStorage.setItem('nexify_leads', JSON.stringify(leads));
+        return { reply: thankYouMessages[userLang], shouldAdvance: false, complete: true };
+      }
+    }
+    leadSubmitted = true;
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+    const q = userMessage.toLowerCase();
+    const answers = {
+      en: {
+        price: "Pricing depends on your needs — we offer flexible plans starting from just a few hundred euros per month. I'd love to learn more about your business so we can find the right fit for you.",
+        demo: "Absolutely! I can help you book a demo. Let me collect a bit of info first so our team can prepare the best demo for your use case.",
+        features: "We offer 24/7 AI customer service across chat, phone, and email — in 30+ languages. Key features include multilingual support, instant response time, order handling, and lead generation. We launch in under 7 days!",
+        languages: "We support 30+ languages natively, including English, Dutch, French, Spanish, German, Chinese, and more. The AI detects your customer's language automatically and responds fluently.",
+        pilot: "Great question! Our pilot program is limited to 5 companies — free or heavily discounted. You'll get a fully customized AI agent, deep integration with your systems, and direct access to our team. Want to apply?"
+      },
+      nl: {
+        price: "De prijs hangt af van je behoeften — we hebben flexibele pakketten vanaf een paar honderd euro per maand. Ik hoor graag meer over je bedrijf, zodat we de juiste oplossing kunnen vinden.",
+        demo: "Zeker weten! Ik kan je helpen met een demo. Laat me eerst wat info verzamelen, zodat ons team de beste demo voor jouw situatie kan voorbereiden.",
+        features: "We bieden 24/7 AI-klantenservice via chat, telefoon en e-mail — in 30+ talen. Belangrijkste functies: meertaligheid, directe reacties, orderafhandeling en leadgeneratie. We gaan live in minder dan 7 dagen!",
+        languages: "We ondersteunen 30+ talen op moedertaalniveau, waaronder Nederlands, Engels, Frans, Spaans, Duits en Chinees. De AI detecteert automatisch de taal van je klant en antwoordt vloeiend.",
+        pilot: "Goede vraag! Ons pilotprogramma is beperkt tot 5 bedrijven — gratis of met flinke korting. Je krijgt een volledig aangepaste AI-agent, diepe integratie met je systemen en directe toegang tot ons team. Wil je je aanmelden?"
+      },
+      fr: {
+        price: "Le prix dépend de vos besoins — nous proposons des formules flexibles à partir de quelques centaines d'euros par mois. J'aimerais en savoir plus sur votre entreprise pour trouver la formule qui vous convient.",
+        demo: "Absolument ! Je peux vous aider à réserver une démo. Laissez-moi d'abord collecter quelques informations pour que notre équipe prépare la meilleure démo pour votre cas.",
+        features: "Nous proposons un service client IA 24h/24 sur chat, téléphone et e-mail — en 30+ langues. Fonctionnalités clés : multilingue, réponse instantanée, gestion des commandes et génération de leads. Mise en ligne en moins de 7 jours !",
+        languages: "Nous supportons 30+ langues nativement, dont le français, l'anglais, le néerlandais, l'espagnol, l'allemand et le chinois. L'IA détecte automatiquement la langue de votre client et répond couramment.",
+        pilot: "Excellente question ! Notre programme pilote est limité à 5 entreprises — gratuit ou fortement réduit. Vous bénéficierez d'un agent IA entièrement personnalisé, d'une intégration profonde avec vos systèmes et d'un accès direct à notre équipe. Vous souhaitez postuler ?"
+      },
+      es: {
+        price: "El precio depende de tus necesidades — ofrecemos planes flexibles desde unos pocos cientos de euros al mes. Me gustaría saber más sobre tu negocio para encontrar la opción adecuada.",
+        demo: "¡Claro que sí! Puedo ayudarte a reservar una demo. Déjame recopilar un poco de información primero para que nuestro equipo prepare la mejor demo para tu caso.",
+        features: "Ofrecemos servicio al cliente con IA 24/7 por chat, teléfono y correo electrónico — en 30+ idiomas. Características clave: multilingüe, respuesta instantánea, gestión de pedidos y generación de leads. ¡Lanzamiento en menos de 7 días!",
+        languages: "Soportamos 30+ idiomas de forma nativa, incluyendo español, inglés, neerlandés, francés, alemán y chino. La IA detecta automáticamente el idioma de tu cliente y responde con fluidez.",
+        pilot: "¡Buena pregunta! Nuestro programa piloto está limitado a 5 empresas — gratuito o con gran descuento. Obtendrás un agente de IA completamente personalizado, integración profunda con tus sistemas y acceso directo a nuestro equipo. ¿Quieres aplicar?"
+      },
+      zh: {
+        price: "价格根据你的需求而定——我们提供灵活的方案，每月几百欧元起。我想更多了解你的业务，以便为你找到最合适的方案。",
+        demo: "当然可以！我可以帮你预约演示。先让我了解一些信息，这样我们的团队可以为你的使用场景准备最合适的演示。",
+        features: "我们提供24/7 AI客服，覆盖聊天、电话和邮件——支持30多种语言。核心功能包括：多语言支持、即时响应、订单处理和获客。7天内即可上线！",
+        languages: "我们原生支持30多种语言，包括中文、英文、荷兰语、法语、西班牙语、德语等。AI会自动检测客户的语言并用母语流畅回复。",
+        pilot: "好问题！我们的试点计划仅限5家公司——免费或大幅折扣。你将获得完全定制的AI智能体、与你的系统深度集成，以及直接联系我们团队的通道。想申请吗？"
+      }
+    };
+    if(/pilot|试点|pilotprogramma|programme pilote|programa piloto/.test(q)) {
+      currentStep = 0;
+      collectedLead.pilotApplication = true;
+      collectedLead = { ...collectedLead, name:null, email:null, company:null, message:null };
+      leadSubmitted = false;
+      const firstQ = leadQuestions[0];
+      return { reply: answers[userLang].pilot + " " + firstQ[userLang], shouldAdvance: false };
+    }
+    if(/price|pricing|cost|how much|prijs|kosten|prix|coût|precio|价格|多少钱|费用/.test(q)) {
+      return { reply: answers[userLang].price, shouldAdvance: false };
+    }
+    if(/demo|book|trial|试|演示|预约|démo|reserve|reserveren/.test(q)) {
+      currentStep = 0;
+      collectedLead = { ...collectedLead, name:null, email:null, company:null, message:null };
+      leadSubmitted = false;
+      const firstQ = leadQuestions[0];
+      return { reply: answers[userLang].demo + " " + firstQ[userLang], shouldAdvance: false };
+    }
+    if(/feature|what can|capabil|service|functie|fonctionnalit|característica|功能|服务/.test(q)) {
+      return { reply: answers[userLang].features, shouldAdvance: false };
+    }
+    if(/language|lang|talen|langue|idioma|语言/.test(q)) {
+      return { reply: answers[userLang].languages, shouldAdvance: false };
+    }
+    return {
+      en: "Great question! Nexify AI provides 24/7 smart customer service that handles chat, phone calls, and emails in 30+ languages. We can help your business never miss a customer again. Would you like to learn more about how we can help your specific business?",
+      nl: "Goede vraag! Nexify AI biedt 24/7 slimme klantenservice die chat, telefoongesprekken en e-mails afhandelt in 30+ talen. Zo mis je nooit meer een klant. Wil je meer weten over hoe we jouw bedrijf kunnen helpen?",
+      fr: "Excellente question ! Nexify AI propose un service client intelligent 24h/24 qui gère chat, appels et e-mails en 30+ langues. Votre entreprise ne ratera plus jamais un client. Souhaitez-vous en savoir plus sur la façon dont nous pouvons aider votre entreprise ?",
+      es: "¡Excelente pregunta! Nexify AI ofrece servicio al cliente inteligente 24/7 que gestiona chat, llamadas y correos en 30+ idiomas. Tu negocio nunca más perderá un cliente. ¿Te gustaría saber más sobre cómo podemos ayudar a tu negocio específico?",
+      zh: "好问题！Nexify AI 提供24/7智能客服，支持30多种语言的聊天、电话和邮件处理。让你的业务永不遗漏客户。想了解更多我们如何帮助你的具体业务吗？"
+    }[userLang];
+  }
+
+  async function callAI(userMessage) {
+    if (!API_URL) {
+      await sleep(800 + Math.random() * 600);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: messages, collectedLead: collectedLead, brandName: 'Nexify AI' }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!response.ok) throw new Error('API call failed');
+      const data = await response.json();
+      if (data.collectedLead) { collectedLead = { ...collectedLead, ...data.collectedLead }; }
+      if (data.leadComplete && !leadSubmitted) { leadSubmitted = true; submitLead(data.collectedLead); }
+      return data.reply;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Chatbot API error:', error);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+  }
+
+  function submitLead(leadData) {
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...leadData, timestamp: new Date().toISOString(), source: window.location.href, userAgent: navigator.userAgent });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    try {
+      const reply = await callAI(text);
+      hideTyping();
+      addBotMessage(reply);
+    } catch (e) {
+      hideTyping();
+      addBotMessage('Sorry, something went wrong. Please try again.');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  }
+
+  async function sendUserMessage(text) {
+    if (!text) return;
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    const reply = await callAI(text);
+    hideTyping();
+    addBotMessage(reply);
+    sendBtn.disabled = false;
+    if (isOpen) inputEl.focus();
+  }
+
+  async function startDemoFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const demoMessages = {
+      en: "I'd like to book a demo",
+      nl: "Ik wil een demo boeken",
+      fr: "Je voudrais réserver une démo",
+      es: "Me gustaría reservar una demo",
+      zh: "我想预约一个演示"
+    };
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(demoMessages[lang] || demoMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  async function startPilotFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const pilotMessages = {
+      en: "I'm interested in joining the pilot program",
+      nl: "Ik ben geïnteresseerd in het pilotprogramma",
+      fr: "Je suis intéressé par le programme pilote",
+      es: "Estoy interesado en el programa piloto",
+      zh: "我对试点计划感兴趣"
+    };
+    collectedLead.pilotApplication = true;
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  bubble.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  window.NexifyChatbot = {
+    open: () => { if (!isOpen) toggleChat(); },
+    close: () => { if (isOpen) toggleChat(); },
+    startDemo: startDemoFlow,
+    startPilot: startPilotFlow,
+    sendMessage: sendUserMessage,
+    getLead: () => collectedLead,
+    getMessages: () => messages,
+    getLeads: () => JSON.parse(localStorage.getItem('nexify_leads') || '[]')
+  };
+})();
+
+
+/* ===== init ===== */
+renderTheme();
+setUiLanguage(uiLang);
+
+</script>
+</body>
+</html>
