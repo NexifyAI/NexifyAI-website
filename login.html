@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>See It in Action &mdash; Nexify AI</title>
+<title>Sign In &mdash; Nexify AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -467,11 +467,11 @@ h1,h2,h3,p{margin:0;}
     <nav class="nav" id="site-nav">
       <a href="index.html" data-i18n="navHome" class="">Home</a>
       <a href="solutions-restaurants.html" data-i18n="navSolutions" class="">Solutions</a>
-      <a href="demo.html" data-i18n="navDemo" class="active">See It in Action</a>
+      <a href="demo.html" data-i18n="navDemo" class="">See It in Action</a>
       <a href="pricing-subscription.html" data-i18n="navPricing" class="">Service Model</a>
       <a href="about.html" data-i18n="navAbout" class="">About</a>
       <a href="pilot-apply.html" data-i18n="navPilot" class="">Pilot</a>
-      <a href="contact.html" data-i18n="navContact" class="">Contact</a>
+      <a href="contact.html" data-i18n="navContact" class="active">Contact</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -487,138 +487,46 @@ h1,h2,h3,p{margin:0;}
 
 
 <main>
-  <!-- Hero -->
-  <section class="page-hero">
+  <div class="login-wrap">
     <div class="container">
-      <div class="eyebrow"><span data-i18n="demoEyebrow">Live Demo</span></div>
-      <h1 data-i18n="demoTitle">See It in Action</h1>
-      <p class="hero-copy" data-i18n="demoSubtitle">Try our AI assistant right now &mdash; no sign up needed.</p>
-    </div>
-  </section>
-
-  <!-- Demo Chat Section -->
-  <section class="demo-chat-section">
-    <div class="container">
-      <div class="demo-chat-wrap" id="demo-chat">
-        <div class="demo-chat-header">
-          <div class="demo-chat-avatar">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5v1a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
-          </div>
-          <div class="demo-chat-meta">
-            <strong>Nexify AI Assistant</strong>
-            <span><span class="online"></span>Online &middot; Always here</span>
-          </div>
+      <div class="login-card">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
         </div>
-        <div class="demo-chat-body" id="demo-chat-body">
-          <div class="demo-msg bot" data-i18n="demoChatPlaceholder">
-            Hi! I&#39;m the Nexify AI assistant. Click the chat bubble in the corner to start a real conversation, or try one of the use cases below.
+        <h2 data-i18n="loginTitle">Sign In</h2>
+        <p class="sub" data-i18n="loginSubtitle">Access your Nexify AI dashboard.</p>
+        
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email" data-i18n="loginEmail">Email</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required>
           </div>
+          <div class="form-group">
+            <label for="login-password" data-i18n="loginPassword">Password</label>
+            <input type="password" id="login-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+          </div>
+          <button type="submit" class="btn btn-primary" data-i18n="loginBtn">Sign In</button>
+        </form>
+        
+        <div class="login-notice" data-i18n="loginNotice">
+          <strong>Dashboard coming soon</strong> &mdash; contact us for early access.
         </div>
-        <div class="demo-chat-footer">
-          <div class="demo-chat-input" data-i18n="demoChatPlaceholder">Click to start chatting...</div>
-          <div class="demo-chat-send" id="demo-chat-start" aria-label="Start chat">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Use Case Tabs -->
-      <div class="usecase-tabs">
-        <button class="usecase-tab active" data-usecase="restaurant">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
-          <span data-i18n="demoUsecaseRestaurant">Restaurant Booking</span>
-        </button>
-        <button class="usecase-tab" data-usecase="clinic">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
-          <span data-i18n="demoUsecaseClinic">Medical Appointment</span>
-        </button>
-        <button class="usecase-tab" data-usecase="law">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
-          <span data-i18n="demoUsecaseLaw">Legal Intake</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Grid -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="demoFeaturesTitle">What Our AI Can Do</h2>
-        <p data-i18n="demoFeaturesSub">Four core capabilities that make Nexify AI different from basic chatbots.</p>
-      </div>
-      <div class="card-grid cols-4">
-        <div class="feature-card" data-color="green">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 9h8M8 13h5"></path></svg>
-          </div>
-          <h3 data-i18n="demoFeat1Title">30+ Languages</h3>
-          <p data-i18n="demoFeat1Desc">Native-level fluency with automatic language detection. Your customers always get a reply in their mother tongue.</p>
-        </div>
-        <div class="feature-card" data-color="blue">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </div>
-          <h3 data-i18n="demoFeat2Title">Smart Lead Capture</h3>
-          <p data-i18n="demoFeat2Desc">Conversational qualification that feels natural, not like filling out a form. High-quality leads delivered to your inbox.</p>
-        </div>
-        <div class="feature-card" data-color="amber">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </div>
-          <h3 data-i18n="demoFeat3Title">24/7 Availability</h3>
-          <p data-i18n="demoFeat3Desc">Never miss a customer inquiry again. Weekends, holidays, after hours &mdash; the AI is always on, always consistent.</p>
-        </div>
-        <div class="feature-card" data-color="purple">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <h3 data-i18n="demoFeat4Title">Instant Response</h3>
-          <p data-i18n="demoFeat4Desc">Average response time under 2 seconds. No wait times, no hold music, no frustrated customers.</p>
+        
+        <div class="login-footer-links">
+          <a href="contact.html" data-i18n="loginContact">Contact support</a>
+          <span style="margin:0 .5rem;">&middot;</span>
+          <a href="index.html" data-i18n="loginBack">Back to home</a>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-card">
-        <h2 data-i18n="demoCtaTitle">Ready for your business?</h2>
-        <p data-i18n="demoCtaSub">Join our pilot program and see the impact firsthand. Limited spots available.</p>
-        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
-      </div>
-    </div>
-  </section>
+  </div>
 </main>
 
 <script>
-// Demo page interactions
-document.getElementById('demo-chat-start').addEventListener('click', function() {
-  if (window.NexifyChatbot) window.NexifyChatbot.open();
-});
-document.querySelector('.demo-chat-input').addEventListener('click', function() {
-  if (window.NexifyChatbot) window.NexifyChatbot.open();
-});
-document.querySelectorAll('.usecase-tab').forEach(tab => {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.usecase-tab').forEach(t => t.classList.remove('active'));
-    this.classList.add('active');
-    if (window.NexifyChatbot) {
-      window.NexifyChatbot.open();
-      setTimeout(() => {
-        const usecase = this.dataset.usecase;
-        const msgs = {
-          restaurant: { en: "I'd like to book a table for dinner", nl: "Ik wil een tafel reserveren voor het avondeten", fr: "Je voudrais r\u00e9server une table pour le d\u00eener" },
-          clinic: { en: "I need to make a doctor's appointment", nl: "Ik moet een afspraak maken bij de dokter", fr: "Je dois prendre rendez-vous chez le m\u00e9decin" },
-          law: { en: "I need legal advice about a case", nl: "Ik heb juridisch advies nodig over een zaak", fr: "J'ai besoin de conseils juridiques sur une affaire" }
-        };
-        const lang = document.documentElement.lang || 'en';
-        window.NexifyChatbot.sendMessage(msgs[usecase][lang] || msgs[usecase].en);
-      }, 300);
-    }
-  });
-});
+function handleLogin(e) {
+  e.preventDefault();
+  alert('Dashboard is coming soon! Please contact us for early access.');
+}
 </script>
 
 

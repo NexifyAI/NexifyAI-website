@@ -1,0 +1,2136 @@
+#!/usr/bin/env python3
+"""Generate Batch 3 pages for Nexify AI website."""
+
+import os
+import json
+
+BASE_DIR = '/app/data/所有对话/主对话/nexifyai-chatbot'
+
+# ============================================================
+# Common CSS
+# ============================================================
+COMMON_CSS = r'''
+:root, [data-theme="light"] {
+  --text-xs: clamp(.72rem,.68rem+.2vw,.82rem);
+  --text-sm: clamp(.88rem,.82rem+.3vw,1rem);
+  --text-base: clamp(1rem,.96rem+.2vw,1.1rem);
+  --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+  --text-xl: clamp(1.6rem,1.3rem+1vw,2.4rem);
+  --text-2xl: clamp(2.2rem,1.4rem+2.6vw,4rem);
+  --space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;
+  --space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+  --color-bg:#f6fff7;
+  --color-surface:#ffffff;
+  --color-surface-2:#f3fff5;
+  --color-surface-offset:#ebf9ee;
+  --color-border:#cfe7d3;
+  --color-divider:#dbefde;
+  --color-text:#153122;
+  --color-text-muted:#51705d;
+  --color-text-faint:#86a191;
+  --color-text-inverse:#f7fff8;
+  --color-primary:#2daa58;
+  --color-primary-hover:#248746;
+  --color-primary-highlight:#dff6e5;
+  --color-accent:#78df97;
+  --radius-md:.75rem;--radius-lg:1rem;--radius-xl:1.5rem;--radius-full:9999px;
+  --shadow-sm:0 8px 20px rgba(45,170,88,.08);
+  --shadow-md:0 18px 40px rgba(45,170,88,.12);
+  --shadow-lg:0 30px 70px rgba(45,170,88,.16);
+  --font-display:'Zodiak',Georgia,serif;
+  --font-body:'Satoshi',Inter,sans-serif;
+  --content-default:1180px;
+}
+[data-theme="dark"] {
+  --color-bg:#0f1712;--color-surface:#152019;--color-surface-2:#1a281e;
+  --color-surface-offset:#1f2f24;--color-border:#284332;--color-divider:#203626;
+  --color-text:#edf7ef;--color-text-muted:#a7c0ad;--color-text-faint:#708777;
+  --color-text-inverse:#0f1712;--color-primary:#67d889;--color-primary-hover:#52c374;
+  --color-primary-highlight:#183222;--color-accent:#8ce5a5;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 16px 40px rgba(0,0,0,.30);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+}
+*, :before, :after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; font-family:var(--font-body); font-size:var(--text-base); line-height:1.6;
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 24%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 82%, #fff));
+  color:var(--color-text);
+  display:flex; flex-direction:column; min-height:100vh;
+}
+main { flex:1; }
+a{text-decoration:none;color:inherit;}
+button{font:inherit;border:none;background:none;}
+h1,h2,h3,p{margin:0;}
+.container{width:min(calc(100% - 2rem),var(--content-default));margin-inline:auto;}
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in oklab,var(--color-bg) 80%,rgba(255,255,255,.55));
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in oklab,var(--color-primary) 14%,white);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
+.brand{display:flex;align-items:center;gap:.6rem;}
+.brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.brand-logo{mix-blend-mode:normal;}
+.nav{display:flex;gap:var(--space-5);}
+.nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
+.nav a:hover{color:var(--color-primary);}
+.nav a.active{color:var(--color-primary);font-weight:700;}
+.actions{display:flex;align-items:center;gap:var(--space-3);}
+.lang-switcher{
+  display:flex;gap:.25rem;padding:.25rem;
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+}
+.lang-btn,.theme-btn,.menu-btn{
+  padding:.55rem .85rem;border-radius:var(--radius-full);cursor:pointer;
+  min-height:44px;color:var(--color-text-muted);transition:all .2s ease;
+}
+.lang-btn.active{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm);font-weight:700;}
+.theme-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:grid;place-items:center;width:44px;
+}
+.menu-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:none;place-items:center;width:44px;padding:10px;color:var(--color-text);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:1rem 1.6rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:700;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{box-shadow:var(--shadow-lg);}
+.btn-secondary{border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);}
+
+.page-hero{padding:clamp(3rem,6vw,5rem) 0 var(--space-12);text-align:center;}
+.page-hero .eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-primary);background:var(--color-primary-highlight);
+  padding:.5rem 1rem;border-radius:var(--radius-full);margin-bottom:var(--space-5);
+}
+.page-hero h1{
+  font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.04;
+  max-width:20ch;margin:0 auto var(--space-5);letter-spacing:-.01em;
+}
+.page-hero p.hero-copy{color:var(--color-text-muted);margin:0 auto var(--space-6);font-size:var(--text-lg);line-height:1.5;max-width:60ch;}
+
+.section{padding:var(--space-16) 0;}
+.section-head{text-align:center;margin-bottom:var(--space-12);max-width:62ch;margin-inline:auto;}
+.section-head h2{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--space-3);}
+.section-head p{color:var(--color-text-muted);font-size:var(--text-sm);}
+
+.card-grid{display:grid;gap:var(--space-6);}
+.card-grid.cols-2{grid-template-columns:repeat(2,1fr);}
+.card-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+.card-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+
+.feature-card{
+  position:relative;background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-4);
+}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.feature-card[data-color="green"]{--card-color:var(--color-primary);}
+.feature-card[data-color="blue"]{--card-color:#3aa6ff;}
+.feature-card[data-color="amber"]{--card-color:#f5a623;}
+.feature-card[data-color="purple"]{--card-color:#9b59b6;}
+.feature-icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,color-mix(in oklab,var(--card-color) 100%,white),color-mix(in oklab,var(--card-color) 70%,white));
+  color:#fff;box-shadow:0 10px 24px color-mix(in oklab,var(--card-color) 40%,transparent);
+}
+.feature-icon svg{width:26px;height:26px;stroke:currentColor;stroke-width:2;fill:none;}
+.feature-card h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;line-height:1.2;}
+.feature-card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.55;}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);align-items:stretch;}
+.pricing-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-10) var(--space-8);
+  box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:var(--space-5);
+  position:relative;transition:transform .25s ease,box-shadow .25s ease;
+}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.pricing-card.featured{
+  border-color:var(--color-primary);
+  box-shadow:0 20px 50px rgba(45,170,88,.2);
+}
+.pricing-card .badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);font-size:var(--text-xs);font-weight:700;
+  padding:.35rem 1rem;border-radius:var(--radius-full);text-transform:uppercase;letter-spacing:.05em;
+}
+.pricing-card h3{font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;}
+.pricing-price{display:flex;align-items:baseline;gap:.5rem;}
+.pricing-price .amount{font-family:var(--font-display);font-size:clamp(2rem,1.5rem+2vw,3rem);font-weight:700;color:var(--color-text);line-height:1;}
+.pricing-price .period{color:var(--color-text-muted);font-size:var(--text-sm);}
+.pricing-desc{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.5;}
+.pricing-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.pricing-features li{display:flex;align-items:flex-start;gap:.6rem;font-size:var(--text-sm);color:var(--color-text);}
+.pricing-features li::before{content:"\2713";color:var(--color-primary);font-weight:700;flex-shrink:0;margin-top:1px;}
+.pricing-card .btn{margin-top:auto;width:100%;}
+
+.compare-wrap{overflow-x:auto;border-radius:var(--radius-xl);border:1px solid var(--color-border);box-shadow:var(--shadow-sm);}
+.compare-table{width:100%;border-collapse:collapse;font-size:var(--text-sm);}
+.compare-table th, .compare-table td{padding:1rem 1.25rem;text-align:left;border-bottom:1px solid var(--color-divider);}
+.compare-table th{font-family:var(--font-display);font-weight:700;background:var(--color-surface-2);font-size:var(--text-base);}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table td:first-child{color:var(--color-text-muted);font-weight:500;}
+.compare-table .check{color:var(--color-primary);font-weight:700;}
+.compare-table .dash{color:var(--color-text-faint);}
+.compare-table .plan-col{text-align:center;}
+.compare-table th.plan-col{color:var(--color-primary);}
+
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);}
+.faq-item{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-6);
+  box-shadow:var(--shadow-sm);
+}
+.faq-item h4{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);color:var(--color-text);}
+.faq-item p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+.form-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-10);box-shadow:var(--shadow-md);max-width:640px;margin:0 auto;}
+.form-group{margin-bottom:var(--space-5);}
+.form-group label{display:block;font-size:var(--text-sm);font-weight:600;margin-bottom:var(--space-2);color:var(--color-text);}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;padding:.85rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:var(--text-sm);font-family:inherit;background:var(--color-surface);color:var(--color-text);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{outline:none;border-color:var(--color-primary);box-shadow:0 0 0 3px color-mix(in oklab,var(--color-primary) 15%,transparent);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
+.form-success{display:none;text-align:center;padding:var(--space-10);}
+.form-success h3{font-family:var(--font-display);font-size:var(--text-xl);color:var(--color-primary);margin-bottom:var(--space-4);}
+.form-success p{color:var(--color-text-muted);}
+
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-8);}
+.step-item{text-align:center;position:relative;}
+.step-number{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);font-family:var(--font-display);font-size:1.8rem;font-weight:700;
+  display:grid;place-items:center;margin:0 auto var(--space-5);
+  box-shadow:var(--shadow-md);
+}
+.step-item h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);}
+.step-item p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+.cta-section{padding:var(--space-20) 0;text-align:center;}
+.cta-card{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 50%,var(--color-accent)));
+  border-radius:var(--radius-xl);padding:var(--space-16) var(--space-10);
+  color:var(--color-text-inverse);box-shadow:var(--shadow-lg);
+}
+.cta-card h2{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--space-4);}
+.cta-card p{font-size:var(--text-base);opacity:.9;margin-bottom:var(--space-8);max-width:50ch;margin-inline:auto;}
+.cta-card .btn-primary{background:var(--color-text-inverse);color:var(--color-primary);}
+.cta-card .btn-primary:hover{background:#fff;}
+
+/* Demo chat */
+.demo-chat-section{padding:var(--space-16) 0;}
+.demo-chat-wrap{
+  max-width:900px;margin:0 auto;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:24px;box-shadow:var(--shadow-lg);overflow:hidden;
+}
+.demo-chat-header{
+  display:flex;align-items:center;gap:.75rem;padding:1.25rem 1.5rem;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);
+}
+.demo-chat-avatar{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;flex-shrink:0;}
+.demo-chat-avatar svg{width:24px;height:24px;stroke:#fff;stroke-width:2;fill:none;}
+.demo-chat-meta{display:flex;flex-direction:column;line-height:1.2;}
+.demo-chat-meta strong{font-size:var(--text-base);}
+.demo-chat-meta span{font-size:var(--text-xs);opacity:.85;display:flex;align-items:center;gap:.35rem;}
+.demo-chat-meta .online{width:8px;height:8px;border-radius:50%;background:#b7ffb7;box-shadow:0 0 6px #b7ffb7;}
+.demo-chat-body{padding:1.5rem;min-height:400px;display:flex;flex-direction:column;gap:.7rem;background:var(--color-surface-2);}
+.demo-msg{max-width:80%;padding:.75rem 1rem;border-radius:18px;font-size:var(--text-sm);line-height:1.5;animation:msgIn .35s ease both;}
+.demo-msg.bot{align-self:flex-start;background:var(--color-surface);border:1px solid var(--color-border);border-bottom-left-radius:6px;}
+.demo-msg.user{align-self:flex-end;background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 70%,var(--color-accent)));color:var(--color-text-inverse);border-bottom-right-radius:6px;}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.demo-typing{
+  align-self:flex-start;display:flex;gap:.3rem;padding:.75rem 1rem;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:18px;border-bottom-left-radius:6px;
+}
+.demo-typing span{width:8px;height:8px;border-radius:50%;background:var(--color-text-faint);animation:demoTyping 1.3s infinite;}
+.demo-typing span:nth-child(2){animation-delay:.2s;}
+.demo-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes demoTyping{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-5px);opacity:1;}}
+.demo-chat-footer{display:flex;align-items:center;gap:.6rem;padding:1rem 1.25rem;border-top:1px solid var(--color-divider);background:var(--color-surface);}
+.demo-chat-input{
+  flex:1;font-size:var(--text-sm);color:var(--color-text-faint);
+  padding:.75rem 1rem;background:var(--color-surface-offset);
+  border:1px solid var(--color-border);border-radius:var(--radius-full);
+  cursor:pointer;transition:all .2s ease;
+}
+.demo-chat-input:hover{border-color:var(--color-primary);color:var(--color-text-muted);}
+.demo-chat-send{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--color-primary);color:#fff;flex-shrink:0;cursor:pointer;transition:transform .15s ease;}
+.demo-chat-send:hover{transform:scale(1.05);}
+.demo-chat-send svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;}
+
+.usecase-tabs{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;margin-top:var(--space-8);}
+.usecase-tab{
+  display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.25rem;
+  border-radius:var(--radius-full);cursor:pointer;font-size:var(--text-sm);font-weight:600;
+  background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-muted);
+  transition:all .2s ease;
+}
+.usecase-tab:hover{border-color:var(--color-primary);color:var(--color-primary);}
+.usecase-tab.active{background:var(--color-primary);color:var(--color-text-inverse);border-color:var(--color-primary);}
+.usecase-tab svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;}
+
+/* Login page */
+.login-wrap{min-height:calc(100vh - 200px);display:grid;place-items:center;padding:var(--space-16) 0;}
+.login-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-12) var(--space-10);
+  box-shadow:var(--shadow-lg);width:100%;max-width:440px;text-align:center;
+}
+.login-card .brand-icon{width:60px;height:60px;margin:0 auto var(--space-6);border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));}
+.login-card .brand-icon svg{width:30px;height:30px;stroke:#fff;stroke-width:2;fill:none;}
+.login-card h2{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--space-3);}
+.login-card p.sub{color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-8);}
+.login-card .form-group{text-align:left;}
+.login-card .btn{width:100%;margin-top:var(--space-4);}
+.login-notice{
+  margin-top:var(--space-8);padding:var(--space-5);
+  background:var(--color-primary-highlight);border-radius:var(--radius-md);
+  font-size:var(--text-xs);color:var(--color-text-muted);
+}
+.login-notice strong{color:var(--color-primary);}
+.login-footer-links{margin-top:var(--space-6);font-size:var(--text-sm);color:var(--color-text-muted);}
+.login-footer-links a{color:var(--color-primary);font-weight:600;}
+
+/* Pricing toggle */
+.pricing-toggle-wrap{display:flex;align-items:center;justify-content:center;gap:var(--space-4);margin-bottom:var(--space-10);}
+.pricing-toggle-wrap span{font-size:var(--text-sm);color:var(--color-text-muted);}
+.pricing-toggle-wrap span.active{color:var(--color-primary);font-weight:700;}
+
+/* Chatbot widget */
+#nx-chatbot-bubble {
+  position: fixed;bottom: 24px;right: 24px;width: 60px;height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  cursor: pointer;display: flex;align-items: center;justify-content: center;
+  z-index: 99999;transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-body);border: none;
+}
+#nx-chatbot-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent); }
+#nx-chatbot-bubble svg { width: 28px;height: 28px;color: white;}
+#nx-chatbot-window {
+  position: fixed;bottom: 96px;right: 24px;width: 380px;height: 560px;
+  max-height: calc(100vh - 120px);background: var(--color-surface);
+  border-radius: 16px;border: 1px solid var(--color-border);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);display: none;flex-direction: column;
+  overflow: hidden;z-index: 99999;font-family: var(--font-body);
+  animation: nxSlideUp 0.3s ease;
+}
+#nx-chatbot-window.open { display: flex; }
+@keyframes nxSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.nx-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  color: var(--color-text-inverse);display: flex;align-items: center;justify-content: space-between;
+}
+.nx-chat-header-title { font-weight: 600;font-size: 15px;display: flex;align-items: center;gap: 8px;}
+.nx-chat-header-status { width: 8px;height: 8px;background: #b7ffb7;border-radius: 50%;animation: nxPulse 2s infinite;}
+@keyframes nxPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); } 50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); } }
+.nx-chat-close { background: none;border: none;color: white;font-size: 20px;cursor: pointer;padding: 0 4px;opacity: 0.85;line-height: 1;width: 28px;height: 28px;display: grid;place-items: center;border-radius: 50%;}
+.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+.nx-chat-messages { flex: 1;overflow-y: auto;padding: 16px;background: var(--color-surface-2);display: flex;flex-direction: column;gap: 10px;}
+.nx-chat-messages::-webkit-scrollbar { width: 6px; }
+.nx-chat-messages::-webkit-scrollbar-thumb { background: var(--color-border);border-radius: 3px;}
+.nx-msg { max-width: 85%;padding: 10px 14px;border-radius: 14px;font-size: 14px;line-height: 1.5;word-wrap: break-word;animation: nxMsgIn 0.3s ease both;}
+@keyframes nxMsgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.nx-msg.bot { background: var(--color-surface);color: var(--color-text);border: 1px solid var(--color-border);border-bottom-left-radius: 4px;align-self: flex-start;}
+.nx-msg.user {
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
+  color: var(--color-text-inverse);border-bottom-right-radius: 4px;align-self: flex-end;}
+.nx-typing {
+  display: flex;gap: 4px;padding: 10px 14px;background: var(--color-surface);
+  border: 1px solid var(--color-border);border-radius: 14px;border-bottom-left-radius: 4px;
+  align-self: flex-start;width: fit-content;
+}
+.nx-typing span { width: 7px;height: 7px;background: var(--color-text-faint);border-radius: 50%;animation: nxTyping 1.3s infinite;}
+.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nxTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+.nx-chat-input-area { padding: 12px 16px;background: var(--color-surface);border-top: 1px solid var(--color-divider);display: flex;gap: 8px;}
+.nx-chat-input {
+  flex: 1;padding: 10px 14px;border: 1px solid var(--color-border);border-radius: 20px;font-size: 14px;outline: none;font-family: inherit;background: var(--color-surface);color: var(--color-text);transition: border-color 0.2s;}
+.nx-chat-input:focus { border-color: var(--color-primary); }
+.nx-chat-input::placeholder { color: var(--color-text-faint); }
+.nx-chat-send {
+  width: 40px;height: 40px;border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  border: none;cursor: pointer;display: flex;align-items: center;justify-content: center;color: white;
+  transition: opacity 0.2s, transform 0.15s;flex-shrink: 0;
+}
+.nx-chat-send:hover { transform: scale(1.05); }
+.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nx-chat-send svg { width: 18px; height: 18px; }
+.nx-powered { text-align: center;font-size: 11px;color: var(--color-text-faint);padding: 6px;background: var(--color-surface);border-top: 1px solid var(--color-divider);}
+.nx-powered a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+
+/* Footer */
+.site-footer{background:var(--color-surface);border-top:1px solid var(--color-border);margin-top:var(--space-20);}
+.footer-main{padding:var(--space-16) 0 var(--space-10);}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);}
+.footer-brand .brand{margin-bottom:var(--space-4);}
+.footer-brand p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;max-width:28ch;}
+.footer-col h5{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-faint);margin-bottom:var(--space-4);}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-col li a{font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;}
+.footer-col li a:hover{color:var(--color-primary);}
+.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
+.footer-social a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--color-surface-offset);color:var(--color-text-muted);transition:all .2s ease;}
+.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
+.footer-social svg{width:18px;height:18px;fill:currentColor;}
+.footer-bottom{border-top:1px solid var(--color-divider);padding:var(--space-5) 0;}
+.footer-bottom-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
+@media (max-width:980px){
+  .menu-btn{display:grid;}
+  .nav{display:none;position:absolute;top:100%;left:0;width:100%;background:var(--color-surface);border-bottom:1px solid var(--color-border);flex-direction:column;padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-md);gap:var(--space-4);z-index:50;}
+  .nav.open{display:flex;}
+  .card-grid.cols-2,.card-grid.cols-3,.card-grid.cols-4{grid-template-columns:1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .steps-grid{grid-template-columns:1fr;}
+  .faq-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8);}
+  .form-row{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  .header-inner{flex-direction:column;align-items:stretch;}
+  .actions{width:100%;justify-content:space-between;margin-top:var(--space-3);}
+  .lang-switcher{padding:.15rem;}
+  .lang-btn{padding:.4rem .6rem;min-height:38px;}
+  .theme-btn,.menu-btn{min-height:38px;width:38px;}
+  .btn{min-height:44px;padding:.8rem 1.2rem;}
+  .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
+  .footer-bottom-inner{flex-direction:column;text-align:center;}
+  .form-card{padding:var(--space-6);}
+  .login-card{padding:var(--space-8) var(--space-6);}
+  .cta-card{padding:var(--space-10) var(--space-6);}
+  #nx-chatbot-window{width:calc(100vw - 32px);right:16px;left:16px;height:70vh;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
+}
+'''
+
+print("Part 1 done")
+
+
+# ============================================================
+# Header HTML
+# ============================================================
+def header_html(active_page='home'):
+    nav_items = [
+        ('index.html', 'navHome', 'Home', 'home'),
+        ('solutions-restaurants.html', 'navSolutions', 'Solutions', 'solutions'),
+        ('demo.html', 'navDemo', 'See It in Action', 'demo'),
+        ('pricing-subscription.html', 'navPricing', 'Service Model', 'pricing'),
+        ('about.html', 'navAbout', 'About', 'about'),
+        ('pilot-apply.html', 'navPilot', 'Pilot', 'pilot'),
+        ('contact.html', 'navContact', 'Contact', 'contact'),
+    ]
+    nav_links = ''
+    for href, key, default, page_id in nav_items:
+        active_class = ' active' if active_page == page_id else ''
+        nav_links += f'      <a href="{href}" data-i18n="{key}" class="{active_class.strip()}">{default}</a>\n'
+    
+    return f'''
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+    </a>
+    <nav class="nav" id="site-nav">
+{nav_links}    </nav>
+    <div class="actions">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">&#9790;</button>
+      <button class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false">&#8801;</button>
+    </div>
+  </div>
+</header>
+'''
+
+# ============================================================
+# Footer HTML
+# ============================================================
+FOOTER_HTML = '''
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+        </a>
+        <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerProduct">Product</h5>
+        <ul>
+          <li><a href="solutions-restaurants.html" data-i18n="footerSolutions">Industry Solutions</a></li>
+          <li><a href="demo.html" data-i18n="footerDemo">See It in Action</a></li>
+          <li><a href="pricing-subscription.html" data-i18n="footerPricing">Pricing</a></li>
+          <li><a href="pilot-apply.html" data-i18n="footerPilot">Pilot Program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerCompany">Company</h5>
+        <ul>
+          <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
+          <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
+          <li><a href="login.html" data-i18n="footerSignin">Sign In</a></li>
+          <li><a href="pilot-apply.html" data-i18n="footerSignup">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerLegal">Legal</h5>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</footer>
+'''
+
+# ============================================================
+# Chatbot Widget HTML
+# ============================================================
+CHATBOT_HTML = '''
+<button id="nx-chatbot-bubble" aria-label="Open chat">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</button>
+
+<div id="nx-chatbot-window">
+  <div class="nx-chat-header">
+    <div class="nx-chat-header-title">
+      <span class="nx-chat-header-status"></span>
+      Nexify AI Assistant
+    </div>
+    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="nx-chat-messages" id="nx-chat-messages"></div>
+  <div class="nx-chat-input-area">
+    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message..." autocomplete="off" />
+    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
+  <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
+</div>
+'''
+
+print("Part 2 done")
+
+
+# ============================================================
+# i18n Translations (EN/NL/FR)
+# ============================================================
+I18N = {
+    'en': {
+        # Nav
+        'navHome': 'Home',
+        'navSolutions': 'Solutions',
+        'navDemo': 'See It in Action',
+        'navPricing': 'Service Model',
+        'navAbout': 'About',
+        'navPilot': 'Pilot',
+        'navContact': 'Contact',
+        # Footer
+        'footerTagline': '24/7 AI customer service for European SMEs.',
+        'footerProduct': 'Product',
+        'footerSolutions': 'Industry Solutions',
+        'footerDemo': 'See It in Action',
+        'footerPricing': 'Pricing',
+        'footerPilot': 'Pilot Program',
+        'footerCompany': 'Company',
+        'footerAbout': 'About Us',
+        'footerContact': 'Contact',
+        'footerSignin': 'Sign In',
+        'footerSignup': 'Sign Up',
+        'footerLegal': 'Legal',
+        'footerPrivacy': 'Privacy Policy',
+        'footerTerms': 'Terms of Service',
+        # Common
+        'ctaPilot': 'Apply for Pilot',
+        'startPilot': 'Start with Pilot',
+        'getStarted': 'Get Started',
+        'contactUs': 'Contact Us',
+        'learnMore': 'Learn More',
+        # Demo page
+        'demoEyebrow': 'Live Demo',
+        'demoTitle': 'See It in Action',
+        'demoSubtitle': 'Try our AI assistant right now \u2014 no sign up needed.',
+        'demoChatPlaceholder': 'Click to start chatting...',
+        'demoFeaturesTitle': 'What Our AI Can Do',
+        'demoFeaturesSub': 'Four core capabilities that make Nexify AI different from basic chatbots.',
+        'demoFeat1Title': '30+ Languages',
+        'demoFeat1Desc': 'Native-level fluency with automatic language detection. Your customers always get a reply in their mother tongue.',
+        'demoFeat2Title': 'Smart Lead Capture',
+        'demoFeat2Desc': 'Conversational qualification that feels natural, not like filling out a form. High-quality leads delivered to your inbox.',
+        'demoFeat3Title': '24/7 Availability',
+        'demoFeat3Desc': 'Never miss a customer inquiry again. Weekends, holidays, after hours \u2014 the AI is always on, always consistent.',
+        'demoFeat4Title': 'Instant Response',
+        'demoFeat4Desc': 'Average response time under 2 seconds. No wait times, no hold music, no frustrated customers.',
+        'demoUsecaseTitle': 'Try a Use Case',
+        'demoUsecaseSub': 'Click a scenario below to see the AI in action for your industry.',
+        'demoUsecaseRestaurant': 'Restaurant Booking',
+        'demoUsecaseClinic': 'Medical Appointment',
+        'demoUsecaseLaw': 'Legal Intake',
+        'demoCtaTitle': 'Ready for your business?',
+        'demoCtaSub': 'Join our pilot program and see the impact firsthand. Limited spots available.',
+        # Pricing Subscription
+        'subEyebrow': 'Subscription Pricing',
+        'subTitle': 'Simple, predictable pricing.',
+        'subSubtitle': 'Fixed monthly plans that scale with your business. No surprises, no hidden fees.',
+        'subStarterName': 'Starter',
+        'subStarterPrice': '\u20ac199',
+        'subStarterPeriod': '/month',
+        'subStarterDesc': 'Perfect for small businesses getting started with AI customer service.',
+        'subGrowthName': 'Growth',
+        'subGrowthPrice': '\u20ac399',
+        'subGrowthPeriod': '/month',
+        'subGrowthDesc': 'Complete solution for growing businesses with higher conversation volume.',
+        'subGrowthBadge': 'Most Popular',
+        'subEnterpriseName': 'Enterprise',
+        'subEnterprisePrice': 'Custom',
+        'subEnterprisePeriod': 'contact us',
+        'subEnterpriseDesc': 'Tailored solutions for large organizations with complex needs.',
+        'subCompareTitle': 'Feature Comparison',
+        'subCompareSub': 'Everything included in every plan \u2014 no hidden add-ons or surprise charges.',
+        'subFaqTitle': 'Frequently Asked Questions',
+        'subFaqSub': 'Everything you need to know about our subscription plans.',
+        'subCtaTitle': 'Not sure which plan is right for you?',
+        'subCtaSub': 'Start with our pilot program and find the perfect fit for your business.',
+        # Pricing PAYG
+        'paygEyebrow': 'Pay As You Use',
+        'paygTitle': 'Only pay for what you use.',
+        'paygSubtitle': 'Flexible pricing that scales up and down with your actual conversation volume.',
+        'paygHowTitle': 'How It Works',
+        'paygHowSub': 'Simple three-step process to get started with usage-based pricing.',
+        'paygStep1Title': 'Connect Your Channels',
+        'paygStep1Desc': 'Add the AI chat widget to your website, connect your phone line, or set up email forwarding.',
+        'paygStep2Title': 'AI Handles Conversations',
+        'paygStep2Desc': 'The AI responds to customer inquiries instantly, 24/7, in any language.',
+        'paygStep3Title': 'Monthly Billing',
+        'paygStep3Desc': 'You only pay for conversations actually handled. Get a detailed invoice at the end of each month.',
+        'paygPricingTitle': 'Transparent Pricing',
+        'paygPricingSub': 'Pay only for what you use, with volume discounts built in.',
+        'paygCompareTitle': 'Subscription vs. Pay-as-you-use',
+        'paygCompareSub': 'Not sure which model is right for you? Here\u2019s a quick comparison.',
+        'paygUsecaseTitle': 'When to Choose PAYG',
+        'paygUsecaseSub': 'Usage-based pricing works best for businesses with variable demand.',
+        'paygFaqTitle': 'Frequently Asked Questions',
+        'paygFaqSub': 'Answers to common questions about usage-based pricing.',
+        'paygCtaTitle': 'Want flexible pricing for your business?',
+        'paygCtaSub': 'Start with our pilot program to test the waters before committing.',
+        # Pricing Custom
+        'customEyebrow': 'Custom Solutions',
+        'customTitle': 'Tailored AI for your business.',
+        'customSubtitle': 'Need something beyond our standard plans? We build bespoke AI solutions for unique requirements.',
+        'customWhenTitle': 'When to Choose Custom',
+        'customWhenSub': 'Our custom solutions are designed for organizations with specific needs that go beyond standard offerings.',
+        'customFeaturesTitle': 'What Custom Can Include',
+        'customFeaturesSub': 'Every custom solution is unique, but here are some common capabilities we build.',
+        'customFormTitle': 'Tell Us About Your Needs',
+        'customFormSub': 'Fill out the form below and our team will get back to you within 24 hours with a tailored proposal.',
+        'customFaqTitle': 'Frequently Asked Questions',
+        'customFaqSub': 'Answers to common questions about custom solutions.',
+        'customCtaTitle': 'Ready to build something custom?',
+        'customCtaSub': 'Tell us about your needs and we\u2019ll craft a solution just for you.',
+        # Login page
+        'loginTitle': 'Sign In',
+        'loginSubtitle': 'Access your Nexify AI dashboard.',
+        'loginEmail': 'Email',
+        'loginPassword': 'Password',
+        'loginBtn': 'Sign In',
+        'loginNoticeTitle': 'Dashboard coming soon',
+        'loginNotice': 'We\u2019re building the customer dashboard. <strong>Contact us for early access.</strong>',
+        'loginContact': 'Contact support',
+        'loginBack': 'Back to home',
+    },
+    'nl': {
+        'navHome': 'Home',
+        'navSolutions': 'Oplossingen',
+        'navDemo': 'Probeer het',
+        'navPricing': 'Servicemodel',
+        'navAbout': 'Over ons',
+        'navPilot': 'Pilot',
+        'navContact': 'Contact',
+        'footerTagline': '24/7 AI-klantenservice voor Europees MKB.',
+        'footerProduct': 'Product',
+        'footerSolutions': 'Branche-oplossingen',
+        'footerDemo': 'Probeer het',
+        'footerPricing': 'Prijzen',
+        'footerPilot': 'Pilotprogramma',
+        'footerCompany': 'Bedrijf',
+        'footerAbout': 'Over ons',
+        'footerContact': 'Contact',
+        'footerSignin': 'Inloggen',
+        'footerSignup': 'Aanmelden',
+        'footerLegal': 'Juridisch',
+        'footerPrivacy': 'Privacybeleid',
+        'footerTerms': 'Servicevoorwaarden',
+        'ctaPilot': 'Aanmelden voor Pilot',
+        'startPilot': 'Start met Pilot',
+        'getStarted': 'Nu Beginnen',
+        'contactUs': 'Neem Contact Op',
+        'learnMore': 'Meer Weten',
+        'demoEyebrow': 'Live Demo',
+        'demoTitle': 'Zie het in actie',
+        'demoSubtitle': 'Probeer onze AI-assistent nu direct \u2014 geen registratie nodig.',
+        'demoChatPlaceholder': 'Klik om te beginnen chatten...',
+        'demoFeaturesTitle': 'Wat onze AI kan doen',
+        'demoFeaturesSub': 'Vier kernvaardigheden die Nexify AI onderscheiden van standaard chatbots.',
+        'demoFeat1Title': '30+ Talen',
+        'demoFeat1Desc': 'Moedertaalniveau vloeiendheid met automatische taaldetectie. Uw klanten krijgen altijd een antwoord in hun eigen taal.',
+        'demoFeat2Title': 'Slimme Leadverzameling',
+        'demoFeat2Desc': 'Gespreksmatige kwalificatie die natuurlijk aanvoelt, niet als een formulier invullen. Kwalitatieve leads in uw inbox.',
+        'demoFeat3Title': '24/7 Beschikbaar',
+        'demoFeat3Desc': 'Mis nooit meer een klantvraag. Weekenden, feestdagen, buiten kantoortijden \u2014 de AI is altijd aan, altijd consistent.',
+        'demoFeat4Title': 'Direct Antwoord',
+        'demoFeat4Desc': 'Gemiddelde reactietijd onder 2 seconden. Geen wachttijden, geen wachtmuziek, geen gefrustreerde klanten.',
+        'demoUsecaseTitle': 'Probeer een Gebruikssituatie',
+        'demoUsecaseSub': 'Klik op een scenario hieronder om de AI in actie te zien voor uw branche.',
+        'demoUsecaseRestaurant': 'Restaurant Reservering',
+        'demoUsecaseClinic': 'Medische Afspraak',
+        'demoUsecaseLaw': 'Juridische Intake',
+        'demoCtaTitle': 'Klaar voor uw bedrijf?',
+        'demoCtaSub': 'Doe mee met ons pilotprogramma en ervaar het verschil zelf. Limited spots available.',
+        'subEyebrow': 'Abonnement Prijzen',
+        'subTitle': 'Simpele, voorspelbare prijzen.',
+        'subSubtitle': 'Vaste maandelijkse plannen die meegroeien met uw bedrijf. Geen verrassingen, geen verborgen kosten.',
+        'subStarterName': 'Starter',
+        'subStarterPrice': '\u20ac199',
+        'subStarterPeriod': '/maand',
+        'subStarterDesc': 'Perfect voor kleine bedrijven die beginnen met AI-klantenservice.',
+        'subGrowthName': 'Growth',
+        'subGrowthPrice': '\u20ac399',
+        'subGrowthPeriod': '/maand',
+        'subGrowthDesc': 'Complete oplossing voor groeiende bedrijven met hoger gespreksvolume.',
+        'subGrowthBadge': 'Meest Populair',
+        'subEnterpriseName': 'Enterprise',
+        'subEnterprisePrice': 'Maatwerk',
+        'subEnterprisePeriod': 'neem contact op',
+        'subEnterpriseDesc': 'Oplossingen op maat voor grote organisaties met complexe behoeften.',
+        'subCompareTitle': 'Functie Vergelijking',
+        'subCompareSub': 'Alles is inbegrepen in elk plan \u2014 geen verborgen toeslagen of onverwachte kosten.',
+        'subFaqTitle': 'Veelgestelde Vragen',
+        'subFaqSub': 'Alles wat je moet weten over onze abonnementsvormen.',
+        'subCtaTitle': 'Weet je niet welk plan bij je past?',
+        'subCtaSub': 'Begin met ons pilotprogramma en vind de perfecte match voor jouw bedrijf.',
+        'paygEyebrow': 'Betalen naar Gebruik',
+        'paygTitle': 'Alleen betalen voor wat je gebruikt.',
+        'paygSubtitle': 'Flexibele prijzen die meebewegen met je werkelijke gespreksvolume.',
+        'paygHowTitle': 'Hoe Het Werkt',
+        'paygHowSub': 'Eenvoudig drie-stappenplan om te beginnen met gebruikersgebaseerde prijzen.',
+        'paygStep1Title': 'Verbind Je Kanalen',
+        'paygStep1Desc': 'Voeg de AI-chat widget toe aan je website, verbind je telefoonlijn, of stel e-maildoorsturing in.',
+        'paygStep2Title': 'AI Verzorgt Gesprekken',
+        'paygStep2Desc': 'De AI beantwoordt klantvragen direct, 24/7, in elke taal.',
+        'paygStep3Title': 'Maandelijkse Facturatie',
+        'paygStep3Desc': 'Je betaalt alleen voor daadwerkelijk afgehandelde gesprekken. Ontvang een gedetailleerde factuur aan het eind van elke maand.',
+        'paygPricingTitle': 'Transparante Prijzen',
+        'paygPricingSub': 'Betaal alleen voor wat je gebruikt, met volumekorting ingebouwd.',
+        'paygCompareTitle': 'Abonnement vs. Betalen-naar-gebruik',
+        'paygCompareSub': 'Weet je niet welk model bij je past? Hier is een snelle vergelijking.',
+        'paygUsecaseTitle': 'Wanneer Kiezen voor PAYG',
+        'paygUsecaseSub': 'Gebruiksgebaseerde prijzen werken het beste voor bedrijven met wisselende vraag.',
+        'paygFaqTitle': 'Veelgestelde Vragen',
+        'paygFaqSub': 'Antwoorden op veelgestelde vragen over gebruikersgebaseerde prijzen.',
+        'paygCtaTitle': 'Flexibele prijzen voor jouw bedrijf?',
+        'paygCtaSub': 'Begin met ons pilotprogramma om de wateren te testen voor je je vastlegt.',
+        'customEyebrow': 'Maatwerk Oplossingen',
+        'customTitle': 'AI op maat voor jouw bedrijf.',
+        'customSubtitle': 'Meer nodig dan onze standaard plannen? We bouwen AI-oplossingen op maat voor unieke vereisten.',
+        'customWhenTitle': 'Wanneer Kiezen voor Maatwerk',
+        'customWhenSub': 'Onze maatwerkoplossingen zijn ontworpen voor organisaties met specifieke behoeften die verder gaan dan standaard aanbiedingen.',
+        'customFeaturesTitle': 'Wat Maatwerk Kan Inhouden',
+        'customFeaturesSub': 'Elke maatwerkoplossing is uniek, maar dit zijn veelvoorkomende mogelijkheden die we bouwen.',
+        'customFormTitle': 'Vertel Ons Over Je Behoeften',
+        'customFormSub': 'Vul het formulier hieronder in en ons team neemt binnen 24 uur contact met je op met een voorstel op maat.',
+        'customFaqTitle': 'Veelgestelde Vragen',
+        'customFaqSub': 'Antwoorden op veelgestelde vragen over maatwerkoplossingen.',
+        'customCtaTitle': 'Klaar om iets op maat te bouwen?',
+        'customCtaSub': 'Vertel ons over je behoeften en we maken een oplossing speciaal voor jou.',
+        'loginTitle': 'Inloggen',
+        'loginSubtitle': 'Toegang tot je Nexify AI dashboard.',
+        'loginEmail': 'E-mail',
+        'loginPassword': 'Wachtwoord',
+        'loginBtn': 'Inloggen',
+        'loginNoticeTitle': 'Dashboard komt eraan',
+        'loginNotice': 'We zijn het klantdashboard aan het bouwen. <strong>Neem contact op voor vroege toegang.</strong>',
+        'loginContact': 'Contact opnemen',
+        'loginBack': 'Terug naar home',
+    },
+    'fr': {
+        'navHome': 'Accueil',
+        'navSolutions': 'Solutions',
+        'navDemo': 'Essayez-le',
+        'navPricing': 'Mod\xe8le de service',
+        'navAbout': '\xc0 propos',
+        'navPilot': 'Pilote',
+        'navContact': 'Contact',
+        'footerTagline': 'Service client IA 24h/24 pour les PME europ\xe9ennes.',
+        'footerProduct': 'Produit',
+        'footerSolutions': 'Solutions secteur',
+        'footerDemo': 'Essayez-le',
+        'footerPricing': 'Tarifs',
+        'footerPilot': 'Programme Pilote',
+        'footerCompany': 'Entreprise',
+        'footerAbout': '\xc0 propos',
+        'footerContact': 'Contact',
+        'footerSignin': 'Connexion',
+        'footerSignup': "S'inscrire",
+        'footerLegal': 'Juridique',
+        'footerPrivacy': 'Politique de confidentialit\xe9',
+        'footerTerms': "Conditions d'utilisation",
+        'ctaPilot': 'Postuler au Pilote',
+        'startPilot': 'Commencer avec le Pilote',
+        'getStarted': 'Commencer',
+        'contactUs': 'Nous Contacter',
+        'learnMore': 'En Savoir Plus',
+        'demoEyebrow': 'D\xe9mo en direct',
+        'demoTitle': 'Voir en action',
+        'demoSubtitle': 'Essayez notre assistant IA d\xe8s maintenant \u2014 aucune inscription n\xe9cessaire.',
+        'demoChatPlaceholder': 'Cliquez pour commencer \xe0 chatter...',
+        'demoFeaturesTitle': "Ce que notre IA peut faire",
+        'demoFeaturesSub': "Quatre capacit\xe9s cl\xe9s qui diff\xe9rencient Nexify AI des chatbots de base.",
+        'demoFeat1Title': '30+ Langues',
+        'demoFeat1Desc': "Une fluidit\xe9 de niveau natif avec d\xe9tection automatique de la langue. Vos clients re\xe7oivent toujours une r\xe9ponse dans leur langue maternelle.",
+        'demoFeat2Title': 'Capture de Leads Intelligente',
+        'demoFeat2Desc': "Une qualification conversationnelle qui semble naturelle, pas comme remplir un formulaire. Des leads de qualit\xe9 livr\xe9s dans votre bo\xeete mail.",
+        'demoFeat3Title': 'Disponibilit\xe9 24/7',
+        'demoFeat3Desc': "Ne manquez plus jamais une demande client. Week-ends, jours f\xe9ri\xe9s, hors horaires \u2014 l'IA est toujours en marche, toujours constante.",
+        'demoFeat4Title': 'R\xe9ponse Instantan\xe9e',
+        'demoFeat4Desc': "Temps de r\xe9ponse moyen inf\xe9rieur \xe0 2 secondes. Pas d'attente, pas de musique d'attente, pas de clients frustr\xe9s.",
+        'demoUsecaseTitle': 'Essayez un Cas d\u2019Usage',
+        'demoUsecaseSub': 'Cliquez sur un sc\xe9nario ci-dessous pour voir l\u2019IA en action pour votre secteur.',
+        'demoUsecaseRestaurant': 'R\xe9servation Restaurant',
+        'demoUsecaseClinic': 'Rendez-vous M\xe9dical',
+        'demoUsecaseLaw': 'Consultation Juridique',
+        'demoCtaTitle': 'Pr\xeat pour votre entreprise ?',
+        'demoCtaSub': 'Rejoignez notre programme pilote et constatez l\u2019impact par vous-m\xeame. Places limit\xe9es disponibles.',
+        'subEyebrow': 'Tarifs Abonnement',
+        'subTitle': 'Des tarifs simples et pr\xe9visibles.',
+        'subSubtitle': "Des forfaits mensuels fixes qui \xe9voluent avec votre entreprise. Pas de surprises, pas de frais cach\xe9s.",
+        'subStarterName': 'Starter',
+        'subStarterPrice': '\u20ac199',
+        'subStarterPeriod': '/mois',
+        'subStarterDesc': 'Parfait pour les petites entreprises qui d\xe9couvrent le service client IA.',
+        'subGrowthName': 'Growth',
+        'subGrowthPrice': '\u20ac399',
+        'subGrowthPeriod': '/mois',
+        'subGrowthDesc': 'Solution compl\xe8te pour les entreprises en croissance avec un volume de conversations plus \xe9lev\xe9.',
+        'subGrowthBadge': 'Le Plus Populaire',
+        'subEnterpriseName': 'Entreprise',
+        'subEnterprisePrice': 'Sur mesure',
+        'subEnterprisePeriod': 'contactez-nous',
+        'subEnterpriseDesc': 'Solutions sur mesure pour les grandes organisations aux besoins complexes.',
+        'subCompareTitle': 'Comparaison des Fonctionnalit\xe9s',
+        'subCompareSub': 'Tout est inclus dans chaque formule \u2014 pas d\u2019ajouts cach\xe9s ni de frais surprises.',
+        'subFaqTitle': 'Questions Fr\xe9quentes',
+        'subFaqSub': 'Tout ce que vous devez savoir sur nos formules d\u2019abonnement.',
+        'subCtaTitle': 'Vous ne savez pas quel forfait choisir ?',
+        'subCtaSub': 'Commencez par notre programme pilote et trouvez la formule id\xe9ale pour votre entreprise.',
+        'paygEyebrow': 'Paiement \xe0 l\u2019usage',
+        'paygTitle': 'Ne payez que ce que vous utilisez.',
+        'paygSubtitle': 'Des tarifs flexibles qui augmentent et diminuent selon votre volume de conversations.',
+        'paygHowTitle': 'Comment \xe7a Marche',
+        'paygHowSub': 'Un processus simple en trois \xe9tapes pour commencer avec la tarification \xe0 l\u2019usage.',
+        'paygStep1Title': 'Connectez Vos Canaux',
+        'paygStep1Desc': 'Ajoutez le widget de chat IA \xe0 votre site, connectez votre ligne t\xe9l\xe9phonique, ou configurez le transfert d\u2019e-mails.',
+        'paygStep2Title': "L'IA G\xe8re les Conversations",
+        'paygStep2Desc': "L'IA r\xe9pond aux demandes des clients instantan\xe9ment, 24h/24, dans n'importe quelle langue.",
+        'paygStep3Title': 'Facturation Mensuelle',
+        'paygStep3Desc': "Vous ne payez que pour les conversations r\xe9ellement trait\xe9es. Recevez une facture d\xe9taill\xe9e \xe0 la fin de chaque mois.",
+        'paygPricingTitle': 'Tarification Transparente',
+        'paygPricingSub': 'Ne payez que ce que vous utilisez, avec des r\xe9ductions de volume int\xe9gr\xe9es.',
+        'paygCompareTitle': 'Abonnement vs. Paiement \xe0 l\u2019usage',
+        'paygCompareSub': 'Vous ne savez pas quel mod\xe8le choisir ? Voici une comparaison rapide.',
+        'paygUsecaseTitle': 'Quand Choisir le PAYG',
+        'paygUsecaseSub': 'La tarification \xe0 l\u2019usage convient mieux aux entreprises \xe0 demande variable.',
+        'paygFaqTitle': 'Questions Fr\xe9quentes',
+        'paygFaqSub': 'R\xe9ponses aux questions courantes sur la tarification \xe0 l\u2019usage.',
+        'paygCtaTitle': 'Vous voulez des tarifs flexibles pour votre entreprise ?',
+        'paygCtaSub': 'Commencez par notre programme pilote pour tester avant de vous engager.',
+        'customEyebrow': 'Solutions Sur Mesure',
+        'customTitle': "Une IA adapt\xe9e \xe0 votre entreprise.",
+        'customSubtitle': "Besoin d'autre chose que nos forfaits standards ? Nous construisons des solutions IA sur mesure pour des exigences uniques.",
+        'customWhenTitle': 'Quand Choisir le Sur Mesure',
+        'customWhenSub': "Nos solutions sur mesure sont con\xe7ues pour les organisations ayant des besoins sp\xe9cifiques allant au-del\xe0 des offres standards.",
+        'customFeaturesTitle': 'Ce que Peut Inclure le Sur Mesure',
+        'customFeaturesSub': "Chaque solution sur mesure est unique, mais voici quelques fonctionnalit\xe9s courantes que nous d\xe9veloppons.",
+        'customFormTitle': 'Parlez-Nous de Vos Besoins',
+        'customFormSub': 'Remplissez le formulaire ci-dessous et notre \xe9quipe vous recontactera sous 24 heures avec une proposition sur mesure.',
+        'customFaqTitle': 'Questions Fr\xe9quentes',
+        'customFaqSub': "R\xe9ponses aux questions courantes sur les solutions sur mesure.",
+        'customCtaTitle': 'Pr\xeat \xe0 construire quelque chose sur mesure ?',
+        'customCtaSub': 'Parlez-nous de vos besoins et nous cr\xe9erons une solution rien que pour vous.',
+        'loginTitle': 'Connexion',
+        'loginSubtitle': 'Acc\xe9dez \xe0 votre tableau de bord Nexify AI.',
+        'loginEmail': 'E-mail',
+        'loginPassword': 'Mot de passe',
+        'loginBtn': 'Se connecter',
+        'loginNoticeTitle': 'Tableau de bord bient\xf4t disponible',
+        'loginNotice': "Nous sommes en train de construire le tableau de bord client. <strong>Contactez-nous pour un acc\xe8s anticip\xe9.</strong>",
+        'loginContact': 'Contacter le support',
+        'loginBack': "Retour \xe0 l'accueil",
+    }
+}
+
+print("Part 3 done")
+
+
+# ============================================================
+# Common JavaScript (i18n, theme, chatbot)
+# ============================================================
+COMMON_JS = r'''
+/* ===== i18n + Theme + Nav ===== */
+(function(){
+  const root = document.documentElement;
+  const langButtons = document.querySelectorAll('.lang-btn');
+  const navElement = document.getElementById('site-nav');
+  const menuToggleBtn = document.querySelector('[data-menu-toggle]');
+  const themeBtn = document.querySelector('[data-theme-toggle]');
+  
+  let uiLang; try { uiLang = localStorage.getItem('nexify_lang') || 'en'; } catch(e) { uiLang = 'en'; }
+
+  function setUiLanguage(lang){
+    uiLang = lang;
+    root.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.dataset.i18n;
+      if(copy[lang] && copy[lang][key]) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          if (el.type === 'submit' || el.type === 'button') el.value = copy[lang][key];
+          else el.placeholder = copy[lang][key];
+        } else {
+          // Preserve HTML for certain keys
+          if (key === 'loginNotice' || key.endsWith('Notice')) {
+            el.innerHTML = copy[lang][key];
+          } else {
+            el.textContent = copy[lang][key];
+          }
+        }
+      }
+    });
+    langButtons.forEach(btn=>{
+      const active = btn.dataset.lang === lang;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    try { localStorage.setItem('nexify_lang', lang); } catch(e){}
+  }
+
+  langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+
+  if(menuToggleBtn && navElement) {
+    menuToggleBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const isOpen = navElement.classList.toggle('open');
+      menuToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    navElement.querySelectorAll('a').forEach(link=>link.addEventListener('click', ()=>{
+      navElement.classList.remove('open');
+      menuToggleBtn.setAttribute('aria-expanded','false');
+    }));
+    document.addEventListener('click', ()=>{
+      if(navElement.classList.contains('open')){
+        navElement.classList.remove('open');
+        menuToggleBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+
+  let theme = 'light';
+  try {
+    const saved = localStorage.getItem('nexify_theme');
+    if (saved) theme = saved;
+    else if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+  } catch(e) {}
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    if(themeBtn) themeBtn.textContent = theme === 'dark' ? '\u263c' : '\u9790';
+  }
+  if(themeBtn) themeBtn.addEventListener('click', ()=>{
+    theme = theme === 'dark' ? 'light' : 'dark';
+    renderTheme();
+    try { localStorage.setItem('nexify_theme', theme); } catch(e){}
+  });
+  renderTheme();
+  setUiLanguage(uiLang);
+})();
+
+/* ===== Chatbot Widget ===== */
+(function(){
+  'use strict';
+  const API_URL = 'https://chatbox.yuanxin0222.workers.dev';
+  const bubble = document.getElementById('nx-chatbot-bubble');
+  const windowEl = document.getElementById('nx-chatbot-window');
+  const closeBtn = document.getElementById('nx-chat-close');
+  const messagesEl = document.getElementById('nx-chat-messages');
+  const inputEl = document.getElementById('nx-chat-input');
+  const sendBtn = document.getElementById('nx-chat-send');
+
+  let isOpen = false;
+  let messages = [];
+  let collectedLead = { industry: null, companyName: null, contactName: null, email: null, needsDescription: null };
+  let leadSubmitted = false;
+  let currentStep = 0;
+  let userLang = 'en';
+  let langLocked = false;
+  let messageCount = 0;
+
+  const greetings = {
+    en: "Hi there! \ud83d\udc4b I'm the Nexify AI assistant. I can help you learn about our smart customer service solutions and even book a demo for you. What brings you in today?",
+    nl: "Hallo! \ud83d\udc4b Ik ben de Nexify AI-assistent. Ik kan je helpen met alles over onze slimme klantenservice oplossingen en zelfs een demo inplannen. Waar kan ik je mee helpen?",
+    fr: "Bonjour ! \ud83d\udc4b Je suis l'assistant Nexify AI. Je peux vous renseigner sur nos solutions de service client intelligent et m\u00eame r\u00e9server une d\u00e9mo. Comment puis-je vous aider ?"
+  };
+
+  function detectLanguage() {
+    const lang = (navigator.language || 'en').toLowerCase();
+    if (lang.startsWith('nl')) return 'nl';
+    if (lang.startsWith('fr')) return 'fr';
+    return 'en';
+  }
+
+  function getGreeting() { return greetings[detectLanguage()] || greetings.en; }
+
+  function toggleChat() {
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if (isOpen) { inputEl.focus(); if (messages.length === 0) addBotMessage(getGreeting()); }
+  }
+
+  function addUserMessage(text) {
+    const msg = document.createElement('div'); msg.className = 'nx-msg user'; msg.textContent = text;
+    messagesEl.appendChild(msg); messages.push({ role: 'user', content: text }); scrollToBottom();
+  }
+  function addBotMessage(text) {
+    const msg = document.createElement('div'); msg.className = 'nx-msg bot'; msg.textContent = text;
+    messagesEl.appendChild(msg); messages.push({ role: 'assistant', content: text }); scrollToBottom();
+  }
+  function showTyping() {
+    const t = document.createElement('div'); t.className = 'nx-typing'; t.id = 'nx-typing-indicator';
+    t.innerHTML = '<span></span><span></span><span></span>'; messagesEl.appendChild(t); scrollToBottom();
+  }
+  function hideTyping() { const t = document.getElementById('nx-typing-indicator'); if(t) t.remove(); }
+  function scrollToBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
+
+  const leadQuestions = [
+    { key:'industry', q:{en:"Great! To better help you, could you tell me what industry your business is in?",nl:"Perfect! Om je beter te kunnen helpen, in welke branche zit je bedrijf?",fr:"Parfait ! Pour mieux vous aider, pourriez-vous me dire dans quel secteur vous exercez ?"}},
+    { key:'companyName', q:{en:"Got it. And what's your company name?",nl:"Begrepen. En wat is de naam van je bedrijf?",fr:"Compris. Et quel est le nom de votre entreprise ?"}},
+    { key:'contactName', q:{en:"Thanks! And your name, please?",nl:"Dankjewel! En jouw naam?",fr:"Merci ! Et votre nom, s'il vous pla\u00eet ?"}},
+    { key:'email', q:{en:"Perfect. What's your email address so we can send you the info and follow up?",nl:"Perfect. Wat is je e-mailadres? Dan sturen we de informatie direct op.",fr:"Parfait. Quelle est votre adresse e-mail pour que nous puissions vous envoyer les informations ?"}},
+    { key:'needsDescription', q:{en:"Last question \u2014 briefly, what are your main needs or challenges with customer service?",nl:"Laatste vraag \u2014 kort gezegd, wat zijn je belangrijkste behoeften of uitdagingen op het gebied van klantenservice?",fr:"Derni\u00e8re question \u2014 bri\u00e8vement, quels sont vos principaux besoins ou d\u00e9fis en mati\u00e8re de service client ?"}}
+  ];
+
+  const thankYouMessages = {
+    en: "Thank you so much for your interest! \ud83c\udf89 I've noted everything down. Our team will review your request and get back to you within 24 hours. In the meantime, feel free to ask me anything about Nexify AI!",
+    nl: "Bedankt voor je interesse! \ud83c\udf89 Ik heb alles genoteerd. Ons team bekijkt je aanvraag en neemt binnen 24 uur contact met je op. Ondertussen kun me altijd alles vragen over Nexify AI!",
+    fr: "Merci beaucoup pour votre int\u00e9r\u00eat ! \ud83c\udf89 J'ai tout not\u00e9. Notre \u00e9quipe examinera votre demande et vous recontactera sous 24 heures. En attendant, n'h\u00e9sitez pas \u00e0 me poser des questions sur Nexify AI !"
+  };
+
+  function detectUserLang(text) {
+    if (langLocked) return userLang;
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text.trim())) return userLang;
+    const dutch = /(hallo|goedendag|dank|je|wij|ons|bedrijf|klant|reservering|tafel|alstublieft|sorry|nee|ja|graag)/i.test(text);
+    const french = /(bonjour|merci|vous|nous|entreprise|client|r\u00e9servation|table|bonsoir|s'il vous pla\u00eet|oui|non|d'accord|bon)/i.test(text);
+    let detected = 'en';
+    if (dutch) detected = 'nl';
+    else if (french) detected = 'fr';
+    if (detected !== 'en') userLang = detected;
+    messageCount++;
+    if (messageCount >= 2) langLocked = true;
+    return userLang;
+  }
+
+  function getLocalResponse(userMessage) {
+    userLang = detectUserLang(userMessage);
+    if (currentStep === 0) {
+      return { reply: leadQuestions[0].q[userLang], shouldAdvance: true };
+    }
+    const currentQ = leadQuestions[currentStep - 1];
+    if (currentQ && collectedLead[currentQ.key] === null) {
+      collectedLead[currentQ.key] = userMessage.trim();
+    }
+    if (currentStep < leadQuestions.length) {
+      return { reply: leadQuestions[currentStep].q[userLang], shouldAdvance: true };
+    }
+    leadSubmitted = true;
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+    return { reply: thankYouMessages[userLang], shouldAdvance: false, complete: true };
+  }
+
+  async function callAI(userMessage) {
+    if (!API_URL) {
+      await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, collectedLead, brandName: 'Nexify AI' }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!response.ok) throw new Error('API call failed');
+      const data = await response.json();
+      if (data.collectedLead) collectedLead = { ...collectedLead, ...data.collectedLead };
+      if (data.leadComplete && !leadSubmitted) { leadSubmitted = true; submitLead(data.collectedLead); }
+      return data.reply;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+  }
+
+  function submitLead(leadData) {
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...leadData, timestamp: new Date().toISOString(), source: window.location.href, userAgent: navigator.userAgent });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim(); if (!text) return;
+    inputEl.value = ''; sendBtn.disabled = true;
+    addUserMessage(text); showTyping();
+    try { const reply = await callAI(text); hideTyping(); addBotMessage(reply); }
+    catch(e) { hideTyping(); addBotMessage('Sorry, something went wrong. Please try again.'); }
+    finally { sendBtn.disabled = false; inputEl.focus(); }
+  }
+
+  async function sendUserMessage(text) {
+    if (!text) return;
+    sendBtn.disabled = true; addUserMessage(text); showTyping();
+    const reply = await callAI(text); hideTyping(); addBotMessage(reply);
+    sendBtn.disabled = false; if (isOpen) inputEl.focus();
+  }
+
+  async function startDemoFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const demoMessages = {
+      en: "I'd like to book a demo",
+      nl: "Ik wil een demo boeken",
+      fr: "Je voudrais r\u00e9server une d\u00e9mo"
+    };
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') { messagesEl.removeChild(messagesEl.lastElementChild); messages.pop(); }
+      sendUserMessage(demoMessages[lang] || demoMessages.en);
+    } else { inputEl.focus(); }
+  }
+
+  async function startPilotFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const pilotMessages = {
+      en: "I'm interested in joining the pilot program",
+      nl: "Ik ben ge\u00efnteresseerd in het pilotprogramma",
+      fr: "Je suis int\u00e9ress\u00e9 par le programme pilote"
+    };
+    collectedLead.pilotApplication = true;
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') { messagesEl.removeChild(messagesEl.lastElementChild); messages.pop(); }
+      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
+    } else { inputEl.focus(); }
+  }
+
+  bubble.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+
+  document.querySelectorAll('[data-start-pilot]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); startPilotFlow(); });
+  });
+  document.querySelectorAll('[data-start-demo]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); startDemoFlow(); });
+  });
+
+  window.NexifyChatbot = {
+    open: () => { if (!isOpen) toggleChat(); },
+    close: () => { if (isOpen) toggleChat(); },
+    startDemo: startDemoFlow,
+    startPilot: startPilotFlow,
+    sendMessage: sendUserMessage,
+    getLead: () => collectedLead,
+    getMessages: () => messages
+  };
+})();
+'''
+
+print("Part 4 done")
+
+
+# ============================================================
+# Page 1: demo.html - Live Demo Page
+# ============================================================
+def demo_page_content():
+    return r'''
+<main>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span data-i18n="demoEyebrow">Live Demo</span></div>
+      <h1 data-i18n="demoTitle">See It in Action</h1>
+      <p class="hero-copy" data-i18n="demoSubtitle">Try our AI assistant right now &mdash; no sign up needed.</p>
+    </div>
+  </section>
+
+  <!-- Demo Chat Section -->
+  <section class="demo-chat-section">
+    <div class="container">
+      <div class="demo-chat-wrap" id="demo-chat">
+        <div class="demo-chat-header">
+          <div class="demo-chat-avatar">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5v1a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
+          </div>
+          <div class="demo-chat-meta">
+            <strong>Nexify AI Assistant</strong>
+            <span><span class="online"></span>Online &middot; Always here</span>
+          </div>
+        </div>
+        <div class="demo-chat-body" id="demo-chat-body">
+          <div class="demo-msg bot" data-i18n="demoChatPlaceholder">
+            Hi! I&#39;m the Nexify AI assistant. Click the chat bubble in the corner to start a real conversation, or try one of the use cases below.
+          </div>
+        </div>
+        <div class="demo-chat-footer">
+          <div class="demo-chat-input" data-i18n="demoChatPlaceholder">Click to start chatting...</div>
+          <div class="demo-chat-send" id="demo-chat-start" aria-label="Start chat">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Use Case Tabs -->
+      <div class="usecase-tabs">
+        <button class="usecase-tab active" data-usecase="restaurant">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
+          <span data-i18n="demoUsecaseRestaurant">Restaurant Booking</span>
+        </button>
+        <button class="usecase-tab" data-usecase="clinic">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
+          <span data-i18n="demoUsecaseClinic">Medical Appointment</span>
+        </button>
+        <button class="usecase-tab" data-usecase="law">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
+          <span data-i18n="demoUsecaseLaw">Legal Intake</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="demoFeaturesTitle">What Our AI Can Do</h2>
+        <p data-i18n="demoFeaturesSub">Four core capabilities that make Nexify AI different from basic chatbots.</p>
+      </div>
+      <div class="card-grid cols-4">
+        <div class="feature-card" data-color="green">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 9h8M8 13h5"></path></svg>
+          </div>
+          <h3 data-i18n="demoFeat1Title">30+ Languages</h3>
+          <p data-i18n="demoFeat1Desc">Native-level fluency with automatic language detection. Your customers always get a reply in their mother tongue.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 data-i18n="demoFeat2Title">Smart Lead Capture</h3>
+          <p data-i18n="demoFeat2Desc">Conversational qualification that feels natural, not like filling out a form. High-quality leads delivered to your inbox.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3 data-i18n="demoFeat3Title">24/7 Availability</h3>
+          <p data-i18n="demoFeat3Desc">Never miss a customer inquiry again. Weekends, holidays, after hours &mdash; the AI is always on, always consistent.</p>
+        </div>
+        <div class="feature-card" data-color="purple">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <h3 data-i18n="demoFeat4Title">Instant Response</h3>
+          <p data-i18n="demoFeat4Desc">Average response time under 2 seconds. No wait times, no hold music, no frustrated customers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <h2 data-i18n="demoCtaTitle">Ready for your business?</h2>
+        <p data-i18n="demoCtaSub">Join our pilot program and see the impact firsthand. Limited spots available.</p>
+        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+// Demo page interactions
+document.getElementById('demo-chat-start').addEventListener('click', function() {
+  if (window.NexifyChatbot) window.NexifyChatbot.open();
+});
+document.querySelector('.demo-chat-input').addEventListener('click', function() {
+  if (window.NexifyChatbot) window.NexifyChatbot.open();
+});
+document.querySelectorAll('.usecase-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.usecase-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    if (window.NexifyChatbot) {
+      window.NexifyChatbot.open();
+      setTimeout(() => {
+        const usecase = this.dataset.usecase;
+        const msgs = {
+          restaurant: { en: "I'd like to book a table for dinner", nl: "Ik wil een tafel reserveren voor het avondeten", fr: "Je voudrais r\u00e9server une table pour le d\u00eener" },
+          clinic: { en: "I need to make a doctor's appointment", nl: "Ik moet een afspraak maken bij de dokter", fr: "Je dois prendre rendez-vous chez le m\u00e9decin" },
+          law: { en: "I need legal advice about a case", nl: "Ik heb juridisch advies nodig over een zaak", fr: "J'ai besoin de conseils juridiques sur une affaire" }
+        };
+        const lang = document.documentElement.lang || 'en';
+        window.NexifyChatbot.sendMessage(msgs[usecase][lang] || msgs[usecase].en);
+      }, 300);
+    }
+  });
+});
+</script>
+'''
+
+print("Part 5 done")
+
+
+# ============================================================
+# Page 2: pricing-subscription.html - Subscription Pricing
+# ============================================================
+def pricing_subscription_content():
+    return r'''
+<main>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span data-i18n="subEyebrow">Subscription Pricing</span></div>
+      <h1 data-i18n="subTitle">Simple, predictable pricing.</h1>
+      <p class="hero-copy" data-i18n="subSubtitle">Fixed monthly plans that scale with your business. No surprises, no hidden fees.</p>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="pricing-grid">
+        <!-- Starter -->
+        <div class="pricing-card">
+          <h3 data-i18n="subStarterName">Starter</h3>
+          <div class="pricing-price">
+            <span class="amount" data-i18n="subStarterPrice">&euro;199</span>
+            <span class="period" data-i18n="subStarterPeriod">/month</span>
+          </div>
+          <p class="pricing-desc" data-i18n="subStarterDesc">Perfect for small businesses getting started with AI customer service.</p>
+          <ul class="pricing-features">
+            <li>Up to 500 conversations / month</li>
+            <li>Website chat widget</li>
+            <li>3 languages included</li>
+            <li>Lead capture &amp; forwarding</li>
+            <li>Email support</li>
+            <li>Basic analytics dashboard</li>
+            <li>GDPR compliant</li>
+          </ul>
+          <a href="pilot-apply.html" class="btn btn-secondary" data-i18n="startPilot">Start with Pilot</a>
+        </div>
+
+        <!-- Growth (Featured) -->
+        <div class="pricing-card featured">
+          <span class="badge" data-i18n="subGrowthBadge">Most Popular</span>
+          <h3 data-i18n="subGrowthName">Growth</h3>
+          <div class="pricing-price">
+            <span class="amount" data-i18n="subGrowthPrice">&euro;399</span>
+            <span class="period" data-i18n="subGrowthPeriod">/month</span>
+          </div>
+          <p class="pricing-desc" data-i18n="subGrowthDesc">Complete solution for growing businesses with higher conversation volume.</p>
+          <ul class="pricing-features">
+            <li>Up to 2,000 conversations / month</li>
+            <li>Website chat + email handling</li>
+            <li>All 30+ languages</li>
+            <li>Smart lead qualification</li>
+            <li>Priority support</li>
+            <li>Full analytics &amp; reporting</li>
+            <li>CRM integration (Zapier)</li>
+            <li>Custom training on your data</li>
+            <li>Dedicated account manager</li>
+          </ul>
+          <a href="pilot-apply.html" class="btn btn-primary" data-i18n="startPilot">Start with Pilot</a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-card">
+          <h3 data-i18n="subEnterpriseName">Enterprise</h3>
+          <div class="pricing-price">
+            <span class="amount" data-i18n="subEnterprisePrice">Custom</span>
+          </div>
+          <p class="pricing-desc" data-i18n="subEnterpriseDesc">Tailored solutions for large organizations with complex needs.</p>
+          <ul class="pricing-features">
+            <li>Unlimited conversations</li>
+            <li>Chat + phone + email</li>
+            <li>All 30+ languages</li>
+            <li>Advanced lead routing</li>
+            <li>24/7 dedicated support</li>
+            <li>Custom analytics &amp; SLA reporting</li>
+            <li>Deep CRM/ERP integrations</li>
+            <li>Custom model fine-tuning</li>
+            <li>White-label option</li>
+            <li>On-premise deployment</li>
+          </ul>
+          <a href="pricing-custom.html" class="btn btn-secondary" data-i18n="contactUs">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="subCompareTitle">Feature Comparison</h2>
+        <p data-i18n="subCompareSub">Everything included in every plan &mdash; no hidden add-ons or surprise charges.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="plan-col">Starter</th>
+              <th class="plan-col">Growth</th>
+              <th class="plan-col">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Monthly conversations</td><td class="plan-col">500</td><td class="plan-col">2,000</td><td class="plan-col">Unlimited</td></tr>
+            <tr><td>Website chat widget</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Email handling</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Phone AI</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Languages</td><td class="plan-col">3</td><td class="plan-col">30+</td><td class="plan-col">30+</td></tr>
+            <tr><td>Lead capture</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Smart qualification</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>CRM integration</td><td class="plan-col dash">&mdash;</td><td class="plan-col">Zapier</td><td class="plan-col">Custom</td></tr>
+            <tr><td>Custom knowledge base</td><td class="plan-col">Basic</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Analytics dashboard</td><td class="plan-col">Basic</td><td class="plan-col">Full</td><td class="plan-col">Custom</td></tr>
+            <tr><td>Support level</td><td class="plan-col">Email</td><td class="plan-col">Priority</td><td class="plan-col">24/7 Dedicated</td></tr>
+            <tr><td>Account manager</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>GDPR compliant</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Custom branding</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Model fine-tuning</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>On-premise / private cloud</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Multi-brand support</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="subFaqTitle">Frequently Asked Questions</h2>
+        <p data-i18n="subFaqSub">Everything you need to know about our subscription plans.</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Can I switch plans later?</h4>
+          <p>Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. We'll prorate any differences fairly.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What happens if I go over my conversation limit?</h4>
+          <p>We won't cut you off. If you exceed your monthly limit, we'll notify you and apply a simple overage rate. You can also upgrade your plan at any time to get a better per-conversation rate.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is there a setup fee?</h4>
+          <p>No setup fees, ever. We include onboarding and knowledge base training in your first month. For Enterprise plans, custom integration work may be quoted separately.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How does the free pilot work?</h4>
+          <p>Our pilot program lets you try Nexify AI with real customer conversations for a limited time, often at a significant discount or even free. It's the best way to see the impact before committing.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I cancel anytime?</h4>
+          <p>Yes, you can cancel your subscription at any time. No long-term contracts, no cancellation fees. Your service continues until the end of your current billing period.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What payment methods do you accept?</h4>
+          <p>We accept all major credit cards (Visa, Mastercard, AmEx), SEPA direct debit, and bank transfers for annual plans. Enterprise customers can also pay via invoice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" style="padding-top:0;">
+    <div class="container">
+      <div class="cta-card">
+        <h2 data-i18n="subCtaTitle">Not sure which plan is right for you?</h2>
+        <p data-i18n="subCtaSub">Start with our pilot program and find the perfect fit for your business.</p>
+        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
+      </div>
+    </div>
+  </section>
+</main>
+'''
+
+print("Part 6 done")
+
+
+# ============================================================
+# Page 3: pricing-payg.html - Pay As You Use
+# ============================================================
+def pricing_payg_content():
+    return r'''
+<main>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span data-i18n="paygEyebrow">Pay As You Use</span></div>
+      <h1 data-i18n="paygTitle">Only pay for what you use.</h1>
+      <p class="hero-copy" data-i18n="paygSubtitle">Flexible pricing that scales up and down with your actual conversation volume.</p>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygHowTitle">How It Works</h2>
+        <p data-i18n="paygHowSub">Simple three-step process to get started with usage-based pricing.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <h3 data-i18n="paygStep1Title">Connect Your Channels</h3>
+          <p data-i18n="paygStep1Desc">Add the AI chat widget to your website, connect your phone line, or set up email forwarding. Set up takes less than 7 days.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <h3 data-i18n="paygStep2Title">AI Handles Conversations</h3>
+          <p data-i18n="paygStep2Desc">The AI responds to customer inquiries instantly, 24/7, in any language. It captures leads, answers questions, and routes complex issues to your team.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <h3 data-i18n="paygStep3Title">Monthly Billing</h3>
+          <p data-i18n="paygStep3Desc">You only pay for conversations actually handled. Get a detailed invoice at the end of each month showing exactly what you paid for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Details -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygPricingTitle">Transparent Pricing</h2>
+        <p data-i18n="paygPricingSub">Pay only for what you use, with volume discounts built in.</p>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="feature-card" data-color="green">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </div>
+          <h3>Starter Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">&euro;0.45</strong>per conversation</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 0-500 conversations / month. Perfect for testing the waters.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          </div>
+          <h3>Growth Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">&euro;0.35</strong>per conversation</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 500-2,000 conversations / month. Volume discount applied automatically.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <h3>High Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">Custom</strong>enterprise rates</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 2,000+ conversations / month. Get a custom quote with the best rates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscription vs PAYG comparison -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygCompareTitle">Subscription vs. Pay-as-you-use</h2>
+        <p data-i18n="paygCompareSub">Not sure which model is right for you? Here&rsquo;s a quick comparison.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="plan-col">Subscription</th>
+              <th class="plan-col">Pay As You Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td class="plan-col">Steady, predictable volume</td><td class="plan-col">Variable or seasonal volume</td></tr>
+            <tr><td>Cost predictability</td><td class="plan-col check">&#10003; Fixed monthly cost</td><td class="plan-col">Varies with usage</td></tr>
+            <tr><td>Per-conversation rate</td><td class="plan-col check">&#10003; Lower effective rate</td><td class="plan-col">Higher per unit</td></tr>
+            <tr><td>Minimum commitment</td><td class="plan-col">Monthly minimum</td><td class="plan-col check">&#10003; No minimum</td></tr>
+            <tr><td>Scaling</td><td class="plan-col">Upgrade when needed</td><td class="plan-col check">&#10003; Auto-scales with demand</td></tr>
+            <tr><td>All features</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Good for testing</td><td class="plan-col">Pilot program</td><td class="plan-col check">&#10003; Start small</td></tr>
+            <tr><td>Seasonal businesses</td><td class="plan-col">Maybe</td><td class="plan-col check">&#10003; Perfect fit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases for PAYG -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygUsecaseTitle">When to Choose PAYG</h2>
+        <p data-i18n="paygUsecaseSub">Usage-based pricing works best for businesses with variable demand.</p>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="feature-card" data-color="green">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <h3>Seasonal Businesses</h3>
+          <p>Tourism, hospitality, retail &mdash; businesses that have busy seasons and quiet periods. Pay more when you&rsquo;re busy, less when you&rsquo;re not.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          </div>
+          <h3>Testing Phase</h3>
+          <p>Just starting with AI customer service? Start with PAYG to prove the ROI before committing to a monthly plan.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <h3>Fluctuating Demand</h3>
+          <p>Marketing campaigns, product launches, or unpredictable inquiry volume. PAYG flexes with your business needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygFaqTitle">Frequently Asked Questions</h2>
+        <p data-i18n="paygFaqSub">Answers to common questions about usage-based pricing.</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>What counts as a &ldquo;conversation&rdquo;?</h4>
+          <p>A conversation is a single customer interaction session &mdash; from first message to resolution. If the same customer comes back the next day with a new question, that&rsquo;s a new conversation.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I switch between PAYG and subscription?</h4>
+          <p>Yes, you can switch billing models at any time. Just let us know and we&rsquo;ll adjust your plan at the start of the next billing cycle.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is there a minimum charge?</h4>
+          <p>No minimums, no base fees. If you have zero conversations in a month, you pay zero. We do have a small one-time setup fee for new accounts.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How do volume discounts work?</h4>
+          <p>Volume discounts are applied automatically based on your total monthly conversations. The more you use, the lower your per-conversation rate.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I set a monthly spending cap?</h4>
+          <p>Absolutely. Set a maximum monthly budget and we&rsquo;ll notify you when you&rsquo;re approaching it. You decide what happens when the cap is reached.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What if I&rsquo;m not sure which model to choose?</h4>
+          <p>Start with our pilot program! You&rsquo;ll get real data on your conversation volume, which makes it easy to choose the right pricing model afterwards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" style="padding-top:0;">
+    <div class="container">
+      <div class="cta-card">
+        <h2 data-i18n="paygCtaTitle">Want flexible pricing for your business?</h2>
+        <p data-i18n="paygCtaSub">Start with our pilot program to test the waters before committing.</p>
+        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
+      </div>
+    </div>
+  </section>
+</main>
+'''
+
+print("Part 7 done")
+
+
+# ============================================================
+# Page 4: pricing-custom.html - Custom Solutions
+# ============================================================
+def pricing_custom_content():
+    return r'''
+<main>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow"><span data-i18n="customEyebrow">Custom Solutions</span></div>
+      <h1 data-i18n="customTitle">Tailored AI for your business.</h1>
+      <p class="hero-copy" data-i18n="customSubtitle">Need something beyond our standard plans? We build bespoke AI solutions for unique requirements.</p>
+    </div>
+  </section>
+
+  <!-- When to Choose Custom -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="customWhenTitle">When to Choose Custom</h2>
+        <p data-i18n="customWhenSub">Our custom solutions are designed for organizations with specific needs that go beyond standard offerings.</p>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="feature-card" data-color="green">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <h3>Deep CRM Integration</h3>
+          <p>Connect with Salesforce, HubSpot, or your custom CRM. Sync leads, update records, and trigger workflows automatically.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <h3>Multi-Channel Unified</h3>
+          <p>Chat, phone, email, WhatsApp, social media &mdash; all channels unified with a single AI brain and consistent responses.</p>
+        </div>
+        <div class="feature-card" data-color="purple">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <h3>Custom Model Fine-tuning</h3>
+          <p>Fine-tune the AI model on your specific industry data, terminology, and customer profiles for unmatched accuracy.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h3>White-Label Solution</h3>
+          <p>Resell or embed Nexify AI under your own brand. Custom domains, custom interfaces, your branding everywhere.</p>
+        </div>
+        <div class="feature-card" data-color="green">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+          </div>
+          <h3>High Volume &amp; SLA</h3>
+          <p>Guaranteed uptime, dedicated infrastructure, and enterprise SLAs for mission-critical customer service operations.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3>On-Premise / Private Cloud</h3>
+          <p>Deploy on your own infrastructure or private cloud for maximum data security and compliance requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Features -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="customFeaturesTitle">What Custom Can Include</h2>
+        <p data-i18n="customFeaturesSub">Every custom solution is unique, but here are some common capabilities we build.</p>
+      </div>
+      <div class="card-grid cols-2">
+        <div class="feature-card" data-color="green">
+          <h3>Custom Integrations</h3>
+          <p>Connect to any system you use: CRM, ERP, booking software, inventory management, ticketing systems, internal tools, and more. We build API connectors and webhook integrations tailored to your stack.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <h3>Custom Workflows</h3>
+          <p>Design conversation flows that match your exact business processes. From complex booking logic to multi-step qualification, we build workflows that follow your rules.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <h3>Multi-Brand / Multi-Location</h3>
+          <p>Manage multiple brands, locations, or subsidiaries from a single platform. Each gets its own AI personality and knowledge base, with centralized reporting.</p>
+        </div>
+        <div class="feature-card" data-color="purple">
+          <h3>Advanced Analytics</h3>
+          <p>Custom dashboards, BI tool integration, and deep insights into customer behavior, intent patterns, and conversion funnels. Export to your data warehouse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="customFormTitle">Tell Us About Your Needs</h2>
+        <p data-i18n="customFormSub">Fill out the form below and our team will get back to you within 24 hours with a tailored proposal.</p>
+      </div>
+      <div class="form-card">
+        <form id="custom-form" onsubmit="handleCustomSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">Company Name</label>
+              <input type="text" id="company" name="company" placeholder="Your company" required>
+            </div>
+            <div class="form-group">
+              <label for="industry">Industry</label>
+              <select id="industry" name="industry" required>
+                <option value="">Select industry</option>
+                <option value="restaurant">Restaurants &amp; Hospitality</option>
+                <option value="healthcare">Healthcare &amp; Medical</option>
+                <option value="legal">Legal Services</option>
+                <option value="realestate">Real Estate</option>
+                <option value="retail">Retail &amp; E-commerce</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Contact Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="teamsize">Team Size</label>
+              <select id="teamsize" name="teamsize">
+                <option value="1-10">1-10 employees</option>
+                <option value="11-50">11-50 employees</option>
+                <option value="51-200">51-200 employees</option>
+                <option value="201-500">201-500 employees</option>
+                <option value="500+">500+ employees</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="timeline">Timeline</label>
+              <select id="timeline" name="timeline">
+                <option value="asap">As soon as possible</option>
+                <option value="1month">Within 1 month</option>
+                <option value="3months">Within 3 months</option>
+                <option value="6months">Within 6 months</option>
+                <option value="exploring">Just exploring</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="usecase">Describe Your Use Case</label>
+            <textarea id="usecase" name="usecase" placeholder="Tell us about your business, what you&#39;re looking for, and any specific requirements..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="budget">Budget Range (monthly)</label>
+            <select id="budget" name="budget">
+              <option value="">Select range</option>
+              <option value="500-1000">&euro;500 - &euro;1,000</option>
+              <option value="1000-2500">&euro;1,000 - &euro;2,500</option>
+              <option value="2500-5000">&euro;2,500 - &euro;5,000</option>
+              <option value="5000-10000">&euro;5,000 - &euro;10,000</option>
+              <option value="10000+">&euro;10,000+</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="contactUs">Send Request</button>
+        </form>
+        <div class="form-success" id="custom-success">
+          <h3>Thank you! &#127881;</h3>
+          <p>We&#39;ve received your request. Our team will review your requirements and get back to you within 24 hours with a tailored proposal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="customFaqTitle">Frequently Asked Questions</h2>
+        <p data-i18n="customFaqSub">Answers to common questions about custom solutions.</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>How long does a custom solution take?</h4>
+          <p>It depends on complexity. Simple customizations (branding, basic integrations) can be done in 2-4 weeks. Complex projects with multiple integrations and custom model training typically take 6-12 weeks.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How much does a custom solution cost?</h4>
+          <p>Custom solutions start at around &euro;1,000/month plus a one-time setup fee. The exact cost depends on your requirements, integrations, and volume. Tell us about your needs and we&rsquo;ll send a detailed quote.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Do you offer on-premise deployment?</h4>
+          <p>Yes, for enterprise customers we support deployment on your own infrastructure or private cloud. This is ideal for organizations with strict data residency or security requirements.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I start with a standard plan and upgrade later?</h4>
+          <p>Absolutely. Many customers start with a standard plan and then move to custom as their needs grow. We&rsquo;ll work with you to design a solution that scales with your business.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What kind of integrations do you support?</h4>
+          <p>Nearly anything with an API. Common integrations include Salesforce, HubSpot, Zendesk, booking systems, ERP software, and internal tools. If your system has an API, we can connect to it.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is there a pilot option for custom solutions?</h4>
+          <p>Yes! We offer pilot programs for custom solutions too. You can test a scoped version of your custom setup before committing to a full rollout.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" style="padding-top:0;">
+    <div class="container">
+      <div class="cta-card">
+        <h2 data-i18n="customCtaTitle">Ready to build something custom?</h2>
+        <p data-i18n="customCtaSub">Tell us about your needs and we&#39;ll craft a solution just for you.</p>
+        <a href="#custom-form" class="btn btn-primary" data-i18n="contactUs">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+function handleCustomSubmit(e) {
+  e.preventDefault();
+  const form = document.getElementById('custom-form');
+  const success = document.getElementById('custom-success');
+  
+  // Save lead to localStorage
+  const formData = new FormData(form);
+  const lead = {};
+  formData.forEach((value, key) => { lead[key] = value; });
+  lead.timestamp = new Date().toISOString();
+  lead.source = 'custom_solutions_form';
+  lead.type = 'custom_solutions';
+  
+  const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+  leads.push(lead);
+  localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  
+  form.style.display = 'none';
+  success.style.display = 'block';
+}
+</script>
+'''
+
+print("Part 8 done")
+
+
+# ============================================================
+# Page 5: login.html - Sign In Placeholder
+# ============================================================
+def login_page_content():
+    return r'''
+<main>
+  <div class="login-wrap">
+    <div class="container">
+      <div class="login-card">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        </div>
+        <h2 data-i18n="loginTitle">Sign In</h2>
+        <p class="sub" data-i18n="loginSubtitle">Access your Nexify AI dashboard.</p>
+        
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email" data-i18n="loginEmail">Email</label>
+            <input type="email" id="login-email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password" data-i18n="loginPassword">Password</label>
+            <input type="password" id="login-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+          </div>
+          <button type="submit" class="btn btn-primary" data-i18n="loginBtn">Sign In</button>
+        </form>
+        
+        <div class="login-notice" data-i18n="loginNotice">
+          <strong>Dashboard coming soon</strong> &mdash; contact us for early access.
+        </div>
+        
+        <div class="login-footer-links">
+          <a href="contact.html" data-i18n="loginContact">Contact support</a>
+          <span style="margin:0 .5rem;">&middot;</span>
+          <a href="index.html" data-i18n="loginBack">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function handleLogin(e) {
+  e.preventDefault();
+  alert('Dashboard is coming soon! Please contact us for early access.');
+}
+</script>
+'''
+
+print("Part 9 done")
+
+
+# ============================================================
+# Page Builder
+# ============================================================
+def build_page(filename, title, active_page, content_fn):
+    """Build a complete HTML page."""
+    content = content_fn()
+    
+    html = f'''<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} &mdash; Nexify AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+{COMMON_CSS}
+</style>
+</head>
+<body>
+{header_html(active_page)}
+{content}
+{FOOTER_HTML}
+{CHATBOT_HTML}
+<script>
+/* ===== i18n data ===== */
+const copy = {json.dumps(I18N, ensure_ascii=False, indent=2)};
+{COMMON_JS}
+</script>
+</body>
+</html>'''
+    
+    filepath = os.path.join(BASE_DIR, filename)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    line_count = html.count('\n')
+    print(f'  Created {filename} ({line_count} lines)')
+    return line_count
+
+
+# ============================================================
+# Main
+# ============================================================
+def main():
+    print('Generating Batch 3 pages...')
+    print()
+    
+    pages = [
+        ('demo.html', 'See It in Action', 'demo', demo_page_content),
+        ('pricing-subscription.html', 'Subscription Plans', 'pricing', pricing_subscription_content),
+        ('pricing-payg.html', 'Pay As You Use', 'pricing', pricing_payg_content),
+        ('pricing-custom.html', 'Custom Solutions', 'pricing', pricing_custom_content),
+        ('login.html', 'Sign In', 'contact', login_page_content),
+    ]
+    
+    total_lines = 0
+    for filename, title, active_nav, content_fn in pages:
+        lines = build_page(filename, title, active_nav, content_fn)
+        total_lines += lines
+    
+    print()
+    print(f'Total: {len(pages)} pages, {total_lines} lines')
+    print('Done!')
+
+
+if __name__ == '__main__':
+    main()

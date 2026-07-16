@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>See It in Action &mdash; Nexify AI</title>
+<title>Pay As You Use &mdash; Nexify AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -467,8 +467,8 @@ h1,h2,h3,p{margin:0;}
     <nav class="nav" id="site-nav">
       <a href="index.html" data-i18n="navHome" class="">Home</a>
       <a href="solutions-restaurants.html" data-i18n="navSolutions" class="">Solutions</a>
-      <a href="demo.html" data-i18n="navDemo" class="active">See It in Action</a>
-      <a href="pricing-subscription.html" data-i18n="navPricing" class="">Service Model</a>
+      <a href="demo.html" data-i18n="navDemo" class="">See It in Action</a>
+      <a href="pricing-subscription.html" data-i18n="navPricing" class="active">Service Model</a>
       <a href="about.html" data-i18n="navAbout" class="">About</a>
       <a href="pilot-apply.html" data-i18n="navPilot" class="">Pilot</a>
       <a href="contact.html" data-i18n="navContact" class="">Contact</a>
@@ -490,136 +490,186 @@ h1,h2,h3,p{margin:0;}
   <!-- Hero -->
   <section class="page-hero">
     <div class="container">
-      <div class="eyebrow"><span data-i18n="demoEyebrow">Live Demo</span></div>
-      <h1 data-i18n="demoTitle">See It in Action</h1>
-      <p class="hero-copy" data-i18n="demoSubtitle">Try our AI assistant right now &mdash; no sign up needed.</p>
+      <div class="eyebrow"><span data-i18n="paygEyebrow">Pay As You Use</span></div>
+      <h1 data-i18n="paygTitle">Only pay for what you use.</h1>
+      <p class="hero-copy" data-i18n="paygSubtitle">Flexible pricing that scales up and down with your actual conversation volume.</p>
     </div>
   </section>
 
-  <!-- Demo Chat Section -->
-  <section class="demo-chat-section">
-    <div class="container">
-      <div class="demo-chat-wrap" id="demo-chat">
-        <div class="demo-chat-header">
-          <div class="demo-chat-avatar">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5v1a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path><path d="M20 21a8 8 0 0 0-16 0"></path></svg>
-          </div>
-          <div class="demo-chat-meta">
-            <strong>Nexify AI Assistant</strong>
-            <span><span class="online"></span>Online &middot; Always here</span>
-          </div>
-        </div>
-        <div class="demo-chat-body" id="demo-chat-body">
-          <div class="demo-msg bot" data-i18n="demoChatPlaceholder">
-            Hi! I&#39;m the Nexify AI assistant. Click the chat bubble in the corner to start a real conversation, or try one of the use cases below.
-          </div>
-        </div>
-        <div class="demo-chat-footer">
-          <div class="demo-chat-input" data-i18n="demoChatPlaceholder">Click to start chatting...</div>
-          <div class="demo-chat-send" id="demo-chat-start" aria-label="Start chat">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- Use Case Tabs -->
-      <div class="usecase-tabs">
-        <button class="usecase-tab active" data-usecase="restaurant">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
-          <span data-i18n="demoUsecaseRestaurant">Restaurant Booking</span>
-        </button>
-        <button class="usecase-tab" data-usecase="clinic">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
-          <span data-i18n="demoUsecaseClinic">Medical Appointment</span>
-        </button>
-        <button class="usecase-tab" data-usecase="law">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
-          <span data-i18n="demoUsecaseLaw">Legal Intake</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Grid -->
-  <section class="section">
+  <!-- How It Works -->
+  <section class="section" style="padding-top:0;">
     <div class="container">
       <div class="section-head">
-        <h2 data-i18n="demoFeaturesTitle">What Our AI Can Do</h2>
-        <p data-i18n="demoFeaturesSub">Four core capabilities that make Nexify AI different from basic chatbots.</p>
+        <h2 data-i18n="paygHowTitle">How It Works</h2>
+        <p data-i18n="paygHowSub">Simple three-step process to get started with usage-based pricing.</p>
       </div>
-      <div class="card-grid cols-4">
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <h3 data-i18n="paygStep1Title">Connect Your Channels</h3>
+          <p data-i18n="paygStep1Desc">Add the AI chat widget to your website, connect your phone line, or set up email forwarding. Set up takes less than 7 days.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <h3 data-i18n="paygStep2Title">AI Handles Conversations</h3>
+          <p data-i18n="paygStep2Desc">The AI responds to customer inquiries instantly, 24/7, in any language. It captures leads, answers questions, and routes complex issues to your team.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <h3 data-i18n="paygStep3Title">Monthly Billing</h3>
+          <p data-i18n="paygStep3Desc">You only pay for conversations actually handled. Get a detailed invoice at the end of each month showing exactly what you paid for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Details -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygPricingTitle">Transparent Pricing</h2>
+        <p data-i18n="paygPricingSub">Pay only for what you use, with volume discounts built in.</p>
+      </div>
+      <div class="card-grid cols-3">
         <div class="feature-card" data-color="green">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 9h8M8 13h5"></path></svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </div>
-          <h3 data-i18n="demoFeat1Title">30+ Languages</h3>
-          <p data-i18n="demoFeat1Desc">Native-level fluency with automatic language detection. Your customers always get a reply in their mother tongue.</p>
+          <h3>Starter Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">&euro;0.45</strong>per conversation</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 0-500 conversations / month. Perfect for testing the waters.</p>
         </div>
         <div class="feature-card" data-color="blue">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
           </div>
-          <h3 data-i18n="demoFeat2Title">Smart Lead Capture</h3>
-          <p data-i18n="demoFeat2Desc">Conversational qualification that feels natural, not like filling out a form. High-quality leads delivered to your inbox.</p>
+          <h3>Growth Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">&euro;0.35</strong>per conversation</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 500-2,000 conversations / month. Volume discount applied automatically.</p>
         </div>
         <div class="feature-card" data-color="amber">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </div>
-          <h3 data-i18n="demoFeat3Title">24/7 Availability</h3>
-          <p data-i18n="demoFeat3Desc">Never miss a customer inquiry again. Weekends, holidays, after hours &mdash; the AI is always on, always consistent.</p>
+          <h3>High Volume</h3>
+          <p><strong style="font-family:var(--font-display);font-size:1.8rem;display:block;margin:.5rem 0;">Custom</strong>enterprise rates</p>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">For 2,000+ conversations / month. Get a custom quote with the best rates.</p>
         </div>
-        <div class="feature-card" data-color="purple">
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscription vs PAYG comparison -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygCompareTitle">Subscription vs. Pay-as-you-use</h2>
+        <p data-i18n="paygCompareSub">Not sure which model is right for you? Here&rsquo;s a quick comparison.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="plan-col">Subscription</th>
+              <th class="plan-col">Pay As You Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td class="plan-col">Steady, predictable volume</td><td class="plan-col">Variable or seasonal volume</td></tr>
+            <tr><td>Cost predictability</td><td class="plan-col check">&#10003; Fixed monthly cost</td><td class="plan-col">Varies with usage</td></tr>
+            <tr><td>Per-conversation rate</td><td class="plan-col check">&#10003; Lower effective rate</td><td class="plan-col">Higher per unit</td></tr>
+            <tr><td>Minimum commitment</td><td class="plan-col">Monthly minimum</td><td class="plan-col check">&#10003; No minimum</td></tr>
+            <tr><td>Scaling</td><td class="plan-col">Upgrade when needed</td><td class="plan-col check">&#10003; Auto-scales with demand</td></tr>
+            <tr><td>All features</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
+            <tr><td>Good for testing</td><td class="plan-col">Pilot program</td><td class="plan-col check">&#10003; Start small</td></tr>
+            <tr><td>Seasonal businesses</td><td class="plan-col">Maybe</td><td class="plan-col check">&#10003; Perfect fit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases for PAYG -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygUsecaseTitle">When to Choose PAYG</h2>
+        <p data-i18n="paygUsecaseSub">Usage-based pricing works best for businesses with variable demand.</p>
+      </div>
+      <div class="card-grid cols-3">
+        <div class="feature-card" data-color="green">
           <div class="feature-icon">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           </div>
-          <h3 data-i18n="demoFeat4Title">Instant Response</h3>
-          <p data-i18n="demoFeat4Desc">Average response time under 2 seconds. No wait times, no hold music, no frustrated customers.</p>
+          <h3>Seasonal Businesses</h3>
+          <p>Tourism, hospitality, retail &mdash; businesses that have busy seasons and quiet periods. Pay more when you&rsquo;re busy, less when you&rsquo;re not.</p>
+        </div>
+        <div class="feature-card" data-color="blue">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          </div>
+          <h3>Testing Phase</h3>
+          <p>Just starting with AI customer service? Start with PAYG to prove the ROI before committing to a monthly plan.</p>
+        </div>
+        <div class="feature-card" data-color="amber">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <h3>Fluctuating Demand</h3>
+          <p>Marketing campaigns, product launches, or unpredictable inquiry volume. PAYG flexes with your business needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="paygFaqTitle">Frequently Asked Questions</h2>
+        <p data-i18n="paygFaqSub">Answers to common questions about usage-based pricing.</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>What counts as a &ldquo;conversation&rdquo;?</h4>
+          <p>A conversation is a single customer interaction session &mdash; from first message to resolution. If the same customer comes back the next day with a new question, that&rsquo;s a new conversation.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I switch between PAYG and subscription?</h4>
+          <p>Yes, you can switch billing models at any time. Just let us know and we&rsquo;ll adjust your plan at the start of the next billing cycle.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Is there a minimum charge?</h4>
+          <p>No minimums, no base fees. If you have zero conversations in a month, you pay zero. We do have a small one-time setup fee for new accounts.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How do volume discounts work?</h4>
+          <p>Volume discounts are applied automatically based on your total monthly conversations. The more you use, the lower your per-conversation rate.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I set a monthly spending cap?</h4>
+          <p>Absolutely. Set a maximum monthly budget and we&rsquo;ll notify you when you&rsquo;re approaching it. You decide what happens when the cap is reached.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What if I&rsquo;m not sure which model to choose?</h4>
+          <p>Start with our pilot program! You&rsquo;ll get real data on your conversation volume, which makes it easy to choose the right pricing model afterwards.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section">
+  <section class="cta-section" style="padding-top:0;">
     <div class="container">
       <div class="cta-card">
-        <h2 data-i18n="demoCtaTitle">Ready for your business?</h2>
-        <p data-i18n="demoCtaSub">Join our pilot program and see the impact firsthand. Limited spots available.</p>
+        <h2 data-i18n="paygCtaTitle">Want flexible pricing for your business?</h2>
+        <p data-i18n="paygCtaSub">Start with our pilot program to test the waters before committing.</p>
         <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
       </div>
     </div>
   </section>
 </main>
-
-<script>
-// Demo page interactions
-document.getElementById('demo-chat-start').addEventListener('click', function() {
-  if (window.NexifyChatbot) window.NexifyChatbot.open();
-});
-document.querySelector('.demo-chat-input').addEventListener('click', function() {
-  if (window.NexifyChatbot) window.NexifyChatbot.open();
-});
-document.querySelectorAll('.usecase-tab').forEach(tab => {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.usecase-tab').forEach(t => t.classList.remove('active'));
-    this.classList.add('active');
-    if (window.NexifyChatbot) {
-      window.NexifyChatbot.open();
-      setTimeout(() => {
-        const usecase = this.dataset.usecase;
-        const msgs = {
-          restaurant: { en: "I'd like to book a table for dinner", nl: "Ik wil een tafel reserveren voor het avondeten", fr: "Je voudrais r\u00e9server une table pour le d\u00eener" },
-          clinic: { en: "I need to make a doctor's appointment", nl: "Ik moet een afspraak maken bij de dokter", fr: "Je dois prendre rendez-vous chez le m\u00e9decin" },
-          law: { en: "I need legal advice about a case", nl: "Ik heb juridisch advies nodig over een zaak", fr: "J'ai besoin de conseils juridiques sur une affaire" }
-        };
-        const lang = document.documentElement.lang || 'en';
-        window.NexifyChatbot.sendMessage(msgs[usecase][lang] || msgs[usecase].en);
-      }, 300);
-    }
-  });
-});
-</script>
 
 
 <footer class="site-footer">
