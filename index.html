@@ -625,6 +625,48 @@ h1,h2,h3,p{margin:0;}
   }
 }
 
+
+/* ---------- Footer ---------- */
+.site-footer{
+  background:var(--color-surface);border-top:1px solid var(--color-border);
+  margin-top:var(--space-20);
+}
+.footer-main{padding:var(--space-16) 0 var(--space-10);}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);
+}
+.footer-brand .brand{margin-bottom:var(--space-4);}
+.footer-brand p{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;max-width:28ch;
+}
+.footer-col h5{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-text-faint);margin-bottom:var(--space-4);
+}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-col li a{
+  font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;
+}
+.footer-col li a:hover{color:var(--color-primary);}
+.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
+.footer-social a{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--color-surface-offset);color:var(--color-text-muted);
+  transition:all .2s ease;
+}
+.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
+.footer-social svg{width:18px;height:18px;fill:currentColor;}
+
+.footer-bottom{
+  border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
+}
+.footer-bottom-inner{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);
+}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
 @media (max-width:980px){
   .menu-btn{display:grid;}
   .nav{
@@ -634,6 +676,7 @@ h1,h2,h3,p{margin:0;}
   }
   .nav.open{display:flex;}
   .values-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8);}
 }
 @media (max-width:640px){
   .header-inner{flex-direction:column;align-items:stretch;}
@@ -651,6 +694,8 @@ h1,h2,h3,p{margin:0;}
   /* Values: tighter card spacing */
   .values-grid{gap:var(--space-4);}
   .value-card{padding:var(--space-5);}
+  .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
+  .footer-bottom-inner{flex-direction:column;text-align:center;}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
@@ -668,7 +713,8 @@ h1,h2,h3,p{margin:0;}
     <nav class="nav" id="site-nav">
       <a href="#solutions" data-i18n="navSolutions">Solutions</a>
       <a href="#work" data-i18n="navPlatform">Service Model</a>
-      <a href="#cases" data-i18n="navCases">Cases</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
+      <a href="contact.html" data-i18n="navContact">Contact</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -873,6 +919,59 @@ h1,h2,h3,p{margin:0;}
   </div>
 </section>
 
+
+<!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+        </a>
+        <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerProduct">Product</h5>
+        <ul>
+          <li><a href="#solutions" data-i18n="footerSolutions">Industry Solutions</a></li>
+          <li><a href="#demo" data-i18n="footerDemo">See It in Action</a></li>
+          <li><a href="#work" data-i18n="footerPricing">Pricing</a></li>
+          <li><a href="contact.html" data-i18n="footerPilot">Pilot Program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerCompany">Company</h5>
+        <ul>
+          <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
+          <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
+          <li><a href="#" data-i18n="footerSignin">Sign In</a></li>
+          <li><a href="contact.html" data-i18n="footerSignup">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerLegal">Legal</h5>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</footer>
+
 <!-- ========== LIVE CHATBOT WIDGET ========== -->
 <button id="nx-chatbot-bubble" aria-label="Open chat">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -903,7 +1002,7 @@ h1,h2,h3,p{margin:0;}
 /* ===== UI copy (header/hero/values) ===== */
 const copy = {
   en: {
-    navSolutions:'Solutions', navPlatform:'Service Model', navCases:'Cases',
+    navSolutions:'Solutions', navPlatform:'Service Model', navAbout:'About', navContact:'Contact',
     heroEyebrow:'AI Customer Service Agent',
     heroTitle:"Flawless service, even when you can't be everywhere.",
     heroCopy:"Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.",
@@ -925,10 +1024,24 @@ const copy = {
     pilotClinicTitle:'General Practice Clinic', pilotClinicDesc:'Dutch & English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.',
     pilotLawTitle:'Small Law Firm', pilotLawDesc:'Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.',
     pilotStatus:'Pilot · In Progress', pilotUpcoming:'Pilot · Starting Soon',
-    pilotCta:'Apply for Pilot'
+    pilotCta:'Apply for Pilot',
+    footerTagline:'24/7 AI customer service for European SMEs.',
+    footerProduct:'Product',
+    footerSolutions:'Industry Solutions',
+    footerDemo:'See It in Action',
+    footerPricing:'Pricing',
+    footerPilot:'Pilot Program',
+    footerCompany:'Company',
+    footerAbout:'About Us',
+    footerContact:'Contact',
+    footerSignin:'Sign In',
+    footerSignup:'Sign Up',
+    footerLegal:'Legal',
+    footerPrivacy:'Privacy Policy',
+    footerTerms:'Terms of Service'
   },
   nl: {
-    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navCases:'Casussen',
+    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navAbout:'Over ons', navContact:'Contact',
     heroEyebrow:'AI Klantenservice Agent',
     heroTitle:'Vlekkeloze service, zelfs als u er niet bent.',
     heroCopy:'Elke oproep beantwoord, elke waardevolle bestelling vastgelegd, uw standaarden 24/7 gehandhaafd. Probeer het één keer en u wilt nooit meer terug.',
@@ -950,10 +1063,24 @@ const copy = {
     pilotClinicTitle:'Huisartsenpraktijk', pilotClinicDesc:'Nederlandse &amp; Engelse afsprakenplanning, triage-FAQ\'s en nasluitings follow-up. Lancering Q3 2026.',
     pilotLawTitle:'Klein advocatenkantoor', pilotLawDesc:'Intake screening, consultatie planning en documentverzoek triage in NL / EN / FR. Lancering Q4 2026.',
     pilotStatus:'Pilot · Gestart', pilotUpcoming:'Pilot · Binnenkort',
-    pilotCta:'Aanmelden voor pilot'
+    pilotCta:'Aanmelden voor pilot',
+    footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
+    footerProduct:'Product',
+    footerSolutions:'Branche-oplossingen',
+    footerDemo:'Probeer het',
+    footerPricing:'Prijzen',
+    footerPilot:'Pilotprogramma',
+    footerCompany:'Bedrijf',
+    footerAbout:'Over ons',
+    footerContact:'Contact',
+    footerSignin:'Inloggen',
+    footerSignup:'Aanmelden',
+    footerLegal:'Juridisch',
+    footerPrivacy:'Privacybeleid',
+    footerTerms:'Servicevoorwaarden'
   },
   fr: {
-    navSolutions:'Solutions', navPlatform:'Modèle de service', navCases:'Cas',
+    navSolutions:'Solutions', navPlatform:'Modèle de service', navAbout:'À propos', navContact:'Contact',
     heroEyebrow:'Agent IA Service Client',
     heroTitle:"Un service irréprochable, même quand vous n'êtes pas là.",
     heroCopy:'Chaque appel trouve réponse, chaque commande importante est capturée, vos normes respectées 24h/24. Essayez une fois et vous ne reviendrez plus en arrière.',
@@ -975,7 +1102,21 @@ const copy = {
     pilotClinicTitle:'Cabinet de médecine générale', pilotClinicDesc:"Planification de rendez-vous en néerlandais &amp; anglais, FAQ de triage et suivi après les heures. Lancement T3 2026.",
     pilotLawTitle:'Petit cabinet d\'avocats', pilotLawDesc:"Filtrage des dossiers, prise de rendez-vous et triage des demandes de documents en NL / EN / FR. Lancement T4 2026.",
     pilotStatus:'Pilote · En cours', pilotUpcoming:'Pilote · Prochainement',
-    pilotCta:'Postuler au pilote'
+    pilotCta:'Postuler au pilote',
+    footerTagline:'Service client IA 24h/24 pour les PME européennes.',
+    footerProduct:'Produit',
+    footerSolutions:'Solutions secteur',
+    footerDemo:'Essayez-le',
+    footerPricing:'Tarifs',
+    footerPilot:'Programme Pilote',
+    footerCompany:'Entreprise',
+    footerAbout:'À propos',
+    footerContact:'Contact',
+    footerSignin:'Connexion',
+    footerSignup:"S'inscrire",
+    footerLegal:'Juridique',
+    footerPrivacy:'Politique de confidentialité',
+    footerTerms:"Conditions d'utilisation" 
   }
 };
 
@@ -1061,7 +1202,7 @@ const root = document.documentElement;
 const langButtons = document.querySelectorAll('.lang-btn');
 const navElement = document.getElementById('site-nav');
 const menuToggleBtn = document.querySelector('[data-menu-toggle]');
-let uiLang = 'en';
+let uiLang; try { uiLang = localStorage.getItem('nexify_lang') || 'en'; } catch(e) { uiLang = 'en'; }
 
 function setUiLanguage(lang){
   uiLang = lang;
@@ -1075,6 +1216,7 @@ function setUiLanguage(lang){
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
+  try { localStorage.setItem('nexify_lang', lang); } catch(e){}
 }
 langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
 

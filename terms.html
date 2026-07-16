@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Nexify AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --text-xs: clamp(.72rem,.68rem+.2vw,.82rem);
+  --text-sm: clamp(.88rem,.82rem+.3vw,1rem);
+  --text-base: clamp(1rem,.96rem+.2vw,1.1rem);
+  --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+  --text-xl: clamp(1.6rem,1.3rem+1vw,2.4rem);
+  --text-2xl: clamp(2.2rem,1.4rem+2.6vw,4rem);
+  --space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;
+  --space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+  --color-bg:#f6fff7;
+  --color-surface:#ffffff;
+  --color-surface-2:#f3fff5;
+  --color-surface-offset:#ebf9ee;
+  --color-border:#cfe7d3;
+  --color-divider:#dbefde;
+  --color-text:#153122;
+  --color-text-muted:#51705d;
+  --color-text-faint:#86a191;
+  --color-text-inverse:#f7fff8;
+  --color-primary:#2daa58;
+  --color-primary-hover:#248746;
+  --color-primary-highlight:#dff6e5;
+  --color-accent:#78df97;
+  --radius-md:.75rem;--radius-lg:1rem;--radius-xl:1.5rem;--radius-full:9999px;
+  --shadow-sm:0 8px 20px rgba(45,170,88,.08);
+  --shadow-md:0 18px 40px rgba(45,170,88,.12);
+  --shadow-lg:0 30px 70px rgba(45,170,88,.16);
+  --font-display:'Zodiak',Georgia,serif;
+  --font-body:'Satoshi',Inter,sans-serif;
+  --content-default:1180px;
+}
+[data-theme="dark"] {
+  --color-bg:#0f1712;--color-surface:#152019;--color-surface-2:#1a281e;
+  --color-surface-offset:#1f2f24;--color-border:#284332;--color-divider:#203626;
+  --color-text:#edf7ef;--color-text-muted:#a7c0ad;--color-text-faint:#708777;
+  --color-text-inverse:#0f1712;--color-primary:#67d889;--color-primary-hover:#52c374;
+  --color-primary-highlight:#183222;--color-accent:#8ce5a5;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 16px 40px rgba(0,0,0,.30);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+}
+*, :before, :after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; font-family:var(--font-body); font-size:var(--text-base); line-height:1.6;
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 24%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 82%, #fff));
+  color:var(--color-text);
+  display:flex; flex-direction:column; min-height:100vh;
+}
+main { flex:1; }
+a{text-decoration:none;color:inherit;}
+button{font:inherit;border:none;background:none;}
+h1,h2,h3,p{margin:0;}
+.container{width:min(calc(100% - 2rem),var(--content-default));margin-inline:auto;}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in oklab,var(--color-bg) 80%,rgba(255,255,255,.55));
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in oklab,var(--color-primary) 14%,white);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
+.brand{display:flex;align-items:center;gap:.6rem;}
+.brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.brand-logo{mix-blend-mode:normal;}
+.nav{display:flex;gap:var(--space-5);}
+.nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
+.nav a:hover{color:var(--color-primary);}
+.actions{display:flex;align-items:center;gap:var(--space-3);}
+.lang-switcher{
+  display:flex;gap:.25rem;padding:.25rem;
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+}
+.lang-btn,.theme-btn,.menu-btn{
+  padding:.55rem .85rem;border-radius:var(--radius-full);cursor:pointer;
+  min-height:44px;color:var(--color-text-muted);transition:all .2s ease;
+}
+.lang-btn.active{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm);font-weight:700;}
+.theme-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:grid;place-items:center;width:44px;
+}
+.menu-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:none;place-items:center;width:44px;padding:10px;color:var(--color-text);
+}
+
+/* ---------- Legal page layout ---------- */
+.legal-page{padding:var(--space-16) 0;}
+.legal-header{text-align:center;margin-bottom:var(--space-12);}
+.legal-header .eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-primary);background:var(--color-primary-highlight);
+  padding:.5rem 1rem;border-radius:var(--radius-full);margin-bottom:var(--space-5);
+}
+.legal-header h1{
+  font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.1;
+  margin-bottom:var(--space-4);letter-spacing:-.01em;
+}
+.legal-header .last-updated{
+  color:var(--color-text-muted);font-size:var(--text-sm);
+}
+.legal-content{
+  max-width:800px;margin:0 auto;
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-10) var(--space-12);
+  box-shadow:var(--shadow-md);
+}
+.legal-content h2{
+  font-family:var(--font-display);font-size:var(--text-lg);
+  margin-top:var(--space-8);margin-bottom:var(--space-4);
+  color:var(--color-text);
+}
+.legal-content h2:first-child{margin-top:0;}
+.legal-content h3{
+  font-size:var(--text-base);font-weight:700;
+  margin-top:var(--space-5);margin-bottom:var(--space-3);
+  color:var(--color-text);
+}
+.legal-content p{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.75;
+  margin-bottom:var(--space-4);
+}
+.legal-content ul, .legal-content ol{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.75;
+  margin-bottom:var(--space-4);padding-left:1.5rem;
+}
+.legal-content li{margin-bottom:var(--space-2);}
+.legal-content strong{color:var(--color-text);}
+.legal-content a{color:var(--color-primary);font-weight:600;}
+.legal-content a:hover{text-decoration:underline;}
+
+/* ---------- Footer ---------- */
+.site-footer{
+  background:var(--color-surface);border-top:1px solid var(--color-border);
+  margin-top:var(--space-20);
+}
+.footer-main{padding:var(--space-16) 0 var(--space-10);}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);
+}
+.footer-brand .brand{margin-bottom:var(--space-4);}
+.footer-brand p{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;max-width:28ch;
+}
+.footer-col h5{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-text-faint);margin-bottom:var(--space-4);
+}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-col li a{
+  font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;
+}
+.footer-col li a:hover{color:var(--color-primary);}
+.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
+.footer-social a{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--color-surface-offset);color:var(--color-text-muted);
+  transition:all .2s ease;
+}
+.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
+.footer-social svg{width:18px;height:18px;fill:currentColor;}
+
+.footer-bottom{
+  border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
+}
+.footer-bottom-inner{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);
+}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .menu-btn{display:grid;}
+  .nav{
+    display:none;position:absolute;top:100%;left:0;width:100%;
+    background:var(--color-surface);border-bottom:1px solid var(--color-border);
+    flex-direction:column;padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-md);gap:var(--space-4);z-index:50;
+  }
+  .nav.open{display:flex;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8);}
+}
+@media (max-width:640px){
+  .header-inner{flex-direction:column;align-items:stretch;}
+  .actions{width:100%;justify-content:space-between;margin-top:var(--space-3);}
+  .lang-switcher{padding:.15rem;}
+  .lang-btn{padding:.4rem .6rem;min-height:38px;}
+  .theme-btn,.menu-btn{min-height:38px;width:38px;}
+  .legal-content{padding:var(--space-6) var(--space-5);}
+  .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
+  .footer-bottom-inner{flex-direction:column;text-align:center;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
+}
+
+/* ====================================================== */
+/* ======== LIVE CHATBOT WIDGET (real AI version) ======= */
+/* ====================================================== */
+
+#nx-chatbot-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-body);
+  border: none;
+}
+#nx-chatbot-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent);
+}
+#nx-chatbot-bubble svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+#nx-chatbot-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  height: 560px;
+  max-height: calc(100vh - 120px);
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  font-family: var(--font-body);
+  animation: nxSlideUp 0.3s ease;
+}
+#nx-chatbot-window.open { display: flex; }
+@keyframes nxSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nx-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nx-chat-header-title {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nx-chat-header-status {
+  width: 8px;
+  height: 8px;
+  background: #b7ffb7;
+  border-radius: 50%;
+  animation: nxPulse 2s infinite;
+}
+@keyframes nxPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); }
+}
+.nx-chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.85;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+
+.nx-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--color-surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nx-chat-messages::-webkit-scrollbar { width: 6px; }
+.nx-chat-messages::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.nx-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  animation: nxMsgIn 0.3s ease both;
+}
+@keyframes nxMsgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nx-msg.bot {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.nx-msg.user {
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.nx-typing {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  width: fit-content;
+}
+.nx-typing span {
+  width: 7px;
+  height: 7px;
+  background: var(--color-text-faint);
+  border-radius: 50%;
+  animation: nxTyping 1.3s infinite;
+}
+.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nxTyping {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.nx-chat-input-area {
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+  display: flex;
+  gap: 8px;
+}
+.nx-chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+.nx-chat-input:focus { border-color: var(--color-primary); }
+.nx-chat-input::placeholder { color: var(--color-text-faint); }
+.nx-chat-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: opacity 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.nx-chat-send:hover { transform: scale(1.05); }
+.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nx-chat-send svg { width: 18px; height: 18px; }
+
+.nx-powered {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-faint);
+  padding: 6px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+}
+.nx-powered a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+
+@media (max-width: 480px) {
+  #nx-chatbot-window {
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+    height: 70vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Header ========== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+    </a>
+    <nav class="nav" id="site-nav">
+      <a href="index.html#solutions" data-i18n="navSolutions">Solutions</a>
+      <a href="index.html#work" data-i18n="navPlatform">Service Model</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
+      <a href="contact.html" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="actions">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="legal-page">
+  <div class="container">
+    <div class="legal-header">
+      <span class="eyebrow" data-i18n="termsEyebrow">Legal</span>
+      <h1 data-i18n="termsTitle">Terms of Service</h1>
+      <p class="last-updated" data-i18n="termsUpdated">Last updated: January 2025</p>
+    </div>
+
+    <div class="legal-content">
+      <h2 data-i18n="termsIntroTitle">1. Acceptance of Terms</h2>
+      <p data-i18n="termsIntroText">Welcome to Nexify AI ("we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our AI customer service platform, website, and related services (collectively, the "Service"). By accessing or using our Service, you agree to be bound by these Terms. If you do not agree, please do not use the Service.</p>
+      <p data-i18n="termsIntro2">Nexify AI is a company registered in The Hague, Netherlands, with Chamber of Commerce (KVK) number 42114767. These Terms are governed by Dutch law.</p>
+
+      <h2 data-i18n="termsServiceTitle">2. Service Description</h2>
+      <p data-i18n="termsServiceText">Nexify AI provides an AI-powered customer service platform that enables businesses to automate customer interactions across chat, phone, and email channels. Our Service includes:</p>
+      <ul>
+        <li data-i18n="termsService1">AI chatbot widget for website integration</li>
+        <li data-i18n="termsService2">AI phone agent for phone call handling</li>
+        <li data-i18n="termsService3">AI email agent for email response management</li>
+        <li data-i18n="termsService4">Multilingual support (30+ languages)</li>
+        <li data-i18n="termsService5">Lead capture and management tools</li>
+        <li data-i18n="termsService6">Dashboard and analytics (where applicable)</li>
+      </ul>
+      <p data-i18n="termsServiceNote">We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice.</p>
+
+      <h2 data-i18n="termsObligationsTitle">3. User Obligations</h2>
+      <p data-i18n="termsObligationsIntro">By using our Service, you agree to:</p>
+      <ul>
+        <li data-i18n="termsObligations1">Provide accurate and complete information during registration and onboarding</li>
+        <li data-i18n="termsObligations2">Use the Service only for lawful purposes and in accordance with these Terms</li>
+        <li data-i18n="termsObligations3">Maintain the security of your account credentials and notify us immediately of any unauthorized access</li>
+        <li data-i18n="termsObligations4">Not attempt to reverse engineer, hack, or disrupt the Service or its underlying technology</li>
+        <li data-i18n="termsObligations5">Not use the Service to send spam, malicious content, or to violate any third-party rights</li>
+        <li data-i18n="termsObligations6">Comply with all applicable laws and regulations in your use of the Service</li>
+        <li data-i18n="termsObligations7">Ensure that your use of the Service does not violate the rights of any third party</li>
+      </ul>
+
+      <h2 data-i18n="termsSlaTitle">4. Service Level Agreement (SLA)</h2>
+      <h3 data-i18n="termsSlaUptimeTitle">4.1 Uptime Commitment</h3>
+      <p data-i18n="termsSlaUptimeText">We strive to maintain 99.9% uptime for our Service, measured monthly. Scheduled maintenance windows are excluded and will be communicated in advance. If we fail to meet this commitment, you may be eligible for service credits as detailed below.</p>
+      <h3 data-i18n="termsSlaCreditTitle">4.2 Service Credits</h3>
+      <p data-i18n="termsSlaCreditText">If uptime falls below 99.9% in any given month, we will credit 10% of your monthly fee for each additional 0.5% below the SLA target, up to a maximum of 50% credit. To claim service credits, you must submit a request to billing@nexifyai.org within 30 days of the incident.</p>
+      <h3 data-i18n="termsSlaSupportTitle">4.3 Support</h3>
+      <p data-i18n="termsSlaSupportText">We provide email support during business hours (Monday-Friday, 9:00-17:00 CET). Response times vary by plan tier. For urgent issues, use the priority support channel provided in your plan.</p>
+
+      <h2 data-i18n="termsPaymentTitle">5. Payment Terms</h2>
+      <h3 data-i18n="termsPaymentSubTitle">5.1 Subscription Fees</h3>
+      <p data-i18n="termsPaymentText">Subscription fees are billed monthly or annually, depending on your chosen plan. All fees are exclusive of taxes, which you are responsible for paying. Payment is due at the start of each billing period.</p>
+      <h3 data-i18n="termsPaymentMethodTitle">5.2 Payment Methods</h3>
+      <p data-i18n="termsPaymentMethodText">We accept major credit cards, bank transfers, and other payment methods as indicated on our platform. Late payments may result in service suspension after 14 days of non-payment.</p>
+      <h3 data-i18n="termsPaymentRefundTitle">5.3 Refunds</h3>
+      <p data-i18n="termsPaymentRefundText">You may cancel your subscription at any time. Refunds are not provided for partial billing periods. For annual plans, you may request a pro-rated refund if you cancel within the first 30 days.</p>
+
+      <h2 data-i18n="termsIpTitle">6. Intellectual Property</h2>
+      <p data-i18n="termsIpText">All content, technology, trademarks, logos, and software comprising the Service are the property of Nexify AI or our licensors. You are granted a limited, non-exclusive, non-transferable license to use the Service for your internal business purposes only.</p>
+      <p data-i18n="termsIp2">You retain ownership of your data and content you provide through the Service. We only use your data to provide the Service and improve our AI models (with anonymized data only, unless you explicitly opt in to model training).</p>
+
+      <h2 data-i18n="termsLiabilityTitle">7. Limitation of Liability</h2>
+      <p data-i18n="termsLiability1">To the fullest extent permitted by law, Nexify AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, revenue, data, or use, arising out of or related to these Terms or the Service.</p>
+      <p data-i18n="termsLiability2">Our total aggregate liability for any claim arising out of or relating to these Terms or the Service shall not exceed the total amount paid by you to Nexify AI in the 12 months preceding the claim.</p>
+      <p data-i18n="termsLiability3">The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or completely secure.</p>
+      <p data-i18n="termsLiability4">Our AI models may occasionally produce incorrect, incomplete, or misleading information. You are responsible for reviewing and validating AI-generated outputs before acting on them.</p>
+
+      <h2 data-i18n="termsTerminationTitle">8. Termination</h2>
+      <h3 data-i18n="termsTerminationByYouTitle">8.1 Termination by You</h3>
+      <p data-i18n="termsTerminationByYouText">You may cancel your subscription at any time through your account settings or by contacting support. Access to the Service continues until the end of the current billing period.</p>
+      <h3 data-i18n="termsTerminationByUsTitle">8.2 Termination by Us</h3>
+      <p data-i18n="termsTerminationByUsText">We may suspend or terminate your access to the Service at any time if you breach these Terms, including non-payment, misuse of the Service, or violation of applicable laws. We will provide written notice where reasonable.</p>
+      <h3 data-i18n="termsTerminationEffectTitle">8.3 Effect of Termination</h3>
+      <p data-i18n="termsTerminationEffectText">Upon termination, your right to use the Service ceases immediately. We will retain your data for 30 days after termination for data export purposes, after which we may delete or anonymize your data.</p>
+
+      <h2 data-i18n="termsPrivacyTitle">9. Privacy &amp; Data Protection</h2>
+      <p data-i18n="termsPrivacyText">Your use of the Service is also governed by our <a href="privacy.html">Privacy Policy</a>, which is incorporated by reference into these Terms. We comply with the General Data Protection Regulation (GDPR) and are happy to sign a Data Processing Agreement (DPA) upon request.</p>
+
+      <h2 data-i18n="termsGoverningTitle">10. Governing Law &amp; Dispute Resolution</h2>
+      <p data-i18n="termsGoverningText">These Terms shall be governed by and construed in accordance with the laws of the Netherlands, without regard to its conflict of law principles.</p>
+      <p data-i18n="termsGoverning2">Any dispute arising out of or relating to these Terms or the Service shall be resolved in the courts of The Hague, Netherlands. If you are a consumer residing in the EU, you may also be entitled to resolve disputes through the <a href="https://ec.europa.eu/consumers/odr/" target="_blank">European Online Dispute Resolution platform</a>.</p>
+
+      <h2 data-i18n="termsChangesTitle">11. Changes to Terms</h2>
+      <p data-i18n="termsChangesText">We may update these Terms from time to time. Material changes will be communicated via email or in-app notification at least 30 days before they take effect. Your continued use of the Service after changes become effective constitutes acceptance of the updated Terms.</p>
+
+      <h2 data-i18n="termsContactTitle">12. Contact Information</h2>
+      <p data-i18n="termsContactText">For questions about these Terms, please contact us at:</p>
+      <p><strong>Nexify AI</strong><br>
+      The Hague, Netherlands<br>
+      KVK: 42114767<br>
+      Email: <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+        </a>
+        <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerProduct">Product</h5>
+        <ul>
+          <li><a href="index.html#solutions" data-i18n="footerSolutions">Industry Solutions</a></li>
+          <li><a href="index.html#demo" data-i18n="footerDemo">See It in Action</a></li>
+          <li><a href="index.html#work" data-i18n="footerPricing">Pricing</a></li>
+          <li><a href="contact.html" data-i18n="footerPilot">Pilot Program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerCompany">Company</h5>
+        <ul>
+          <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
+          <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
+          <li><a href="#" data-i18n="footerSignin">Sign In</a></li>
+          <li><a href="contact.html" data-i18n="footerSignup">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerLegal">Legal</h5>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© 2025 Nexify AI · KVK 42114767 · The Hague, Netherlands · <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== LIVE CHATBOT WIDGET ========== -->
+<button id="nx-chatbot-bubble" aria-label="Open chat">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</button>
+
+<div id="nx-chatbot-window">
+  <div class="nx-chat-header">
+    <div class="nx-chat-header-title">
+      <span class="nx-chat-header-status"></span>
+      Nexify AI Assistant
+    </div>
+    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">×</button>
+  </div>
+  <div class="nx-chat-messages" id="nx-chat-messages"></div>
+  <div class="nx-chat-input-area">
+    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message..." autocomplete="off" />
+    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
+  <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
+</div>
+
+<script>
+/* ===== UI copy (Terms page) ===== */
+const copy = {
+  en: {
+    navSolutions:'Solutions', navPlatform:'Service Model', navAbout:'About', navContact:'Contact',
+    termsEyebrow:'Legal',
+    termsTitle:'Terms of Service',
+    termsUpdated:'Last updated: January 2025',
+    termsIntroTitle:'1. Acceptance of Terms',
+    termsIntroText:'Welcome to Nexify AI ("we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our AI customer service platform, website, and related services (collectively, the "Service"). By accessing or using our Service, you agree to be bound by these Terms. If you do not agree, please do not use the Service.',
+    termsIntro2:'Nexify AI is a company registered in The Hague, Netherlands, with Chamber of Commerce (KVK) number 42114767. These Terms are governed by Dutch law.',
+    termsServiceTitle:'2. Service Description',
+    termsServiceText:'Nexify AI provides an AI-powered customer service platform that enables businesses to automate customer interactions across chat, phone, and email channels. Our Service includes:',
+    termsService1:'AI chatbot widget for website integration',
+    termsService2:'AI phone agent for phone call handling',
+    termsService3:'AI email agent for email response management',
+    termsService4:'Multilingual support (30+ languages)',
+    termsService5:'Lead capture and management tools',
+    termsService6:'Dashboard and analytics (where applicable)',
+    termsServiceNote:'We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice.',
+    termsObligationsTitle:'3. User Obligations',
+    termsObligationsIntro:'By using our Service, you agree to:',
+    termsObligations1:'Provide accurate and complete information during registration and onboarding',
+    termsObligations2:'Use the Service only for lawful purposes and in accordance with these Terms',
+    termsObligations3:'Maintain the security of your account credentials and notify us immediately of any unauthorized access',
+    termsObligations4:'Not attempt to reverse engineer, hack, or disrupt the Service or its underlying technology',
+    termsObligations5:'Not use the Service to send spam, malicious content, or to violate any third-party rights',
+    termsObligations6:'Comply with all applicable laws and regulations in your use of the Service',
+    termsObligations7:'Ensure that your use of the Service does not violate the rights of any third party',
+    termsSlaTitle:'4. Service Level Agreement (SLA)',
+    termsSlaUptimeTitle:'4.1 Uptime Commitment',
+    termsSlaUptimeText:'We strive to maintain 99.9% uptime for our Service, measured monthly. Scheduled maintenance windows are excluded and will be communicated in advance. If we fail to meet this commitment, you may be eligible for service credits as detailed below.',
+    termsSlaCreditTitle:'4.2 Service Credits',
+    termsSlaCreditText:'If uptime falls below 99.9% in any given month, we will credit 10% of your monthly fee for each additional 0.5% below the SLA target, up to a maximum of 50% credit. To claim service credits, you must submit a request to billing@nexifyai.org within 30 days of the incident.',
+    termsSlaSupportTitle:'4.3 Support',
+    termsSlaSupportText:'We provide email support during business hours (Monday-Friday, 9:00-17:00 CET). Response times vary by plan tier. For urgent issues, use the priority support channel provided in your plan.',
+    termsPaymentTitle:'5. Payment Terms',
+    termsPaymentSubTitle:'5.1 Subscription Fees',
+    termsPaymentText:'Subscription fees are billed monthly or annually, depending on your chosen plan. All fees are exclusive of taxes, which you are responsible for paying. Payment is due at the start of each billing period.',
+    termsPaymentMethodTitle:'5.2 Payment Methods',
+    termsPaymentMethodText:'We accept major credit cards, bank transfers, and other payment methods as indicated on our platform. Late payments may result in service suspension after 14 days of non-payment.',
+    termsPaymentRefundTitle:'5.3 Refunds',
+    termsPaymentRefundText:'You may cancel your subscription at any time. Refunds are not provided for partial billing periods. For annual plans, you may request a pro-rated refund if you cancel within the first 30 days.',
+    termsIpTitle:'6. Intellectual Property',
+    termsIpText:'All content, technology, trademarks, logos, and software comprising the Service are the property of Nexify AI or our licensors. You are granted a limited, non-exclusive, non-transferable license to use the Service for your internal business purposes only.',
+    termsIp2:'You retain ownership of your data and content you provide through the Service. We only use your data to provide the Service and improve our AI models (with anonymized data only, unless you explicitly opt in to model training).',
+    termsLiabilityTitle:'7. Limitation of Liability',
+    termsLiability1:'To the fullest extent permitted by law, Nexify AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, revenue, data, or use, arising out of or related to these Terms or the Service.',
+    termsLiability2:'Our total aggregate liability for any claim arising out of or relating to these Terms or the Service shall not exceed the total amount paid by you to Nexify AI in the 12 months preceding the claim.',
+    termsLiability3:'The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted, error-free, or completely secure.',
+    termsLiability4:'Our AI models may occasionally produce incorrect, incomplete, or misleading information. You are responsible for reviewing and validating AI-generated outputs before acting on them.',
+    termsTerminationTitle:'8. Termination',
+    termsTerminationByYouTitle:'8.1 Termination by You',
+    termsTerminationByYouText:'You may cancel your subscription at any time through your account settings or by contacting support. Access to the Service continues until the end of the current billing period.',
+    termsTerminationByUsTitle:'8.2 Termination by Us',
+    termsTerminationByUsText:'We may suspend or terminate your access to the Service at any time if you breach these Terms, including non-payment, misuse of the Service, or violation of applicable laws. We will provide written notice where reasonable.',
+    termsTerminationEffectTitle:'8.3 Effect of Termination',
+    termsTerminationEffectText:'Upon termination, your right to use the Service ceases immediately. We will retain your data for 30 days after termination for data export purposes, after which we may delete or anonymize your data.',
+    termsPrivacyTitle:'9. Privacy & Data Protection',
+    termsPrivacyText:'Your use of the Service is also governed by our <a href="privacy.html">Privacy Policy</a>, which is incorporated by reference into these Terms. We comply with the General Data Protection Regulation (GDPR) and are happy to sign a Data Processing Agreement (DPA) upon request.',
+    termsGoverningTitle:'10. Governing Law & Dispute Resolution',
+    termsGoverningText:'These Terms shall be governed by and construed in accordance with the laws of the Netherlands, without regard to its conflict of law principles.',
+    termsGoverning2:'Any dispute arising out of or relating to these Terms or the Service shall be resolved in the courts of The Hague, Netherlands. If you are a consumer residing in the EU, you may also be entitled to resolve disputes through the <a href="https://ec.europa.eu/consumers/odr/" target="_blank">European Online Dispute Resolution platform</a>.',
+    termsChangesTitle:'11. Changes to Terms',
+    termsChangesText:'We may update these Terms from time to time. Material changes will be communicated via email or in-app notification at least 30 days before they take effect. Your continued use of the Service after changes become effective constitutes acceptance of the updated Terms.',
+    termsContactTitle:'12. Contact Information',
+    termsContactText:'For questions about these Terms, please contact us at:',
+    footerTagline:'24/7 AI customer service for European SMEs.',
+    footerProduct:'Product',
+    footerSolutions:'Industry Solutions',
+    footerDemo:'See It in Action',
+    footerPricing:'Pricing',
+    footerPilot:'Pilot Program',
+    footerCompany:'Company',
+    footerAbout:'About Us',
+    footerContact:'Contact',
+    footerSignin:'Sign In',
+    footerSignup:'Sign Up',
+    footerLegal:'Legal',
+    footerPrivacy:'Privacy Policy',
+    footerTerms:'Terms of Service'
+  },
+  nl: {
+    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navAbout:'Over ons', navContact:'Contact',
+    termsEyebrow:'Juridisch',
+    termsTitle:'Servicevoorwaarden',
+    termsUpdated:'Laatst bijgewerkt: januari 2025',
+    termsIntroTitle:'1. Aanvaarding van voorwaarden',
+    termsIntroText:'Welkom bij Nexify AI ("wij", "ons" of "onze"). Deze servicevoorwaarden ("Voorwaarden") bepalen je toegang tot en gebruik van ons AI-klantenserviceplatform, website en gerelateerde diensten (gezamenlijk de "Dienst"). Door onze Dienst te gebruiken, ga je akkoord met deze Voorwaarden. Als je niet akkoord gaat, gebruik de Dienst dan niet.',
+    termsIntro2:'Nexify AI is een bedrijf gevestigd in Den Haag, Nederland, met KvK-nummer 42114767. Deze Voorwaarden worden beheerst door Nederlands recht.',
+    termsServiceTitle:'2. Dienstverlening',
+    termsServiceText:'Nexify AI biedt een AI-gestuurd klantenserviceplatform waarmee bedrijven klantinteracties kunnen automatiseren via chat, telefoon en e-mail. Onze Dienst omvat:',
+    termsService1:'AI chat-widget voor website-integratie',
+    termsService2:'AI telefoonagent voor het afhandelen van telefoongesprekken',
+    termsService3:'AI e-mailagent voor het beheren van e-mailreacties',
+    termsService4:'Meertalige ondersteuning (30+ talen)',
+    termsService5:'Leadverzameling en beheertools',
+    termsService6:'Dashboard en analytics (indien van toepassing)',
+    termsServiceNote:'We behouden ons het recht voor om elk deel van de Dienst op elk moment te wijzigen, op te schorten of te beëindigen, met of zonder kennisgeving.',
+    termsObligationsTitle:'3. Verplichtingen van de gebruiker',
+    termsObligationsIntro:'Door onze Dienst te gebruiken, ga je ermee akkoord dat je:',
+    termsObligations1:'Juiste en volledige informatie verstrekt bij registratie en onboarding',
+    termsObligations2:'De Dienst alleen gebruikt voor rechtmatige doeleinden en in overeenstemming met deze Voorwaarden',
+    termsObligations3:'De veiligheid van je accountgegevens handhaaft en ons onmiddellijk op de hoogte stelt bij ongeoorloofde toegang',
+    termsObligations4:'Niet probeert de Dienst of de onderliggende technologie te reverse engineeren, te hacken of te verstoren',
+    termsObligations5:'De Dienst niet gebruikt om spam, kwaadaardige inhoud te verzenden of rechten van derden te schenden',
+    termsObligations6:'Alle toepasselijke wet- en regelgeving naleert bij je gebruik van de Dienst',
+    termsObligations7:'Ervoor zorgt dat je gebruik van de Dienst geen rechten van derden schendt',
+    termsSlaTitle:'4. Service Level Agreement (SLA)',
+    termsSlaUptimeTitle:'4.1 Beschikbaarheid',
+    termsSlaUptimeText:'We streven naar 99,9% beschikbaarheid van onze Dienst, per maand gemeten. Geplande onderhoudsperiodes zijn uitgesloten en worden vooraf gecommuniceerd. Als we niet aan deze verbintenis voldoen, kom je mogelijk in aanmerking voor servicekredieten zoals hieronder beschreven.',
+    termsSlaCreditTitle:'4.2 Servicekredieten',
+    termsSlaCreditText:'Als de beschikbaarheid in een bepaalde maand onder de 99,9% daalt, krediteren we 10% van je maandelijkse kosten voor elke extra 0,5% onder de SLA-doelstelling, maximaal 50% krediet. Om servicekredieten aan te vragen, stuur een verzoek naar billing@nexifyai.org binnen 30 dagen na het incident.',
+    termsSlaSupportTitle:'4.3 Ondersteuning',
+    termsSlaSupportText:'We bieden e-mailondersteuning tijdens kantooruren (maandag-vrijdag, 9:00-17:00 CET). Responstijden verschillen per abonnement. Voor urgente problemen gebruik je de prioriteitsondersteuning in je plan.',
+    termsPaymentTitle:'5. Betalingsvoorwaarden',
+    termsPaymentSubTitle:'5.1 Abonnementskosten',
+    termsPaymentText:'Abonnementskosten worden maandelijks of jaarlijks in rekening gebracht, afhankelijk van je gekozen plan. Alle kosten zijn exclusief btw, die voor je rekening komen. Betaling is verschuldigd aan het begin van elke factureringsperiode.',
+    termsPaymentMethodTitle:'5.2 Betalingsmethoden',
+    termsPaymentMethodText:'We accepteren grote creditcards, bankoverschrijvingen en andere betalingsmethoden zoals aangegeven op ons platform. Te late betalingen kunnen leiden tot opschorting van de dienst na 14 dagen niet-betaling.',
+    termsPaymentRefundTitle:'5.3 Restituties',
+    termsPaymentRefundText:'Je kunt je abonnement op elk moment opzeggen. Er worden geen restituties verstrekt voor gedeelde factureringsperioden. Voor jaarabonnementen kun je een evenredige teruggave aanvragen als je binnen de eerste 30 dagen opzegt.',
+    termsIpTitle:'6. Intellectueel eigendom',
+    termsIpText:'Alle inhoud, technologie, handelsmerken, logo\'s en software die de Dienst vormen, zijn eigendom van Nexify AI of onze licentiegevers. Je krijgt een beperkte, niet-exclusieve, niet-overdraagbare licentie om de Dienst alleen voor je interne zakelijke doeleinden te gebruiken.',
+    termsIp2:'Je behoudt het eigendom van je gegevens en inhoud die je via de Dienst verstrekt. We gebruiken je gegevens alleen om de Dienst te leveren en onze AI-modellen te verbeteren (alleen met geanonimiseerde gegevens, tenzij je expliciet toestemming geeft voor modeltraining).',
+    termsLiabilityTitle:'7. Beperking van aansprakelijkheid',
+    termsLiability1:'Voor zover wettelijk toegestaan, is Nexify AI niet aansprakelijk voor indirecte, incidentele, speciale, gevolgschade of punitieve schade, of enig verlies van winst, omzet, gegevens of gebruik, voortvloeiend uit of verband houdend met deze Voorwaarden of de Dienst.',
+    termsLiability2:'Onze totale geaggregeerde aansprakelijkheid voor enige vordering voortvloeiend uit of verband houdend met deze Voorwaarden of de Dienst bedraagt niet meer dan het totale bedrag dat je aan Nexify AI hebt betaald in de 12 maanden voorafgaand aan de vordering.',
+    termsLiability3:'De Dienst wordt geleverd "zoals hij is" en "zoals beschikbaar" zonder garanties van welke aard dan ook, expliciet of impliciet. We garanderen niet dat de Dienst ononderbroken, foutloos of volledig veilig is.',
+    termsLiability4:'Onze AI-modellen kunnen soms onjuiste, onvolledige of misleidende informatie produceren. Je bent verantwoordelijk voor het beoordelen en valideren van door AI gegenereerde uitvoer voordat je erop handelt.',
+    termsTerminationTitle:'8. Beëindiging',
+    termsTerminationByYouTitle:'8.1 Beëindiging door jou',
+    termsTerminationByYouText:'Je kunt je abonnement op elk moment opzeggen via je accountinstellingen of door contact op te nemen met support. Toegang tot de Dienst blijft bestaan tot het einde van de huidige factureringsperiode.',
+    termsTerminationByUsTitle:'8.2 Beëindiging door ons',
+    termsTerminationByUsText:'We kunnen je toegang tot de Dienst op elk moment opschorten of beëindigen als je deze Voorwaarden schendt, waaronder niet-betaling, misbruik van de Dienst of schending van toepasselijke wetten. We geven schriftelijke kennisgeving waar redelijk.',
+    termsTerminationEffectTitle:'8.3 Gevolgen van beëindiging',
+    termsTerminationEffectText:'Bij beëindiging eindigt je recht om de Dienst te gebruiken onmiddellijk. We bewaren je gegevens 30 dagen na beëindiging voor gegevensexport, daarna kunnen we je gegevens verwijderen of anonimiseren.',
+    termsPrivacyTitle:'9. Privacy & Gegevensbescherming',
+    termsPrivacyText:'Je gebruik van de Dienst valt ook onder ons <a href="privacy.html">Privacybeleid</a>, dat door verwijzing in deze Voorwaarden is opgenomen. We voldoen aan de Algemene Verordening Gegevensbescherming (AVG) en tekenen graag een Verwerkersovereenkomst (VWO) op verzoek.',
+    termsGoverningTitle:'10. Toepasselijk recht & Geschillenbeslechting',
+    termsGoverningText:'Deze Voorwaarden worden beheerst door en uitgelegd in overeenstemming met het recht van Nederland, zonder aanzien van zijn conflictenrechtbeginselen.',
+    termsGoverning2:'Elk geschil voortvloeiend uit of verband houdend met deze Voorwaarden of de Dienst wordt beslecht door de rechter in Den Haag, Nederland. Als je een consument bent die in de EU woont, kun je mogelijk ook geschillen beslechten via het <a href="https://ec.europa.eu/consumers/odr/" target="_blank">Europees platform voor online geschillenbeslechting</a>.',
+    termsChangesTitle:'11. Wijzigingen in voorwaarden',
+    termsChangesText:'We kunnen deze Voorwaarden van tijd tot tijd bijwerken. Wezenlijke wijzigingen worden minimaal 30 dagen voor ingang per e-mail of in-app-melding meegedeeld. Je voortgezette gebruik van de Dienst nadat wijzigingen van kracht worden, betekent aanvaarding van de bijgewerkte Voorwaarden.',
+    termsContactTitle:'12. Contact',
+    termsContactText:'Voor vragen over deze Voorwaarden, neem contact met ons op via:',
+    footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
+    footerProduct:'Product',
+    footerSolutions:'Branche-oplossingen',
+    footerDemo:'Probeer het',
+    footerPricing:'Prijzen',
+    footerPilot:'Pilotprogramma',
+    footerCompany:'Bedrijf',
+    footerAbout:'Over ons',
+    footerContact:'Contact',
+    footerSignin:'Inloggen',
+    footerSignup:'Aanmelden',
+    footerLegal:'Juridisch',
+    footerPrivacy:'Privacybeleid',
+    footerTerms:'Servicevoorwaarden'
+  },
+  fr: {
+    navSolutions:'Solutions', navPlatform:'Modèle de service', navAbout:'À propos', navContact:'Contact',
+    termsEyebrow:'Juridique',
+    termsTitle:"Conditions d'utilisation",
+    termsUpdated:'Dernière mise à jour : janvier 2025',
+    termsIntroTitle:'1. Acceptation des conditions',
+    termsIntroText:'Bienvenue chez Nexify AI ("nous", "notre" ou "nos"). Ces Conditions d\'utilisation ("Conditions") régissent votre accès et votre utilisation de notre plateforme de service client IA, de notre site web et des services associés (collectivement le "Service"). En accédant ou en utilisant notre Service, vous acceptez d\'être lié par ces Conditions. Si vous n\'êtes pas d\'accord, veuillez ne pas utiliser le Service.',
+    termsIntro2:'Nexify AI est une entreprise enregistrée à La Haye, Pays-Bas, avec le numéro de Chambre de commerce (KVK) 42114767. Ces Conditions sont régies par le droit néerlandais.',
+    termsServiceTitle:'2. Description du service',
+    termsServiceText:'Nexify AI fournit une plateforme de service client alimentée par l\'IA qui permet aux entreprises d\'automatiser les interactions clients via les canaux chat, téléphone et e-mail. Notre Service comprend :',
+    termsService1:'Widget chatbot IA pour intégration de site web',
+    termsService2:'Agent téléphonique IA pour la gestion des appels',
+    termsService3:'Agent e-mail IA pour la gestion des réponses e-mail',
+    termsService4:'Support multilingue (30+ langues)',
+    termsService5:'Outils de capture et de gestion de leads',
+    termsService6:'Tableau de bord et analyses (le cas échéant)',
+    termsServiceNote:'Nous nous réservons le droit de modifier, suspendre ou interrompre toute partie du Service à tout moment, avec ou sans préavis.',
+    termsObligationsTitle:'3. Obligations de l\'utilisateur',
+    termsObligationsIntro:'En utilisant notre Service, vous acceptez de :',
+    termsObligations1:'Fournir des informations exactes et complètes lors de l\'inscription et de l\'intégration',
+    termsObligations2:'Utiliser le Service uniquement à des fins légales et conformément à ces Conditions',
+    termsObligations3:'Maintenir la sécurité de vos identifiants de compte et nous avertir immédiatement de tout accès non autorisé',
+    termsObligations4:'Ne pas tenter d\'effectuer une ingénierie inverse, de pirater ou de perturber le Service ou sa technologie sous-jacente',
+    termsObligations5:'Ne pas utiliser le Service pour envoyer des spam, du contenu malveillant, ou violer les droits de tiers',
+    termsObligations6:'Respecter toutes les lois et réglementations applicables dans votre utilisation du Service',
+    termsObligations7:'Vous assurer que votre utilisation du Service ne viole pas les droits de tiers',
+    termsSlaTitle:'4. Accord de niveau de service (SLA)',
+    termsSlaUptimeTitle:'4.1 Engagement de disponibilité',
+    termsSlaUptimeText:'Nous nous efforçons de maintenir 99,9% de disponibilité pour notre Service, mesuré mensuellement. Les fenêtres de maintenance planifiées sont exclues et seront communiquées à l\'avance. Si nous ne respectons pas cet engagement, vous pourriez être éligible à des crédits de service comme détaillé ci-dessous.',
+    termsSlaCreditTitle:'4.2 Crédits de service',
+    termsSlaCreditText:'Si la disponibilité descend en dessous de 99,9% un mois donné, nous créditerons 10% de vos frais mensuels pour chaque 0,5% supplémentaire en dessous de l\'objectif SLA, jusqu\'à un maximum de 50% de crédit. Pour réclamer des crédits de service, vous devez soumettre une demande à billing@nexifyai.org dans les 30 jours suivant l\'incident.',
+    termsSlaSupportTitle:'4.3 Support',
+    termsSlaSupportText:'Nous fournissons un support e-mail pendant les heures ouvrables (lundi-vendredi, 9h00-17h00 CET). Les temps de réponse varient selon le niveau d\'abonnement. Pour les problèmes urgents, utilisez le canal de support prioritaire fourni dans votre plan.',
+    termsPaymentTitle:'5. Conditions de paiement',
+    termsPaymentSubTitle:'5.1 Frais d\'abonnement',
+    termsPaymentText:'Les frais d\'abonnement sont facturés mensuellement ou annuellement, selon le plan choisi. Tous les frais sont hors taxes, dont vous êtes responsable. Le paiement est dû au début de chaque période de facturation.',
+    termsPaymentMethodTitle:'5.2 Moyens de paiement',
+    termsPaymentMethodText:'Nous acceptons les principales cartes de crédit, les virements bancaires et d\'autres moyens de paiement indiqués sur notre plateforme. Les paiements en retard peuvent entraîner la suspension du service après 14 jours de non-paiement.',
+    termsPaymentRefundTitle:'5.3 Remboursements',
+    termsPaymentRefundText:'Vous pouvez annuler votre abonnement à tout moment. Aucun remboursement n\'est prévu pour les périodes de facturation partielles. Pour les abonnements annuels, vous pouvez demander un remboursement au prorata si vous annulez dans les 30 premiers jours.',
+    termsIpTitle:'6. Propriété intellectuelle',
+    termsIpText:'Tout le contenu, la technologie, les marques, les logos et les logiciels composant le Service sont la propriété de Nexify AI ou de nos concédants. Une licence limitée, non exclusive et non transférable vous est accordée pour utiliser le Service uniquement à vos fins commerciales internes.',
+    termsIp2:'Vous conservez la propriété de vos données et du contenu que vous fournissez via le Service. Nous utilisons vos données uniquement pour fournir le Service et améliorer nos modèles IA (avec des données anonymisées uniquement, sauf si vous optez explicitement pour la formation des modèles).',
+    termsLiabilityTitle:'7. Limitation de responsabilité',
+    termsLiability1:'Dans toute la mesure permise par la loi, Nexify AI ne sera pas responsable des dommages indirects, accessoires, spéciaux, consécutifs ou punitifs, ni de toute perte de profits, de revenus, de données ou d\'utilisation, découlant de ou liés à ces Conditions ou au Service.',
+    termsLiability2:'Notre responsabilité totale et cumulative pour toute réclamation découlant de ou liée à ces Conditions ou au Service ne dépassera pas le montant total que vous avez payé à Nexify AI au cours des 12 mois précédant la réclamation.',
+    termsLiability3:'Le Service est fourni "tel quel" et "tel que disponible" sans garantie d\'aucune sorte, expresse ou implicite. Nous ne garantissons pas que le Service sera ininterrompu, exempt d\'erreurs ou complètement sécurisé.',
+    termsLiability4:'Nos modèles IA peuvent occasionnellement produire des informations incorrectes, incomplètes ou trompeuses. Vous êtes responsable de l\'examen et de la validation des sorties générées par l\'IA avant d\'agir.',
+    termsTerminationTitle:'8. Résiliation',
+    termsTerminationByYouTitle:'8.1 Résiliation par vous',
+    termsTerminationByYouText:'Vous pouvez annuler votre abonnement à tout moment via les paramètres de votre compte ou en contactant le support. L\'accès au Service continue jusqu\'à la fin de la période de facturation en cours.',
+    termsTerminationByUsTitle:'8.2 Résiliation par nous',
+    termsTerminationByUsText:'Nous pouvons suspendre ou résilier votre accès au Service à tout moment si vous violez ces Conditions, y compris pour non-paiement, mauvaise utilisation du Service ou violation des lois applicables. Nous fournirons un avis écrit lorsque cela est raisonnable.',
+    termsTerminationEffectTitle:'8.3 Effet de la résiliation',
+    termsTerminationEffectText:'À la résiliation, votre droit d\'utiliser le Service cesse immédiatement. Nous conserverons vos données pendant 30 jours après la résiliation pour l\'exportation des données, après quoi nous pourrons supprimer ou anonymiser vos données.',
+    termsPrivacyTitle:'9. Confidentialité & Protection des données',
+    termsPrivacyText:'Votre utilisation du Service est également régie par notre <a href="privacy.html">Politique de confidentialité</a>, qui est incorporée par référence dans ces Conditions. Nous nous conformons au Règlement Général sur la Protection des Données (RGPD) et nous sommes heureux de signer un Accord de Traitement des Données (ATD) sur demande.',
+    termsGoverningTitle:'10. Droit applicable & Règlement des litiges',
+    termsGoverningText:'Ces Conditions sont régies et interprétées conformément aux lois des Pays-Bas, sans égard à ses principes de conflit de lois.',
+    termsGoverning2:'Tout litige découlant de ou lié à ces Conditions ou au Service sera résolu par les tribunaux de La Haye, Pays-Bas. Si vous êtes un consommateur résidant dans l\'UE, vous pouvez également être en droit de régler les litiges via la <a href="https://ec.europa.eu/consumers/odr/" target="_blank">plateforme européenne de résolution des litiges en ligne</a>.',
+    termsChangesTitle:'11. Modification des conditions',
+    termsChangesText:'Nous pouvons mettre à jour ces Conditions de temps à autre. Les modifications importantes seront communiquées par e-mail ou notification dans l\'application au moins 30 jours avant leur entrée en vigueur. Votre utilisation continue du Service après l\'entrée en vigueur des modifications constitue une acceptation des Conditions mises à jour.',
+    termsContactTitle:'12. Informations de contact',
+    termsContactText:'Pour toute question sur ces Conditions, veuillez nous contacter à :',
+    footerTagline:'Service client IA 24h/24 pour les PME européennes.',
+    footerProduct:'Produit',
+    footerSolutions:'Solutions secteur',
+    footerDemo:'Essayez-le',
+    footerPricing:'Tarifs',
+    footerPilot:'Programme Pilote',
+    footerCompany:'Entreprise',
+    footerAbout:'À propos',
+    footerContact:'Contact',
+    footerSignin:'Connexion',
+    footerSignup:"S'inscrire",
+    footerLegal:'Juridique',
+    footerPrivacy:'Politique de confidentialité',
+    footerTerms:"Conditions d'utilisation"
+  }
+};
+
+/* ===== Theme + nav + header language ===== */
+const root = document.documentElement;
+const langButtons = document.querySelectorAll('.lang-btn');
+const navElement = document.getElementById('site-nav');
+const menuToggleBtn = document.querySelector('[data-menu-toggle]');
+let uiLang = localStorage.getItem('nexify_lang') || 'en';
+
+function setUiLanguage(lang){
+  uiLang = lang;
+  root.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(copy[lang] && copy[lang][key]) el.innerHTML = copy[lang][key];
+  });
+  langButtons.forEach(btn=>{
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  localStorage.setItem('nexify_lang', lang);
+}
+langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+
+if(menuToggleBtn && navElement) {
+  menuToggleBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const isOpen = navElement.classList.toggle('open');
+    menuToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navElement.querySelectorAll('a').forEach(link=>link.addEventListener('click', ()=>{
+    navElement.classList.remove('open');
+    menuToggleBtn.setAttribute('aria-expanded','false');
+  }));
+  document.addEventListener('click', ()=>{
+    if(navElement.classList.contains('open')){
+      navElement.classList.remove('open');
+      menuToggleBtn.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
+let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const themeBtn = document.querySelector('[data-theme-toggle]');
+function renderTheme(){root.setAttribute('data-theme',theme);}
+if(themeBtn){themeBtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';renderTheme();});}
+
+/* ===== Chatbot Widget ===== */
+(function(){
+  const bubble = document.getElementById('nx-chatbot-bubble');
+  const windowEl = document.getElementById('nx-chatbot-window');
+  const closeBtn = document.getElementById('nx-chat-close');
+  const messagesEl = document.getElementById('nx-chat-messages');
+  const inputEl = document.getElementById('nx-chat-input');
+  const sendBtn = document.getElementById('nx-chat-send');
+
+  let isOpen = false;
+  let messages = [];
+  let collectedLead = { name:null, email:null, company:null, message:null };
+  let currentStep = 0;
+  let leadSubmitted = false;
+  let userLang = 'en';
+
+  const API_URL = '';
+
+  function toggleChat(){
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if(isOpen){
+      if(messages.length === 0){
+        const lang = detectLanguage();
+        const greetings = {
+          en:"Hi there! 👋 I'm the Nexify AI assistant. How can I help you today?",
+          nl:"Hallo! 👋 Ik ben de Nexify AI-assistent. Waar kan ik je vandaag mee helpen?",
+          fr:"Bonjour ! 👋 Je suis l'assistant Nexify AI. Comment puis-je vous aider aujourd'hui ?",
+          es:"¡Hola! 👋 Soy el asistente de Nexify AI. ¿En qué puedo ayudarte hoy?",
+          zh:"你好！👋 我是 Nexify AI 助手，今天有什么可以帮你的？"
+        };
+        addBotMessage(greetings[lang] || greetings.en);
+      }
+      inputEl.focus();
+    }
+  }
+
+  function detectLanguage(){
+    const stored = localStorage.getItem('nexify_lang');
+    if(stored && ['en','nl','fr','es','zh'].includes(stored)) return stored;
+    const browser = navigator.language.toLowerCase();
+    if(browser.startsWith('nl')) return 'nl';
+    if(browser.startsWith('fr')) return 'fr';
+    if(browser.startsWith('es')) return 'es';
+    if(browser.startsWith('zh')) return 'zh';
+    return 'en';
+  }
+
+  function detectUserLang(text){
+    const dutch = /de|het|een|ik|je|dat|wat|hoe|kan|u|uw|bedrijf|klant/i;
+    const french = /le|la|les|un|une|des|je|tu|vous|que|comment|pouvez|entreprise|client/i;
+    const spanish = /el|la|los|las|un|una|yo|tú|usted|qué|cómo|puede|empresa|cliente/i;
+    const chinese = /[\u4e00-\u9fa5]/;
+    if(chinese.test(text)) return 'zh';
+    if(dutch.test(text)) return 'nl';
+    if(french.test(text)) return 'fr';
+    if(spanish.test(text)) return 'es';
+    return 'en';
+  }
+
+  const leadQuestions = [
+    {key:'name', q:{en:"Great! To get started, could I get your name?",nl:"Perfect! Om te beginnen, wat is je naam?",fr:"Parfait ! Pour commencer, puis-je avoir votre nom ?",es:"¡Perfecto! Para empezar, ¿cuál es tu nombre?",zh:"好的！请问怎么称呼您？"}},
+    {key:'email', q:{en:"Thanks! And what's your email address so we can follow up?",nl:"Dank je! En wat is je e-mailadres zodat we contact kunnen opnemen?",fr:"Merci ! Et quelle est votre adresse e-mail pour que nous puissions vous recontacter ?",es:"¡Gracias! ¿Y cuál es tu correo electrónico para poder contactarte?",zh:"谢谢！你的邮箱地址是什么，我们好跟进？"}},
+    {key:'company', q:{en:"Got it. What company are you with?",nl:"Oké. Bij welk bedrijf werk je?",fr:"D'accord. Dans quelle entreprise travaillez-vous ?",es:"Entendido. ¿Para qué empresa trabajas?",zh:"好的，你在哪个公司工作？"}},
+    {key:'message', q:{en:"Almost done! What would you like to talk about — a demo, pricing, or something else?",nl:"Bijna klaar! Waar wil je het over hebben — een demo, prijzen, of iets anders?",fr:"C'est presque fini ! De quoi aimeriez-vous parler — une démo, les tarifs, ou autre chose ?",es:"¡Casi terminamos! ¿De qué te gustaría hablar — una demo, precios, o algo más?",zh:"快完成了！你想聊什么——演示、价格还是其他？"}}
+  ];
+
+  const thankYouMessages = {
+    en:"Thanks so much! Our team will review your message and get back to you within 24 hours. In the meantime, feel free to ask me anything about Nexify AI!",
+    nl:"Bedankt! Ons team bekijkt je bericht en neemt binnen 24 uur contact met je op. In de tussentijd kun je me gerust alles vragen over Nexify AI!",
+    fr:"Merci beaucoup ! Notre équipe examinera votre message et vous répondra dans les 24 heures. En attendant, n'hésitez pas à me poser vos questions sur Nexify AI !",
+    es:"¡Muchas gracias! Nuestro equipo revisará tu mensaje y te responderá en 24 horas. Mientras tanto, ¡no dudes en preguntarme cualquier cosa sobre Nexify AI!",
+    zh:"非常感谢！我们的团队会查看你的信息，并在24小时内回复你。同时，有任何关于 Nexify AI 的问题，随时问我！"
+  };
+
+  function addBotMessage(text){
+    const div = document.createElement('div');
+    div.className = 'nx-msg bot';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messages.push({role:'assistant', content:text});
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMessage(text){
+    const div = document.createElement('div');
+    div.className = 'nx-msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messages.push({role:'user', content:text});
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showTyping(){
+    const div = document.createElement('div');
+    div.className = 'nx-typing';
+    div.id = 'nx-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping(){
+    const el = document.getElementById('nx-typing-indicator');
+    if(el) el.remove();
+  }
+
+  function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+  function getLocalResponse(userMessage) {
+    userLang = detectUserLang(userMessage);
+    const isQuestion = /[?？]/.test(userMessage) || /^(what|how|can|do you|is there|wat|hoe|kan|comment|pouvez|qué|cómo|puede|什么|怎么|如何|有没有|是否)/i.test(userMessage);
+    if (isQuestion && currentStep === 0) {
+      return { reply: getQuestionAnswer(userMessage, userLang) + "\n\n" + leadQuestions[0].q[userLang], shouldAdvance: true };
+    }
+    if (currentStep === 0) {
+      return { reply: leadQuestions[0].q[userLang], shouldAdvance: true };
+    }
+    const currentQ = leadQuestions[currentStep - 1];
+    if (currentQ && collectedLead[currentQ.key] === null) {
+      collectedLead[currentQ.key] = userMessage.trim();
+    }
+    if (currentStep < leadQuestions.length) {
+      const nextQ = leadQuestions[currentStep];
+      return { reply: nextQ.q[userLang], shouldAdvance: true };
+    }
+    leadSubmitted = true;
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+    return { reply: thankYouMessages[userLang], shouldAdvance: false, complete: true };
+  }
+
+  function getQuestionAnswer(question, lang) {
+    const q = question.toLowerCase();
+    const answers = {
+      en: {
+        price: "Pricing depends on your needs — we offer flexible plans starting from just a few hundred euros per month. I'd love to learn more about your business so we can find the right fit for you.",
+        demo: "Absolutely! I can help you book a demo. Let me collect a bit of info first so our team can prepare the best demo for your use case.",
+        features: "We offer 24/7 AI customer service across chat, phone, and email — in 30+ languages. Key features include multilingual support, instant response time, order handling, and lead generation. We launch in under 7 days!",
+        languages: "We support 30+ languages natively, including English, Dutch, French, Spanish, German, Chinese, and more. The AI detects your customer's language automatically and responds fluently."
+      },
+      nl: {
+        price: "De prijs hangt af van je behoeften — we hebben flexibele pakketten vanaf een paar honderd euro per maand. Ik hoor graag meer over je bedrijf, zodat we de juiste oplossing kunnen vinden.",
+        demo: "Zeker weten! Ik kan je helpen met een demo. Laat me eerst wat info verzamelen, zodat ons team de beste demo voor jouw situatie kan voorbereiden.",
+        features: "We bieden 24/7 AI-klantenservice via chat, telefoon en e-mail — in 30+ talen. Belangrijkste functies: meertaligheid, directe reacties, orderafhandeling en leadgeneratie. We gaan live in minder dan 7 dagen!",
+        languages: "We ondersteunen 30+ talen op moedertaalniveau, waaronder Nederlands, Engels, Frans, Spaans, Duits en Chinees. De AI detecteert automatisch de taal van je klant en antwoordt vloeiend."
+      },
+      fr: {
+        price: "Le prix dépend de vos besoins — nous proposons des formules flexibles à partir de quelques centaines d'euros par mois. J'aimerais en savoir plus sur votre entreprise pour trouver la formule qui vous convient.",
+        demo: "Absolument ! Je peux vous aider à réserver une démo. Laissez-moi d'abord collecter quelques informations pour que notre équipe prépare la meilleure démo pour votre cas.",
+        features: "Nous proposons un service client IA 24h/24 sur chat, téléphone et e-mail — en 30+ langues. Fonctionnalités clés : multilingue, réponse instantanée, gestion des commandes et génération de leads. Mise en ligne en moins de 7 jours !",
+        languages: "Nous supportons 30+ langues nativement, dont le français, l'anglais, le néerlandais, l'espagnol, l'allemand et le chinois. L'IA détecte automatiquement la langue de votre client et répond couramment."
+      },
+      es: {
+        price: "El precio depende de tus necesidades — ofrecemos planes flexibles desde unos pocos cientos de euros al mes. Me gustaría saber más sobre tu negocio para encontrar la opción adecuada.",
+        demo: "¡Claro que sí! Puedo ayudarte a reservar una demo. Déjame recopilar un poco de información primero para que nuestro equipo prepare la mejor demo para tu caso.",
+        features: "Ofrecemos servicio al cliente con IA 24/7 por chat, teléfono y correo electrónico — en 30+ idiomas. Características clave: multilingüe, respuesta instantánea, gestión de pedidos y generación de leads. ¡Lanzamiento en menos de 7 días!",
+        languages: "Soportamos 30+ idiomas de forma nativa, incluyendo español, inglés, neerlandés, francés, alemán y chino. La IA detecta automáticamente el idioma de tu cliente y responde con fluidez."
+      },
+      zh: {
+        price: "价格根据你的需求而定——我们提供灵活的方案，每月几百欧元起。我想更多了解你的业务，以便为你找到最合适的方案。",
+        demo: "当然可以！我可以帮你预约演示。先让我了解一些信息，这样我们的团队可以为你的使用场景准备最合适的演示。",
+        features: "我们提供24/7 AI客服，覆盖聊天、电话和邮件——支持30多种语言。核心功能包括：多语言支持、即时响应、订单处理和获客。7天内即可上线！",
+        languages: "我们原生支持30多种语言，包括中文、英文、荷兰语、法语、西班牙语、德语等。AI会自动检测客户的语言并用母语流畅回复。"
+      }
+    };
+    if (/price|pricing|cost|how much|prijs|kosten|prix|coût|precio|价格|多少钱|费用/.test(q)) {
+      return answers[lang].price;
+    }
+    if (/demo|book|trial|试|演示|预约|démo|reserve|reserveren/.test(q)) {
+      return answers[lang].demo;
+    }
+    if (/feature|what can|capabil|service|functie|fonctionnalit|característica|功能|服务/.test(q)) {
+      return answers[lang].features;
+    }
+    if (/language|lang|talen|langue|idioma|语言/.test(q)) {
+      return answers[lang].languages;
+    }
+    return {
+      en: "Great question! Nexify AI provides 24/7 smart customer service that handles chat, phone calls, and emails in 30+ languages. We can help your business never miss a customer again. Let me tell you more — ",
+      nl: "Goede vraag! Nexify AI biedt 24/7 slimme klantenservice die chat, telefoongesprekken en e-mails afhandelt in 30+ talen. Zo mis je nooit meer een klant. Laat me je meer vertellen — ",
+      fr: "Excellente question ! Nexify AI propose un service client intelligent 24h/24 qui gère chat, appels et e-mails en 30+ langues. Votre entreprise ne ratera plus jamais un client. Laissez-moi vous en dire plus — ",
+      es: "¡Excelente pregunta! Nexify AI ofrece servicio al cliente inteligente 24/7 que gestiona chat, llamadas y correos en 30+ idiomas. Tu negocio nunca más perderá un cliente. Déjame contarte más — ",
+      zh: "好问题！Nexify AI 提供24/7智能客服，支持30多种语言的聊天、电话和邮件处理。让你的业务永不遗漏客户。让我为你详细介绍——"
+    }[lang];
+  }
+
+  async function callAI(userMessage) {
+    if (!API_URL) {
+      await sleep(800 + Math.random() * 600);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: messages, collectedLead: collectedLead, brandName: 'Nexify AI' }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!response.ok) throw new Error('API call failed');
+      const data = await response.json();
+      if (data.collectedLead) { collectedLead = { ...collectedLead, ...data.collectedLead }; }
+      if (data.leadComplete && !leadSubmitted) { leadSubmitted = true; submitLead(data.collectedLead); }
+      return data.reply;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Chatbot API error:', error);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+  }
+
+  function submitLead(leadData) {
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...leadData, timestamp: new Date().toISOString(), source: window.location.href, userAgent: navigator.userAgent });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    try {
+      const reply = await callAI(text);
+      hideTyping();
+      addBotMessage(reply);
+    } catch (e) {
+      hideTyping();
+      addBotMessage('Sorry, something went wrong. Please try again.');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  }
+
+  async function sendUserMessage(text) {
+    if (!text) return;
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    const reply = await callAI(text);
+    hideTyping();
+    addBotMessage(reply);
+    sendBtn.disabled = false;
+    if (isOpen) inputEl.focus();
+  }
+
+  async function startDemoFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const demoMessages = {
+      en: "I'd like to book a demo",
+      nl: "Ik wil een demo boeken",
+      fr: "Je voudrais réserver une démo",
+      es: "Me gustaría reservar una demo",
+      zh: "我想预约一个演示"
+    };
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(demoMessages[lang] || demoMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  async function startPilotFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const pilotMessages = {
+      en: "I'm interested in joining the pilot program",
+      nl: "Ik ben geïnteresseerd in het pilotprogramma",
+      fr: "Je suis intéressé par le programme pilote",
+      es: "Estoy interesado en el programa piloto",
+      zh: "我对试点计划感兴趣"
+    };
+    collectedLead.pilotApplication = true;
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  bubble.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  window.NexifyChatbot = {
+    open: () => { if (!isOpen) toggleChat(); },
+    close: () => { if (isOpen) toggleChat(); },
+    startDemo: startDemoFlow,
+    startPilot: startPilotFlow,
+    sendMessage: sendUserMessage,
+    getLead: () => collectedLead,
+    getMessages: () => messages,
+    getLeads: () => JSON.parse(localStorage.getItem('nexify_leads') || '[]')
+  };
+})();
+
+/* ===== init ===== */
+renderTheme();
+setUiLanguage(uiLang);
+</script>
+</body>
+</html>

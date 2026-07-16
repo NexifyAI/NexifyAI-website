@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Nexify AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --text-xs: clamp(.72rem,.68rem+.2vw,.82rem);
+  --text-sm: clamp(.88rem,.82rem+.3vw,1rem);
+  --text-base: clamp(1rem,.96rem+.2vw,1.1rem);
+  --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+  --text-xl: clamp(1.6rem,1.3rem+1vw,2.4rem);
+  --text-2xl: clamp(2.2rem,1.4rem+2.6vw,4rem);
+  --space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;
+  --space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+  --color-bg:#f6fff7;
+  --color-surface:#ffffff;
+  --color-surface-2:#f3fff5;
+  --color-surface-offset:#ebf9ee;
+  --color-border:#cfe7d3;
+  --color-divider:#dbefde;
+  --color-text:#153122;
+  --color-text-muted:#51705d;
+  --color-text-faint:#86a191;
+  --color-text-inverse:#f7fff8;
+  --color-primary:#2daa58;
+  --color-primary-hover:#248746;
+  --color-primary-highlight:#dff6e5;
+  --color-accent:#78df97;
+  --radius-md:.75rem;--radius-lg:1rem;--radius-xl:1.5rem;--radius-full:9999px;
+  --shadow-sm:0 8px 20px rgba(45,170,88,.08);
+  --shadow-md:0 18px 40px rgba(45,170,88,.12);
+  --shadow-lg:0 30px 70px rgba(45,170,88,.16);
+  --font-display:'Zodiak',Georgia,serif;
+  --font-body:'Satoshi',Inter,sans-serif;
+  --content-default:1180px;
+}
+[data-theme="dark"] {
+  --color-bg:#0f1712;--color-surface:#152019;--color-surface-2:#1a281e;
+  --color-surface-offset:#1f2f24;--color-border:#284332;--color-divider:#203626;
+  --color-text:#edf7ef;--color-text-muted:#a7c0ad;--color-text-faint:#708777;
+  --color-text-inverse:#0f1712;--color-primary:#67d889;--color-primary-hover:#52c374;
+  --color-primary-highlight:#183222;--color-accent:#8ce5a5;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 16px 40px rgba(0,0,0,.30);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+}
+*, :before, :after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; font-family:var(--font-body); font-size:var(--text-base); line-height:1.6;
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 24%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 82%, #fff));
+  color:var(--color-text);
+  display:flex; flex-direction:column; min-height:100vh;
+}
+main { flex:1; }
+a{text-decoration:none;color:inherit;}
+button{font:inherit;border:none;background:none;}
+h1,h2,h3,p{margin:0;}
+.container{width:min(calc(100% - 2rem),var(--content-default));margin-inline:auto;}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in oklab,var(--color-bg) 80%,rgba(255,255,255,.55));
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in oklab,var(--color-primary) 14%,white);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
+.brand{display:flex;align-items:center;gap:.6rem;}
+.brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.brand-logo{mix-blend-mode:normal;}
+.nav{display:flex;gap:var(--space-5);}
+.nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
+.nav a:hover{color:var(--color-primary);}
+.actions{display:flex;align-items:center;gap:var(--space-3);}
+.lang-switcher{
+  display:flex;gap:.25rem;padding:.25rem;
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+}
+.lang-btn,.theme-btn,.menu-btn{
+  padding:.55rem .85rem;border-radius:var(--radius-full);cursor:pointer;
+  min-height:44px;color:var(--color-text-muted);transition:all .2s ease;
+}
+.lang-btn.active{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm);font-weight:700;}
+.theme-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:grid;place-items:center;width:44px;
+}
+.menu-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:none;place-items:center;width:44px;padding:10px;color:var(--color-text);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:1rem 1.6rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:700;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{box-shadow:var(--shadow-lg);}
+.btn-secondary{border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);}
+
+/* ---------- Page Hero ---------- */
+.page-hero{padding:clamp(3rem,6vw,5rem) 0 var(--space-12);text-align:center;}
+.page-hero .eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-primary);background:var(--color-primary-highlight);
+  padding:.5rem 1rem;border-radius:var(--radius-full);margin-bottom:var(--space-5);
+}
+.page-hero h1{
+  font-family:var(--font-display);font-size:var(--text-2xl);line-height:1.04;
+  max-width:18ch;margin:0 auto var(--space-5);letter-spacing:-.01em;
+}
+.page-hero .hero-copy{color:var(--color-text-muted);margin:0 auto;font-size:var(--text-lg);line-height:1.5;max-width:55ch;}
+
+/* ---------- Section base ---------- */
+.section{padding:var(--space-16) 0;}
+.section-head{text-align:center;margin-bottom:var(--space-10);}
+.section-head h2{
+  font-family:var(--font-display);font-size:var(--text-xl);line-height:1.15;
+  margin-bottom:var(--space-4);letter-spacing:-.01em;
+}
+.section-head p{color:var(--color-text-muted);font-size:var(--text-base);max-width:50ch;margin:0 auto;}
+
+/* ---------- Contact Layout ---------- */
+.contact-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-10);align-items:start;
+}
+
+/* ---------- Contact Form ---------- */
+.contact-form-wrap{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-md);
+}
+.contact-form{display:flex;flex-direction:column;gap:var(--space-5);}
+.form-group{display:flex;flex-direction:column;gap:.5rem;}
+.form-group label{
+  font-size:var(--text-sm);font-weight:600;color:var(--color-text);
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;padding:.85rem 1rem;
+  border:1px solid var(--color-border);border-radius:var(--radius-md);
+  font-size:var(--text-sm);font-family:inherit;
+  background:var(--color-surface);color:var(--color-text);
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  outline:none;border-color:var(--color-primary);
+  box-shadow:0 0 0 3px var(--color-primary-highlight);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:var(--color-text-faint);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
+.form-submit{margin-top:var(--space-3);}
+
+/* ---------- Contact Info ---------- */
+.contact-info{display:flex;flex-direction:column;gap:var(--space-5);}
+.info-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-sm);
+  display:flex;gap:var(--space-4);align-items:flex-start;
+}
+.info-icon{
+  width:48px;height:48px;border-radius:14px;display:grid;place-items:center;flex-shrink:0;
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:#fff;box-shadow:0 8px 20px color-mix(in oklab,var(--color-primary) 25%,transparent);
+  font-size:1.2rem;
+}
+.info-card h4{font-size:var(--text-base);font-weight:700;margin-bottom:.3rem;}
+.info-card p{font-size:var(--text-sm);color:var(--color-text-muted);}
+.info-card a{color:var(--color-primary);font-weight:600;}
+.info-card a:hover{text-decoration:underline;}
+
+/* ---------- FAQ ---------- */
+.faq-section{background:var(--color-surface-offset);}
+.faq-list{
+  max-width:800px;margin:0 auto;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
+.faq-item{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:box-shadow .2s ease;
+}
+.faq-item:hover{box-shadow:var(--shadow-sm);}
+.faq-question{
+  width:100%;padding:var(--space-5) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);
+  cursor:pointer;text-align:left;font-weight:600;font-size:var(--text-sm);
+  color:var(--color-text);background:none;border:none;font-family:inherit;
+}
+.faq-question svg{
+  width:20px;height:20px;flex-shrink:0;
+  color:var(--color-primary);transition:transform .3s ease;
+}
+.faq-item.open .faq-question svg{transform:rotate(180deg);}
+.faq-answer{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  padding:0 var(--space-6);
+}
+.faq-item.open .faq-answer{
+  max-height:300px;
+  padding:0 var(--space-6) var(--space-5);
+}
+.faq-answer p{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;}
+
+/* ---------- Footer ---------- */
+.site-footer{
+  background:var(--color-surface);border-top:1px solid var(--color-border);
+  margin-top:var(--space-20);
+}
+.footer-main{padding:var(--space-16) 0 var(--space-10);}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);
+}
+.footer-brand .brand{margin-bottom:var(--space-4);}
+.footer-brand p{
+  color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;max-width:28ch;
+}
+.footer-col h5{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--color-text-faint);margin-bottom:var(--space-4);
+}
+.footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-col li a{
+  font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;
+}
+.footer-col li a:hover{color:var(--color-primary);}
+.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
+.footer-social a{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--color-surface-offset);color:var(--color-text-muted);
+  transition:all .2s ease;
+}
+.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
+.footer-social svg{width:18px;height:18px;fill:currentColor;}
+
+.footer-bottom{
+  border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
+}
+.footer-bottom-inner{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);
+}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .menu-btn{display:grid;}
+  .nav{
+    display:none;position:absolute;top:100%;left:0;width:100%;
+    background:var(--color-surface);border-bottom:1px solid var(--color-border);
+    flex-direction:column;padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-md);gap:var(--space-4);z-index:50;
+  }
+  .nav.open{display:flex;}
+  .contact-layout{grid-template-columns:1fr;gap:var(--space-8);}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:var(--space-8);}
+}
+@media (max-width:640px){
+  .header-inner{flex-direction:column;align-items:stretch;}
+  .actions{width:100%;justify-content:space-between;margin-top:var(--space-3);}
+  .lang-switcher{padding:.15rem;}
+  .lang-btn{padding:.4rem .6rem;min-height:38px;}
+  .theme-btn,.menu-btn{min-height:38px;width:38px;}
+  .btn{min-height:44px;padding:.8rem 1.2rem;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
+  .footer-bottom-inner{flex-direction:column;text-align:center;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
+}
+
+/* ====================================================== */
+/* ======== LIVE CHATBOT WIDGET (real AI version) ======= */
+/* ====================================================== */
+
+#nx-chatbot-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-body);
+  border: none;
+}
+#nx-chatbot-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent);
+}
+#nx-chatbot-bubble svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+#nx-chatbot-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  height: 560px;
+  max-height: calc(100vh - 120px);
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  font-family: var(--font-body);
+  animation: nxSlideUp 0.3s ease;
+}
+#nx-chatbot-window.open { display: flex; }
+@keyframes nxSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nx-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nx-chat-header-title {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nx-chat-header-status {
+  width: 8px;
+  height: 8px;
+  background: #b7ffb7;
+  border-radius: 50%;
+  animation: nxPulse 2s infinite;
+}
+@keyframes nxPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); }
+}
+.nx-chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.85;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+
+.nx-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--color-surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nx-chat-messages::-webkit-scrollbar { width: 6px; }
+.nx-chat-messages::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+.nx-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  animation: nxMsgIn 0.3s ease both;
+}
+@keyframes nxMsgIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nx-msg.bot {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.nx-msg.user {
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
+  color: var(--color-text-inverse);
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.nx-typing {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  width: fit-content;
+}
+.nx-typing span {
+  width: 7px;
+  height: 7px;
+  background: var(--color-text-faint);
+  border-radius: 50%;
+  animation: nxTyping 1.3s infinite;
+}
+.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nxTyping {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.nx-chat-input-area {
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+  display: flex;
+  gap: 8px;
+}
+.nx-chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.2s;
+}
+.nx-chat-input:focus { border-color: var(--color-primary); }
+.nx-chat-input::placeholder { color: var(--color-text-faint); }
+.nx-chat-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: opacity 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.nx-chat-send:hover { transform: scale(1.05); }
+.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nx-chat-send svg { width: 18px; height: 18px; }
+
+.nx-powered {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-faint);
+  padding: 6px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-divider);
+}
+.nx-powered a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+
+@media (max-width: 480px) {
+  #nx-chatbot-window {
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+    height: 70vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== Header ========== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+    </a>
+    <nav class="nav" id="site-nav">
+      <a href="index.html#solutions" data-i18n="navSolutions">Solutions</a>
+      <a href="index.html#work" data-i18n="navPlatform">Service Model</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
+      <a href="contact.html" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="actions">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ========== Hero ========== -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow" data-i18n="contactEyebrow">Contact</span>
+    <h1 data-i18n="contactHeroTitle">Get in touch</h1>
+    <p class="hero-copy" data-i18n="contactHeroSub">We usually reply within 24 hours. Or chat with our AI assistant right now — it's available 24/7.</p>
+  </div>
+</section>
+
+<!-- ========== Contact Form + Info ========== -->
+<section class="section" id="contact-form">
+  <div class="container">
+    <div class="contact-layout">
+      <!-- Form -->
+      <div class="contact-form-wrap">
+        <h2 data-i18n="contactFormTitle" style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-5);">Send us a message</h2>
+        <form class="contact-form" id="contact-form-el">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" data-i18n="formName">Name *</label>
+              <input type="text" id="name" name="name" required data-i18n-placeholder="formNamePlaceholder" placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label for="email" data-i18n="formEmail">Email *</label>
+              <input type="email" id="email" name="email" required data-i18n-placeholder="formEmailPlaceholder" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company" data-i18n="formCompany">Company</label>
+              <input type="text" id="company" name="company" data-i18n-placeholder="formCompanyPlaceholder" placeholder="Your company">
+            </div>
+            <div class="form-group">
+              <label for="industry" data-i18n="formIndustry">Industry</label>
+              <select id="industry" name="industry">
+                <option value="" data-i18n="industrySelect">Select industry</option>
+                <option value="restaurant" data-i18n="industryRestaurant">Restaurant / Hospitality</option>
+                <option value="medical" data-i18n="industryMedical">Medical / Healthcare</option>
+                <option value="legal" data-i18n="industryLegal">Legal / Law Firm</option>
+                <option value="realestate" data-i18n="industryRealEstate">Real Estate</option>
+                <option value="retail" data-i18n="industryRetail">Retail / E-commerce</option>
+                <option value="other" data-i18n="industryOther">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message" data-i18n="formMessage">Message *</label>
+            <textarea id="message" name="message" required data-i18n-placeholder="formMessagePlaceholder" placeholder="Tell us about your needs..."></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="formSubmit">Send message</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Info -->
+      <div class="contact-info">
+        <div class="info-card">
+          <div class="info-icon">📧</div>
+          <div>
+            <h4 data-i18n="infoEmailTitle">Email</h4>
+            <p><a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+            <p style="font-size:var(--text-xs);color:var(--color-text-faint);margin-top:.25rem;" data-i18n="infoEmailDesc">We reply within 24 hours on business days.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📍</div>
+          <div>
+            <h4 data-i18n="infoAddressTitle">Address</h4>
+            <p>The Hague, Netherlands</p>
+            <p style="font-size:var(--text-xs);color:var(--color-text-faint);margin-top:.25rem;" data-i18n="infoAddressDesc">Registered at the Dutch Chamber of Commerce.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">📋</div>
+          <div>
+            <h4 data-i18n="infoKvkTitle">Company Registration</h4>
+            <p>KVK Number: <strong>42114767</strong></p>
+            <p style="font-size:var(--text-xs);color:var(--color-text-faint);margin-top:.25rem;" data-i18n="infoKvkDesc">Nexify AI — Dutch registered AI company.</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">💬</div>
+          <div>
+            <h4 data-i18n="infoChatTitle">Chat with us</h4>
+            <p data-i18n="infoChatDesc">Our AI assistant is available 24/7. Click the chat bubble in the bottom right to start a conversation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section faq-section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="faqTitle">Frequently asked questions</h2>
+      <p data-i18n="faqSub">Can't find what you're looking for? Reach out — we're happy to help.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-question">
+          <span data-i18n="faq1Q">How quickly can I get started?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p data-i18n="faq1A">From sign-up to go-live takes about 7 days. We'll need access to your knowledge base, FAQ documents, and a brief call to understand your business workflows. After that, your AI agent is trained and deployed on your website.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="faq2Q">What languages does the AI support?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p data-i18n="faq2A">Our AI supports 30+ languages natively, including English, Dutch, French, Spanish, German, and many more. It automatically detects the language of your customer and responds fluently in the same language.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="faq3Q">How does pricing work?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p data-i18n="faq3A">We offer both monthly subscription plans and pay-as-you-go pricing. Plans start from a few hundred euros per month — significantly cheaper than hiring additional staff. Contact us for a quote tailored to your business.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="faq4Q">Is my data secure and GDPR compliant?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p data-i18n="faq4A">Absolutely. We're a Dutch company and all data is stored within the European Union. We're fully GDPR compliant, and you retain full ownership of your data. We're happy to sign a data processing agreement (DPA) upon request.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="faq5Q">Can I try it before committing?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-answer">
+          <p data-i18n="faq5A">Yes! We're currently running a pilot program with select businesses. Pilot participants get heavily discounted or free access in exchange for feedback. Apply through our contact form and mention you're interested in the pilot program.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========== Footer ========== -->
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+        </a>
+        <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerProduct">Product</h5>
+        <ul>
+          <li><a href="index.html#solutions" data-i18n="footerSolutions">Industry Solutions</a></li>
+          <li><a href="index.html#demo" data-i18n="footerDemo">See It in Action</a></li>
+          <li><a href="index.html#work" data-i18n="footerPricing">Pricing</a></li>
+          <li><a href="contact.html" data-i18n="footerPilot">Pilot Program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerCompany">Company</h5>
+        <ul>
+          <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
+          <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
+          <li><a href="#" data-i18n="footerSignin">Sign In</a></li>
+          <li><a href="contact.html" data-i18n="footerSignup">Sign Up</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerLegal">Legal</h5>
+        <ul>
+          <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© 2025 Nexify AI · KVK 42114767 · The Hague, Netherlands · <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== LIVE CHATBOT WIDGET ========== -->
+<button id="nx-chatbot-bubble" aria-label="Open chat">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</button>
+
+<div id="nx-chatbot-window">
+  <div class="nx-chat-header">
+    <div class="nx-chat-header-title">
+      <span class="nx-chat-header-status"></span>
+      Nexify AI Assistant
+    </div>
+    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">×</button>
+  </div>
+  <div class="nx-chat-messages" id="nx-chat-messages"></div>
+  <div class="nx-chat-input-area">
+    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message..." autocomplete="off" />
+    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
+  <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
+</div>
+
+<script>
+/* ===== UI copy (Contact page) ===== */
+const copy = {
+  en: {
+    navSolutions:'Solutions', navPlatform:'Service Model', navAbout:'About', navContact:'Contact',
+    contactEyebrow:'Contact',
+    contactHeroTitle:'Get in touch',
+    contactHeroSub:"We usually reply within 24 hours. Or chat with our AI assistant right now — it's available 24/7.",
+    contactFormTitle:'Send us a message',
+    formName:'Name *',
+    formNamePlaceholder:'Your name',
+    formEmail:'Email *',
+    formEmailPlaceholder:'your@email.com',
+    formCompany:'Company',
+    formCompanyPlaceholder:'Your company',
+    formIndustry:'Industry',
+    industrySelect:'Select industry',
+    industryRestaurant:'Restaurant / Hospitality',
+    industryMedical:'Medical / Healthcare',
+    industryLegal:'Legal / Law Firm',
+    industryRealEstate:'Real Estate',
+    industryRetail:'Retail / E-commerce',
+    industryOther:'Other',
+    formMessage:'Message *',
+    formMessagePlaceholder:'Tell us about your needs...',
+    formSubmit:'Send message',
+    infoEmailTitle:'Email',
+    infoEmailDesc:'We reply within 24 hours on business days.',
+    infoAddressTitle:'Address',
+    infoAddressDesc:'Registered at the Dutch Chamber of Commerce.',
+    infoKvkTitle:'Company Registration',
+    infoKvkDesc:'Nexify AI — Dutch registered AI company.',
+    infoChatTitle:'Chat with us',
+    infoChatDesc:'Our AI assistant is available 24/7. Click the chat bubble in the bottom right to start a conversation.',
+    faqTitle:'Frequently asked questions',
+    faqSub:"Can't find what you're looking for? Reach out — we're happy to help.",
+    faq1Q:'How quickly can I get started?',
+    faq1A:'From sign-up to go-live takes about 7 days. We\'ll need access to your knowledge base, FAQ documents, and a brief call to understand your business workflows. After that, your AI agent is trained and deployed on your website.',
+    faq2Q:'What languages does the AI support?',
+    faq2A:'Our AI supports 30+ languages natively, including English, Dutch, French, Spanish, German, and many more. It automatically detects the language of your customer and responds fluently in the same language.',
+    faq3Q:'How does pricing work?',
+    faq3A:'We offer both monthly subscription plans and pay-as-you-go pricing. Plans start from a few hundred euros per month — significantly cheaper than hiring additional staff. Contact us for a quote tailored to your business.',
+    faq4Q:'Is my data secure and GDPR compliant?',
+    faq4A:'Absolutely. We\'re a Dutch company and all data is stored within the European Union. We\'re fully GDPR compliant, and you retain full ownership of your data. We\'re happy to sign a data processing agreement (DPA) upon request.',
+    faq5Q:'Can I try it before committing?',
+    faq5A:'Yes! We\'re currently running a pilot program with select businesses. Pilot participants get heavily discounted or free access in exchange for feedback. Apply through our contact form and mention you\'re interested in the pilot program.',
+    footerTagline:'24/7 AI customer service for European SMEs.',
+    footerProduct:'Product',
+    footerSolutions:'Industry Solutions',
+    footerDemo:'See It in Action',
+    footerPricing:'Pricing',
+    footerPilot:'Pilot Program',
+    footerCompany:'Company',
+    footerAbout:'About Us',
+    footerContact:'Contact',
+    footerSignin:'Sign In',
+    footerSignup:'Sign Up',
+    footerLegal:'Legal',
+    footerPrivacy:'Privacy Policy',
+    footerTerms:'Terms of Service'
+  },
+  nl: {
+    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navAbout:'Over ons', navContact:'Contact',
+    contactEyebrow:'Contact',
+    contactHeroTitle:'Neem contact op',
+    contactHeroSub:'We reageren meestal binnen 24 uur. Of chat direct met onze AI-assistent — 24/7 beschikbaar.',
+    contactFormTitle:'Stuur ons een bericht',
+    formName:'Naam *',
+    formNamePlaceholder:'Je naam',
+    formEmail:'E-mail *',
+    formEmailPlaceholder:'jouw@email.com',
+    formCompany:'Bedrijf',
+    formCompanyPlaceholder:'Je bedrijf',
+    formIndustry:'Branche',
+    industrySelect:'Selecteer branche',
+    industryRestaurant:'Restaurant / Horeca',
+    industryMedical:'Medisch / Gezondheidszorg',
+    industryLegal:'Juridisch / Advocatenkantoor',
+    industryRealEstate:'Makelaardij',
+    industryRetail:'Retail / E-commerce',
+    industryOther:'Overig',
+    formMessage:'Bericht *',
+    formMessagePlaceholder:'Vertel ons over je wensen...',
+    formSubmit:'Bericht versturen',
+    infoEmailTitle:'E-mail',
+    infoEmailDesc:'We reageren binnen 24 uur op werkdagen.',
+    infoAddressTitle:'Adres',
+    infoAddressDesc:'Geregistreerd bij de Kamer van Koophandel.',
+    infoKvkTitle:'Bedrijfsregistratie',
+    infoKvkDesc:'Nexify AI — Nederlands AI-bedrijf.',
+    infoChatTitle:'Chat met ons',
+    infoChatDesc:'Onze AI-assistent is 24/7 beschikbaar. Klik op de chatknop rechtsonder om een gesprek te starten.',
+    faqTitle:'Veelgestelde vragen',
+    faqSub:'Kan je niet vinden wat je zoekt? Neem contact op — we helpen je graag.',
+    faq1Q:'Hoe snel kan ik beginnen?',
+    faq1A:'Van aanmelding tot live gaan duurt ongeveer 7 dagen. We hebben toegang nodig tot je kennisbank, FAQ-documenten en een kort gesprek om je bedrijfsprocessen te begrijpen. Daarna is je AI-agent getraind en live op je website.',
+    faq2Q:'Welke talen ondersteunt de AI?',
+    faq2A:'Onze AI ondersteunt 30+ talen op moedertaalniveau, waaronder Nederlands, Engels, Frans, Spaans, Duits en nog veel meer. De AI detecteert automatisch de taal van je klant en antwoordt vloeiend in dezelfde taal.',
+    faq3Q:'Hoe werkt de prijsstelling?',
+    faq3A:'We bieden zowel maandelijkse abonnementen als betalen naar gebruik. Prijzen beginnen bij een paar honderd euro per maand — aanzienlijk goedkoper dan extra personeel aannemen. Neem contact op voor een offerte op maat.',
+    faq4Q:'Is mijn data veilig en GDPR-compliant?',
+    faq4A:'Absoluut. We zijn een Nederlands bedrijf en alle data wordt opgeslagen binnen de Europese Unie. We zijn volledig GDPR-compliant en je blijft eigenaar van je data. We tekenen graag een verwerkersovereenkomst (VWO) op aanvraag.',
+    faq5Q:'Kan ik het proberen voordat ik vastleg?',
+    faq5A:'Ja! We lopen momenteel een pilotprogramma met geselecteerde bedrijven. Pilot-deelnemers krijgen sterk gereduceerde of gratis toegang in ruil voor feedback. Meld je aan via ons contactformulier en vermeld dat je geïnteresseerd bent in het pilotprogramma.',
+    footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
+    footerProduct:'Product',
+    footerSolutions:'Branche-oplossingen',
+    footerDemo:'Probeer het',
+    footerPricing:'Prijzen',
+    footerPilot:'Pilotprogramma',
+    footerCompany:'Bedrijf',
+    footerAbout:'Over ons',
+    footerContact:'Contact',
+    footerSignin:'Inloggen',
+    footerSignup:'Aanmelden',
+    footerLegal:'Juridisch',
+    footerPrivacy:'Privacybeleid',
+    footerTerms:'Servicevoorwaarden'
+  },
+  fr: {
+    navSolutions:'Solutions', navPlatform:'Modèle de service', navAbout:'À propos', navContact:'Contact',
+    contactEyebrow:'Contact',
+    contactHeroTitle:'Contactez-nous',
+    contactHeroSub:'Nous répondons généralement sous 24 heures. Ou discutez dès maintenant avec notre assistant IA — disponible 24h/24.',
+    contactFormTitle:'Envoyez-nous un message',
+    formName:'Nom *',
+    formNamePlaceholder:'Votre nom',
+    formEmail:'E-mail *',
+    formEmailPlaceholder:'votre@email.com',
+    formCompany:'Entreprise',
+    formCompanyPlaceholder:'Votre entreprise',
+    formIndustry:'Secteur',
+    industrySelect:'Sélectionner le secteur',
+    industryRestaurant:'Restaurant / Hôtellerie',
+    industryMedical:'Médical / Santé',
+    industryLegal:'Juridique / Cabinet d\'avocats',
+    industryRealEstate:'Immobilier',
+    industryRetail:'Vente au détail / E-commerce',
+    industryOther:'Autre',
+    formMessage:'Message *',
+    formMessagePlaceholder:'Parlez-nous de vos besoins...',
+    formSubmit:'Envoyer le message',
+    infoEmailTitle:'E-mail',
+    infoEmailDesc:'Nous répondons sous 24 heures les jours ouvrés.',
+    infoAddressTitle:'Adresse',
+    infoAddressDesc:'Enregistré à la Chambre de commerce néerlandaise.',
+    infoKvkTitle:'Immatriculation',
+    infoKvkDesc:'Nexify AI — entreprise IA néerlandaise.',
+    infoChatTitle:'Discutez avec nous',
+    infoChatDesc:'Notre assistant IA est disponible 24h/24. Cliquez sur la bulle de chat en bas à droite pour commencer.',
+    faqTitle:'Questions fréquentes',
+    faqSub:'Vous ne trouvez pas ce que vous cherchez ? Contactez-nous — nous serons ravis de vous aider.',
+    faq1Q:'Combien de temps pour démarrer ?',
+    faq1A:"De l'inscription à la mise en service, il faut environ 7 jours. Nous aurons besoin d'accéder à votre base de connaissances, vos FAQ et d'un bref appel pour comprendre vos processus. Ensuite, votre agent IA est formé et déployé sur votre site.",
+    faq2Q:'Quelles langues l\'IA supporte-t-elle ?',
+    faq2A:"Notre IA supporte plus de 30 langues nativement, dont l'anglais, le néerlandais, le français, l'espagnol, l'allemand et bien d'autres. Elle détecte automatiquement la langue de votre client et répond couramment dans la même langue.",
+    faq3Q:'Comment fonctionne la tarification ?',
+    faq3A:"Nous proposons des abonnements mensuels et une tarification à l'usage. Les offres commencent à quelques centaines d'euros par mois — bien moins cher que d'embaucher du personnel supplémentaire. Contactez-nous pour un devis adapté à votre entreprise.",
+    faq4Q:'Mes données sont-elles sécurisées et conformes au RGPD ?',
+    faq4A:"Absolument. Nous sommes une entreprise néerlandaise et toutes les données sont stockées dans l'Union européenne. Nous sommes entièrement conformes au RGPD, et vous conservez la pleine propriété de vos données. Nous signons volontiers un accord de traitement de données sur demande.",
+    faq5Q:'Puis-je essayer avant de m\'engager ?',
+    faq5A:"Oui ! Nous menons actuellement un programme pilote avec des entreprises sélectionnées. Les participants bénéficient d'un accès fortement réduit ou gratuit en échange de retours. Postulez via notre formulaire et mentionnez votre intérêt pour le programme pilote.",
+    footerTagline:'Service client IA 24h/24 pour les PME européennes.',
+    footerProduct:'Produit',
+    footerSolutions:'Solutions secteur',
+    footerDemo:'Essayez-le',
+    footerPricing:'Tarifs',
+    footerPilot:'Programme Pilote',
+    footerCompany:'Entreprise',
+    footerAbout:'À propos',
+    footerContact:'Contact',
+    footerSignin:'Connexion',
+    footerSignup:"S'inscrire",
+    footerLegal:'Juridique',
+    footerPrivacy:'Politique de confidentialité',
+    footerTerms:"Conditions d'utilisation"
+  }
+};
+
+/* ===== Theme + nav + header language ===== */
+const root = document.documentElement;
+const langButtons = document.querySelectorAll('.lang-btn');
+const navElement = document.getElementById('site-nav');
+const menuToggleBtn = document.querySelector('[data-menu-toggle]');
+let uiLang = localStorage.getItem('nexify_lang') || 'en';
+
+function setUiLanguage(lang){
+  uiLang = lang;
+  root.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(copy[lang] && copy[lang][key]) el.textContent = copy[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.dataset.i18nPlaceholder;
+    if(copy[lang] && copy[lang][key]) el.placeholder = copy[lang][key];
+  });
+  langButtons.forEach(btn=>{
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  localStorage.setItem('nexify_lang', lang);
+}
+langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+
+if(menuToggleBtn && navElement) {
+  menuToggleBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const isOpen = navElement.classList.toggle('open');
+    menuToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navElement.querySelectorAll('a').forEach(link=>link.addEventListener('click', ()=>{
+    navElement.classList.remove('open');
+    menuToggleBtn.setAttribute('aria-expanded','false');
+  }));
+  document.addEventListener('click', ()=>{
+    if(navElement.classList.contains('open')){
+      navElement.classList.remove('open');
+      menuToggleBtn.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
+let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const themeBtn = document.querySelector('[data-theme-toggle]');
+function renderTheme(){root.setAttribute('data-theme',theme);}
+if(themeBtn){themeBtn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';renderTheme();});}
+
+/* ===== FAQ accordion ===== */
+document.querySelectorAll('.faq-question').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
+
+/* ===== Contact form submit → start chatbot lead flow ===== */
+const contactForm = document.getElementById('contact-form-el');
+if(contactForm){
+  contactForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const company = formData.get('company');
+    const message = formData.get('message');
+
+    // Open chatbot and prefill lead info
+    if(window.NexifyChatbot){
+      window.NexifyChatbot.open();
+      setTimeout(()=>{
+        const userLang = uiLang || 'en';
+        const greeting = {
+          en: `Thanks for reaching out, ${name}! 👋 I can see you sent us a message. Our team will review it shortly. Is there anything I can help you with right now?`,
+          nl: `Bedankt voor je bericht, ${name}! 👋 Ik zie dat je ons een bericht hebt gestuurd. Ons team bekijkt het spoedig. Kan ik je nu ergens mee helpen?`,
+          fr: `Merci de nous avoir contactés, ${name} ! 👋 Je vois que vous nous avez envoyé un message. Notre équipe l'examinera rapidement. Puis-je vous aider maintenant ?`
+        };
+        window.NexifyChatbot.sendMessage(message || '');
+      }, 300);
+    }
+  });
+}
+
+/* ===== Chatbot Widget ===== */
+(function(){
+  const bubble = document.getElementById('nx-chatbot-bubble');
+  const windowEl = document.getElementById('nx-chatbot-window');
+  const closeBtn = document.getElementById('nx-chat-close');
+  const messagesEl = document.getElementById('nx-chat-messages');
+  const inputEl = document.getElementById('nx-chat-input');
+  const sendBtn = document.getElementById('nx-chat-send');
+
+  let isOpen = false;
+  let messages = [];
+  let collectedLead = { name:null, email:null, company:null, message:null };
+  let currentStep = 0;
+  let leadSubmitted = false;
+  let userLang = 'en';
+
+  const API_URL = '';
+
+  function toggleChat(){
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if(isOpen){
+      if(messages.length === 0){
+        const lang = detectLanguage();
+        const greetings = {
+          en:"Hi there! 👋 I'm the Nexify AI assistant. How can I help you today?",
+          nl:"Hallo! 👋 Ik ben de Nexify AI-assistent. Waar kan ik je vandaag mee helpen?",
+          fr:"Bonjour ! 👋 Je suis l'assistant Nexify AI. Comment puis-je vous aider aujourd'hui ?",
+          es:"¡Hola! 👋 Soy el asistente de Nexify AI. ¿En qué puedo ayudarte hoy?",
+          zh:"你好！👋 我是 Nexify AI 助手，今天有什么可以帮你的？"
+        };
+        addBotMessage(greetings[lang] || greetings.en);
+      }
+      inputEl.focus();
+    }
+  }
+
+  function detectLanguage(){
+    const stored = localStorage.getItem('nexify_lang');
+    if(stored && ['en','nl','fr','es','zh'].includes(stored)) return stored;
+    const browser = navigator.language.toLowerCase();
+    if(browser.startsWith('nl')) return 'nl';
+    if(browser.startsWith('fr')) return 'fr';
+    if(browser.startsWith('es')) return 'es';
+    if(browser.startsWith('zh')) return 'zh';
+    return 'en';
+  }
+
+  function detectUserLang(text){
+    const dutch = /de|het|een|ik|je|dat|wat|hoe|kan|u|uw|bedrijf|klant/i;
+    const french = /le|la|les|un|une|des|je|tu|vous|que|comment|pouvez|entreprise|client/i;
+    const spanish = /el|la|los|las|un|una|yo|tú|usted|qué|cómo|puede|empresa|cliente/i;
+    const chinese = /[\u4e00-\u9fa5]/;
+    if(chinese.test(text)) return 'zh';
+    if(dutch.test(text)) return 'nl';
+    if(french.test(text)) return 'fr';
+    if(spanish.test(text)) return 'es';
+    return 'en';
+  }
+
+  const leadQuestions = [
+    {key:'name', q:{en:"Great! To get started, could I get your name?",nl:"Perfect! Om te beginnen, wat is je naam?",fr:"Parfait ! Pour commencer, puis-je avoir votre nom ?",es:"¡Perfecto! Para empezar, ¿cuál es tu nombre?",zh:"好的！请问怎么称呼您？"}},
+    {key:'email', q:{en:"Thanks! And what's your email address so we can follow up?",nl:"Dank je! En wat is je e-mailadres zodat we contact kunnen opnemen?",fr:"Merci ! Et quelle est votre adresse e-mail pour que nous puissions vous recontacter ?",es:"¡Gracias! ¿Y cuál es tu correo electrónico para poder contactarte?",zh:"谢谢！你的邮箱地址是什么，我们好跟进？"}},
+    {key:'company', q:{en:"Got it. What company are you with?",nl:"Oké. Bij welk bedrijf werk je?",fr:"D'accord. Dans quelle entreprise travaillez-vous ?",es:"Entendido. ¿Para qué empresa trabajas?",zh:"好的，你在哪个公司工作？"}},
+    {key:'message', q:{en:"Almost done! What would you like to talk about — a demo, pricing, or something else?",nl:"Bijna klaar! Waar wil je het over hebben — een demo, prijzen, of iets anders?",fr:"C'est presque fini ! De quoi aimeriez-vous parler — une démo, les tarifs, ou autre chose ?",es:"¡Casi terminamos! ¿De qué te gustaría hablar — una demo, precios, o algo más?",zh:"快完成了！你想聊什么——演示、价格还是其他？"}}
+  ];
+
+  const thankYouMessages = {
+    en:"Thanks so much! Our team will review your message and get back to you within 24 hours. In the meantime, feel free to ask me anything about Nexify AI!",
+    nl:"Bedankt! Ons team bekijkt je bericht en neemt binnen 24 uur contact met je op. In de tussentijd kun je me gerust alles vragen over Nexify AI!",
+    fr:"Merci beaucoup ! Notre équipe examinera votre message et vous répondra dans les 24 heures. En attendant, n'hésitez pas à me poser vos questions sur Nexify AI !",
+    es:"¡Muchas gracias! Nuestro equipo revisará tu mensaje y te responderá en 24 horas. Mientras tanto, ¡no dudes en preguntarme cualquier cosa sobre Nexify AI!",
+    zh:"非常感谢！我们的团队会查看你的信息，并在24小时内回复你。同时，有任何关于 Nexify AI 的问题，随时问我！"
+  };
+
+  function addBotMessage(text){
+    const div = document.createElement('div');
+    div.className = 'nx-msg bot';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messages.push({role:'assistant', content:text});
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMessage(text){
+    const div = document.createElement('div');
+    div.className = 'nx-msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messages.push({role:'user', content:text});
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showTyping(){
+    const div = document.createElement('div');
+    div.className = 'nx-typing';
+    div.id = 'nx-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping(){
+    const el = document.getElementById('nx-typing-indicator');
+    if(el) el.remove();
+  }
+
+  function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+  function getLocalResponse(userMessage) {
+    userLang = detectUserLang(userMessage);
+    const isQuestion = /[?？]/.test(userMessage) || /^(what|how|can|do you|is there|wat|hoe|kan|comment|pouvez|qué|cómo|puede|什么|怎么|如何|有没有|是否)/i.test(userMessage);
+    if (isQuestion && currentStep === 0) {
+      return { reply: getQuestionAnswer(userMessage, userLang) + "\n\n" + leadQuestions[0].q[userLang], shouldAdvance: true };
+    }
+    if (currentStep === 0) {
+      return { reply: leadQuestions[0].q[userLang], shouldAdvance: true };
+    }
+    const currentQ = leadQuestions[currentStep - 1];
+    if (currentQ && collectedLead[currentQ.key] === null) {
+      collectedLead[currentQ.key] = userMessage.trim();
+    }
+    if (currentStep < leadQuestions.length) {
+      const nextQ = leadQuestions[currentStep];
+      return { reply: nextQ.q[userLang], shouldAdvance: true };
+    }
+    leadSubmitted = true;
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+    return { reply: thankYouMessages[userLang], shouldAdvance: false, complete: true };
+  }
+
+  function getQuestionAnswer(question, lang) {
+    const q = question.toLowerCase();
+    const answers = {
+      en: {
+        price: "Pricing depends on your needs — we offer flexible plans starting from just a few hundred euros per month. I'd love to learn more about your business so we can find the right fit for you.",
+        demo: "Absolutely! I can help you book a demo. Let me collect a bit of info first so our team can prepare the best demo for your use case.",
+        features: "We offer 24/7 AI customer service across chat, phone, and email — in 30+ languages. Key features include multilingual support, instant response time, order handling, and lead generation. We launch in under 7 days!",
+        languages: "We support 30+ languages natively, including English, Dutch, French, Spanish, German, Chinese, and more. The AI detects your customer's language automatically and responds fluently."
+      },
+      nl: {
+        price: "De prijs hangt af van je behoeften — we hebben flexibele pakketten vanaf een paar honderd euro per maand. Ik hoor graag meer over je bedrijf, zodat we de juiste oplossing kunnen vinden.",
+        demo: "Zeker weten! Ik kan je helpen met een demo. Laat me eerst wat info verzamelen, zodat ons team de beste demo voor jouw situatie kan voorbereiden.",
+        features: "We bieden 24/7 AI-klantenservice via chat, telefoon en e-mail — in 30+ talen. Belangrijkste functies: meertaligheid, directe reacties, orderafhandeling en leadgeneratie. We gaan live in minder dan 7 dagen!",
+        languages: "We ondersteunen 30+ talen op moedertaalniveau, waaronder Nederlands, Engels, Frans, Spaans, Duits en Chinees. De AI detecteert automatisch de taal van je klant en antwoordt vloeiend."
+      },
+      fr: {
+        price: "Le prix dépend de vos besoins — nous proposons des formules flexibles à partir de quelques centaines d'euros par mois. J'aimerais en savoir plus sur votre entreprise pour trouver la formule qui vous convient.",
+        demo: "Absolument ! Je peux vous aider à réserver une démo. Laissez-moi d'abord collecter quelques informations pour que notre équipe prépare la meilleure démo pour votre cas.",
+        features: "Nous proposons un service client IA 24h/24 sur chat, téléphone et e-mail — en 30+ langues. Fonctionnalités clés : multilingue, réponse instantanée, gestion des commandes et génération de leads. Mise en ligne en moins de 7 jours !",
+        languages: "Nous supportons 30+ langues nativement, dont le français, l'anglais, le néerlandais, l'espagnol, l'allemand et le chinois. L'IA détecte automatiquement la langue de votre client et répond couramment."
+      },
+      es: {
+        price: "El precio depende de tus necesidades — ofrecemos planes flexibles desde unos pocos cientos de euros al mes. Me gustaría saber más sobre tu negocio para encontrar la opción adecuada.",
+        demo: "¡Claro que sí! Puedo ayudarte a reservar una demo. Déjame recopilar un poco de información primero para que nuestro equipo prepare la mejor demo para tu caso.",
+        features: "Ofrecemos servicio al cliente con IA 24/7 por chat, teléfono y correo electrónico — en 30+ idiomas. Características clave: multilingüe, respuesta instantánea, gestión de pedidos y generación de leads. ¡Lanzamiento en menos de 7 días!",
+        languages: "Soportamos 30+ idiomas de forma nativa, incluyendo español, inglés, neerlandés, francés, alemán y chino. La IA detecta automáticamente el idioma de tu cliente y responde con fluidez."
+      },
+      zh: {
+        price: "价格根据你的需求而定——我们提供灵活的方案，每月几百欧元起。我想更多了解你的业务，以便为你找到最合适的方案。",
+        demo: "当然可以！我可以帮你预约演示。先让我了解一些信息，这样我们的团队可以为你的使用场景准备最合适的演示。",
+        features: "我们提供24/7 AI客服，覆盖聊天、电话和邮件——支持30多种语言。核心功能包括：多语言支持、即时响应、订单处理和获客。7天内即可上线！",
+        languages: "我们原生支持30多种语言，包括中文、英文、荷兰语、法语、西班牙语、德语等。AI会自动检测客户的语言并用母语流畅回复。"
+      }
+    };
+    if (/price|pricing|cost|how much|prijs|kosten|prix|coût|precio|价格|多少钱|费用/.test(q)) {
+      return answers[lang].price;
+    }
+    if (/demo|book|trial|试|演示|预约|démo|reserve|reserveren/.test(q)) {
+      return answers[lang].demo;
+    }
+    if (/feature|what can|capabil|service|functie|fonctionnalit|característica|功能|服务/.test(q)) {
+      return answers[lang].features;
+    }
+    if (/language|lang|talen|langue|idioma|语言/.test(q)) {
+      return answers[lang].languages;
+    }
+    return {
+      en: "Great question! Nexify AI provides 24/7 smart customer service that handles chat, phone calls, and emails in 30+ languages. We can help your business never miss a customer again. Let me tell you more — ",
+      nl: "Goede vraag! Nexify AI biedt 24/7 slimme klantenservice die chat, telefoongesprekken en e-mails afhandelt in 30+ talen. Zo mis je nooit meer een klant. Laat me je meer vertellen — ",
+      fr: "Excellente question ! Nexify AI propose un service client intelligent 24h/24 qui gère chat, appels et e-mails en 30+ langues. Votre entreprise ne ratera plus jamais un client. Laissez-moi vous en dire plus — ",
+      es: "¡Excelente pregunta! Nexify AI ofrece servicio al cliente inteligente 24/7 que gestiona chat, llamadas y correos en 30+ idiomas. Tu negocio nunca más perderá un cliente. Déjame contarte más — ",
+      zh: "好问题！Nexify AI 提供24/7智能客服，支持30多种语言的聊天、电话和邮件处理。让你的业务永不遗漏客户。让我为你详细介绍——"
+    }[lang];
+  }
+
+  async function callAI(userMessage) {
+    if (!API_URL) {
+      await sleep(800 + Math.random() * 600);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: messages, collectedLead: collectedLead, brandName: 'Nexify AI' }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!response.ok) throw new Error('API call failed');
+      const data = await response.json();
+      if (data.collectedLead) { collectedLead = { ...collectedLead, ...data.collectedLead }; }
+      if (data.leadComplete && !leadSubmitted) { leadSubmitted = true; submitLead(data.collectedLead); }
+      return data.reply;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Chatbot API error:', error);
+      const result = getLocalResponse(userMessage);
+      if (result.shouldAdvance) currentStep++;
+      return result.reply;
+    }
+  }
+
+  function submitLead(leadData) {
+    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+    leads.push({ ...leadData, timestamp: new Date().toISOString(), source: window.location.href, userAgent: navigator.userAgent });
+    localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    try {
+      const reply = await callAI(text);
+      hideTyping();
+      addBotMessage(reply);
+    } catch (e) {
+      hideTyping();
+      addBotMessage('Sorry, something went wrong. Please try again.');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  }
+
+  async function sendUserMessage(text) {
+    if (!text) return;
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    const reply = await callAI(text);
+    hideTyping();
+    addBotMessage(reply);
+    sendBtn.disabled = false;
+    if (isOpen) inputEl.focus();
+  }
+
+  async function startDemoFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const demoMessages = {
+      en: "I'd like to book a demo",
+      nl: "Ik wil een demo boeken",
+      fr: "Je voudrais réserver une démo",
+      es: "Me gustaría reservar una demo",
+      zh: "我想预约一个演示"
+    };
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(demoMessages[lang] || demoMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  async function startPilotFlow() {
+    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
+    const lang = detectLanguage();
+    const pilotMessages = {
+      en: "I'm interested in joining the pilot program",
+      nl: "Ik ben geïnteresseerd in het pilotprogramma",
+      fr: "Je suis intéressé par le programme pilote",
+      es: "Estoy interesado en el programa piloto",
+      zh: "我对试点计划感兴趣"
+    };
+    collectedLead.pilotApplication = true;
+    if (messages.length <= 1) {
+      if (messages.length === 1 && messages[0].role === 'assistant') {
+        messagesEl.removeChild(messagesEl.lastElementChild);
+        messages.pop();
+      }
+      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
+    } else {
+      inputEl.focus();
+    }
+  }
+
+  bubble.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  window.NexifyChatbot = {
+    open: () => { if (!isOpen) toggleChat(); },
+    close: () => { if (isOpen) toggleChat(); },
+    startDemo: startDemoFlow,
+    startPilot: startPilotFlow,
+    sendMessage: sendUserMessage,
+    getLead: () => collectedLead,
+    getMessages: () => messages,
+    getLeads: () => JSON.parse(localStorage.getItem('nexify_leads') || '[]')
+  };
+})();
+
+/* ===== init ===== */
+renderTheme();
+setUiLanguage(uiLang);
+</script>
+</body>
+</html>
