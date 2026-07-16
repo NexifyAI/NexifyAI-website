@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Subscription Plans &mdash; Nexify AI</title>
+<title>Pilot Program Results &mdash; Nexify AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -369,6 +369,108 @@ h1,h2,h3,p{margin:0;}
   color:var(--color-text-faint);padding:.4rem .9rem .2rem;
 }
 
+
+/* Metrics Banner */
+.metrics-section{padding:var(--space-12) 0;}
+.metrics-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-5);
+}
+.metric-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-6) var(--space-5);
+  box-shadow:var(--shadow-sm);text-align:center;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.metric-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.metric-value{
+  font-family:var(--font-display);font-size:2.4rem;font-weight:700;
+  color:var(--color-primary);line-height:1;margin-bottom:var(--space-2);
+}
+.metric-label{font-weight:700;font-size:var(--text-sm);margin-bottom:.25rem;}
+.metric-desc{font-size:var(--text-xs);color:var(--color-text-muted);}
+.pilot-badge{
+  display:inline-block;padding:.3rem .75rem;font-size:var(--text-xs);font-weight:700;
+  color:var(--color-primary);background:rgba(45,170,88,.12);border-radius:999px;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--space-4);
+}
+
+/* Case Studies */
+.case-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.case-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);overflow:hidden;
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-4);
+}
+.case-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.case-industry{
+  font-size:var(--text-xs);font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--color-primary);
+}
+.case-card h3{font-family:var(--font-display);font-size:var(--text-lg);}
+.case-desc{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+.case-metrics{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);
+  padding:var(--space-4) 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);
+}
+.case-metric strong{
+  display:block;font-family:var(--font-display);font-size:1.5rem;
+  color:var(--color-primary);line-height:1;margin-bottom:.25rem;
+}
+.case-metric span{font-size:var(--text-xs);color:var(--color-text-muted);}
+.case-quote{
+  font-size:var(--text-sm);color:var(--color-text-muted);font-style:italic;line-height:1.6;
+  padding-left:var(--space-4);border-left:3px solid var(--color-primary);
+}
+.case-quote-author{font-size:var(--text-xs);color:var(--color-text);font-weight:600;font-style:normal;margin-top:.5rem;}
+.case-quote-author span{display:block;color:var(--color-text-muted);font-weight:400;}
+
+/* Testimonials */
+.testimonials-section{background:var(--color-surface-offset);}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);
+}
+.testimonial-card{
+  background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-8) var(--space-6);
+  box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease;
+  display:flex;flex-direction:column;gap:var(--space-5);
+}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.testimonial-text{
+  font-size:var(--text-sm);line-height:1.7;color:var(--color-text);
+  position:relative;padding-left:var(--space-6);
+}
+.testimonial-text::before{
+  content:"\201C";position:absolute;left:0;top:-.5rem;
+  font-family:var(--font-display);font-size:3rem;color:var(--color-primary);opacity:.3;line-height:1;
+}
+.testimonial-author{display:flex;align-items:center;gap:var(--space-3);}
+.testimonial-avatar{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,var(--color-primary),var(--color-accent));
+  color:#fff;display:grid;place-items:center;font-weight:700;font-size:var(--text-sm);
+}
+.testimonial-author-info{display:flex;flex-direction:column;}
+.testimonial-author-name{font-size:var(--text-sm);font-weight:700;}
+.testimonial-author-role{font-size:var(--text-xs);color:var(--color-text-muted);}
+
+/* Responsive additions */
+@media (max-width:980px){
+  .metrics-grid{grid-template-columns:repeat(2,1fr);}
+  .case-grid{grid-template-columns:1fr;}
+  .testimonials-grid{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  .metrics-grid{grid-template-columns:1fr 1fr;gap:var(--space-4);}
+  .metric-card{padding:var(--space-5) var(--space-4);}
+  .metric-value{font-size:1.8rem;}
+}
+
 #nx-chatbot-bubble {
   position: fixed;bottom: 24px;right: 24px;width: 60px;height: 60px;
   border-radius: 50%;
@@ -559,175 +661,262 @@ h1,h2,h3,p{margin:0;}
 
 
 <main>
-  <!-- Hero -->
-  <section class="page-hero">
-    <div class="container">
-      <div class="eyebrow"><span data-i18n="subEyebrow">Subscription Pricing</span></div>
-      <h1 data-i18n="subTitle">Simple, predictable pricing.</h1>
-      <p class="hero-copy" data-i18n="subSubtitle">Fixed monthly plans that scale with your business. No surprises, no hidden fees.</p>
-    </div>
-  </section>
 
-  <!-- Pricing Cards -->
-  <section class="section" style="padding-top:0;">
-    <div class="container">
-      <div class="pricing-grid">
-        <!-- Starter -->
-        <div class="pricing-card">
-          <h3 data-i18n="subStarterName">Starter</h3>
-          <div class="pricing-price">
-            <span class="amount" data-i18n="subStarterPrice">&euro;199</span>
-            <span class="period" data-i18n="subStarterPeriod">/month</span>
+<!-- Hero -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow" data-i18n="prEyebrow">Pilot Program</span>
+    <h1 data-i18n="prTitle">Real results from our pilot clients</h1>
+    <p class="hero-copy" data-i18n="prSubtitle">We&#39;re working with a select group of pilot partners to refine and validate our AI solutions. Here&#39;s what we&#39;re learning together.</p>
+  </div>
+</section>
+
+<!-- Metrics Banner -->
+<section class="metrics-section">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="prMetricsTitle">Pilot Program at a Glance</h2>
+      <p data-i18n="prMetricsSub">Aggregated data from our active pilot partnerships. Updated monthly.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value" data-i18n="prMetric1Val">32%</div>
+        <div class="metric-label" data-i18n="prMetric1Label">Avg. Time Saved</div>
+        <div class="metric-desc" data-i18n="prMetric1Desc">on customer service tasks</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" data-i18n="prMetric2Val">4.7/5</div>
+        <div class="metric-label" data-i18n="prMetric2Label">Satisfaction Score</div>
+        <div class="metric-desc" data-i18n="prMetric2Desc">reported by pilot teams</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" data-i18n="prMetric3Val">65%</div>
+        <div class="metric-label" data-i18n="prMetric3Label">Faster Response</div>
+        <div class="metric-desc" data-i18n="prMetric3Desc">average speed improvement</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" data-i18n="prMetric4Val">3</div>
+        <div class="metric-label" data-i18n="prMetric4Label">Active Pilots</div>
+        <div class="metric-desc" data-i18n="prMetric4Desc">across 3 industries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section class="section" id="cases">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="prCaseTitle">Case Studies</h2>
+      <p data-i18n="prCaseSub">Early results from our pilot partners. Full case studies coming soon.</p>
+    </div>
+    <div class="case-grid">
+      <div class="case-card">
+        <span class="pilot-badge" data-i18n="prPilotBadge">Pilot &middot; In Progress</span>
+        <div class="case-industry" data-i18n="prCase1Industry">Healthcare</div>
+        <h3 data-i18n="prCase1Name">General Practice</h3>
+        <p class="case-desc" data-i18n="prCase1Desc">A busy general practice in the Netherlands using Nexify AI for appointment management and patient triage in Dutch and English.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <strong data-i18n="prCase1Metric1">40%</strong>
+            <span data-i18n="prCase1Metric1Label">fewer missed calls</span>
           </div>
-          <p class="pricing-desc" data-i18n="subStarterDesc">Perfect for small businesses getting started with AI customer service.</p>
-          <ul class="pricing-features">
-            <li>Up to 500 conversations / month</li>
-            <li>Website chat widget</li>
-            <li>3 languages included</li>
-            <li>Lead capture &amp; forwarding</li>
-            <li>Email support</li>
-            <li>Basic analytics dashboard</li>
-            <li>GDPR compliant</li>
-          </ul>
-          <a href="pilot-apply.html" class="btn btn-secondary" data-i18n="startPilot">Start with Pilot</a>
-        </div>
-
-        <!-- Growth (Featured) -->
-        <div class="pricing-card featured">
-          <span class="badge" data-i18n="subGrowthBadge">Most Popular</span>
-          <h3 data-i18n="subGrowthName">Growth</h3>
-          <div class="pricing-price">
-            <span class="amount" data-i18n="subGrowthPrice">&euro;399</span>
-            <span class="period" data-i18n="subGrowthPeriod">/month</span>
+          <div class="case-metric">
+            <strong data-i18n="prCase1Metric2">15 hrs</strong>
+            <span data-i18n="prCase1Metric2Label">saved per week</span>
           </div>
-          <p class="pricing-desc" data-i18n="subGrowthDesc">Complete solution for growing businesses with higher conversation volume.</p>
-          <ul class="pricing-features">
-            <li>Up to 2,000 conversations / month</li>
-            <li>Website chat + email handling</li>
-            <li>All 30+ languages</li>
-            <li>Smart lead qualification</li>
-            <li>Priority support</li>
-            <li>Full analytics &amp; reporting</li>
-            <li>CRM integration (Zapier)</li>
-            <li>Custom training on your data</li>
-            <li>Dedicated account manager</li>
-          </ul>
-          <a href="pilot-apply.html" class="btn btn-primary" data-i18n="startPilot">Start with Pilot</a>
         </div>
-
-        <!-- Enterprise -->
-        <div class="pricing-card">
-          <h3 data-i18n="subEnterpriseName">Enterprise</h3>
-          <div class="pricing-price">
-            <span class="amount" data-i18n="subEnterprisePrice">Custom</span>
+        <blockquote class="case-quote">
+          <span data-i18n="prCase1Quote">&quot;The AI handles routine appointment questions instantly. Our team can finally focus on patients who need real medical attention.&quot;</span>
+          <div class="case-quote-author">
+            <span data-i18n="prCase1QuoteName">Dr. van der Meer</span>
+            <span data-i18n="prCase1QuoteRole">Practice Manager</span>
           </div>
-          <p class="pricing-desc" data-i18n="subEnterpriseDesc">Tailored solutions for large organizations with complex needs.</p>
-          <ul class="pricing-features">
-            <li>Unlimited conversations</li>
-            <li>Chat + phone + email</li>
-            <li>All 30+ languages</li>
-            <li>Advanced lead routing</li>
-            <li>24/7 dedicated support</li>
-            <li>Custom analytics &amp; SLA reporting</li>
-            <li>Deep CRM/ERP integrations</li>
-            <li>Custom model fine-tuning</li>
-            <li>White-label option</li>
-            <li>On-premise deployment</li>
-          </ul>
-          <a href="pricing-custom.html" class="btn btn-secondary" data-i18n="contactUs">Contact Us</a>
+        </blockquote>
+      </div>
+      <div class="case-card">
+        <span class="pilot-badge" data-i18n="prPilotBadge">Pilot &middot; In Progress</span>
+        <div class="case-industry" data-i18n="prCase2Industry">Legal</div>
+        <h3 data-i18n="prCase2Name">Small Law Firm</h3>
+        <p class="case-desc" data-i18n="prCase2Desc">A boutique law firm using AI intake screening to qualify leads and collect case details outside business hours.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <strong data-i18n="prCase2Metric1">3x</strong>
+            <span data-i18n="prCase2Metric1Label">more qualified leads</span>
+          </div>
+          <div class="case-metric">
+            <strong data-i18n="prCase2Metric2">24/7</strong>
+            <span data-i18n="prCase2Metric2Label">intake coverage</span>
+          </div>
         </div>
+        <blockquote class="case-quote">
+          <span data-i18n="prCase2Quote">&quot;Potential clients reach out at all hours. Now the AI screens them overnight and we wake up to a prioritized list of quality leads.&quot;</span>
+          <div class="case-quote-author">
+            <span data-i18n="prCase2QuoteName">Mr. Jansen</span>
+            <span data-i18n="prCase2QuoteRole">Founding Partner</span>
+          </div>
+        </blockquote>
+      </div>
+      <div class="case-card">
+        <span class="pilot-badge" data-i18n="prPilotBadge">Pilot &middot; In Progress</span>
+        <div class="case-industry" data-i18n="prCase3Industry">Hospitality</div>
+        <h3 data-i18n="prCase3Name">Restaurant Group</h3>
+        <p class="case-desc" data-i18n="prCase3Desc">A local restaurant group handling reservations, takeaway orders, and menu questions across multiple locations.</p>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <strong data-i18n="prCase3Metric1">85%</strong>
+            <span data-i18n="prCase3Metric1Label">reservations auto-handled</span>
+          </div>
+          <div class="case-metric">
+            <strong data-i18n="prCase3Metric2">12+</strong>
+            <span data-i18n="prCase3Metric2Label">languages supported</span>
+          </div>
+        </div>
+        <blockquote class="case-quote">
+          <span data-i18n="prCase3Quote">&quot;Tourist season was always chaotic with multilingual calls. Now the AI handles everything smoothly, and our staff stays focused on service.&quot;</span>
+          <div class="case-quote-author">
+            <span data-i18n="prCase3QuoteName">Sofia R.</span>
+            <span data-i18n="prCase3QuoteRole">Operations Manager</span>
+          </div>
+        </blockquote>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Comparison Table -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="subCompareTitle">Feature Comparison</h2>
-        <p data-i18n="subCompareSub">Everything included in every plan &mdash; no hidden add-ons or surprise charges.</p>
+<!-- Testimonials -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="prTestTitle">What Our Pilots Say</h2>
+      <p data-i18n="prTestSub">Feedback from our pilot partners during the program.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text" data-i18n="prTest1Text">&quot;We were skeptical about AI reception, but Nexify has genuinely reduced our phone load by half. The team loves it.&quot;</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MB</div>
+          <div class="testimonial-author-info">
+            <span class="testimonial-author-name" data-i18n="prTest1Name">Marieke B.</span>
+            <span class="testimonial-author-role" data-i18n="prTest1Role">Practice Manager, Healthcare</span>
+          </div>
+        </div>
       </div>
-      <div class="compare-wrap">
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th class="plan-col">Starter</th>
-              <th class="plan-col">Growth</th>
-              <th class="plan-col">Enterprise</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Monthly conversations</td><td class="plan-col">500</td><td class="plan-col">2,000</td><td class="plan-col">Unlimited</td></tr>
-            <tr><td>Website chat widget</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Email handling</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Phone AI</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Languages</td><td class="plan-col">3</td><td class="plan-col">30+</td><td class="plan-col">30+</td></tr>
-            <tr><td>Lead capture</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Smart qualification</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>CRM integration</td><td class="plan-col dash">&mdash;</td><td class="plan-col">Zapier</td><td class="plan-col">Custom</td></tr>
-            <tr><td>Custom knowledge base</td><td class="plan-col">Basic</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Analytics dashboard</td><td class="plan-col">Basic</td><td class="plan-col">Full</td><td class="plan-col">Custom</td></tr>
-            <tr><td>Support level</td><td class="plan-col">Email</td><td class="plan-col">Priority</td><td class="plan-col">24/7 Dedicated</td></tr>
-            <tr><td>Account manager</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>GDPR compliant</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Custom branding</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Model fine-tuning</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>On-premise / private cloud</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
-            <tr><td>Multi-brand support</td><td class="plan-col dash">&mdash;</td><td class="plan-col dash">&mdash;</td><td class="plan-col check">&#10003;</td></tr>
-          </tbody>
-        </table>
+      <div class="testimonial-card">
+        <p class="testimonial-text" data-i18n="prTest2Text">&quot;The multilingual capability alone is worth it. We serve expats and tourists and the AI switches languages seamlessly.&quot;</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TD</div>
+          <div class="testimonial-author-info">
+            <span class="testimonial-author-name" data-i18n="prTest2Name">Thomas D.</span>
+            <span class="testimonial-author-role" data-i18n="prTest2Role">Restaurant Owner</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text" data-i18n="prTest3Text">&quot;Setup was faster than expected &mdash; about a week. The team was responsive and the AI actually understands our business.&quot;</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">AV</div>
+          <div class="testimonial-author-info">
+            <span class="testimonial-author-name" data-i18n="prTest3Name">Anouk V.</span>
+            <span class="testimonial-author-role" data-i18n="prTest3Role">Office Manager, Legal</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="subFaqTitle">Frequently Asked Questions</h2>
-        <p data-i18n="subFaqSub">Everything you need to know about our subscription plans.</p>
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="container">
+    <div class="section-head">
+      <h2 data-i18n="prFaqTitle">Pilot Program FAQ</h2>
+      <p data-i18n="prFaqSub">Everything you need to know about joining our pilot program.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="prFaq1Q">How are pilot partners selected?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="prFaq1A">We look for businesses with clear customer service challenges, reasonable conversation volume, and systems we can integrate with. Industry fit and willingness to provide feedback are also important. We typically respond within 24 hours.</p></div>
       </div>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <h4>Can I switch plans later?</h4>
-          <p>Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle. We'll prorate any differences fairly.</p>
-        </div>
-        <div class="faq-item">
-          <h4>What happens if I go over my conversation limit?</h4>
-          <p>We won't cut you off. If you exceed your monthly limit, we'll notify you and apply a simple overage rate. You can also upgrade your plan at any time to get a better per-conversation rate.</p>
-        </div>
-        <div class="faq-item">
-          <h4>Is there a setup fee?</h4>
-          <p>No setup fees, ever. We include onboarding and knowledge base training in your first month. For Enterprise plans, custom integration work may be quoted separately.</p>
-        </div>
-        <div class="faq-item">
-          <h4>How does the free pilot work?</h4>
-          <p>Our pilot program lets you try Nexify AI with real customer conversations for a limited time, often at a significant discount or even free. It's the best way to see the impact before committing.</p>
-        </div>
-        <div class="faq-item">
-          <h4>Can I cancel anytime?</h4>
-          <p>Yes, you can cancel your subscription at any time. No long-term contracts, no cancellation fees. Your service continues until the end of your current billing period.</p>
-        </div>
-        <div class="faq-item">
-          <h4>What payment methods do you accept?</h4>
-          <p>We accept all major credit cards (Visa, Mastercard, AmEx), SEPA direct debit, and bank transfers for annual plans. Enterprise customers can also pay via invoice.</p>
-        </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="prFaq2Q">What does the pilot cost?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="prFaq2A">Our pilot program is either free or heavily discounted depending on your use case and the level of customization needed. We select pilot partners based on fit &mdash; not ability to pay. Our goal is to build great case studies together.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="prFaq3Q">How long does the pilot last?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="prFaq3A">The pilot runs for 30 days from launch. During that time, you get full access to our platform, dedicated support, and weekly check-ins. After 30 days, we review the results together and discuss next steps.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="prFaq4Q">What kind of results can I expect?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="prFaq4A">Results vary by industry and use case, but our current pilots typically see 25-40% time savings on customer service tasks, 60-80% reduction in missed calls/messages, and high satisfaction scores from both staff and customers.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span data-i18n="prFaq5Q">Can I cancel the pilot early?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><p data-i18n="prFaq5A">Absolutely. If the pilot isn&#39;t meeting your expectations, you can withdraw at any time with no obligation and no cost. We&#39;d rather you be honest than unhappy.</p></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section class="cta-section" style="padding-top:0;">
-    <div class="container">
-      <div class="cta-card">
-        <h2 data-i18n="subCtaTitle">Not sure which plan is right for you?</h2>
-        <p data-i18n="subCtaSub">Start with our pilot program and find the perfect fit for your business.</p>
-        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="ctaPilot">Apply for Pilot</a>
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2 data-i18n="prCtaTitle">Ready to become our next pilot partner?</h2>
+      <p data-i18n="prCtaSub">Limited spots available. Apply now and get a fully customized AI solution for your business.</p>
+      <div class="cta-actions">
+        <a href="pilot-apply.html" class="btn btn-primary" data-i18n="prCtaBtn">Apply for Pilot</a>
+        <a href="demo.html" class="btn btn-secondary" data-i18n="prCtaSecondary">See it in action</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 </main>
+
+<script>
+// Demo page interactions
+document.getElementById('demo-chat-start').addEventListener('click', function() {
+  if (window.NexifyChatbot) window.NexifyChatbot.open();
+});
+document.querySelector('.demo-chat-input').addEventListener('click', function() {
+  if (window.NexifyChatbot) window.NexifyChatbot.open();
+});
+document.querySelectorAll('.usecase-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.usecase-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    if (window.NexifyChatbot) {
+      window.NexifyChatbot.open();
+      setTimeout(() => {
+        const usecase = this.dataset.usecase;
+        const msgs = {
+          restaurant: { en: "I'd like to book a table for dinner", nl: "Ik wil een tafel reserveren voor het avondeten", fr: "Je voudrais r\u00e9server une table pour le d\u00eener" },
+          clinic: { en: "I need to make a doctor's appointment", nl: "Ik moet een afspraak maken bij de dokter", fr: "Je dois prendre rendez-vous chez le m\u00e9decin" },
+          law: { en: "I need legal advice about a case", nl: "Ik heb juridisch advies nodig over een zaak", fr: "J'ai besoin de conseils juridiques sur une affaire" }
+        };
+        const lang = document.documentElement.lang || 'en';
+        window.NexifyChatbot.sendMessage(msgs[usecase][lang] || msgs[usecase].en);
+      }, 300);
+    }
+  });
+});
+</script>
 
 
 <footer class="site-footer">
@@ -737,6 +926,83 @@ h1,h2,h3,p{margin:0;}
         <a href="index.html" class="brand">
           <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
         </a>
+    'prEyebrow': 'Pilot Program',
+    'prTitle': 'Real results from our pilot clients',
+    'prSubtitle': 'We\'re working with a select group of pilot partners to refine and validate our AI solutions. Here\'s what we\'re learning together.',
+    'prMetricsTitle': 'Pilot Program at a Glance',
+    'prMetricsSub': 'Aggregated data from our active pilot partnerships. Updated monthly.',
+    'prMetric1Val': '32%',
+    'prMetric1Label': 'Avg. Time Saved',
+    'prMetric1Desc': 'on customer service tasks',
+    'prMetric2Val': '4.7/5',
+    'prMetric2Label': 'Satisfaction Score',
+    'prMetric2Desc': 'reported by pilot teams',
+    'prMetric3Val': '65%',
+    'prMetric3Label': 'Faster Response',
+    'prMetric3Desc': 'average speed improvement',
+    'prMetric4Val': '3',
+    'prMetric4Label': 'Active Pilots',
+    'prMetric4Desc': 'across 3 industries',
+    'prPilotBadge': 'Pilot · In Progress',
+    'prCaseTitle': 'Case Studies',
+    'prCaseSub': 'Early results from our pilot partners. Full case studies coming soon.',
+    'prCase1Industry': 'Healthcare',
+    'prCase1Name': 'General Practice',
+    'prCase1Desc': 'A busy general practice in the Netherlands using Nexify AI for appointment management and patient triage in Dutch and English.',
+    'prCase1Metric1': '40%',
+    'prCase1Metric1Label': 'fewer missed calls',
+    'prCase1Metric2': '15 hrs',
+    'prCase1Metric2Label': 'saved per week',
+    'prCase1Quote': '"The AI handles routine appointment questions instantly. Our team can finally focus on patients who need real medical attention."',
+    'prCase1QuoteName': 'Dr. van der Meer',
+    'prCase1QuoteRole': 'Practice Manager',
+    'prCase2Industry': 'Legal',
+    'prCase2Name': 'Small Law Firm',
+    'prCase2Desc': 'A boutique law firm using AI intake screening to qualify leads and collect case details outside business hours.',
+    'prCase2Metric1': '3x',
+    'prCase2Metric1Label': 'more qualified leads',
+    'prCase2Metric2': '24/7',
+    'prCase2Metric2Label': 'intake coverage',
+    'prCase2Quote': '"Potential clients reach out at all hours. Now the AI screens them overnight and we wake up to a prioritized list of quality leads."',
+    'prCase2QuoteName': 'Mr. Jansen',
+    'prCase2QuoteRole': 'Founding Partner',
+    'prCase3Industry': 'Hospitality',
+    'prCase3Name': 'Restaurant Group',
+    'prCase3Desc': 'A local restaurant group handling reservations, takeaway orders, and menu questions across multiple locations.',
+    'prCase3Metric1': '85%',
+    'prCase3Metric1Label': 'reservations auto-handled',
+    'prCase3Metric2': '12+',
+    'prCase3Metric2Label': 'languages supported',
+    'prCase3Quote': '"Tourist season was always chaotic with multilingual calls. Now the AI handles everything smoothly, and our staff stays focused on service."',
+    'prCase3QuoteName': 'Sofia R.',
+    'prCase3QuoteRole': 'Operations Manager',
+    'prTestTitle': 'What Our Pilots Say',
+    'prTestSub': 'Feedback from our pilot partners during the program.',
+    'prTest1Text': '"We were skeptical about AI reception, but Nexify has genuinely reduced our phone load by half. The team loves it."',
+    'prTest1Name': 'Marieke B.',
+    'prTest1Role': 'Practice Manager, Healthcare',
+    'prTest2Text': '"The multilingual capability alone is worth it. We serve expats and tourists and the AI switches languages seamlessly."',
+    'prTest2Name': 'Thomas D.',
+    'prTest2Role': 'Restaurant Owner',
+    'prTest3Text': '"Setup was faster than expected — about a week. The team was responsive and the AI actually understands our business."',
+    'prTest3Name': 'Anouk V.',
+    'prTest3Role': 'Office Manager, Legal',
+    'prFaqTitle': 'Pilot Program FAQ',
+    'prFaqSub': 'Everything you need to know about joining our pilot program.',
+    'prFaq1Q': 'How are pilot partners selected?',
+    'prFaq1A': 'We look for businesses with clear customer service challenges, reasonable conversation volume, and systems we can integrate with. Industry fit and willingness to provide feedback are also important. We typically respond within 24 hours.',
+    'prFaq2Q': 'What does the pilot cost?',
+    'prFaq2A': 'Our pilot program is either free or heavily discounted depending on your use case and the level of customization needed. We select pilot partners based on fit — not ability to pay. Our goal is to build great case studies together.',
+    'prFaq3Q': 'How long does the pilot last?',
+    'prFaq3A': 'The pilot runs for 30 days from launch. During that time, you get full access to our platform, dedicated support, and weekly check-ins. After 30 days, we review the results together and discuss next steps.',
+    'prFaq4Q': 'What kind of results can I expect?',
+    'prFaq4A': 'Results vary by industry and use case, but our current pilots typically see 25-40% time savings on customer service tasks, 60-80% reduction in missed calls/messages, and high satisfaction scores from both staff and customers.',
+    'prFaq5Q': 'Can I cancel the pilot early?',
+    'prFaq5A': 'Absolutely. If the pilot isn\'t meeting your expectations, you can withdraw at any time with no obligation and no cost. We\'d rather you be honest than unhappy.',
+    'prCtaTitle': 'Ready to become our next pilot partner?',
+    'prCtaSub': 'Limited spots available. Apply now and get a fully customized AI solution for your business.',
+    'prCtaBtn': 'Apply for Pilot',
+    'prCtaSecondary': 'See it in action',
         <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
       </div>
             <div class="footer-col">
@@ -821,6 +1087,83 @@ const copy = {
     "navAbout": "About",
     "navPilot": "Pilot",
     "navContact": "Contact",
+    'prEyebrow': 'Pilot Programma',
+    'prTitle': 'Echte resultaten van onze pilot-klanten',
+    'prSubtitle': 'We werken samen met een selecte groep pilot-partners om onze AI-oplossingen te verfijnen en valideren. Dit is wat we samen leren.',
+    'prMetricsTitle': 'Pilot Programma in vogelvlucht',
+    'prMetricsSub': 'Geaggregeerde gegevens van onze actieve pilot-partners. Maandelijks bijgewerkt.',
+    'prMetric1Val': '32%',
+    'prMetric1Label': 'Gem. Tijd Bespaard',
+    'prMetric1Desc': 'op klantenservice taken',
+    'prMetric2Val': '4.7/5',
+    'prMetric2Label': 'Tevredenheidsscore',
+    'prMetric2Desc': 'gerapporteerd door pilot-teams',
+    'prMetric3Val': '65%',
+    'prMetric3Label': 'Sneller Reageren',
+    'prMetric3Desc': 'gemiddelde snelheidstoename',
+    'prMetric4Val': '3',
+    'prMetric4Label': 'Actieve Pilots',
+    'prMetric4Desc': 'over 3 branches',
+    'prPilotBadge': 'Pilot · Bezig',
+    'prCaseTitle': 'Casestudies',
+    'prCaseSub': 'Vroege resultaten van onze pilot-partners. Complete casestudies komen binnenkort.',
+    'prCase1Industry': 'Zorg',
+    'prCase1Name': 'Huisartsenpraktijk',
+    'prCase1Desc': 'Een drukke huisartsenpraktijk in Nederland die Nexify AI gebruikt voor afspraakbeheer en patiënttriadge in het Nederlands en Engels.',
+    'prCase1Metric1': '40%',
+    'prCase1Metric1Label': 'minder gemiste oproepen',
+    'prCase1Metric2': '15 uur',
+    'prCase1Metric2Label': 'bespaard per week',
+    'prCase1Quote': '"De AI handelt routine-afspraakvragen direct af. Ons team kan zich eindelijk richten op patiënten die echte medische aandacht nodig hebben."',
+    'prCase1QuoteName': 'Dr. van der Meer',
+    'prCase1QuoteRole': 'Praktijkmanager',
+    'prCase2Industry': 'Juridisch',
+    'prCase2Name': 'Klein Advocatenkantoor',
+    'prCase2Desc': 'Een boutique advocatenkantoor dat AI-intake screening gebruikt om leads te kwalificeren en zaakdetails te verzamelen buiten kantooruren.',
+    'prCase2Metric1': '3x',
+    'prCase2Metric1Label': 'meer gekwalificeerde leads',
+    'prCase2Metric2': '24/7',
+    'prCase2Metric2Label': 'intake dekking',
+    'prCase2Quote': '"Potentiële klanten nemen altijd contact op. Nu screent de AI ze \'s nachts en worden we wakker met een geprioriteerde lijst met kwaliteitsleads."',
+    'prCase2QuoteName': 'Mr. Jansen',
+    'prCase2QuoteRole': 'Oprichtend Partner',
+    'prCase3Industry': 'Horeca',
+    'prCase3Name': 'Restaurant Groep',
+    'prCase3Desc': 'Een lokale restaurantengroep die reserveringen, bestellingen en menuvragen beheert over meerdere locaties.',
+    'prCase3Metric1': '85%',
+    'prCase3Metric1Label': 'reserveringen automatisch',
+    'prCase3Metric2': '12+',
+    'prCase3Metric2Label': 'talen ondersteund',
+    'prCase3Quote': '"Toeristenseizoen was altijd chaotisch met meertalige telefoontjes. Nu handelt de AI alles soepel af en ons personeel blijft gefocust op service."',
+    'prCase3QuoteName': 'Sofia R.',
+    'prCase3QuoteRole': 'Operations Manager',
+    'prTestTitle': 'Wat Onze Pilots Zeggen',
+    'prTestSub': 'Feedback van onze pilot-partners tijdens het programma.',
+    'prTest1Text': '"We waren sceptisch over AI-receptie, maar Nexify heeft onze telefoonlast echt met de helft verminderd. Het team is er dol op."',
+    'prTest1Name': 'Marieke B.',
+    'prTest1Role': 'Praktijkmanager, Zorg',
+    'prTest2Text': '"De meertalige mogelijkheid alleen al is het waard. We bedienen expats en toeristen en de AI schakelt naadloos tussen talen."',
+    'prTest2Name': 'Thomas D.',
+    'prTest2Role': 'Restaurant Eigenaar',
+    'prTest3Text': '"De opzet was sneller dan verwacht — ongeveer een week. Het team was responsief en de AI begrijpt ons bedrijf echt."',
+    'prTest3Name': 'Anouk V.',
+    'prTest3Role': 'Office Manager, Juridisch',
+    'prFaqTitle': 'Veelgestelde Vragen over Pilot',
+    'prFaqSub': 'Alles wat je moet weten over ons pilotprogramma.',
+    'prFaq1Q': 'Hoe worden pilot-partners geselecteerd?',
+    'prFaq1A': 'We zoeken naar bedrijven met duidelijke klantenservice-uitdagingen, redelijk conversatievolume en systemen waarmee we kunnen integreren. Branchedeskundigheid en bereidheid om feedback te geven zijn ook belangrijk. We reageren meestal binnen 24 uur.',
+    'prFaq2Q': 'Wat kost de pilot?',
+    'prFaq2A': 'Ons pilotprogramma is gratis of met flinke korting, afhankelijk van je use case en het niveau van maatwerk dat nodig is. We selecteren pilot-partners op basis van geschiktheid — niet op betaalvermogen. Ons doel is om samen mooie casestudies te bouwen.',
+    'prFaq3Q': 'Hoe lang duurt de pilot?',
+    'prFaq3A': 'De pilot duurt 30 dagen vanaf de lancering. Tijdens die periode krijg je volledige toegang tot ons platform, toegewijde ondersteuning en wekelijkse check-ins. Na 30 dagen bespreken we samen de resultaten en de volgende stappen.',
+    'prFaq4Q': 'Welke resultaten kan ik verwachten?',
+    'prFaq4A': 'Resultaten variëren per branche en use case, maar onze huidige pilots zien meestal 25-40% tijdsbesparing op klantenservicetaken, 60-80% minder gemiste oproepen/berichten en hoge tevredenheidsscores van zowel personeel als klanten.',
+    'prFaq5Q': 'Kan ik de pilot vroegtijdig stoppen?',
+    'prFaq5A': 'Absoluut. Als de pilot niet aan je verwachtingen voldoet, kun je je op elk moment terugtrekken zonder verplichtingen en zonder kosten. We hebben liever dat je eerlijk bent dan ongelukkig.',
+    'prCtaTitle': 'Klaar om onze volgende pilot-partner te worden?',
+    'prCtaSub': 'Beperkte plekken beschikbaar. Meld je nu aan en krijg een volledig aangepaste AI-oplossing voor je bedrijf.',
+    'prCtaBtn': 'Aanmelden voor Pilot',
+    'prCtaSecondary': 'Bekijk het in actie',
     "footerTagline": "24/7 AI customer service for European SMEs.",
     "footerProduct": "Product",
     "footerSolutions": "Industry Solutions",
@@ -935,6 +1278,83 @@ const copy = {
     "navAbout": "Over ons",
     "navPilot": "Pilot",
     "navContact": "Contact",
+    'prEyebrow': 'Programme Pilote',
+    'prTitle': 'De vrais résultats de nos clients pilotes',
+    'prSubtitle': 'Nous travaillons avec un groupe sélect de partenaires pilotes pour affiner et valider nos solutions IA. Voici ce que nous apprenons ensemble.',
+    'prMetricsTitle': 'Programme Pilote en un coup d\'œil',
+    'prMetricsSub': 'Données agrégées de nos partenariats pilotes actifs. Mise à jour mensuelle.',
+    'prMetric1Val': '32%',
+    'prMetric1Label': 'Temps Moy. Épargné',
+    'prMetric1Desc': 'sur les tâches de service client',
+    'prMetric2Val': '4.7/5',
+    'prMetric2Label': 'Score de Satisfaction',
+    'prMetric2Desc': 'rapporté par les équipes pilotes',
+    'prMetric3Val': '65%',
+    'prMetric3Label': 'Réponse plus Rapide',
+    'prMetric3Desc': 'amélioration moyenne de la vitesse',
+    'prMetric4Val': '3',
+    'prMetric4Label': 'Pilotes Actifs',
+    'prMetric4Desc': 'dans 3 secteurs',
+    'prPilotBadge': 'Pilote · En cours',
+    'prCaseTitle': 'Études de Cas',
+    'prCaseSub': 'Résultats préliminaires de nos partenaires pilotes. Études de cas complètes à venir.',
+    'prCase1Industry': 'Santé',
+    'prCase1Name': 'Médecine Générale',
+    'prCase1Desc': 'Un cabinet de médecine générale chargé aux Pays-Bas utilisant Nexify AI pour la gestion des rendez-vous et le tri des patients en néerlandais et anglais.',
+    'prCase1Metric1': '40%',
+    'prCase1Metric1Label': 'moins d\'appels manqués',
+    'prCase1Metric2': '15 h',
+    'prCase1Metric2Label': 'épargnées par semaine',
+    'prCase1Quote': '"L\'IA traite les questions de rendez-vous de routine instantanément. Notre équipe peut enfin se concentrer sur les patients qui nécessitent une vraie attention médicale."',
+    'prCase1QuoteName': 'Dr. van der Meer',
+    'prCase1QuoteRole': 'Directeur de Cabinet',
+    'prCase2Industry': 'Juridique',
+    'prCase2Name': 'Petit Cabinet d\'Avocats',
+    'prCase2Desc': 'Un cabinet d\'avocats boutique utilisant le screening d\'entrée IA pour qualifier les leads et collecter les détails des dossiers en dehors des heures de bureau.',
+    'prCase2Metric1': '3x',
+    'prCase2Metric1Label': 'plus de leads qualifiés',
+    'prCase2Metric2': '24/7',
+    'prCase2Metric2Label': 'couverture d\'entrée',
+    'prCase2Quote': '"Les clients potentiels nous contactent à toute heure. Maintenant, l\'IA les sélectionne pendant la nuit et nous nous réveillons avec une liste prioritaire de leads de qualité."',
+    'prCase2QuoteName': 'Me Jansen',
+    'prCase2QuoteRole': 'Associé Fondateur',
+    'prCase3Industry': 'Hôtellerie',
+    'prCase3Name': 'Groupe de Restaurants',
+    'prCase3Desc': 'Un groupe de restaurants locaux gérant les réservations, les commandes à emporter et les questions de menu sur plusieurs sites.',
+    'prCase3Metric1': '85%',
+    'prCase3Metric1Label': 'réservations automatisées',
+    'prCase3Metric2': '12+',
+    'prCase3Metric2Label': 'langues supportées',
+    'prCase3Quote': '"La saison touristique était toujours chaotique avec les appels multilingues. Maintenant, l\'IA gère tout en douceur et notre personnel reste concentré sur le service."',
+    'prCase3QuoteName': 'Sofia R.',
+    'prCase3QuoteRole': 'Directrice des Opérations',
+    'prTestTitle': 'Ce Que Disent Nos Pilotes',
+    'prTestSub': 'Retour de nos partenaires pilotes pendant le programme.',
+    'prTest1Text': '"Nous étions sceptiques sur la réception IA, mais Nexify a vraiment réduit de moitié notre charge téléphonique. L\'équipe adore."',
+    'prTest1Name': 'Marieke B.',
+    'prTest1Role': 'Directrice de Cabinet, Santé',
+    'prTest2Text': '"La capacité multilingue à elle seule en vaut la peine. Nous servons des expats et des touristes et l\'IA passe d\'une langue à l\'autre sans couture."',
+    'prTest2Name': 'Thomas D.',
+    'prTest2Role': 'Propriétaire de Restaurant',
+    'prTest3Text': '"La mise en place a été plus rapide que prévu — environ une semaine. L\'équipe était réactive et l\'IA comprend vraiment notre entreprise."',
+    'prTest3Name': 'Anouk V.',
+    'prTest3Role': 'Responsable Bureau, Juridique',
+    'prFaqTitle': 'FAQ Programme Pilote',
+    'prFaqSub': 'Tout ce que vous devez savoir sur notre programme pilote.',
+    'prFaq1Q': 'Comment les partenaires pilotes sont-ils sélectionnés ?',
+    'prFaq1A': 'Nous recherchons des entreprises avec des défis de service client clairs, un volume de conversations raisonnable et des systèmes avec lesquels nous pouvons nous intégrer. L\'adéquation sectorielle et la volonté de fournir des retours sont également importantes. Nous répondons généralement sous 24 heures.',
+    'prFaq2Q': 'Combien coûte le pilote ?',
+    'prFaq2A': 'Notre programme pilote est soit gratuit, soit fortement réduit selon votre cas d\'usage et le niveau de personnalisation nécessaire. Nous sélectionnons les partenaires pilotes en fonction de l\'adéquation — pas de la capacité à payer. Notre objectif est de construire de belles études de cas ensemble.',
+    'prFaq3Q': 'Combien de temps dure le pilote ?',
+    'prFaq3A': 'Le pilote dure 30 jours à partir du lancement. Pendant cette période, vous avez un accès complet à notre plateforme, un support dédié et des points hebdomadaires. Après 30 jours, nous passons en revue les résultats ensemble et discutons des prochaines étapes.',
+    'prFaq4Q': 'Quels résultats puis-je attendre ?',
+    'prFaq4A': 'Les résultats varient selon le secteur et le cas d\'usage, mais nos pilotes actuels constatent généralement 25-40% d\'économie de temps sur les tâches de service client, 60-80% de réduction des appels/messages manqués et des scores de satisfaction élevés du personnel comme des clients.',
+    'prFaq5Q': 'Puis-je annuler le pilote plus tôt ?',
+    'prFaq5A': 'Absolument. Si le pilote ne répond pas à vos attentes, vous pouvez vous retirer à tout moment sans obligation et sans frais. Nous préférons que vous soyez honnête plutôt que mécontent.',
+    'prCtaTitle': 'Prêt à devenir notre prochain partenaire pilote ?',
+    'prCtaSub': 'Places limitées disponibles. Postulez maintenant et obtenez une solution IA entièrement personnalisée pour votre entreprise.',
+    'prCtaBtn': 'Postuler au Pilote',
+    'prCtaSecondary': 'Voir en action',
     "footerTagline": "24/7 AI-klantenservice voor Europees MKB.",
     "footerProduct": "Product",
     "footerSolutions": "Branche-oplossingen",

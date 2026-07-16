@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Page Not Found | Nexify AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --text-xs: clamp(.72rem,.68rem+.2vw,.82rem);
+  --text-sm: clamp(.88rem,.82rem+.3vw,1rem);
+  --text-base: clamp(1rem,.96rem+.2vw,1.1rem);
+  --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+  --text-xl: clamp(1.6rem,1.3rem+1vw,2.4rem);
+  --text-2xl: clamp(2.2rem,1.4rem+2.6vw,4rem);
+  --space-2:.5rem;--space-3:.75rem;--space-4:1rem;
+  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;
+  --space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+  --color-bg:#f6fff7;
+  --color-surface:#ffffff;
+  --color-surface-2:#f3fff5;
+  --color-surface-offset:#ebf9ee;
+  --color-border:#cfe7d3;
+  --color-divider:#dbefde;
+  --color-text:#153122;
+  --color-text-muted:#51705d;
+  --color-text-faint:#86a191;
+  --color-text-inverse:#f7fff8;
+  --color-primary:#2daa58;
+  --color-primary-hover:#248746;
+  --color-primary-highlight:#dff6e5;
+  --color-accent:#78df97;
+  --radius-md:.75rem;--radius-lg:1rem;--radius-xl:1.5rem;--radius-full:9999px;
+  --shadow-sm:0 8px 20px rgba(45,170,88,.08);
+  --shadow-md:0 18px 40px rgba(45,170,88,.12);
+  --shadow-lg:0 30px 70px rgba(45,170,88,.16);
+  --font-display:'Zodiak',Georgia,serif;
+  --font-body:'Satoshi',Inter,sans-serif;
+  --content-default:1180px;
+}
+[data-theme="dark"] {
+  --color-bg:#0f1712;--color-surface:#152019;--color-surface-2:#1a281e;
+  --color-surface-offset:#1f2f24;--color-border:#284332;--color-divider:#203626;
+  --color-text:#edf7ef;--color-text-muted:#a7c0ad;--color-text-faint:#708777;
+  --color-text-inverse:#0f1712;--color-primary:#67d889;--color-primary-hover:#52c374;
+  --color-primary-highlight:#183222;--color-accent:#8ce5a5;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.22);
+  --shadow-md:0 16px 40px rgba(0,0,0,.30);
+  --shadow-lg:0 28px 80px rgba(0,0,0,.38);
+}
+*, :before, :after { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; font-family:var(--font-body); font-size:var(--text-base); line-height:1.6;
+  background:
+    radial-gradient(circle at 15% 0%, color-mix(in oklab,var(--color-accent) 24%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 10%, color-mix(in oklab,var(--color-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg,var(--color-bg),color-mix(in oklab,var(--color-bg) 82%, #fff));
+  color:var(--color-text);
+  display:flex; flex-direction:column; min-height:100vh;
+}
+main { flex:1; display:grid; place-items:center; padding:var(--space-16) 0; }
+a{text-decoration:none;color:inherit;}
+button{font:inherit;border:none;background:none;}
+h1,h2,h3,p{margin:0;}
+.container{width:min(calc(100% - 2rem),var(--content-default));margin-inline:auto;}
+
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in oklab,var(--color-bg) 80%,rgba(255,255,255,.55));
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid color-mix(in oklab,var(--color-primary) 14%,white);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:.85rem 0;position:relative;}
+.brand{display:flex;align-items:center;gap:.6rem;}
+.brand img{height:40px;width:auto;display:block;object-fit:contain;}
+.brand-logo-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--color-bg);border-radius:var(--radius-md);
+  padding:2px;transition:background .3s ease;
+}
+.nav{display:flex;gap:var(--space-5);}
+.nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
+.nav a:hover{color:var(--color-primary);}
+.actions{display:flex;align-items:center;gap:var(--space-3);}
+.lang-switcher{
+  display:flex;gap:.25rem;padding:.25rem;
+  background:var(--color-surface-offset);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+}
+.lang-btn,.theme-btn,.menu-btn{
+  padding:.55rem .85rem;border-radius:var(--radius-full);cursor:pointer;
+  min-height:44px;color:var(--color-text-muted);transition:all .2s ease;
+}
+.lang-btn.active{background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm);font-weight:700;}
+.theme-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:grid;place-items:center;width:44px;
+}
+.menu-btn{
+  border:1px solid var(--color-border);background:var(--color-surface);
+  box-shadow:var(--shadow-sm);display:none;place-items:center;width:44px;padding:10px;color:var(--color-text);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:50px;padding:1rem 1.6rem;border-radius:var(--radius-full);
+  font-size:var(--text-sm);font-weight:700;cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--color-primary),color-mix(in oklab,var(--color-primary) 65%,var(--color-accent)));
+  color:var(--color-text-inverse);box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{box-shadow:var(--shadow-lg);}
+.btn-secondary{border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);}
+
+/* 404 content */
+.not-found-wrap{text-align:center;max-width:560px;}
+.not-found-code{
+  font-family:var(--font-display);
+  font-size:clamp(6rem,15vw,10rem);
+  font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--color-primary),var(--color-accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:var(--space-4);
+}
+.not-found-wrap h1{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  margin-bottom:var(--space-4);
+}
+.not-found-wrap p{
+  color:var(--color-text-muted);font-size:var(--text-base);
+  margin-bottom:var(--space-8);line-height:1.6;
+}
+.not-found-actions{display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;}
+
+/* Footer */
+.site-footer{background:var(--color-surface);border-top:1px solid var(--color-border);}
+.footer-main{padding:var(--space-10) 0 var(--space-6);}
+.footer-bottom{
+  border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
+}
+.footer-bottom p{font-size:var(--text-xs);color:var(--color-text-faint);text-align:center;}
+.footer-bottom a{color:var(--color-text-muted);}
+.footer-bottom a:hover{color:var(--color-primary);}
+
+/* Chatbot widget */
+#nx-chatbot-bubble {
+  position: fixed;bottom: 24px;right: 24px;width: 60px;height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
+  cursor: pointer;display: flex;align-items: center;justify-content: center;
+  z-index: 99999;transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-body);border: none;
+}
+#nx-chatbot-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent); }
+#nx-chatbot-bubble svg { width: 28px;height: 28px;color: white;}
+#nx-chatbot-window {
+  position: fixed;bottom: 96px;right: 24px;width: 380px;height: 560px;
+  max-height: calc(100vh - 120px);background: var(--color-surface);
+  border-radius: 16px;border: 1px solid var(--color-border);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);display: none;flex-direction: column;
+  overflow: hidden;z-index: 99999;font-family: var(--font-body);
+  animation: nxSlideUp 0.3s ease;
+}
+#nx-chatbot-window.open { display: flex; }
+@keyframes nxSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.nx-chat-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  color: var(--color-text-inverse);display: flex;align-items: center;justify-content: space-between;
+}
+.nx-chat-header-title { font-weight: 600;font-size: 15px;display: flex;align-items: center;gap: 8px;}
+.nx-chat-header-status { width: 8px;height: 8px;background: #b7ffb7;border-radius: 50%;animation: nxPulse 2s infinite;}
+@keyframes nxPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); } 50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); } }
+.nx-chat-close { background: none;border: none;color: white;font-size: 20px;cursor: pointer;padding: 0 4px;opacity: 0.85;line-height: 1;width: 28px;height: 28px;display: grid;place-items: center;border-radius: 50%;}
+.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+.nx-chat-messages { flex: 1;overflow-y: auto;padding: 16px;background: var(--color-surface-2);display: flex;flex-direction: column;gap: 10px;}
+.nx-chat-messages::-webkit-scrollbar { width: 6px; }
+.nx-chat-messages::-webkit-scrollbar-thumb { background: var(--color-border);border-radius: 3px;}
+.nx-msg { max-width: 85%;padding: 10px 14px;border-radius: 14px;font-size: 14px;line-height: 1.5;word-wrap: break-word;animation: nxMsgIn 0.3s ease both;}
+@keyframes nxMsgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.nx-msg.bot { background: var(--color-surface);color: var(--color-text);border: 1px solid var(--color-border);border-bottom-left-radius: 4px;align-self: flex-start;}
+.nx-msg.user {
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
+  color: var(--color-text-inverse);border-bottom-right-radius: 4px;align-self: flex-end;}
+.nx-typing {
+  display: flex;gap: 4px;padding: 10px 14px;background: var(--color-surface);
+  border: 1px solid var(--color-border);border-radius: 14px;border-bottom-left-radius: 4px;
+  align-self: flex-start;width: fit-content;
+}
+.nx-typing span { width: 7px;height: 7px;background: var(--color-text-faint);border-radius: 50%;animation: nxTyping 1.3s infinite;}
+.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes nxTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+.nx-chat-input-area { padding: 12px 16px;background: var(--color-surface);border-top: 1px solid var(--color-divider);display: flex;gap: 8px;}
+.nx-chat-input {
+  flex: 1;padding: 10px 14px;border: 1px solid var(--color-border);border-radius: 20px;font-size: 14px;outline: none;font-family: inherit;background: var(--color-surface);color: var(--color-text);transition: border-color 0.2s;}
+.nx-chat-input:focus { border-color: var(--color-primary); }
+.nx-chat-input::placeholder { color: var(--color-text-faint); }
+.nx-chat-send {
+  width: 40px;height: 40px;border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
+  border: none;cursor: pointer;display: flex;align-items: center;justify-content: center;color: white;
+  transition: opacity 0.2s, transform 0.15s;flex-shrink: 0;
+}
+.nx-chat-send:hover { transform: scale(1.05); }
+.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.nx-chat-send svg { width: 18px; height: 18px; }
+
+@media (max-width:980px){
+  .menu-btn{display:grid;}
+  .nav{
+    display:none;position:absolute;top:100%;left:0;width:100%;
+    background:var(--color-surface);border-bottom:1px solid var(--color-border);
+    flex-direction:column;padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-md);gap:var(--space-4);z-index:50;
+  }
+  .nav.open{display:flex;}
+}
+@media (max-width:640px){
+  .header-inner{flex-direction:column;align-items:stretch;}
+  .actions{width:100%;justify-content:space-between;margin-top:var(--space-3);}
+  .lang-switcher{padding:.15rem;}
+  .lang-btn{padding:.4rem .6rem;min-height:38px;}
+  .theme-btn,.menu-btn{min-height:38px;width:38px;}
+  .btn{min-height:44px;padding:.8rem 1.2rem;}
+  #nx-chatbot-window {
+    width: calc(100vw - 32px);
+    right: 16px;left: 16px;
+    height: 70vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-logo-wrap"><img src="logo.svg" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+    </a>
+    <nav class="nav" id="site-nav">
+      <a href="index.html" data-i18n="navHome">Home</a>
+      <a href="solutions-restaurants.html" data-i18n="navSolutions">Solutions</a>
+      <a href="demo.html" data-i18n="navDemo">See It in Action</a>
+      <a href="pricing-subscription.html" data-i18n="navPricing">Pricing</a>
+      <a href="about.html" data-i18n="navAbout">About</a>
+      <a href="contact.html" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="actions">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" data-lang="nl" aria-pressed="false">NL</button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <button class="menu-btn" data-menu-toggle aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="not-found-wrap">
+      <div class="not-found-code">404</div>
+      <h1 data-i18n="nfTitle">Page not found</h1>
+      <p data-i18n="nfDesc">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+      <div class="not-found-actions">
+        <a href="index.html" class="btn btn-primary" data-i18n="nfHome">Back to Home</a>
+        <a href="demo.html" class="btn btn-secondary" data-i18n="nfDemo">Try the Demo</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="nx-chatbot-bubble" aria-label="Open chat">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+</button>
+
+<div id="nx-chatbot-window">
+  <div class="nx-chat-header">
+    <div class="nx-chat-header-title">
+      <span class="nx-chat-header-status"></span>
+      Nexify AI Assistant
+    </div>
+    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="nx-chat-messages" id="nx-chat-messages"></div>
+  <div class="nx-chat-input-area">
+    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message...">
+    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const copy = {
+  en: {
+    navHome: "Home",
+    navSolutions: "Solutions",
+    navDemo: "See It in Action",
+    navPricing: "Pricing",
+    navAbout: "About",
+    navContact: "Contact",
+    nfTitle: "Page not found",
+    nfDesc: "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    nfHome: "Back to Home",
+    nfDemo: "Try the Demo"
+  },
+  nl: {
+    navHome: "Home",
+    navSolutions: "Oplossingen",
+    navDemo: "Bekijk het in actie",
+    navPricing: "Prijzen",
+    navAbout: "Over",
+    navContact: "Contact",
+    nfTitle: "Pagina niet gevonden",
+    nfDesc: "De pagina die je zoekt bestaat niet of is verplaatst. Laten we je terug op weg helpen.",
+    nfHome: "Terug naar Home",
+    nfDemo: "Probeer de Demo"
+  },
+  fr: {
+    navHome: "Accueil",
+    navSolutions: "Solutions",
+    navDemo: "Voir en action",
+    navPricing: "Tarifs",
+    navAbout: "À propos",
+    navContact: "Contact",
+    nfTitle: "Page introuvable",
+    nfDesc: "La page que vous recherchez n'existe pas ou a été déplacée. Reprenons le bon chemin.",
+    nfHome: "Retour à l'accueil",
+    nfDemo: "Essayer la démo"
+  }
+};
+
+const root = document.documentElement;
+const langButtons = document.querySelectorAll('.lang-btn');
+const navElement = document.getElementById('site-nav');
+const menuToggleBtn = document.querySelector('[data-menu-toggle]');
+const themeBtn = document.querySelector('[data-theme-toggle]');
+
+let uiLang;
+try { uiLang = localStorage.getItem('nexify_lang') || 'en'; } catch(e) { uiLang = 'en'; }
+
+function setUiLanguage(lang){
+  uiLang = lang;
+  root.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(copy[lang] && copy[lang][key]) el.textContent = copy[lang][key];
+  });
+  langButtons.forEach(btn=>{
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  try { localStorage.setItem('nexify_lang', lang); } catch(e){}
+}
+langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+
+if(menuToggleBtn && navElement) {
+  menuToggleBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const isOpen = navElement.classList.toggle('open');
+    menuToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navElement.querySelectorAll('a').forEach(link=>link.addEventListener('click', ()=>{
+    navElement.classList.remove('open');
+    menuToggleBtn.setAttribute('aria-expanded','false');
+  }));
+  document.addEventListener('click', ()=>{
+    if(navElement.classList.contains('open')){
+      navElement.classList.remove('open');
+      menuToggleBtn.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
+let theme = 'light';
+try {
+  const saved = localStorage.getItem('nexify_theme');
+  if (saved) theme = saved;
+  else if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+} catch(e) {}
+function renderTheme(){
+  root.setAttribute('data-theme', theme);
+  if(themeBtn) themeBtn.textContent = theme === 'dark' ? '☼' : '☾';
+}
+if(themeBtn) themeBtn.addEventListener('click', ()=>{
+  theme = theme === 'dark' ? 'light' : 'dark';
+  renderTheme();
+  try { localStorage.setItem('nexify_theme', theme); } catch(e){}
+});
+renderTheme();
+setUiLanguage(uiLang);
+
+/* Chatbot Widget */
+(function(){
+  const bubble = document.getElementById('nx-chatbot-bubble');
+  const windowEl = document.getElementById('nx-chatbot-window');
+  const closeBtn = document.getElementById('nx-chat-close');
+  const messagesEl = document.getElementById('nx-chat-messages');
+  const inputEl = document.getElementById('nx-chat-input');
+  const sendBtn = document.getElementById('nx-chat-send');
+
+  let isOpen = false;
+  let messages = [];
+  let collectedLead = { name:null, email:null, company:null, message:null };
+  let currentStep = 0;
+  let leadSubmitted = false;
+
+  function toggleChat(){
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if(isOpen){
+      if(messages.length === 0){
+        addBotMessage("Hi there! 👋 I'm the Nexify AI assistant. How can I help you today?");
+      }
+      inputEl.focus();
+    }
+  }
+
+  function addBotMessage(text){
+    messages.push({role:'assistant', content:text});
+    const div = document.createElement('div');
+    div.className = 'nx-msg bot';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMessage(text){
+    messages.push({role:'user', content:text});
+    const div = document.createElement('div');
+    div.className = 'nx-msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showTyping(){
+    const div = document.createElement('div');
+    div.className = 'nx-typing';
+    div.id = 'nx-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping(){
+    const el = document.getElementById('nx-typing-indicator');
+    if(el) el.remove();
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    addUserMessage(text);
+    showTyping();
+    await new Promise(r => setTimeout(r, 800));
+    hideTyping();
+    addBotMessage("Thanks for your message! Our team will get back to you soon. You can also visit our homepage for more information about Nexify AI.");
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  bubble.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+})();
+</script>
+</body>
+</html>
