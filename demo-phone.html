@@ -2002,5 +2002,244 @@ document.querySelectorAll('.nav-item > .nav-link').forEach(btn => {
 });
 
 </script>
+
+<!-- Phone Demo Player Interaction -->
+<style>
+.phone-visual.connected{box-shadow:0 0 24px color-mix(in oklab,var(--color-primary) 35%,transparent),0 12px 40px color-mix(in oklab,var(--color-primary) 30%,transparent);}
+</style>
+<script>
+(function(){
+  'use strict';
+
+  var playBtn = document.getElementById('play-call-btn');
+  var waveform = document.getElementById('demo-waveform');
+  var transcriptLines = document.getElementById('transcript-lines');
+  var phoneVisual = document.getElementById('phone-visual');
+  var scenarioNameEl = document.getElementById('call-scenario-name');
+  var scenarioTabs = document.querySelectorAll('.phone-scenario-tab');
+
+  var currentScenario = 'restaurant';
+  var isPlaying = false;
+  var lineIndex = 0;
+  var lineTimer = null;
+
+  /* ── Scenario dialogue data ── */
+  var scenarios = {
+    restaurant: {
+      nameI18nKey: 'pdScenario1Name',
+      fallbackName: 'Restaurant Reservation',
+      lines: [
+        { role: 'ai', text: 'Thank you for calling La Terrasse. How can I help you today?' },
+        { role: 'customer', text: "Hi, I'd like to make a reservation for Saturday evening." },
+        { role: 'ai', text: 'Of course! How many people and what time works best?' },
+        { role: 'customer', text: 'Four of us, around 8 PM if possible.' },
+        { role: 'ai', text: 'Perfect \u2014 I have a table for 4 at 8 PM this Saturday. Can I have a name for the reservation?' },
+        { role: 'customer', text: 'Garc\u00eda, please.' },
+        { role: 'ai', text: "All set, Mr. Garc\u00eda \u2014 table for 4, Saturday at 8 PM. You'll receive a confirmation shortly. See you then!" }
+      ]
+    },
+    clinic: {
+      fallbackName: 'Clinic Appointment',
+      lines: [
+        { role: 'ai', text: 'Good morning, this is Parkview Medical. How can I assist you?' },
+        { role: 'customer', text: 'Hi, I need to schedule a check-up appointment.' },
+        { role: 'ai', text: "I'd be happy to help. Do you have a preferred doctor or day?" },
+        { role: 'customer', text: 'Dr. Hansen, preferably next week.' },
+        { role: 'ai', text: 'Dr. Hansen has availability on Tuesday at 10 AM or Thursday at 2 PM. Which works better?' },
+        { role: 'customer', text: 'Tuesday at 10 sounds good.' },
+        { role: 'ai', text: "Booked! Tuesday at 10 AM with Dr. Hansen. You'll get a confirmation text shortly. Is there anything else?" }
+      ]
+    },
+    law: {
+      fallbackName: 'Law Firm Consultation',
+      lines: [
+        { role: 'ai', text: 'Thank you for calling Jansen & Partners. How may I direct your call?' },
+        { role: 'customer', text: "I'm looking to hire a lawyer for a business dispute." },
+        { role: 'ai', text: 'I can help with that. What type of business dispute is it?' },
+        { role: 'customer', text: "It's a contract issue with a supplier." },
+        { role: 'ai', text: "Understood. Our commercial law team can assist. I'll schedule a consultation \u2014 what's your availability?" },
+        { role: 'customer', text: 'Any weekday morning works.' },
+        { role: 'ai', text: "I'll set up a consultation for the next available morning slot. You'll receive an email confirmation with the details." }
+      ]
+    }
+  };
+
+  /* ── Helpers ── */
+  function getLang() {
+    try { return localStorage.getItem('nexify_lang') || 'en'; } catch(e) { return 'en'; }
+  }
+
+  function getAIlabel() {
+    var lang = getLang();
+    if (typeof copy !== 'undefined' && copy[lang] && copy[lang].pdTranscriptAI) {
+      return copy[lang].pdTranscriptAI;
+    }
+    return 'AI:';
+  }
+
+  function getCustomerLabel() {
+    var lang = getLang();
+    if (typeof copy !== 'undefined' && copy[lang] && copy[lang].pdTranscriptCustomer) {
+      return copy[lang].pdTranscriptCustomer;
+    }
+    return 'Customer:';
+  }
+
+  function getScenarioName(scenario) {
+    var lang = getLang();
+    var data = scenarios[scenario];
+    if (data.nameI18nKey && typeof copy !== 'undefined' && copy[lang] && copy[lang][data.nameI18nKey]) {
+      return copy[lang][data.nameI18nKey];
+    }
+    return data.fallbackName;
+  }
+
+  /* ── Play / Stop icon swap ── */
+  function setPlayIcon(playing) {
+    var svg = playBtn.querySelector('svg');
+    if (playing) {
+      // Stop icon: filled rectangle
+      svg.innerHTML = '<rect x="6" y="4" width="12" height="16" rx="1" fill="currentColor"/>';
+      playBtn.classList.remove('answer');
+      playBtn.classList.add('end');
+      playBtn.setAttribute('aria-label', 'Stop');
+    } else {
+      // Play icon: triangle
+      svg.innerHTML = '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>';
+      playBtn.classList.remove('end');
+      playBtn.classList.add('answer');
+      playBtn.setAttribute('aria-label', 'Play');
+    }
+  }
+
+  /* ── Transcript management ── */
+  function clearTranscript() {
+    transcriptLines.innerHTML = '';
+  }
+
+  function addTranscriptLine(lineData) {
+    var div = document.createElement('div');
+    var isAI = lineData.role === 'ai';
+    div.className = 'transcript-line ' + (isAI ? 'ai' : 'user');
+
+    var spk = document.createElement('span');
+    spk.className = 'spk';
+    spk.textContent = isAI ? getAIlabel() : getCustomerLabel();
+
+    var text = document.createElement('span');
+    text.textContent = lineData.text;
+
+    div.appendChild(spk);
+    div.appendChild(text);
+    transcriptLines.appendChild(div);
+    transcriptLines.scrollTop = transcriptLines.scrollHeight;
+  }
+
+  /* ── Playback control ── */
+  function showNextLine() {
+    var data = scenarios[currentScenario];
+    if (lineIndex >= data.lines.length) {
+      // All lines shown — auto-stop
+      stopPlayback();
+      return;
+    }
+    addTranscriptLine(data.lines[lineIndex]);
+    lineIndex++;
+    lineTimer = setTimeout(showNextLine, 2000);
+  }
+
+  function startPlayback() {
+    if (isPlaying) return;
+    isPlaying = true;
+
+    // Waveform: animate
+    waveform.classList.add('playing');
+    waveform.classList.remove('idle');
+
+    // Phone visual: connected state
+    phoneVisual.classList.remove('ringing');
+    phoneVisual.classList.add('connected');
+
+    // Play → Stop icon
+    setPlayIcon(true);
+
+    // Reset transcript and begin
+    clearTranscript();
+    lineIndex = 0;
+    showNextLine();
+  }
+
+  function stopPlayback() {
+    isPlaying = false;
+
+    if (lineTimer) {
+      clearTimeout(lineTimer);
+      lineTimer = null;
+    }
+
+    // Waveform: idle
+    waveform.classList.remove('playing');
+    waveform.classList.add('idle');
+
+    // Phone visual: ringing state
+    phoneVisual.classList.remove('connected');
+    phoneVisual.classList.add('ringing');
+
+    // Stop → Play icon
+    setPlayIcon(false);
+  }
+
+  function resetToInitial() {
+    stopPlayback();
+    clearTranscript();
+    // Show first line as preview
+    var data = scenarios[currentScenario];
+    if (data && data.lines.length > 0) {
+      addTranscriptLine(data.lines[0]);
+    }
+  }
+
+  /* ── Event: Play / Stop button ── */
+  playBtn.addEventListener('click', function() {
+    if (isPlaying) {
+      resetToInitial();
+    } else {
+      startPlayback();
+    }
+  });
+
+  /* ── Event: Scenario tabs ── */
+  scenarioTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var scenario = tab.dataset.scenario;
+      if (scenario === currentScenario && !isPlaying) return;
+
+      // Stop any active playback
+      if (isPlaying) {
+        stopPlayback();
+      }
+
+      // Switch active tab
+      scenarioTabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+
+      // Update current scenario and name
+      currentScenario = scenario;
+      scenarioNameEl.textContent = getScenarioName(scenario);
+
+      // Reset transcript with first-line preview
+      clearTranscript();
+      var data = scenarios[scenario];
+      if (data && data.lines.length > 0) {
+        addTranscriptLine(data.lines[0]);
+      }
+    });
+  });
+
+  /* ── Init: pause waveform on page load ── */
+  waveform.classList.add('idle');
+
+})();
+</script>
 </body>
 </html>
