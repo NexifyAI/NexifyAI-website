@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pay As You Use — Nexify AI. Usage-based pricing from €0.45 per conversation. No minimums, no commitment. Perfect for variable demand.">
 <title>Pay As You Use &mdash; Nexify AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -216,13 +217,9 @@ h1,h2,h3,p{margin:0;}
 .compare-table th.plan-col{color:var(--color-primary);}
 
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);}
-.faq-item{
-  background:var(--color-surface);border:1px solid var(--color-border);
-  border-radius:var(--radius-lg);padding:var(--space-6);
-  box-shadow:var(--shadow-sm);
-}
-.faq-item h4{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);color:var(--color-text);}
-.faq-item p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+
+
 
 .form-card{
   background:var(--color-surface);border:1px solid var(--color-border);
@@ -513,6 +510,13 @@ h1,h2,h3,p{margin:0;}
   }
   .nav-item.open > .nav-link svg{transform:rotate(180deg);}
 }
+
+.faq-item{cursor:pointer;overflow:hidden;transition:all .2s ease;}
+.faq-item h4{cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:0!important;}
+.faq-item h4::after{content:'+';font-size:1.2em;font-weight:300;color:var(--color-text-faint);transition:transform .2s ease;}
+.faq-item p{max-height:0;overflow:hidden;margin:0;opacity:0;transition:max-height .3s ease,opacity .2s ease,padding .2s ease;}
+.faq-item.open h4::after{content:'−';transform:rotate(180deg);}
+.faq-item.open p{max-height:200px;opacity:1;margin-top:var(--space-3);}
 </style>
 </head>
 <body>
@@ -648,7 +652,7 @@ h1,h2,h3,p{margin:0;}
     <div class="container">
       <div class="section-head">
         <h2 data-i18n="paygCompareTitle">Subscription vs. Pay-as-you-use</h2>
-        <p data-i18n="paygCompareSub">Not sure which model is right for you? Here&rsquo;s a quick comparison.</p>
+        <p data-i18n="paygCompareSub">Not sure which model is right for you? Here’s a quick comparison.</p>
       </div>
       <div class="compare-wrap">
         <table class="compare-table">
@@ -687,7 +691,7 @@ h1,h2,h3,p{margin:0;}
             <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           </div>
           <h3>Seasonal Businesses</h3>
-          <p>Tourism, hospitality, retail &mdash; businesses that have busy seasons and quiet periods. Pay more when you&rsquo;re busy, less when you&rsquo;re not.</p>
+          <p>Tourism, hospitality, retail &mdash; businesses that have busy seasons and quiet periods. Pay more when you’re busy, less when you’re not.</p>
         </div>
         <div class="feature-card" data-color="blue">
           <div class="feature-icon">
@@ -716,12 +720,12 @@ h1,h2,h3,p{margin:0;}
       </div>
       <div class="faq-grid">
         <div class="faq-item">
-          <h4>What counts as a &ldquo;conversation&rdquo;?</h4>
-          <p>A conversation is a single customer interaction session &mdash; from first message to resolution. If the same customer comes back the next day with a new question, that&rsquo;s a new conversation.</p>
+          <h4>What counts as a “conversation”?</h4>
+          <p>A conversation is a single customer interaction session &mdash; from first message to resolution. If the same customer comes back the next day with a new question, that’s a new conversation.</p>
         </div>
         <div class="faq-item">
           <h4>Can I switch between PAYG and subscription?</h4>
-          <p>Yes, you can switch billing models at any time. Just let us know and we&rsquo;ll adjust your plan at the start of the next billing cycle.</p>
+          <p>Yes, you can switch billing models at any time. Just let us know and we’ll adjust your plan at the start of the next billing cycle.</p>
         </div>
         <div class="faq-item">
           <h4>Is there a minimum charge?</h4>
@@ -733,11 +737,11 @@ h1,h2,h3,p{margin:0;}
         </div>
         <div class="faq-item">
           <h4>Can I set a monthly spending cap?</h4>
-          <p>Absolutely. Set a maximum monthly budget and we&rsquo;ll notify you when you&rsquo;re approaching it. You decide what happens when the cap is reached.</p>
+          <p>Absolutely. Set a maximum monthly budget and we’ll notify you when you’re approaching it. You decide what happens when the cap is reached.</p>
         </div>
         <div class="faq-item">
-          <h4>What if I&rsquo;m not sure which model to choose?</h4>
-          <p>Start with our pilot program! You&rsquo;ll get real data on your conversation volume, which makes it easy to choose the right pricing model afterwards.</p>
+          <h4>What if I’m not sure which model to choose?</h4>
+          <p>Start with our pilot program! You’ll get real data on your conversation volume, which makes it easy to choose the right pricing model afterwards.</p>
         </div>
       </div>
     </div>
@@ -804,7 +808,7 @@ h1,h2,h3,p{margin:0;}
   </div>
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
-      <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+      <p>&copy; 2026 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
     </div>
   </div>
 </footer>
@@ -1573,6 +1577,17 @@ document.querySelectorAll('.nav-item > .nav-link').forEach(btn => {
     }
   });
 });
+
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('h4');
+    if(q) q.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
 
 </script>
 </body>

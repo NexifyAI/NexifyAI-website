@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Subscription Plans — Nexify AI. Fixed monthly pricing from €199/month. Starter and Growth plans with full features and support.">
 <title>Subscription Plans &mdash; Nexify AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -216,13 +217,9 @@ h1,h2,h3,p{margin:0;}
 .compare-table th.plan-col{color:var(--color-primary);}
 
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);}
-.faq-item{
-  background:var(--color-surface);border:1px solid var(--color-border);
-  border-radius:var(--radius-lg);padding:var(--space-6);
-  box-shadow:var(--shadow-sm);
-}
-.faq-item h4{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);color:var(--color-text);}
-.faq-item p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+
+
+
 
 .form-card{
   background:var(--color-surface);border:1px solid var(--color-border);
@@ -513,6 +510,13 @@ h1,h2,h3,p{margin:0;}
   }
   .nav-item.open > .nav-link svg{transform:rotate(180deg);}
 }
+
+.faq-item{cursor:pointer;overflow:hidden;transition:all .2s ease;}
+.faq-item h4{cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-bottom:0!important;}
+.faq-item h4::after{content:'+';font-size:1.2em;font-weight:300;color:var(--color-text-faint);transition:transform .2s ease;}
+.faq-item p{max-height:0;overflow:hidden;margin:0;opacity:0;transition:max-height .3s ease,opacity .2s ease,padding .2s ease;}
+.faq-item.open h4::after{content:'−';transform:rotate(180deg);}
+.faq-item.open p{max-height:200px;opacity:1;margin-top:var(--space-3);}
 </style>
 </head>
 <body>
@@ -790,7 +794,7 @@ h1,h2,h3,p{margin:0;}
   </div>
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
-      <p>&copy; 2025 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+      <p>&copy; 2026 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
     </div>
   </div>
 </footer>
@@ -1559,6 +1563,17 @@ document.querySelectorAll('.nav-item > .nav-link').forEach(btn => {
     }
   });
 });
+
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('h4');
+    if(q) q.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
 
 </script>
 </body>
