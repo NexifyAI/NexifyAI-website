@@ -37,9 +37,27 @@ IMPORTANT RULES:
 1. LANGUAGE: ALWAYS reply in the SAME LANGUAGE as the user's last message. Auto-detect. Support: English, Dutch, French, Spanish, Chinese, German, Italian, Portuguese, and more. Never switch languages unless the user does.
 2. NATURAL FLOW: Don't ask for all info at once like a form. Have a real conversation and collect info gradually. Ask max 1-2 questions per message.
 3. TONE: Friendly, professional, helpful. Not robotic or salesy. Like a smart concierge.
-4. LEAD COMPLETION: When you have ALL 5 pieces of info, confirm everything and tell them our team will reach out within 24 hours. Then set leadComplete to true.
+4. LEAD COMPLETION: When you have ALL required info, confirm everything and tell them our team will reach out within 24 hours. Then set leadComplete to true.
 5. If someone asks to speak to a human or says "talk to sales", collect their contact info and tell them someone will reach out shortly.
 6. If someone is just browsing / exploring, answer their questions and naturally steer toward learning more about their business.
+
+PILOT PROGRAM SPECIAL FLOW:
+If the user mentions "pilot", "pilot program", "试点", "free trial", or expresses interest in joining the pilot (check the collectedLead.pilotApplication flag or user intent):
+- You are handling a PILOT APPLICATION, not just a general inquiry.
+- You MUST collect these 7 pieces of info before marking leadComplete:
+  1. companyName — their company name
+  2. industry — their industry / business type
+  3. contactName — contact person name
+  4. email — email address
+  5. website — their company website URL
+  6. challenges — their biggest customer service challenges / pain points
+  7. volume — estimated monthly chat/call volume
+- Include all 7 fields in collectedLead when leadComplete is true.
+- Set pilotApplication: true in collectedLead.
+- Still keep the conversation natural — don't ask all 7 at once. Spread them across the conversation.
+- When complete, summarize the application and confirm: "Great! I've got everything we need. Our team will review your application and reach out within 24 hours. Excited to potentially work together! 🚀"
+
+For general leads (not pilot), collect the standard 5 fields: industry, companyName, contactName, email, needsDescription.
 
 OUTPUT FORMAT - You MUST respond with valid JSON in this exact format:
 {
@@ -196,11 +214,29 @@ export default {
       // If lead is complete, send notifications (webhook + email)
       if (parsedResponse.leadComplete) {
         const ip = request.headers.get('CF-Connecting-IP');
+        const lead = parsedResponse.collectedLead || {};
+        const isPilot = lead.pilotApplication === true || lead.pilotApplication === 'true';
+
         if (env.LEAD_WEBHOOK_URL) {
-          ctx.waitUntil(sendToWebhook(env.LEAD_WEBHOOK_URL, parsedResponse.collectedLead, ip));
+          ctx.waitUntil(sendToWebhook(env.LEAD_WEBHOOK_URL, lead, ip));
         }
+
         if (env.LEAD_NOTIFY_EMAIL && env.RESEND_API_KEY) {
-          ctx.waitUntil(sendLeadEmail(env, parsedResponse.collectedLead, ip));
+          if (isPilot) {
+            // Map AI field names to pilot email field names
+            const pilotData = {
+              company: lead.companyName || lead.company || '—',
+              industry: lead.industry || '—',
+              name: lead.contactName || lead.name || '—',
+              email: lead.email || '—',
+              website: lead.website || '—',
+              challenges: lead.challenges || lead.needsDescription || '—',
+              volume: lead.volume || '—'
+            };
+            ctx.waitUntil(sendPilotEmail(env, pilotData, ip));
+          } else {
+            ctx.waitUntil(sendLeadEmail(env, lead, ip));
+          }
         }
       }
 

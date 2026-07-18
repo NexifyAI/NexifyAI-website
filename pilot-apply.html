@@ -882,64 +882,23 @@ h1,h2,h3,p{margin:0;}
   </div>
 </section>
 
-<!-- ========== Application Form ========== -->
+<!-- ========== Chat Application CTA ========== -->
 <section class="section form-section" id="apply">
   <div class="container">
     <div class="section-head">
-      <h2 data-i18n="pilotFormTitle">Apply Now — It Takes 2 Minutes</h2>
-      <p data-i18n="pilotFormSub">Tell us about your business and we'll get back to you within 24 hours.</p>
+      <h2 data-i18n="pilotApplyTitle">Apply with Our AI Assistant</h2>
+      <p data-i18n="pilotApplySub">Chat naturally with our AI — tell us about your business in your own words. No forms, no friction.</p>
     </div>
-    <div class="form-wrap">
-      <form class="contact-form" id="pilot-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="formCompany">Company Name</label>
-            <input type="text" name="company" data-i18n-ph="formCompanyPh" placeholder="Your company name" required>
-          </div>
-          <div class="form-group">
-            <label data-i18n="formIndustry">Industry</label>
-            <select name="industry" required>
-              <option value="" data-i18n="formIndustryPh">Select your industry</option>
-              <option value="restaurants" data-i18n="formIndustryRestaurant">Restaurants & Hospitality</option>
-              <option value="medical" data-i18n="formIndustryMedical">General Practice / Medical</option>
-              <option value="law" data-i18n="formIndustryLaw">Law Firms</option>
-              <option value="realestate" data-i18n="formIndustryRealEstate">Real Estate</option>
-              <option value="other" data-i18n="formIndustryOther">Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="formContactName">Contact Name</label>
-            <input type="text" name="name" data-i18n-ph="formContactNamePh" placeholder="Your full name" required>
-          </div>
-          <div class="form-group">
-            <label data-i18n="formEmail">Email</label>
-            <input type="email" name="email" data-i18n-ph="formEmailPh" placeholder="you@company.com" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label data-i18n="formWebsite">Website</label>
-          <input type="url" name="website" data-i18n-ph="formWebsitePh" placeholder="https://yourwebsite.com" required>
-        </div>
-        <div class="form-group">
-          <label data-i18n="formChallenges">Current Challenges</label>
-          <textarea name="challenges" data-i18n-ph="formChallengesPh" placeholder="Tell us about your biggest customer service challenges..." rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-          <label data-i18n="formVolume">Expected Monthly Volume</label>
-          <input type="text" name="volume" data-i18n-ph="formVolumePh" placeholder="e.g. 500 chats/calls per month" required>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="formSubmit">Apply for Pilot Program</button>
-        </div>
-        <div class="form-error" id="form-error" style="display:none; margin-top:1rem; padding:.75rem 1rem; background:#fef2f2; color:#dc2626; border-radius:8px; font-size:.9rem;"></div>
-      </form>
-      <div class="form-success" id="form-success">
-        <div class="success-icon">✓</div>
-        <h3 data-i18n="formSuccessTitle">Application Received! 🎉</h3>
-        <p data-i18n="formSuccessMsg">Thanks for applying! We've received your application and our team will reach out within 24 hours. In the meantime, chat with our AI to learn more.</p>
-      </div>
+    <div class="form-wrap" style="text-align:center;">
+      <div style="font-size:3rem; margin-bottom:var(--space-5);">💬</div>
+      <h3 style="font-family:var(--font-display); font-size:var(--text-lg); margin-bottom:var(--space-3);" data-i18n="pilotChatCtaTitle">Just 2 minutes of chatting</h3>
+      <p style="color:var(--color-text-muted); font-size:var(--text-sm); max-width:45ch; margin:0 auto var(--space-8);" data-i18n="pilotChatCtaDesc">Our AI will guide you through the application — ask about your business, your challenges, and your goals. You'll get a response from our team within 24 hours.</p>
+      <button class="btn btn-primary" style="font-size:var(--text-base); padding:1.2rem 2.4rem; min-height:60px;" onclick="window.NexifyChatbot && window.NexifyChatbot.startPilot()" data-i18n="pilotChatBtn">
+        Start Your Application →
+      </button>
+      <p style="margin-top:var(--space-4); font-size:var(--text-xs); color:var(--color-text-faint);" data-i18n="pilotChatNote">
+        Click the button to open the chat → We'll collect your info naturally → You'll hear from us within 24h
+      </p>
     </div>
   </div>
 </section>
@@ -957,7 +916,7 @@ h1,h2,h3,p{margin:0;}
         <div class="timeline-content">
           <div class="timeline-step" data-i18n="timelineStep1">Step 1</div>
           <h3 data-i18n="timelineStep1Title">Apply</h3>
-          <p data-i18n="timelineStep1Desc">Fill out the application form. We review each application personally and select 5 pilot partners.</p>
+          <p data-i18n="timelineStep1Desc">Chat with our AI assistant — tell us about your business in 2 minutes. We review each application personally and select 5 pilot partners.</p>
         </div>
       </div>
       <div class="timeline-item">
@@ -1162,7 +1121,13 @@ const copy = {
     pilotTimelineSub:'A simple 4-step process from application to results.',
     timelineStep1:'Step 1',
     timelineStep1Title:'Apply',
-    timelineStep1Desc:'Fill out the application form. We review each application personally and select 5 pilot partners.',
+    timelineStep1Desc:'Chat with our AI assistant — tell us about your business in 2 minutes. We review each application personally and select 5 pilot partners.',
+    pilotApplyTitle:'Apply with Our AI Assistant',
+    pilotApplySub:'Chat naturally with our AI — tell us about your business in your own words. No forms, no friction.',
+    pilotChatCtaTitle:'Just 2 minutes of chatting',
+    pilotChatCtaDesc:'Our AI will guide you through the application — ask about your business, your challenges, and your goals. You\'ll get a response from our team within 24 hours.',
+    pilotChatBtn:'Start Your Application →',
+    pilotChatNote:'Click the button to open the chat → We\'ll collect your info naturally → You\'ll hear from us within 24h',
     timelineStep2:'Step 2',
     timelineStep2Title:'Kickoff',
     timelineStep2Desc:'A 30-minute call to understand your business needs, systems, and goals. We start building your AI agent immediately.',
@@ -1261,7 +1226,13 @@ const copy = {
     pilotTimelineSub:'Een eenvoudig 4-staps proces van aanmelding tot resultaten.',
     timelineStep1:'Stap 1',
     timelineStep1Title:'Aanmelden',
-    timelineStep1Desc:'Vul het aanvraagformulier in. We beoordelen elke aanvraag persoonlijk en selecteren 5 pilotpartners.',
+    timelineStep1Desc:'Chat met onze AI-assistent — vertel ons over je bedrijf in 2 minuten. We beoordelen elke aanvraag persoonlijk en selecteren 5 pilotpartners.',
+    pilotApplyTitle:'Aanvragen met Onze AI Assistent',
+    pilotApplySub:'Chat natuurlijk met onze AI — vertel over je bedrijf in je eigen woorden. Geen formulieren, geen wrijving.',
+    pilotChatCtaTitle:'Slechts 2 minuten chatten',
+    pilotChatCtaDesc:'Onze AI begeleidt je door de aanvraag — vraagt naar je bedrijf, je uitdagingen en je doelen. Je hoort binnen 24 uur van ons team.',
+    pilotChatBtn:'Start Je Aanvraag →',
+    pilotChatNote:'Klik op de knop om de chat te openen → We verzamelen je info op een natuurlijke manier → Je hoort binnen 24 uur van ons',
     timelineStep2:'Stap 2',
     timelineStep2Title:'Kickoff',
     timelineStep2Desc:'Een gesprek van 30 minuten om je bedrijfsbehoeften, systemen en doelen te begrijpen. We beginnen direct met bouwen.',
@@ -1360,7 +1331,13 @@ const copy = {
     pilotTimelineSub:'Un processus simple en 4 étapes, de la candidature aux résultats.',
     timelineStep1:'Étape 1',
     timelineStep1Title:'Postuler',
-    timelineStep1Desc:'Remplissez le formulaire de candidature. Nous examinons chaque demande personnellement et sélectionnons 5 partenaires pilotes.',
+    timelineStep1Desc:'Discutez avec notre assistant IA — parlez-nous de votre entreprise en 2 minutes. Nous examinons chaque demande personnellement et sélectionnons 5 partenaires pilotes.',
+    pilotApplyTitle:'Postulez avec Notre Assistant IA',
+    pilotApplySub:'Discutez naturellement avec notre IA — parlez de votre entreprise à votre guise. Pas de formulaires, pas de friction.',
+    pilotChatCtaTitle:'Seulement 2 minutes de discussion',
+    pilotChatCtaDesc:'Notre IA vous guide tout au long de la candidature — elle s\'informe sur votre entreprise, vos défis et vos objectifs. Notre équipe vous répondra sous 24 heures.',
+    pilotChatBtn:'Commencer la candidature →',
+    pilotChatNote:'Cliquez sur le bouton pour ouvrir le chat → Nous collectons vos informations naturellement → Vous aurez de nos nouvelles sous 24h',
     timelineStep2:'Étape 2',
     timelineStep2Title:'Kickoff',
     timelineStep2Desc:'Un appel de 30 minutes pour comprendre vos besoins, vos systèmes et vos objectifs. Nous commençons à construire votre agent IA immédiatement.',
@@ -1827,76 +1804,6 @@ renderTheme();
 setUiLanguage(uiLang);
 
 
-/* ===== Pilot form submission ===== */
-const pilotForm = document.getElementById('pilot-form');
-const formSuccess = document.getElementById('form-success');
-const formError = document.getElementById('form-error');
-const submitBtn = pilotForm ? pilotForm.querySelector('button[type="submit"]') : null;
-const PILOT_API_URL = 'https://chatbox.yuanxin0222.workers.dev/pilot-apply';
-
-if(pilotForm) {
-  pilotForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    // HTML5 validation
-    if (!pilotForm.checkValidity()) {
-      pilotForm.reportValidity();
-      return;
-    }
-
-    const formData = new FormData(pilotForm);
-    const data = {};
-    formData.forEach((value, key) => { data[key] = value; });
-
-    // Disable button, show loading
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.style.opacity = '0.7';
-
-      try {
-        const response = await fetch(PILOT_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          // Store lead locally as backup
-          const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
-          leads.push({ ...data, type:'pilot_application', timestamp: new Date().toISOString(), source: window.location.href });
-          localStorage.setItem('nexify_leads', JSON.stringify(leads));
-
-          // Show success
-          pilotForm.style.display = 'none';
-          if (formError) formError.style.display = 'none';
-          formSuccess.classList.add('show');
-
-          // Trigger pilot flow in chatbot
-          if(window.NexifyChatbot && window.NexifyChatbot.startPilot) {
-            setTimeout(() => {
-              window.NexifyChatbot.startPilot();
-            }, 500);
-          }
-        } else {
-          throw new Error(result.error || 'Submission failed');
-        }
-      } catch (err) {
-        console.error('Pilot form error:', err);
-        if (formError) {
-          formError.style.display = 'block';
-          formError.textContent = 'Something went wrong. Please try again or contact us directly.';
-        }
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-        submitBtn.style.opacity = '1';
-      }
-    }
-  });
-}
 </script>
 </body>
 </html>
