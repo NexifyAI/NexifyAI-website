@@ -217,13 +217,42 @@ h1,h2,h3,p{margin:0;}
 .compare-table th.plan-col{color:var(--color-primary);}
 
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);}
+
+/* ---------- FAQ ---------- */
+.faq-section{background:var(--color-surface-offset);}
+.faq-list{
+  max-width:800px;margin:0 auto;
+  display:flex;flex-direction:column;gap:var(--space-3);
+}
 .faq-item{
   background:var(--color-surface);border:1px solid var(--color-border);
-  border-radius:var(--radius-lg);padding:var(--space-6);
-  box-shadow:var(--shadow-sm);
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:box-shadow .2s ease;
 }
-.faq-item h4{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3);color:var(--color-text);}
-.faq-item p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.6;}
+.faq-item:hover{box-shadow:var(--shadow-sm);}
+.faq-question{
+  width:100%;padding:var(--space-5) var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);
+  cursor:pointer;text-align:left;font-weight:600;font-size:var(--text-sm);
+  color:var(--color-text);background:none;border:none;font-family:inherit;
+}
+.faq-question svg{
+  width:20px;height:20px;flex-shrink:0;
+  color:var(--color-primary);transition:transform .3s ease;
+}
+.faq-item.open .faq-question svg{transform:rotate(180deg);}
+.faq-answer{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  padding:0 var(--space-6);
+}
+.faq-item.open .faq-answer{
+  max-height:300px;
+  padding:0 var(--space-6) var(--space-5);
+}
+.faq-answer p{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.7;}
+
+
 
 .form-card{
   background:var(--color-surface);border:1px solid var(--color-border);
@@ -846,35 +875,35 @@ h1,h2,h3,p{margin:0;}
       <div class="faq-item">
         <button class="faq-question">
           <span data-i18n="prFaq1Q">How are pilot partners selected?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer"><p data-i18n="prFaq1A">We look for businesses with clear customer service challenges, reasonable conversation volume, and systems we can integrate with. Industry fit and willingness to provide feedback are also important. We typically respond within 24 hours.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">
           <span data-i18n="prFaq2Q">What does the pilot cost?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer"><p data-i18n="prFaq2A">Our pilot program is either free or heavily discounted depending on your use case and the level of customization needed. We select pilot partners based on fit &mdash; not ability to pay. Our goal is to build great case studies together.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">
           <span data-i18n="prFaq3Q">How long does the pilot last?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer"><p data-i18n="prFaq3A">The pilot runs for 30 days from launch. During that time, you get full access to our platform, dedicated support, and weekly check-ins. After 30 days, we review the results together and discuss next steps.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">
           <span data-i18n="prFaq4Q">What kind of results can I expect?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer"><p data-i18n="prFaq4A">Results vary by industry and use case, but our current pilots typically see 25-40% time savings on customer service tasks, 60-80% reduction in missed calls/messages, and high satisfaction scores from both staff and customers.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">
           <span data-i18n="prFaq5Q">Can I cancel the pilot early?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="faq-answer"><p data-i18n="prFaq5A">Absolutely. If the pilot isn&#39;t meeting your expectations, you can withdraw at any time with no obligation and no cost. We&#39;d rather you be honest than unhappy.</p></div>
       </div>
@@ -1678,6 +1707,17 @@ const copy = {
   }
   if(themeBtn) themeBtn.addEventListener('click', ()=>{
     theme = theme === 'dark' ? 'light' : 'dark';
+
+/* ===== FAQ Accordion ===== */
+document.querySelectorAll('.faq-question').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
     renderTheme();
     try { localStorage.setItem('nexify_theme', theme); } catch(e){}
   });
