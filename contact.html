@@ -158,39 +158,8 @@ h1,h2,h3,p{margin:0;}
 
 /* ---------- Contact Layout ---------- */
 .contact-layout{
-  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-10);align-items:start;
+  display:grid;max-width:600px;margin:0 auto;grid-template-columns:1fr;gap:var(--space-10);align-items:start;
 }
-
-/* ---------- Contact Form ---------- */
-.contact-form-wrap{
-  background:var(--color-surface);border:1px solid var(--color-border);
-  border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-md);
-}
-.contact-form{display:flex;flex-direction:column;gap:var(--space-5);}
-.form-group{display:flex;flex-direction:column;gap:.5rem;}
-.form-group label{
-  font-size:var(--text-sm);font-weight:600;color:var(--color-text);
-}
-.form-group input,
-.form-group select,
-.form-group textarea{
-  width:100%;padding:.85rem 1rem;
-  border:1px solid var(--color-border);border-radius:var(--radius-md);
-  font-size:var(--text-sm);font-family:inherit;
-  background:var(--color-surface);color:var(--color-text);
-  transition:border-color .2s ease, box-shadow .2s ease;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-  outline:none;border-color:var(--color-primary);
-  box-shadow:0 0 0 3px var(--color-primary-highlight);
-}
-.form-group input::placeholder,
-.form-group textarea::placeholder{color:var(--color-text-faint);}
-.form-group textarea{resize:vertical;min-height:120px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
-.form-submit{margin-top:var(--space-3);}
 
 /* ---------- Contact Info ---------- */
 .contact-info{display:flex;flex-direction:column;gap:var(--space-5);}
@@ -266,14 +235,6 @@ h1,h2,h3,p{margin:0;}
   font-size:var(--text-sm);color:var(--color-text-muted);transition:color .2s ease;
 }
 .footer-col li a:hover{color:var(--color-primary);}
-.footer-social{display:flex;gap:var(--space-3);margin-top:var(--space-4);}
-.footer-social a{
-  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
-  background:var(--color-surface-offset);color:var(--color-text-muted);
-  transition:all .2s ease;
-}
-.footer-social a:hover{background:var(--color-primary);color:var(--color-text-inverse);}
-.footer-social svg{width:18px;height:18px;fill:currentColor;}
 
 .footer-bottom{
   border-top:1px solid var(--color-divider);padding:var(--space-5) 0;
@@ -304,7 +265,6 @@ h1,h2,h3,p{margin:0;}
   .lang-btn{padding:.4rem .6rem;min-height:38px;}
   .theme-btn,.menu-btn{min-height:38px;width:38px;}
   .btn{min-height:44px;padding:.8rem 1.2rem;}
-  .form-row{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;gap:var(--space-6);}
   .footer-bottom-inner{flex-direction:column;text-align:center;}
 }
@@ -656,48 +616,6 @@ h1,h2,h3,p{margin:0;}
 <section class="section" id="contact-form">
   <div class="container">
     <div class="contact-layout">
-      <!-- Form -->
-      <div class="contact-form-wrap">
-        <h2 data-i18n="contactFormTitle" style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--space-5);">Send us a message</h2>
-        <form class="contact-form" id="contact-form-el">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name" data-i18n="formName">Name *</label>
-              <input type="text" id="name" name="name" required data-i18n-placeholder="formNamePlaceholder" placeholder="Your name">
-            </div>
-            <div class="form-group">
-              <label for="email" data-i18n="formEmail">Email *</label>
-              <input type="email" id="email" name="email" required data-i18n-placeholder="formEmailPlaceholder" placeholder="your@email.com">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="company" data-i18n="formCompany">Company</label>
-              <input type="text" id="company" name="company" data-i18n-placeholder="formCompanyPlaceholder" placeholder="Your company">
-            </div>
-            <div class="form-group">
-              <label for="industry" data-i18n="formIndustry">Industry</label>
-              <select id="industry" name="industry">
-                <option value="" data-i18n="industrySelect">Select industry</option>
-                <option value="restaurant" data-i18n="industryRestaurant">Restaurant / Hospitality</option>
-                <option value="medical" data-i18n="industryMedical">Medical / Healthcare</option>
-                <option value="legal" data-i18n="industryLegal">Legal / Law Firm</option>
-                <option value="realestate" data-i18n="industryRealEstate">Real Estate</option>
-                <option value="retail" data-i18n="industryRetail">Retail / E-commerce</option>
-                <option value="other" data-i18n="industryOther">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="message" data-i18n="formMessage">Message *</label>
-            <textarea id="message" name="message" required data-i18n-placeholder="formMessagePlaceholder" placeholder="Tell us about your needs..."></textarea>
-          </div>
-          <div class="form-submit">
-            <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="formSubmit">Send message</button>
-          </div>
-        </form>
-      </div>
-
       <!-- Info -->
       <div class="contact-info">
         <div class="info-card">
@@ -820,8 +738,6 @@ h1,h2,h3,p{margin:0;}
         <ul>
           <li><a href="about.html" data-i18n="footerAbout">About Us</a></li>
           <li><a href="contact.html" data-i18n="footerContact">Contact</a></li>
-          <li><a href="login.html" data-i18n="footerSignin">Sign In</a></li>
-          <li><a href="pilot-apply.html" data-i18n="footerSignup">Sign Up</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -830,14 +746,6 @@ h1,h2,h3,p{margin:0;}
           <li><a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a></li>
           <li><a href="terms.html" data-i18n="footerTerms">Terms of Service</a></li>
         </ul>
-        <div class="footer-social">
-          <a href="#" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-          <a href="#" aria-label="Twitter/X">
-            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -883,24 +791,6 @@ const copy = {
     contactEyebrow:'Contact',
     contactHeroTitle:'Get in touch',
     contactHeroSub:"We usually reply within 24 hours. Or chat with our AI assistant right now — it's available 24/7.",
-    contactFormTitle:'Send us a message',
-    formName:'Name *',
-    formNamePlaceholder:'Your name',
-    formEmail:'Email *',
-    formEmailPlaceholder:'your@email.com',
-    formCompany:'Company',
-    formCompanyPlaceholder:'Your company',
-    formIndustry:'Industry',
-    industrySelect:'Select industry',
-    industryRestaurant:'Restaurant / Hospitality',
-    industryMedical:'Medical / Healthcare',
-    industryLegal:'Legal / Law Firm',
-    industryRealEstate:'Real Estate',
-    industryRetail:'Retail / E-commerce',
-    industryOther:'Other',
-    formMessage:'Message *',
-    formMessagePlaceholder:'Tell us about your needs...',
-    formSubmit:'Send message',
     infoEmailTitle:'Email',
     infoEmailDesc:'We reply within 24 hours on business days.',
     infoAddressTitle:'Address',
@@ -930,8 +820,6 @@ const copy = {
     footerCompany:'Company',
     footerAbout:'About Us',
     footerContact:'Contact',
-    footerSignin:'Sign In',
-    footerSignup:'Sign Up',
     footerLegal:'Legal',
     footerPrivacy:'Privacy Policy',
     footerTerms:'Terms of Service',
@@ -960,24 +848,6 @@ const copy = {
     contactEyebrow:'Contact',
     contactHeroTitle:'Neem contact op',
     contactHeroSub:'We reageren meestal binnen 24 uur. Of chat direct met onze AI-assistent — 24/7 beschikbaar.',
-    contactFormTitle:'Stuur ons een bericht',
-    formName:'Naam *',
-    formNamePlaceholder:'Je naam',
-    formEmail:'E-mail *',
-    formEmailPlaceholder:'jouw@email.com',
-    formCompany:'Bedrijf',
-    formCompanyPlaceholder:'Je bedrijf',
-    formIndustry:'Branche',
-    industrySelect:'Selecteer branche',
-    industryRestaurant:'Restaurant / Horeca',
-    industryMedical:'Medisch / Gezondheidszorg',
-    industryLegal:'Juridisch / Advocatenkantoor',
-    industryRealEstate:'Makelaardij',
-    industryRetail:'Retail / E-commerce',
-    industryOther:'Overig',
-    formMessage:'Bericht *',
-    formMessagePlaceholder:'Vertel ons over je wensen...',
-    formSubmit:'Bericht versturen',
     infoEmailTitle:'E-mail',
     infoEmailDesc:'We reageren binnen 24 uur op werkdagen.',
     infoAddressTitle:'Adres',
@@ -1007,8 +877,6 @@ const copy = {
     footerCompany:'Bedrijf',
     footerAbout:'Over ons',
     footerContact:'Contact',
-    footerSignin:'Inloggen',
-    footerSignup:'Aanmelden',
     footerLegal:'Juridisch',
     footerPrivacy:'Privacybeleid',
     footerTerms:'Servicevoorwaarden',
@@ -1037,24 +905,6 @@ const copy = {
     contactEyebrow:'Contact',
     contactHeroTitle:'Contactez-nous',
     contactHeroSub:'Nous répondons généralement sous 24 heures. Ou discutez dès maintenant avec notre assistant IA — disponible 24h/24.',
-    contactFormTitle:'Envoyez-nous un message',
-    formName:'Nom *',
-    formNamePlaceholder:'Votre nom',
-    formEmail:'E-mail *',
-    formEmailPlaceholder:'votre@email.com',
-    formCompany:'Entreprise',
-    formCompanyPlaceholder:'Votre entreprise',
-    formIndustry:'Secteur',
-    industrySelect:'Sélectionner le secteur',
-    industryRestaurant:'Restaurant / Hôtellerie',
-    industryMedical:'Médical / Santé',
-    industryLegal:'Juridique / Cabinet d\'avocats',
-    industryRealEstate:'Immobilier',
-    industryRetail:'Vente au détail / E-commerce',
-    industryOther:'Autre',
-    formMessage:'Message *',
-    formMessagePlaceholder:'Parlez-nous de vos besoins...',
-    formSubmit:'Envoyer le message',
     infoEmailTitle:'E-mail',
     infoEmailDesc:'Nous répondons sous 24 heures les jours ouvrés.',
     infoAddressTitle:'Adresse',
@@ -1084,8 +934,6 @@ const copy = {
     footerCompany:'Entreprise',
     footerAbout:'À propos',
     footerContact:'Contact',
-    footerSignin:'Connexion',
-    footerSignup:"S'inscrire",
     footerLegal:'Juridique',
     footerPrivacy:'Politique de confidentialité',
     footerTerms:"Conditions d'utilisation",
@@ -1183,33 +1031,6 @@ document.querySelectorAll('.faq-question').forEach(btn=>{
     if(!isOpen) item.classList.add('open');
   });
 });
-
-/* ===== Contact form submit → start chatbot lead flow ===== */
-const contactForm = document.getElementById('contact-form-el');
-if(contactForm){
-  contactForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const company = formData.get('company');
-    const message = formData.get('message');
-
-    // Open chatbot and prefill lead info
-    if(window.NexifyChatbot){
-      window.NexifyChatbot.open();
-      setTimeout(()=>{
-        const userLang = uiLang || 'en';
-        const greeting = {
-          en: `Thanks for reaching out, ${name}! 👋 I can see you sent us a message. Our team will review it shortly. Is there anything I can help you with right now?`,
-          nl: `Bedankt voor je bericht, ${name}! 👋 Ik zie dat je ons een bericht hebt gestuurd. Ons team bekijkt het spoedig. Kan ik je nu ergens mee helpen?`,
-          fr: `Merci de nous avoir contactés, ${name} ! 👋 Je vois que vous nous avez envoyé un message. Notre équipe l'examinera rapidement. Puis-je vous aider maintenant ?`
-        };
-        window.NexifyChatbot.sendMessage(message || '');
-      }, 300);
-    }
-  });
-}
 
 /* ===== Chatbot Widget ===== */
 (function(){
