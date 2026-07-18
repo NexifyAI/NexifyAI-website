@@ -110,6 +110,40 @@ export default {
       });
     }
 
+    // Pilot application endpoint
+    if (request.method === 'POST' && reqUrl.pathname === '/pilot-apply') {
+      try {
+        const body = await request.json();
+        const ip = request.headers.get('CF-Connecting-IP');
+
+        // Validate required fields
+        const required = ['company', 'industry', 'name', 'email', 'website', 'challenges', 'volume'];
+        const missing = required.filter(f => !body[f] || !body[f].toString().trim());
+        if (missing.length > 0) {
+          return new Response(JSON.stringify({ error: 'Missing required fields', missing }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          });
+        }
+
+        // Send email notification
+        if (env.LEAD_NOTIFY_EMAIL && env.RESEND_API_KEY) {
+          ctx.waitUntil(sendPilotEmail(env, body, ip));
+        }
+
+        return new Response(JSON.stringify({ success: true, message: 'Application received' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      } catch (e) {
+        console.error('Pilot apply error:', e);
+        return new Response(JSON.stringify({ error: 'Internal server error' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+    }
+
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 });
     }
@@ -457,5 +491,89 @@ IP: ${ip || 'unknown'}
     });
   } catch (e) {
     console.error('Email send error:', e);
+  }
+}
+
+async function sendPilotEmail(env, formData, ip) {
+  try {
+    const time = new Date().toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+    const subject = `🚀 New Pilot Application: ${formData.company || 'Unknown Company'} - ${formData.industry || 'N/A'}`;
+
+    const html = `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #2daa58, #78df97); padding: 24px; border-radius: 12px 12px 0 0;">
+          <h2 style="color: white; margin: 0; font-size: 20px;">🚀 New Pilot Program Application</h2>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-top: none; padding: 24px; border-radius: 0 0 12px 12px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d; width: 35%;">🏢 Company</td>
+              <td style="padding: 10px 0; color: #153122;">${formData.company || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">🏭 Industry</td>
+              <td style="padding: 10px 0; color: #153122;">${formData.industry || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">👤 Contact Name</td>
+              <td style="padding: 10px 0; color: #153122;">${formData.name || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">📧 Email</td>
+              <td style="padding: 10px 0; color: #153122;"><a href="mailto:${formData.email || ''}">${formData.email || '—'}</a></td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">🌐 Website</td>
+              <td style="padding: 10px 0; color: #153122;">${formData.website || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">💬 Challenges</td>
+              <td style="padding: 10px 0; color: #153122;">${(formData.challenges || '—').replace(/\n/g, '<br>')}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; font-weight: 600; color: #51705d;">📊 Monthly Volume</td>
+              <td style="padding: 10px 0; color: #153122;">${formData.volume || '—'}</td>
+            </tr>
+          </table>
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 13px; color: #86a191;">
+            <div>🕐 Time: ${time} (CET)</div>
+            <div>🌐 IP: ${ip || 'unknown'}</div>
+            <div style="margin-top: 8px;">— Nexify AI Pilot Program</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const text = `New Pilot Program Application
+==============================
+
+Company: ${formData.company || '—'}
+Industry: ${formData.industry || '—'}
+Contact Name: ${formData.name || '—'}
+Email: ${formData.email || '—'}
+Website: ${formData.website || '—'}
+Challenges: ${formData.challenges || '—'}
+Monthly Volume: ${formData.volume || '—'}
+
+Time: ${time} (CET)
+IP: ${ip || 'unknown'}
+`;
+
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'Nexify AI <onboarding@resend.dev>',
+        to: [env.LEAD_NOTIFY_EMAIL],
+        subject: subject,
+        html: html,
+        text: text
+      })
+    });
+  } catch (e) {
+    console.error('Pilot email send error:', e);
   }
 }

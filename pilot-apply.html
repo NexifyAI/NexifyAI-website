@@ -920,19 +920,20 @@ h1,h2,h3,p{margin:0;}
         </div>
         <div class="form-group">
           <label data-i18n="formWebsite">Website</label>
-          <input type="url" name="website" data-i18n-ph="formWebsitePh" placeholder="https://yourwebsite.com">
+          <input type="url" name="website" data-i18n-ph="formWebsitePh" placeholder="https://yourwebsite.com" required>
         </div>
         <div class="form-group">
           <label data-i18n="formChallenges">Current Challenges</label>
-          <textarea name="challenges" data-i18n-ph="formChallengesPh" placeholder="Tell us about your biggest customer service challenges..." rows="4"></textarea>
+          <textarea name="challenges" data-i18n-ph="formChallengesPh" placeholder="Tell us about your biggest customer service challenges..." rows="4" required></textarea>
         </div>
         <div class="form-group">
           <label data-i18n="formVolume">Expected Monthly Volume</label>
-          <input type="text" name="volume" data-i18n-ph="formVolumePh" placeholder="e.g. 500 chats/calls per month">
+          <input type="text" name="volume" data-i18n-ph="formVolumePh" placeholder="e.g. 500 chats/calls per month" required>
         </div>
         <div class="form-submit">
           <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="formSubmit">Apply for Pilot Program</button>
         </div>
+        <div class="form-error" id="form-error" style="display:none; margin-top:1rem; padding:.75rem 1rem; background:#fef2f2; color:#dc2626; border-radius:8px; font-size:.9rem;"></div>
       </form>
       <div class="form-success" id="form-success">
         <div class="success-icon">✓</div>
@@ -1829,28 +1830,70 @@ setUiLanguage(uiLang);
 /* ===== Pilot form submission ===== */
 const pilotForm = document.getElementById('pilot-form');
 const formSuccess = document.getElementById('form-success');
+const formError = document.getElementById('form-error');
+const submitBtn = pilotForm ? pilotForm.querySelector('button[type="submit"]') : null;
+const PILOT_API_URL = 'https://chatbox.yuanxin0222.workers.dev/pilot-apply';
 
 if(pilotForm) {
-  pilotForm.addEventListener('submit', function(e) {
+  pilotForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    // HTML5 validation
+    if (!pilotForm.checkValidity()) {
+      pilotForm.reportValidity();
+      return;
+    }
+
     const formData = new FormData(pilotForm);
     const data = {};
     formData.forEach((value, key) => { data[key] = value; });
-    
-    // Store lead
-    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
-    leads.push({ ...data, type:'pilot_application', timestamp: new Date().toISOString(), source: window.location.href });
-    localStorage.setItem('nexify_leads', JSON.stringify(leads));
-    
-    // Show success
-    pilotForm.style.display = 'none';
-    formSuccess.classList.add('show');
-    
-    // Trigger pilot flow in chatbot
-    if(window.NexifyChatbot && window.NexifyChatbot.startPilot) {
-      setTimeout(() => {
-        window.NexifyChatbot.startPilot();
-      }, 500);
+
+    // Disable button, show loading
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.style.opacity = '0.7';
+
+      try {
+        const response = await fetch(PILOT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          // Store lead locally as backup
+          const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
+          leads.push({ ...data, type:'pilot_application', timestamp: new Date().toISOString(), source: window.location.href });
+          localStorage.setItem('nexify_leads', JSON.stringify(leads));
+
+          // Show success
+          pilotForm.style.display = 'none';
+          if (formError) formError.style.display = 'none';
+          formSuccess.classList.add('show');
+
+          // Trigger pilot flow in chatbot
+          if(window.NexifyChatbot && window.NexifyChatbot.startPilot) {
+            setTimeout(() => {
+              window.NexifyChatbot.startPilot();
+            }, 500);
+          }
+        } else {
+          throw new Error(result.error || 'Submission failed');
+        }
+      } catch (err) {
+        console.error('Pilot form error:', err);
+        if (formError) {
+          formError.style.display = 'block';
+          formError.textContent = 'Something went wrong. Please try again or contact us directly.';
+        }
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        submitBtn.style.opacity = '1';
+      }
     }
   });
 }
