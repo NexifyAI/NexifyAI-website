@@ -120,6 +120,9 @@ h1,h2,h3,p{margin:0;}
   padding:2px;transition:background .3s ease;
 }
 .brand-logo{mix-blend-mode:normal;}
+.brand-logo.logo-dark{display:none;}
+[data-theme="dark"] .brand-logo.logo-light{display:none;}
+[data-theme="dark"] .brand-logo.logo-dark{display:inline-block;}
 .nav{display:flex;gap:var(--space-5);}
 .nav a{font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);transition:color .2s ease;}
 .nav a:hover{color:var(--color-primary);}
@@ -1067,7 +1070,7 @@ h1,h2,h3,p{margin:0;}
       <div class="footer-grid">
         <div class="footer-col footer-brand">
           <div class="brand">
-            <span class="brand-logo-wrap"><img src="logo.png" alt="Nexify AI" class="brand-logo" onerror="this.style.display='none'"></span>
+            <span class="brand-logo-wrap"><img src="assets/logo/logo-horizontal-green.png" alt="Nexify AI" class="brand-logo logo-light" onerror="this.style.display='none'"><img src="assets/logo/logo-horizontal-light.png" alt="Nexify AI" class="brand-logo logo-dark" onerror="this.style.display='none'"></span>
           </div>
           <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
         </div>
@@ -1101,7 +1104,7 @@ h1,h2,h3,p{margin:0;}
   </div>
   <div class="footer-bottom">
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:var(--space-4);">
-      <p>&copy; 2026 Nexify AI &middot; KVK 42114767 &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
+      <p>&copy; 2026 Nexify AI &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
     </div>
   </div>
 </footer>
