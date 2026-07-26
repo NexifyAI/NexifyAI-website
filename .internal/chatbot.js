@@ -28,6 +28,10 @@
     if (scriptTag.dataset.primaryColor) config.primaryColor = scriptTag.dataset.primaryColor;
     if (scriptTag.dataset.apiUrl) config.apiUrl = scriptTag.dataset.apiUrl;
     if (scriptTag.dataset.greeting) config.greetingMessage = scriptTag.dataset.greeting;
+    if (scriptTag.dataset.persona) config.persona = scriptTag.dataset.persona;
+    if (scriptTag.dataset.personaConfig) {
+      try { config.personaConfig = JSON.parse(scriptTag.dataset.personaConfig); } catch(e) {}
+    }
   }
 
   // ========== State ==========
@@ -35,6 +39,8 @@
   let messages = [];
   let collectedLead = {};
   let leadSubmitted = false;
+  let reservation = {};
+  let reservationSubmitted = false;
 
   // ========== DOM Elements ==========
   let bubble, chatWindow, chatMessages, chatInput, chatSendBtn;
@@ -358,30 +364,49 @@
       return "⚠️ API URL not configured. Please set data-api-url attribute on the script tag.";
     }
 
+    const isRestaurant = config.persona === 'restaurant';
+
     try {
+      const requestBody = {
+        messages: messages,
+        brandName: config.brandName,
+        persona: config.persona || 'default',
+        config: config.personaConfig || {}
+      };
+
+      if (isRestaurant) {
+        requestBody.reservation = reservation;
+      } else {
+        requestBody.collectedLead = collectedLead;
+      }
+
       const response = await fetch(config.apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: messages,
-          collectedLead: collectedLead,
-          brandName: config.brandName
-        })
+        body: JSON.stringify(requestBody)
       });
 
       if (!response.ok) throw new Error('API call failed');
       
       const data = await response.json();
       
-      // Update collected lead data
-      if (data.collectedLead) {
-        collectedLead = { ...collectedLead, ...data.collectedLead };
-      }
-      
-      // If lead is complete, trigger webhook
-      if (data.leadComplete && !leadSubmitted) {
-        leadSubmitted = true;
-        submitLead(data.collectedLead);
+      // Update state based on persona
+      if (isRestaurant) {
+        if (data.reservation) {
+          reservation = { ...reservation, ...data.reservation };
+        }
+        if (data.reservationComplete && !reservationSubmitted) {
+          reservationSubmitted = true;
+          submitReservation(data.reservation);
+        }
+      } else {
+        if (data.collectedLead) {
+          collectedLead = { ...collectedLead, ...data.collectedLead };
+        }
+        if (data.leadComplete && !leadSubmitted) {
+          leadSubmitted = true;
+          submitLead(data.collectedLead);
+        }
       }
 
       return data.reply;
@@ -414,6 +439,32 @@
       source: window.location.href
     });
     localStorage.setItem('nexify_leads', JSON.stringify(leads));
+  }
+
+  function submitReservation(reservationData) {
+    // Send reservation to webhook if configured
+    if (config.webhookUrl) {
+      fetch(config.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reservation: reservationData,
+          restaurant: config.personaConfig?.restaurantName || config.brandName,
+          timestamp: new Date().toISOString(),
+          source: window.location.href,
+          userAgent: navigator.userAgent
+        })
+      }).catch(err => console.error('Reservation submission error:', err));
+    }
+    
+    // Store locally for backup
+    const reservations = JSON.parse(localStorage.getItem('nexify_reservations') || '[]');
+    reservations.push({
+      ...reservationData,
+      timestamp: new Date().toISOString(),
+      source: window.location.href
+    });
+    localStorage.setItem('nexify_reservations', JSON.stringify(reservations));
   }
 
   // ========== Send Message ==========
@@ -487,6 +538,7 @@
     startDemo: startDemoFlow,
     sendMessage: sendUserMessage,
     getLead: () => collectedLead,
+    getReservation: () => reservation,
     getMessages: () => messages
   };
 

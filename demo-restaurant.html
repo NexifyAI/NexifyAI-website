@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金龙轩 Golden Dragon — 鹿特丹正宗粤菜</title>
+<meta name="description" content="金龙轩 Golden Dragon - 鹿特丹市中心正宗粤菜餐厅，招牌北京烤鸭、港式点心、海鲜火锅，支持线上订座">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #c41e3a;
+    --color-primary-dark: #8b0000;
+    --color-gold: #d4af37;
+    --color-cream: #fdf6e3;
+    --color-dark: #1a1a1a;
+    --color-text: #333;
+    --color-text-light: #666;
+    --color-bg: #fffef8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+  }
+
+  .chinese { font-family: "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif; }
+  .english { font-family: "Playfair Display", Georgia, serif; }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-logo .chinese {
+    color: var(--color-gold);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 4px;
+  }
+
+  .nav-logo .english {
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--color-gold); }
+
+  .nav-reserve-btn {
+    background: var(--color-primary);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .nav-reserve-btn:hover { background: var(--color-primary-dark); }
+
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    min-height: 600px;
+    background: linear-gradient(135deg, rgba(26,26,26,0.7) 0%, rgba(139,0,0,0.5) 100%),
+                url('https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&q=80') center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    color: var(--color-gold);
+    letter-spacing: 12px;
+    margin-bottom: 8px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  .hero .subtitle {
+    font-size: clamp(18px, 3vw, 28px);
+    letter-spacing: 6px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+  }
+
+  .hero .tagline {
+    font-size: 15px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: white;
+    padding: 16px 40px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    padding: 16px 40px;
+    border: 2px solid var(--color-gold);
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background: var(--color-gold);
+    color: var(--color-dark);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* Section Common */
+  section { padding: 100px 40px; }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-title .chinese {
+    font-size: 36px;
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: 8px;
+    margin-bottom: 8px;
+  }
+
+  .section-title .english {
+    font-size: 14px;
+    color: var(--color-text-light);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--color-gold);
+    margin: 16px auto 0;
+  }
+
+  /* Signature Dishes */
+  .signature {
+    background: var(--color-cream);
+  }
+
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dish-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .dish-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+
+  .dish-img {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .dish-img.duck { background-image: url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=80'); }
+  .dish-img.dimsum { background-image: url('https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80'); }
+  .dish-img.hotpot { background-image: url('https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80'); }
+  .dish-img.kungpao { background-image: url('https://images.unsplash.com/photo-1525755662778-989d0524087e?w=600&q=80'); }
+
+  .dish-info { padding: 24px; }
+
+  .dish-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .dish-name .chinese {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-dark);
+  }
+
+  .dish-price {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .dish-desc {
+    color: var(--color-text-light);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* About Section */
+  .about {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-text p {
+    margin-bottom: 16px;
+    color: var(--color-text);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .about-image {
+    height: 400px;
+    border-radius: 8px;
+    background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80') center/cover;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+
+  /* Info Section */
+  .info-section {
+    background: var(--color-dark);
+    color: white;
+  }
+
+  .info-section .section-title .chinese { color: var(--color-gold); }
+  .info-section .section-title .english { color: rgba(255,255,255,0.6); }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 48px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .info-item h3 {
+    color: var(--color-gold);
+    font-size: 18px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+
+  .info-item p {
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* Footer */
+  footer {
+    background: #0d0d0d;
+    color: rgba(255,255,255,0.5);
+    padding: 40px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  footer .chinese {
+    color: var(--color-gold);
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .about-content { grid-template-columns: 1fr; }
+    .about-image { height: 300px; order: -1; }
+    .hero h1 { letter-spacing: 6px; }
+    .hero .subtitle { letter-spacing: 3px; }
+  }
+
+  /* Chatbot custom style overrides for restaurant */
+  #nexify-chatbot-bubble {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-gold)) !important;
+    box-shadow: 0 4px 20px rgba(196, 30, 58, 0.4) !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">
+    <span class="chinese">金龙轩</span>
+    <span class="english">Golden Dragon</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">关于我们</a></li>
+    <li><a href="#signature">招牌菜品</a></li>
+    <li><a href="#info">营业时间</a></li>
+    <li><a href="#contact">联系方式</a></li>
+  </ul>
+  <button class="nav-reserve-btn" onclick="document.getElementById('nexify-chatbot-bubble').click()">立即订座</button>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <h1 class="chinese">金龙轩</h1>
+  <p class="subtitle english">GOLDEN DRAGON</p>
+  <p class="tagline">正宗粤菜 · 匠心传承 · 自1998年</p>
+  <div class="hero-buttons">
+    <button class="btn-primary" onclick="document.getElementById('nexify-chatbot-bubble').click()">🥢 在线订座</button>
+    <a href="#signature" class="btn-outline">查看菜单</a>
+  </div>
+  <div class="scroll-hint">向下滚动 ↓</div>
+</section>
+
+<!-- Signature Dishes -->
+<section class="signature" id="signature">
+  <div class="section-title">
+    <div class="chinese">招牌菜品</div>
+    <div class="english">Signature Dishes</div>
+    <div class="divider"></div>
+  </div>
+  <div class="dishes-grid">
+    <div class="dish-card">
+      <div class="dish-img duck"></div>
+      <div class="dish-info">
+        <div class="dish-name">
+          <span class="chinese">北京烤鸭</span>
+          <span class="dish-price">€48</span>
+        </div>
+        <p class="dish-desc">果木炭火烤制，皮脆肉嫩，配薄饼、葱丝、甜面酱。需提前24小时预订。</p>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img dimsum"></div>
+      <div class="dish-info">
+        <div class="dish-name">
+          <span class="chinese">港式点心</span>
+          <span class="dish-price">€12起</span>
+        </div>
+        <p class="dish-desc">每日现做，虾饺、烧卖、叉烧包、肠粉等二十余种，午市供应。</p>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img hotpot"></div>
+      <div class="dish-info">
+        <div class="dish-name">
+          <span class="chinese">海鲜火锅</span>
+          <span class="dish-price">€68起</span>
+        </div>
+        <p class="dish-desc">鲜活海鲜配滋补汤底，大虾、螃蟹、鱼片、蔬菜拼盘，适合2-4人。</p>
+      </div>
+    </div>
+    <div class="dish-card">
+      <div class="dish-img kungpao"></div>
+      <div class="dish-info">
+        <div class="dish-name">
+          <span class="chinese">宫保鸡丁</span>
+          <span class="dish-price">€18</span>
+        </div>
+        <p class="dish-desc">经典川菜，嫩滑鸡肉配花生米、干辣椒，麻辣鲜香，下饭神器。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="about">
+    <div class="section-title">
+      <div class="chinese">关于金龙轩</div>
+      <div class="english">About Us</div>
+      <div class="divider"></div>
+    </div>
+    <div class="about-content">
+      <div class="about-image"></div>
+      <div class="about-text">
+        <p><strong class="chinese">金龙轩</strong> 始创于1998年，是鹿特丹市中心最具口碑的粤菜餐厅之一。我们坚持"食材为本，匠心烹饪"的理念，为每一位客人呈献最地道的中华美食。</p>
+        <p>主厨拥有三十年粤菜烹饪经验，曾在香港、新加坡多家米其林餐厅掌勺。从选材到烹饪，每一道菜品都精益求精。</p>
+        <p>我们提供丰富的用餐选择：午市点心、晚市正餐、海鲜火锅、宴席包场。无论是商务宴请还是家庭聚餐，金龙轩都是您的理想之选。</p>
+        <p style="color: var(--color-primary); font-weight: 600;">🍽️ 欢迎光临，品味正宗中华味道</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info Section -->
+<section class="info-section" id="info">
+  <div class="section-title">
+    <div class="chinese">餐厅信息</div>
+    <div class="english">Restaurant Info</div>
+    <div class="divider"></div>
+  </div>
+  <div class="info-grid">
+    <div class="info-item">
+      <h3>🕐 营业时间</h3>
+      <p>
+        周一至周日<br>
+        11:30 - 22:00<br>
+        （最后点单 21:30）<br>
+        <br>
+        午市点心：11:30 - 16:00
+      </p>
+    </div>
+    <div class="info-item">
+      <h3>📍 地址</h3>
+      <p>
+        Kruisplein 123<br>
+        3012 CC Rotterdam<br>
+        The Netherlands<br>
+        <br>
+        地铁：Rotterdam Centraal
+      </p>
+    </div>
+    <div class="info-item">
+      <h3>📞 联系方式</h3>
+      <p>
+        电话：+31 10 123 4567<br>
+        邮箱：info@goldendragon.nl<br>
+        微信：GoldenDragon_Rdam<br>
+        <br>
+        支持：微信支付 / 支付宝
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+  <div class="chinese">金龙轩 Golden Dragon</div>
+  <p>© 2026 Golden Dragon Restaurant. All rights reserved.</p>
+  <p style="margin-top: 8px;">智能客服由 Nexify AI 提供技术支持</p>
+</footer>
+
+<!-- Chatbot Widget - Restaurant Persona -->
+<script>
+  // Restaurant config
+  const restaurantConfig = {
+    restaurantName: "金龙轩 Golden Dragon",
+    cuisineType: "正宗粤菜 Cantonese Cuisine",
+    address: "Kruisplein 123, 3012 CC Rotterdam",
+    phone: "+31 10 123 4567",
+    openingHours: "周一至周日 11:30 - 22:00（最后点单 21:30）。午市点心：11:30 - 16:00",
+    priceRange: "人均 €25-40",
+    deliveryPlatforms: "Uber Eats、Thuisbezorgd、以及微信小程序",
+    specialties: "北京烤鸭（需提前24小时预订）、港式点心、海鲜火锅、宫保鸡丁、麻婆豆腐、糖醋排骨、各类海鲜",
+    languages: "中文（普通话/粤语）、英文、荷兰文",
+    parkingInfo: "Kruisplein 停车场，步行2分钟。消费满€50可报销1小时停车费。",
+    privateRooms: "设有3个包厢，可容纳6-20人，有最低消费要求，欢迎咨询预订",
+    additionalInfo: "支持微信支付、支付宝、银行卡及现金。免费WiFi提供。承接宴席、团建、年夜饭等团体活动。"
+  };
+
+  // Load chatbot dynamically
+  (function() {
+    const script = document.createElement('script');
+    script.src = '.internal/chatbot.js';
+    script.setAttribute('data-api-url', 'https://chatbox.yuanxin0222.workers.dev');
+    script.setAttribute('data-brand', '金龙轩');
+    script.setAttribute('data-persona', 'restaurant');
+    script.setAttribute('data-persona-config', JSON.stringify(restaurantConfig));
+    script.setAttribute('data-greeting', '您好！欢迎光临金龙轩 🐲 我是您的AI客服小金龙，有什么可以帮您？订座、菜单咨询、外卖信息都可以问我~');
+    document.head.appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

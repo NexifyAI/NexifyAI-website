@@ -74,6 +74,98 @@ OUTPUT FORMAT - You MUST respond with valid JSON in this exact format:
 
 Only respond with the JSON object. No other text, no markdown, no code blocks.`;
 
+// ============================================================
+// RESTAURANT PERSONA - 餐厅 AI 客服系统
+// ============================================================
+const RESTAURANT_SYSTEM_PROMPT_TEMPLATE = (config) => `You are the friendly, welcoming AI receptionist for {{RESTAURANT_NAME}} — a {{CUISINE_TYPE}} restaurant. Your job is to help customers with reservations, menu questions, delivery info, and general inquiries.
+
+YOUR PRIMARY GOALS:
+1. Help customers make reservations smoothly
+2. Answer menu and food questions accurately
+3. Guide customers to ordering delivery/takeaway
+4. Collect reservation details and notify the restaurant
+
+RESTAURANT INFO (use this to answer questions):
+- Restaurant Name: {{RESTAURANT_NAME}}
+- Cuisine: {{CUISINE_TYPE}}
+- Address: {{ADDRESS}}
+- Phone: {{PHONE}}
+- Opening Hours: {{OPENING_HOURS}}
+- Price Range: {{PRICE_RANGE}}
+- Delivery Platforms: {{DELIVERY_PLATFORMS}}
+- Specialties: {{SPECIALTIES}}
+- Languages Spoken: {{LANGUAGES}}
+- Parking: {{PARKING_INFO}}
+- Private Rooms: {{PRIVATE_ROOMS}}
+- Additional Info: {{ADDITIONAL_INFO}}
+
+RESERVATION FLOW:
+When a customer wants to make a reservation, collect these details naturally through conversation:
+1. partySize — number of people
+2. dateTime — date and time of reservation
+3. customerName — customer's name
+4. phoneNumber — customer's phone number
+5. specialRequests — any special requests (birthday, allergies, window seat, etc.)
+
+IMPORTANT RULES:
+1. LANGUAGE: ALWAYS reply in the SAME LANGUAGE as the user's last message. Auto-detect. Support: Chinese, English, Dutch, and more. Never switch languages unless the user does.
+2. NATURAL FLOW: Don't ask for all reservation details at once like a form. Have a real conversation and collect info gradually. Ask max 1-2 questions per message.
+3. TONE: Warm, friendly, welcoming. Like a great restaurant host. Use appropriate emojis (🍜, 🍽️, 🥢, etc.) but not too many.
+4. RESERVATION CONFIRMATION: When you have ALL 5 reservation details, summarize them clearly and ask the customer to confirm. Only mark reservationComplete as true AFTER the customer confirms.
+5. MENU QUESTIONS: Answer confidently based on the restaurant info. If you don't know a specific dish detail, say so honestly and suggest alternatives or tell them to check the menu.
+6. DELIVERY: If someone asks about delivery, tell them which platforms they can order from ({{DELIVERY_PLATFORMS}}).
+7. If someone asks to speak to a human or has a very complex request, collect their phone number and tell them the restaurant will call them back.
+
+OUTPUT FORMAT - You MUST respond with valid JSON in this exact format:
+{
+  "reply": "your response to the customer (in their language)",
+  "reservation": {
+    "partySize": "value or null if not yet known",
+    "dateTime": "value or null if not yet known",
+    "customerName": "value or null if not yet known",
+    "phoneNumber": "value or null if not yet known",
+    "specialRequests": "value or null if not yet known"
+  },
+  "reservationComplete": false,
+  "inquiryType": "reservation | menu | delivery | general | other"
+}
+
+Only respond with the JSON object. No other text, no markdown, no code blocks.`;
+
+// Default restaurant config for demo
+const DEFAULT_RESTAURANT_CONFIG = {
+  restaurantName: "Golden Dragon 金龙轩",
+  cuisineType: "Authentic Chinese Cantonese Cuisine",
+  address: "Kruisplein 123, 3012 CC Rotterdam",
+  phone: "+31 10 123 4567",
+  openingHours: "Mon-Sun: 11:30 - 22:00 (last order 21:30)",
+  priceRange: "€15-30 per person for dinner",
+  deliveryPlatforms: "Uber Eats, Thuisbezorgd, and WeChat mini-program 微信小程序",
+  specialties: "Peking Duck (pre-order 24h), Dim Sum, Sweet & Sour Pork, Kung Pao Chicken, Mapo Tofu, Seafood Hot Pot",
+  languages: "Chinese (Mandarin/Cantonese), English, Dutch",
+  parkingInfo: "Paid parking available at Kruisplein garage, 2 min walk",
+  privateRooms: "3 private rooms available (6-20 people), minimum order applies",
+  additionalInfo: "We accept major credit cards and PIN. WeChat Pay and Alipay also accepted. Free WiFi available."
+};
+
+function buildRestaurantSystemPrompt(config) {
+  const cfg = { ...DEFAULT_RESTAURANT_CONFIG, ...config };
+  let prompt = RESTAURANT_SYSTEM_PROMPT_TEMPLATE();
+  prompt = prompt.replace(/\{\{RESTAURANT_NAME\}\}/g, cfg.restaurantName);
+  prompt = prompt.replace(/\{\{CUISINE_TYPE\}\}/g, cfg.cuisineType);
+  prompt = prompt.replace(/\{\{ADDRESS\}\}/g, cfg.address);
+  prompt = prompt.replace(/\{\{PHONE\}\}/g, cfg.phone);
+  prompt = prompt.replace(/\{\{OPENING_HOURS\}\}/g, cfg.openingHours);
+  prompt = prompt.replace(/\{\{PRICE_RANGE\}\}/g, cfg.priceRange);
+  prompt = prompt.replace(/\{\{DELIVERY_PLATFORMS\}\}/g, cfg.deliveryPlatforms);
+  prompt = prompt.replace(/\{\{SPECIALTIES\}\}/g, cfg.specialties);
+  prompt = prompt.replace(/\{\{LANGUAGES\}\}/g, cfg.languages);
+  prompt = prompt.replace(/\{\{PARKING_INFO\}\}/g, cfg.parkingInfo);
+  prompt = prompt.replace(/\{\{PRIVATE_ROOMS\}\}/g, cfg.privateRooms);
+  prompt = prompt.replace(/\{\{ADDITIONAL_INFO\}\}/g, cfg.additionalInfo);
+  return prompt;
+}
+
 export default {
   async fetch(request, env, ctx) {
     // CORS headers
@@ -170,20 +262,38 @@ export default {
 
     try {
       const body = await request.json();
-      const { messages, collectedLead = {}, brandName = 'Nexify AI' } = body;
+      const { messages, collectedLead = {}, brandName = 'Nexify AI', persona = 'default', config = {} } = body;
 
       if (!messages || !Array.isArray(messages)) {
         return new Response(JSON.stringify({ error: 'Invalid messages format' }), { status: 400 });
       }
 
+      // Select system prompt based on persona
+      let systemPrompt;
+      let isRestaurant = false;
+      if (persona === 'restaurant') {
+        systemPrompt = buildRestaurantSystemPrompt(config);
+        isRestaurant = true;
+      } else {
+        systemPrompt = SYSTEM_PROMPT;
+      }
+
       // Build the conversation for the AI
       const aiMessages = [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: systemPrompt },
         ...messages.map(m => ({ role: m.role, content: m.content }))
       ];
 
-      // Add current lead state to help AI track what's collected
-      if (Object.keys(collectedLead).length > 0) {
+      // Add current lead/reservation state to help AI track what's collected
+      if (isRestaurant) {
+        const reservation = body.reservation || {};
+        if (Object.keys(reservation).length > 0) {
+          aiMessages.push({
+            role: 'system',
+            content: `Current reservation details (update these fields as you gather more info): ${JSON.stringify(reservation)}`
+          });
+        }
+      } else if (Object.keys(collectedLead).length > 0) {
         aiMessages.push({
           role: 'system',
           content: `Current collected lead data (update these fields as you gather more info): ${JSON.stringify(collectedLead)}`
@@ -211,8 +321,21 @@ export default {
         };
       }
 
-      // If lead is complete, send notifications (webhook + email)
-      if (parsedResponse.leadComplete) {
+      // If reservation/lead is complete, send notifications
+      const isReservationComplete = isRestaurant && parsedResponse.reservationComplete;
+      const isLeadComplete = !isRestaurant && parsedResponse.leadComplete;
+
+      if (isReservationComplete) {
+        const ip = request.headers.get('CF-Connecting-IP');
+        const reservation = parsedResponse.reservation || {};
+        const restaurantName = config.restaurantName || 'the restaurant';
+
+        if (env.LEAD_NOTIFY_EMAIL && env.RESEND_API_KEY) {
+          ctx.waitUntil(sendRestaurantReservationEmail(env, reservation, restaurantName, ip));
+        }
+      }
+
+      if (isLeadComplete) {
         const ip = request.headers.get('CF-Connecting-IP');
         const lead = parsedResponse.collectedLead || {};
         const isPilot = lead.pilotApplication === true || lead.pilotApplication === 'true';
@@ -241,8 +364,9 @@ export default {
       }
 
       const duration = Date.now() - startTime;
-      const leadCount = parsedResponse.leadComplete ? 1 : 0;
-      console.log(`Chat request completed in ${duration}ms, leadComplete=${leadCount}`);
+      const leadCount = isLeadComplete ? 1 : 0;
+      const resCount = isReservationComplete ? 1 : 0;
+      console.log(`Chat request completed in ${duration}ms, persona=${persona}, leadComplete=${leadCount}, reservationComplete=${resCount}`);
 
       return new Response(JSON.stringify(parsedResponse), {
         headers: {
@@ -611,5 +735,83 @@ IP: ${ip || 'unknown'}
     });
   } catch (e) {
     console.error('Pilot email send error:', e);
+  }
+}
+
+// ============================================================
+// RESTAURANT RESERVATION EMAIL
+// ============================================================
+async function sendRestaurantReservationEmail(env, reservation, restaurantName, ip) {
+  try {
+    const res = reservation || {};
+    const time = new Date().toLocaleString('en-US', { timeZone: 'Europe/Amsterdam' });
+    const subject = `🍽️ New Reservation: ${res.customerName || 'Unknown'} - ${res.partySize || '?'} ppl - ${res.dateTime || 'TBD'}`;
+
+    const html = `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #dc2626, #f97316); padding: 24px; border-radius: 12px 12px 0 0;">
+          <h2 style="color: white; margin: 0; font-size: 20px;">🍽️ New Reservation — ${restaurantName}</h2>
+        </div>
+        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-top: none; padding: 24px; border-radius: 0 0 12px 12px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 12px 0; font-weight: 600; color: #dc2626; width: 35%;">👥 Party Size</td>
+              <td style="padding: 12px 0; color: #1f2937; font-size: 16px;">${res.partySize || '—'} people</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 12px 0; font-weight: 600; color: #dc2626;">📅 Date & Time</td>
+              <td style="padding: 12px 0; color: #1f2937; font-size: 16px;">${res.dateTime || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 12px 0; font-weight: 600; color: #dc2626;">👤 Customer Name</td>
+              <td style="padding: 12px 0; color: #1f2937; font-size: 16px;">${res.customerName || '—'}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+              <td style="padding: 12px 0; font-weight: 600; color: #dc2626;">📱 Phone Number</td>
+              <td style="padding: 12px 0; color: #1f2937; font-size: 16px;">${res.phoneNumber || '—'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; font-weight: 600; color: #dc2626;">📝 Special Requests</td>
+              <td style="padding: 12px 0; color: #1f2937; font-size: 16px;">${res.specialRequests || '—'}</td>
+            </tr>
+          </table>
+          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 13px; color: #6b7280;">
+            <div>🕐 Received: ${time} (CET)</div>
+            <div>🌐 IP: ${ip || 'unknown'}</div>
+            <div style="margin-top: 8px;">— Powered by Nexify AI Restaurant Agent</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const text = `New Reservation — ${restaurantName}
+================================
+
+Party Size: ${res.partySize || '—'} people
+Date & Time: ${res.dateTime || '—'}
+Customer Name: ${res.customerName || '—'}
+Phone Number: ${res.phoneNumber || '—'}
+Special Requests: ${res.specialRequests || '—'}
+
+Received: ${time} (CET)
+IP: ${ip || 'unknown'}
+`;
+
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'Nexify AI <onboarding@resend.dev>',
+        to: [env.LEAD_NOTIFY_EMAIL],
+        subject: subject,
+        html: html,
+        text: text
+      })
+    });
+  } catch (e) {
+    console.error('Restaurant reservation email send error:', e);
   }
 }
