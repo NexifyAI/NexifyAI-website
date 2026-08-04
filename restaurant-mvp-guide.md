@@ -37,7 +37,7 @@
 
 ```html
 <script src="https://nexifyai.org/chatbot.js"
-  data-api-url="https://chatbox.yuanxin0222.workers.dev"
+  data-api-url="https://chat.nexifyai.org"
   data-brand="餐厅名字"
   data-persona="restaurant"
   data-persona-config='{"restaurantName":"金龙轩","cuisineType":"粤菜","address":"...","phone":"...","openingHours":"...","deliveryPlatforms":"...","specialties":"..."}'

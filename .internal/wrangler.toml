@@ -1,0 +1,8 @@
+name = "nexify-chatbot"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Custom domain (configure in Cloudflare Dashboard after first deploy)
+# routes = [
+#   { pattern = "chat.nexifyai.org/*", zone_name = "nexifyai.org" }
+# ]

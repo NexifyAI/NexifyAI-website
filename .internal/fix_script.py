@@ -7,7 +7,7 @@ import glob
 REPO = os.path.dirname(os.path.abspath(__file__))
 os.chdir(REPO)
 
-WORKER_URL = 'https://chatbox.yuanxin0222.workers.dev'
+WORKER_URL = 'https://chat.nexifyai.org'
 BASE_URL = 'https://nexifyai.org'
 
 ALL_HTML = sorted(glob.glob('*.html'))

@@ -1031,7 +1031,7 @@ COMMON_JS = r'''
 /* ===== Chatbot Widget ===== */
 (function(){
   'use strict';
-  const API_URL = 'https://chatbox.yuanxin0222.workers.dev';
+  const API_URL = 'https://chat.nexifyai.org';
   const bubble = document.getElementById('nx-chatbot-bubble');
   const windowEl = document.getElementById('nx-chatbot-window');
   const closeBtn = document.getElementById('nx-chat-close');

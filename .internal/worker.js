@@ -207,7 +207,7 @@ function isOriginAllowed(request) {
   const referer = request.headers.get('Referer') || '';
   // Allow if no Origin/Referer (e.g. curl, server-to-server) — still subject to rate limit
   if (!origin && !referer) return true;
-  const allowedHosts = ['nexifyai.org', 'www.nexifyai.org'];
+  const allowedHosts = ['nexifyai.org', 'www.nexifyai.org', 'chat.nexifyai.org'];
   return allowedHosts.some(h => origin.includes(h) || referer.includes(h));
 }
 
@@ -220,7 +220,7 @@ export default {
     // CORS headers — restrict to own origins
     if (request.method === 'OPTIONS') {
       const origin = request.headers.get('Origin') || '';
-      const allowedOrigins = ['https://nexifyai.org', 'https://www.nexifyai.org', 'http://localhost'];
+      const allowedOrigins = ['https://nexifyai.org', 'https://www.nexifyai.org', 'https://chat.nexifyai.org', 'http://localhost'];
       const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
       return new Response(null, {
         headers: {
