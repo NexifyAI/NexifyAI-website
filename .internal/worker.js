@@ -166,21 +166,75 @@ function buildRestaurantSystemPrompt(config) {
   return prompt;
 }
 
+// ============================================================
+// Rate Limiter — simple in-memory counter (per-IP, per-minute)
+// ============================================================
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60;        // seconds
+const RATE_LIMIT_MAX_REQUESTS = 30;  // per IP per window
+const RATE_LIMIT_MAX_PILOT = 3;      // pilot-apply submissions per IP per hour
+
+function isRateLimited(ip, type = 'chat') {
+  const now = Math.floor(Date.now() / 1000);
+  const key = `${ip}:${type}`;
+  const entry = rateLimitMap.get(key);
+  if (!entry || now - entry.first > RATE_LIMIT_WINDOW) {
+    rateLimitMap.set(key, { count: 1, first: now });
+    return false;
+  }
+  const max = type === 'pilot' ? RATE_LIMIT_MAX_PILOT : RATE_LIMIT_MAX_REQUESTS;
+  entry.count++;
+  return entry.count > max;
+}
+
+// Clean up old entries every 5 minutes to prevent memory leaks
+let lastCleanup = Math.floor(Date.now() / 1000);
+function cleanupRateLimits() {
+  const now = Math.floor(Date.now() / 1000);
+  if (now - lastCleanup > 300) {
+    for (const [key, entry] of rateLimitMap) {
+      if (now - entry.first > RATE_LIMIT_WINDOW * 2) rateLimitMap.delete(key);
+    }
+    lastCleanup = now;
+  }
+}
+
+// ============================================================
+// Origin validation — only accept requests from your own sites
+// ============================================================
+function isOriginAllowed(request) {
+  const origin = request.headers.get('Origin') || '';
+  const referer = request.headers.get('Referer') || '';
+  // Allow if no Origin/Referer (e.g. curl, server-to-server) — still subject to rate limit
+  if (!origin && !referer) return true;
+  const allowedHosts = ['nexifyai.org', 'www.nexifyai.org'];
+  return allowedHosts.some(h => origin.includes(h) || referer.includes(h));
+}
+
 export default {
   async fetch(request, env, ctx) {
-    // CORS headers
+    cleanupRateLimits();
+
+    const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+    // CORS headers — restrict to own origins
     if (request.method === 'OPTIONS') {
+      const origin = request.headers.get('Origin') || '';
+      const allowedOrigins = ['https://nexifyai.org', 'https://www.nexifyai.org', 'http://localhost'];
+      const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
       return new Response(null, {
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': corsOrigin,
           'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Max-Age': '86400',
         },
       });
     }
 
-    // Health check endpoint
     const reqUrl = new URL(request.url);
+
+    // Health check endpoint — only from allowed origins or direct access
     if (request.method === 'GET' && reqUrl.pathname === '/health') {
       const apiKey = env.AI_API_KEY;
       const provider = env.AI_PROVIDER || 'gemini';
@@ -216,12 +270,27 @@ export default {
         },
         timestamp: new Date().toISOString()
       }), {
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://nexifyai.org' }
       });
     }
 
-    // Pilot application endpoint
+    // Pilot application endpoint — with rate limiting + origin check
     if (request.method === 'POST' && reqUrl.pathname === '/pilot-apply') {
+      // Rate limit check
+      const pilotIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+      if (isRateLimited(pilotIP, 'pilot')) {
+        return new Response(JSON.stringify({ error: 'Too many applications. Please try again later.' }), {
+          status: 429,
+          headers: { 'Content-Type': 'application/json', 'Retry-After': '3600' }
+        });
+      }
+      // Origin check
+      if (!isOriginAllowed(request)) {
+        return new Response(JSON.stringify({ error: 'Forbidden' }), {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
       try {
         const body = await request.json();
         const ip = request.headers.get('CF-Connecting-IP');
@@ -232,7 +301,7 @@ export default {
         if (missing.length > 0) {
           return new Response(JSON.stringify({ error: 'Missing required fields', missing }), {
             status: 400,
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://nexifyai.org' }
           });
         }
 
@@ -243,19 +312,35 @@ export default {
 
         return new Response(JSON.stringify({ success: true, message: 'Application received' }), {
           status: 200,
-          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://nexifyai.org' }
         });
       } catch (e) {
         console.error('Pilot apply error:', e);
         return new Response(JSON.stringify({ error: 'Internal server error' }), {
           status: 500,
-          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://nexifyai.org' }
         });
       }
     }
 
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 });
+    }
+
+    // Rate limit check for chat requests
+    if (isRateLimited(clientIP, 'chat')) {
+      return new Response(
+        JSON.stringify({ error: 'rate_limited', reply: 'You are sending messages too quickly. Please slow down.' }),
+        { status: 429, headers: { 'Content-Type': 'application/json', 'Retry-After': '60' } }
+      );
+    }
+
+    // Origin check — block requests from unauthorized sites
+    if (!isOriginAllowed(request)) {
+      return new Response(
+        JSON.stringify({ error: 'forbidden', reply: 'This service can only be accessed from nexifyai.org.' }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     const startTime = Date.now();
@@ -371,7 +456,7 @@ export default {
       return new Response(JSON.stringify(parsedResponse), {
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': 'https://nexifyai.org',
         },
       });
 
@@ -404,7 +489,7 @@ export default {
           errorDetail: error.message || 'Internal server error',
           reply: userMessage
         }),
-        { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } }
+        { status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://nexifyai.org' } }
       );
     }
   }

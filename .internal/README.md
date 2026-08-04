@@ -42,7 +42,7 @@
 
 > 💡 免费额度：每天 100 封邮件，起步完全够用。
 >
-> 🔒 你的收件邮箱 `yuanxin0222@gmail.com` 只会存在 Worker 后端，前端完全不可见。
+> 🔒 你的收件邮箱 `YOUR_EMAIL@example.com` 只会存在 Worker 后端，前端完全不可见。
 
 ---
 
@@ -72,7 +72,7 @@
 | 1 | `AI_PROVIDER` | `gemini` | 不用勾 |
 | 2 | `AI_API_KEY` | 你的 Google API Key（`AQ.Ab8RN6Ih...`） | ✅ 勾上 |
 | 3 | `AI_MODEL` | `gemini-2.0-flash` | 不用勾 |
-| 4 | `LEAD_NOTIFY_EMAIL` | `yuanxin0222@gmail.com` | ✅ 勾上 |
+| 4 | `LEAD_NOTIFY_EMAIL` | `YOUR_EMAIL@example.com` | ✅ 勾上 |
 | 5 | `RESEND_API_KEY` | 你的 Resend API Key（`re_` 开头） | ✅ 勾上 |
 
 > 🔐 **Encrypt 加密**：敏感信息（API Key、邮箱）一定要勾上 Encrypt，加密后的值谁都看不到，包括你自己，只能整体替换。
@@ -147,7 +147,7 @@ https://nexify-chatbot.yourname.workers.dev
 1. 去 [resend.com](https://resend.com) 注册免费账号（每天 100 封免费额度）
 2. 在 Resend 里验证你的发件域名（或用默认的 resend.dev 测试域名）
 3. Worker 设置两个环境变量：
-   - `LEAD_NOTIFY_EMAIL` = 你的收件邮箱（yuanxin0222@gmail.com）
+   - `LEAD_NOTIFY_EMAIL` = 你的收件邮箱（YOUR_EMAIL@example.com）
    - `RESEND_API_KEY` = 你在 Resend 创建的 API Key
 
 > 🔒 **隐私保护**：邮箱地址只保存在 Worker 后端，前端代码和访客完全看不到。

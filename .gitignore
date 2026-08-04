@@ -1,2 +1,12 @@
 __pycache__/
 *.pyc
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
+*.swp
+*.swo

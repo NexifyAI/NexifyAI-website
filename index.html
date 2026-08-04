@@ -781,9 +781,9 @@ h1,h2,h3,p{margin:0;}
 <!-- ========== Header ========== -->
 <header class="site-header">
   <div class="container header-inner">
-    <div class="brand">
+    <a href="/" class="brand">
       <span class="brand-logo-wrap"><img src="assets/logo/logo-horizontal-green.png" alt="Nexify AI" class="brand-logo logo-light" onerror="this.style.display='none'"><img src="assets/logo/logo-horizontal-light.png" alt="Nexify AI" class="brand-logo logo-dark" onerror="this.style.display='none'"></span>
-    </div>
+    </a>
         <nav class="nav" id="site-nav">
       <div class="nav-item">
         <button class="nav-link" data-i18n="navSolutions">Solutions <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
@@ -1630,7 +1630,7 @@ function googleCalLink(c){
 (function(){
   'use strict';
 
-  const API_URL = 'https://chatbox.yuanxin0222.workers.dev'; // e.g. 'https://your-worker.nexifyai.workers.dev'
+  const API_URL = atob('aHR0cHM6Ly9jaGF0Ym94Lnl1YW54aW4wMjIyLndvcmtlcnMuZGV2'); // e.g. 'https://your-worker.nexifyai.workers.dev'
 
   const bubble = document.getElementById('nx-chatbot-bubble');
   const windowEl = document.getElementById('nx-chatbot-window');
