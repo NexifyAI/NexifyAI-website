@@ -131,6 +131,33 @@
   .tg-card .copied { font-size: 12px; color: var(--umami-gold-soft); margin-top: 6px; visibility: hidden; }
   .tg-card.copied .copied { visibility: visible; }
   .tg-foot { text-align: center; margin-top: 26px; font-size: 13px; color: var(--umami-muted); }
+  .tg-note { text-align: center; margin-top: 14px; font-size: 13.5px; color: var(--umami-muted); }
+  .tg-note i { color: var(--umami-text); }
+
+  /* roadmap */
+  .rm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .rm-card {
+    border: 1px solid var(--umami-line); border-radius: 14px; padding: 24px 22px;
+    background: rgba(255,255,255,0.015); display: flex; flex-direction: column; gap: 10px;
+  }
+  .rm-card.rm-now  { border-color: rgba(176,151,109,0.55); background: rgba(176,151,109,0.08); }
+  .rm-card.rm-next { border-style: dashed; }
+  .rm-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+    background: var(--umami-gold); color: #121212;
+  }
+  .rm-card.rm-next .rm-badge { background: transparent; color: var(--umami-gold-soft); border: 1px solid var(--umami-gold); }
+  .rm-card.rm-future .rm-badge { background: transparent; color: var(--umami-muted); border: 1px solid var(--umami-muted); }
+  .rm-card h3 { font-size: 18.5px; font-weight: 600; color: var(--umami-gold-soft); }
+  .rm-card .rm-desc { font-size: 13.5px; color: var(--umami-text); line-height: 1.7; }
+  .rm-card .rm-need {
+    margin-top: auto; font-size: 12.5px; color: var(--umami-muted); line-height: 1.7;
+    border-top: 1px dashed var(--umami-line); padding-top: 10px;
+  }
+  .rm-card .rm-need b { color: var(--umami-gold-soft); }
+  .rm-foot { margin-top: 26px; font-size: 12.5px; color: var(--umami-muted); text-align: center; line-height: 1.8; }
+  .rm-foot b { color: var(--umami-text); }
 
   /* footer */
   footer { text-align: center; padding: 40px 20px 120px; color: var(--umami-muted); font-size: 12.5px; }
@@ -262,8 +289,48 @@
       <div class="copied">✓ Gekopieerd</div>
     </div>
   </div>
-  <p class="tg-foot" style="padding-bottom:clamp(48px,7vw,88px)">
+  <p class="tg-foot">
     🌐 Also try the language selector inside the chat (EN · NL · DE · FR · ES · 中文) — ask the same question in different languages.
+  </p>
+  <div class="tg-note" style="max-width:1080px;margin:0 auto;padding-bottom:clamp(48px,7vw,88px)">
+    💬 Try a complex one too: <i>"明天下午4点我们4个人想订位，有一位对花生过敏，确认邮件请发到我的邮箱"</i> (EN/NL both work)
+    — today the assistant collects the details and hands over your booking link; the roadmap below shows how this becomes fully conversational booking.
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="sec-head">
+    <h2 class="serif">Roadmap · 从演示到全自动预订</h2>
+    <div class="rule"></div>
+    <span class="zh-sub">The assistant you are testing is Phase 1 (live now). Here is how it evolves — and what it needs from you.</span>
+  </div>
+  <div class="rm-grid">
+
+    <div class="rm-card rm-now">
+      <div class="rm-badge">Phase 1 · 现已上线</div>
+      <h3>对话式咨询 + 预订引导</h3>
+      <p class="rm-desc">营业时间、菜单、团体政策、过敏处理方式、分店信息——全部即时准确回答（6 种语言）。预订通过您的官方链接完成，AI 不碰预订系统。</p>
+      <p class="rm-need"><b>需要的权限：</b>无 — 已就绪。仅需网站管理员放置一个验证文件 + 嵌入一段代码即可上 umami-restaurant.com。</p>
+    </div>
+
+    <div class="rm-card rm-next">
+      <div class="rm-badge">Phase 2 · 下一步（1-2 周可开通）</div>
+      <h3>对话式代办：AI 收集并发送预订</h3>
+      <p class="rm-desc">客人说"明天 4 点 4 个人，一位花生过敏，回执发到 xx@邮箱"→ AI 反问哪家分店 → 逐项收集（分店/日期/时间/人数/姓名/联系方式/过敏原）→ <b>结构化预订邮件</b>自动发送到对应分店邮箱，客人即时收到"已受理"回执。餐厅在自己的 Guestplan 里照常录入、电话/邮件确认。</p>
+      <p class="rm-need"><b>需要的权限：</b>① 授权 AI 以 umami-restaurant.com 分店邮箱为目的地发送预订邮件；② 确认各店接收预订的邮箱地址；③ 隐私条款补充一条（预订信息含过敏原说明，仅用于本预订）。</p>
+    </div>
+
+    <div class="rm-card rm-future">
+      <div class="rm-badge">Phase 3 · 终态（试点评审后）</div>
+      <h3>直连 Guestplan：实时查桌 + 自动下单</h3>
+      <p class="rm-desc">AI 实时查询真实可用时段 → 客人选定即写入 Guestplan → 确认邮件自动发出，全程无人工。冲突时自动推荐最近的可用时段。</p>
+      <p class="rm-need"><b>需要的权限：</b>① Guestplan API 对接授权（贵方调研清单已注明：技术对接请联系 Han Ji，由其指派负责人）；② Guestplan API 账号/密钥；③ 试点评审会上确认扩展范围与商务条款。</p>
+    </div>
+
+  </div>
+  <p class="rm-foot">
+    ⚠️ 无论哪个阶段，AI 的承诺红线不变：<b>未获餐厅确认前，绝不向客人声称"已预订成功"</b>。
+    过敏原等健康相关信息只进入预订执行通道（邮件/API），绝不用于其他用途。
   </p>
 </section>
 
