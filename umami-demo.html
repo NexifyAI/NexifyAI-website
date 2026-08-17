@@ -11,13 +11,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --umami-orange: #e65100;
-    --umami-orange-soft: #ff8f3d;
-    --umami-dark: #14100d;
-    --umami-panel: #1f1915;
-    --umami-line: rgba(230, 81, 0, 0.25);
-    --umami-text: #f4ece4;
-    --umami-muted: #b8a998;
+    --umami-gold: #b0976d;          /* site logo dark-gold (villenoir theme accent) */
+    --umami-gold-soft: #d3b98a;     /* brighter gold for headings/hover */
+    --umami-dark: #121212;          /* site background black */
+    --umami-panel: #1c1813;         /* warm near-black panel */
+    --umami-line: rgba(176, 151, 109, 0.28);
+    --umami-text: #ece5da;
+    --umami-muted: #a99e8c;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -32,7 +32,7 @@
   /* ── demo banner ─────────────────────────────── */
   .demo-banner {
     position: sticky; top: 0; z-index: 900;
-    background: linear-gradient(90deg, #e65100, #ff8f3d);
+    background: linear-gradient(90deg, #8a744e, #b0976d);
     color: #fff; text-align: center;
     padding: 10px 16px; font-size: 14px; font-weight: 500;
     box-shadow: 0 2px 12px rgba(0,0,0,0.35);
@@ -48,7 +48,7 @@
   }
   .brand { display: flex; align-items: baseline; gap: 10px; }
   .brand .name { font-size: 24px; font-weight: 700; letter-spacing: 3px; }
-  .brand .tag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--umami-orange-soft); }
+  .brand .tag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--umami-gold-soft); }
   .nav-cities { display: flex; gap: 18px; font-size: 13px; color: var(--umami-muted); flex-wrap: wrap; }
   .nav-cities span { cursor: default; }
 
@@ -57,24 +57,24 @@
     text-align: center;
     padding: clamp(64px, 10vw, 120px) 24px 72px;
     background:
-      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,81,0,0.22), transparent),
-      linear-gradient(180deg, #14100d 0%, #1a140f 100%);
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(176,151,109,0.20), transparent),
+      linear-gradient(180deg, #121212 0%, #181410 100%);
     position: relative;
   }
   .hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 600; letter-spacing: 6px; line-height: 1.1; }
-  .hero .wordmark { color: var(--umami-orange-soft); }
+  .hero .wordmark { color: var(--umami-gold-soft); }
   .hero .values { margin-top: 14px; font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--umami-muted); }
-  .hero .values .dot { color: var(--umami-orange); margin: 0 10px; }
+  .hero .values .dot { color: var(--umami-gold); margin: 0 10px; }
   .hero p.sub { max-width: 640px; margin: 22px auto 0; color: var(--umami-muted); font-size: 15.5px; }
   .hero .cta {
     display: inline-block; margin-top: 30px; padding: 13px 36px;
-    border: 1px solid var(--umami-orange); color: var(--umami-orange-soft);
+    border: 1px solid var(--umami-gold); color: var(--umami-gold-soft);
     border-radius: 999px; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
     text-decoration: none; transition: all .2s;
   }
-  .hero .cta:hover { background: var(--umami-orange); color: #fff; }
+  .hero .cta:hover { background: var(--umami-gold); color: #fff; }
   .hero .hint {
-    margin-top: 26px; font-size: 13.5px; color: var(--umami-orange-soft);
+    margin-top: 26px; font-size: 13.5px; color: var(--umami-gold-soft);
     animation: pulse 2.2s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
@@ -83,26 +83,26 @@
   section { padding: clamp(48px, 7vw, 88px) clamp(20px, 5vw, 64px); max-width: 1080px; margin: 0 auto; }
   .sec-head { text-align: center; margin-bottom: 40px; }
   .sec-head h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 600; letter-spacing: 1px; }
-  .sec-head .rule { width: 56px; height: 2px; background: var(--umami-orange); margin: 14px auto 0; }
+  .sec-head .rule { width: 56px; height: 2px; background: var(--umami-gold); margin: 14px auto 0; }
   .sec-head .zh-sub { display: block; margin-top: 8px; font-size: 13px; color: var(--umami-muted); }
 
   /* seafood bar */
   .seafood { background: var(--umami-panel); border-top: 1px solid var(--umami-line); border-bottom: 1px solid var(--umami-line); }
   .seafood-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
   .seafood-card {
-    background: rgba(230,81,0,0.07); border: 1px solid var(--umami-line);
+    background: rgba(176,151,109,0.07); border: 1px solid var(--umami-line);
     border-radius: 14px; padding: 26px 22px; text-align: center;
   }
   .seafood-card .ic { font-size: 30px; }
   .seafood-card h3 { margin: 10px 0 6px; font-size: 19px; font-weight: 600; }
   .seafood-card p { font-size: 13.5px; color: var(--umami-muted); }
   .seafood-note { text-align: center; margin-top: 26px; font-size: 13px; color: var(--umami-muted); }
-  .seafood-note b { color: var(--umami-orange-soft); }
+  .seafood-note b { color: var(--umami-gold-soft); }
 
   /* locations */
   .loc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
   .loc-card { border: 1px solid var(--umami-line); border-radius: 14px; padding: 22px; background: rgba(255,255,255,0.015); }
-  .loc-card h3 { font-size: 20px; font-weight: 600; color: var(--umami-orange-soft); }
+  .loc-card h3 { font-size: 20px; font-weight: 600; color: var(--umami-gold-soft); }
   .loc-card .addr { font-size: 13.5px; margin-top: 6px; color: var(--umami-text); }
   .loc-card .meta { font-size: 12.5px; color: var(--umami-muted); margin-top: 4px; }
 
@@ -110,7 +110,7 @@
   .hours-wrap { overflow-x: auto; border: 1px solid var(--umami-line); border-radius: 14px; }
   table.hours { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
   table.hours th, table.hours td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(230,81,0,0.12); }
-  table.hours th { color: var(--umami-orange-soft); font-weight: 600; font-size: 12.5px; letter-spacing: 1px; text-transform: uppercase; }
+  table.hours th { color: var(--umami-gold-soft); font-weight: 600; font-size: 12.5px; letter-spacing: 1px; text-transform: uppercase; }
   table.hours tr:last-child td { border-bottom: none; }
   table.hours td.city { font-weight: 600; }
   .hours-note { font-size: 12px; color: var(--umami-muted); margin-top: 10px; }
@@ -124,18 +124,18 @@
     border: 1px solid var(--umami-line); border-radius: 12px; padding: 18px 18px 16px;
     background: rgba(255,255,255,0.02); cursor: pointer; transition: border-color .2s;
   }
-  .tg-card:hover { border-color: var(--umami-orange); }
-  .tg-card .label { font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--umami-orange-soft); font-weight: 600; }
+  .tg-card:hover { border-color: var(--umami-gold); }
+  .tg-card .label { font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--umami-gold-soft); font-weight: 600; }
   .tg-card .q { margin-top: 8px; font-size: 14.5px; }
   .tg-card .expect { margin-top: 10px; font-size: 12.5px; color: var(--umami-muted); }
-  .tg-card .copied { font-size: 12px; color: var(--umami-orange-soft); margin-top: 6px; visibility: hidden; }
+  .tg-card .copied { font-size: 12px; color: var(--umami-gold-soft); margin-top: 6px; visibility: hidden; }
   .tg-card.copied .copied { visibility: visible; }
   .tg-foot { text-align: center; margin-top: 26px; font-size: 13px; color: var(--umami-muted); }
 
   /* footer */
   footer { text-align: center; padding: 40px 20px 120px; color: var(--umami-muted); font-size: 12.5px; }
   footer .f1 { letter-spacing: 2px; text-transform: uppercase; color: var(--umami-text); font-size: 13px; }
-  footer .sep { margin: 0 8px; color: var(--umami-orange); }
+  footer .sep { margin: 0 8px; color: var(--umami-gold); }
 
   @media (max-width: 640px) {
     .nav-cities { display: none; }
@@ -152,8 +152,8 @@
 
 <nav>
   <div class="brand">
-    <span class="name serif">UMAMI <span style="color:var(--umami-orange-soft)">by Han</span></span>
-    <span class="tag">Asian Fusion</span>
+    <img src="https://umami-restaurant.com/wp-content/uploads/2023/08/umami_by_han_wit_logo-300x160-1.png"
+         alt="UMAMI by Han" style="height:44px;width:auto;display:block">
   </div>
   <div class="nav-cities">
     <span>Amsterdam</span><span>Den Haag</span><span>Eindhoven</span><span>Rotterdam</span><span>Maastricht</span>
@@ -269,7 +269,7 @@
 
 <footer>
   <div class="f1">UMAMI by Han — pilot demo</div>
-  <div style="margin-top:8px">powered by <b style="color:var(--umami-orange-soft)">NexifyAI</b><span class="sep">·</span>2-month pilot<span class="sep">·</span>this page is a preview hosted at nexifyai.org</div>
+  <div style="margin-top:8px">powered by <b style="color:var(--umami-gold-soft)">NexifyAI</b><span class="sep">·</span>2-month pilot<span class="sep">·</span>this page is a preview hosted at nexifyai.org</div>
 </footer>
 
 <script>
