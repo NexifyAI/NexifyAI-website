@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UMAMI by Han — AI Assistant Demo</title>
+<meta name="description" content="Live demo of the NexifyAI customer-service assistant for Umami by Han — test it before it goes live on umami-restaurant.com">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --umami-orange: #e65100;
+    --umami-orange-soft: #ff8f3d;
+    --umami-dark: #14100d;
+    --umami-panel: #1f1915;
+    --umami-line: rgba(230, 81, 0, 0.25);
+    --umami-text: #f4ece4;
+    --umami-muted: #b8a998;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--umami-dark);
+    color: var(--umami-text);
+    line-height: 1.65;
+  }
+  .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+  /* ── demo banner ─────────────────────────────── */
+  .demo-banner {
+    position: sticky; top: 0; z-index: 900;
+    background: linear-gradient(90deg, #e65100, #ff8f3d);
+    color: #fff; text-align: center;
+    padding: 10px 16px; font-size: 14px; font-weight: 500;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  .demo-banner strong { font-weight: 700; }
+  .demo-banner .zh { display: block; font-size: 12.5px; opacity: 0.92; margin-top: 1px; }
+
+  /* ── nav ─────────────────────────────────────── */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--umami-line);
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .name { font-size: 24px; font-weight: 700; letter-spacing: 3px; }
+  .brand .tag { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--umami-orange-soft); }
+  .nav-cities { display: flex; gap: 18px; font-size: 13px; color: var(--umami-muted); flex-wrap: wrap; }
+  .nav-cities span { cursor: default; }
+
+  /* ── hero ────────────────────────────────────── */
+  .hero {
+    text-align: center;
+    padding: clamp(64px, 10vw, 120px) 24px 72px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,81,0,0.22), transparent),
+      linear-gradient(180deg, #14100d 0%, #1a140f 100%);
+    position: relative;
+  }
+  .hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 600; letter-spacing: 6px; line-height: 1.1; }
+  .hero .wordmark { color: var(--umami-orange-soft); }
+  .hero .values { margin-top: 14px; font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--umami-muted); }
+  .hero .values .dot { color: var(--umami-orange); margin: 0 10px; }
+  .hero p.sub { max-width: 640px; margin: 22px auto 0; color: var(--umami-muted); font-size: 15.5px; }
+  .hero .cta {
+    display: inline-block; margin-top: 30px; padding: 13px 36px;
+    border: 1px solid var(--umami-orange); color: var(--umami-orange-soft);
+    border-radius: 999px; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; transition: all .2s;
+  }
+  .hero .cta:hover { background: var(--umami-orange); color: #fff; }
+  .hero .hint {
+    margin-top: 26px; font-size: 13.5px; color: var(--umami-orange-soft);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+
+  /* ── sections ────────────────────────────────── */
+  section { padding: clamp(48px, 7vw, 88px) clamp(20px, 5vw, 64px); max-width: 1080px; margin: 0 auto; }
+  .sec-head { text-align: center; margin-bottom: 40px; }
+  .sec-head h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 600; letter-spacing: 1px; }
+  .sec-head .rule { width: 56px; height: 2px; background: var(--umami-orange); margin: 14px auto 0; }
+  .sec-head .zh-sub { display: block; margin-top: 8px; font-size: 13px; color: var(--umami-muted); }
+
+  /* seafood bar */
+  .seafood { background: var(--umami-panel); border-top: 1px solid var(--umami-line); border-bottom: 1px solid var(--umami-line); }
+  .seafood-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .seafood-card {
+    background: rgba(230,81,0,0.07); border: 1px solid var(--umami-line);
+    border-radius: 14px; padding: 26px 22px; text-align: center;
+  }
+  .seafood-card .ic { font-size: 30px; }
+  .seafood-card h3 { margin: 10px 0 6px; font-size: 19px; font-weight: 600; }
+  .seafood-card p { font-size: 13.5px; color: var(--umami-muted); }
+  .seafood-note { text-align: center; margin-top: 26px; font-size: 13px; color: var(--umami-muted); }
+  .seafood-note b { color: var(--umami-orange-soft); }
+
+  /* locations */
+  .loc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .loc-card { border: 1px solid var(--umami-line); border-radius: 14px; padding: 22px; background: rgba(255,255,255,0.015); }
+  .loc-card h3 { font-size: 20px; font-weight: 600; color: var(--umami-orange-soft); }
+  .loc-card .addr { font-size: 13.5px; margin-top: 6px; color: var(--umami-text); }
+  .loc-card .meta { font-size: 12.5px; color: var(--umami-muted); margin-top: 4px; }
+
+  /* hours table */
+  .hours-wrap { overflow-x: auto; border: 1px solid var(--umami-line); border-radius: 14px; }
+  table.hours { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+  table.hours th, table.hours td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(230,81,0,0.12); }
+  table.hours th { color: var(--umami-orange-soft); font-weight: 600; font-size: 12.5px; letter-spacing: 1px; text-transform: uppercase; }
+  table.hours tr:last-child td { border-bottom: none; }
+  table.hours td.city { font-weight: 600; }
+  .hours-note { font-size: 12px; color: var(--umami-muted); margin-top: 10px; }
+
+  /* test guide */
+  .testguide { background: var(--umami-panel); border-top: 1px solid var(--umami-line); border-bottom: 1px solid var(--umami-line); }
+  .tg-intro { text-align: center; max-width: 660px; margin: 0 auto 30px; color: var(--umami-muted); font-size: 14.5px; }
+  .tg-intro b { color: var(--umami-text); }
+  .tg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .tg-card {
+    border: 1px solid var(--umami-line); border-radius: 12px; padding: 18px 18px 16px;
+    background: rgba(255,255,255,0.02); cursor: pointer; transition: border-color .2s;
+  }
+  .tg-card:hover { border-color: var(--umami-orange); }
+  .tg-card .label { font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--umami-orange-soft); font-weight: 600; }
+  .tg-card .q { margin-top: 8px; font-size: 14.5px; }
+  .tg-card .expect { margin-top: 10px; font-size: 12.5px; color: var(--umami-muted); }
+  .tg-card .copied { font-size: 12px; color: var(--umami-orange-soft); margin-top: 6px; visibility: hidden; }
+  .tg-card.copied .copied { visibility: visible; }
+  .tg-foot { text-align: center; margin-top: 26px; font-size: 13px; color: var(--umami-muted); }
+
+  /* footer */
+  footer { text-align: center; padding: 40px 20px 120px; color: var(--umami-muted); font-size: 12.5px; }
+  footer .f1 { letter-spacing: 2px; text-transform: uppercase; color: var(--umami-text); font-size: 13px; }
+  footer .sep { margin: 0 8px; color: var(--umami-orange); }
+
+  @media (max-width: 640px) {
+    .nav-cities { display: none; }
+    .hero h1 { letter-spacing: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>DEMO PREVIEW</strong> — this is exactly how the AI assistant will appear on umami-restaurant.com
+  <span class="zh">演示预览 — 这就是即将嵌入 umami-restaurant.com 的 AI 助手。点击右下角气泡开始测试！</span>
+</div>
+
+<nav>
+  <div class="brand">
+    <span class="name serif">UMAMI <span style="color:var(--umami-orange-soft)">by Han</span></span>
+    <span class="tag">Asian Fusion</span>
+  </div>
+  <div class="nav-cities">
+    <span>Amsterdam</span><span>Den Haag</span><span>Eindhoven</span><span>Rotterdam</span><span>Maastricht</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1 class="serif">UMAMI <span class="wordmark">by Han</span></h1>
+  <div class="values">innovation <span class="dot">·</span> health <span class="dot">·</span> heritage</div>
+  <p class="sub">Asian-fusion shared dining across five cities in the Netherlands — seafood platters, dim sum,
+    and the Steamed Seafood Bar: traditional Chinese steaming techniques with contemporary flavours.</p>
+  <a class="cta" href="#testguide">Try the AI assistant</a>
+  <div class="hint">💬 Klik op de bel rechtsonder om te chatten / Click the bubble (bottom-right) to chat</div>
+</header>
+
+<section class="seafood" id="seafood">
+  <div class="sec-head" style="padding-top:clamp(48px,7vw,88px)">
+    <h2 class="serif">Steamed Seafood Bar</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="seafood-grid" style="max-width:1080px;margin:0 auto;padding-bottom:clamp(48px,7vw,88px)">
+    <div class="seafood-card"><div class="ic">🦞</div><h3>Fruits de Mer</h3><p>Premium platter — oysters, crab, langoustine, black tiger shrimp &amp; lobster</p></div>
+    <div class="seafood-card"><div class="ic">♨️</div><h3>À la Carte Steamed</h3><p>Lobster, langoustines, scallops, mussels &amp; sea bass, Cantonese-style</p></div>
+    <div class="seafood-card"><div class="ic">🍵</div><h3>Matcha by Han</h3><p>Our special matcha bar — exclusively in Eindhoven</p></div>
+  </div>
+  <p class="seafood-note" style="padding-bottom:clamp(48px,7vw,88px)">Available in <b>Eindhoven</b> (first location), <b>Den Haag</b> &amp; <b>Amsterdam</b> — ask the assistant which city serves what.</p>
+</section>
+
+<section id="locations">
+  <div class="sec-head">
+    <h2 class="serif">Onze vestigingen · Locations</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="loc-grid">
+    <div class="loc-card"><h3>Amsterdam</h3><div class="addr">Overtoom 31H, 1054 HB</div><div class="meta">+31 (0)20 280 13 79 · amsterdam@umami-restaurant.com · terrace &amp; private dining</div></div>
+    <div class="loc-card"><h3>Den Haag</h3><div class="addr">Buitenhof 46, 2513 AH</div><div class="meta">070-392 1808 · denhaag@umami-restaurant.com · serre · restaurant · balcony</div></div>
+    <div class="loc-card"><h3>Eindhoven</h3><div class="addr">Kleine Berg 57H, 5611 JT</div><div class="meta">040-237 0036 · eindhoven@umami-restaurant.com · Matcha bar · Steamed Seafood Bar</div></div>
+    <div class="loc-card"><h3>Rotterdam</h3><div class="addr">Binnenrotte 140, 3011 HC</div><div class="meta">+31 (0)10 433 31 39 · rotterdam@umami-restaurant.com · near Markthal · weekly markets</div></div>
+    <div class="loc-card"><h3>Maastricht</h3><div class="addr">Stationsstraat 12, 6221 BP</div><div class="meta">043-351 0006 · maastricht@umami-restaurant.com · Wyck, near central station</div></div>
+  </div>
+</section>
+
+<section id="hours" style="padding-top:0">
+  <div class="sec-head">
+    <h2 class="serif">Openingstijden · Hours</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="hours-wrap">
+    <table class="hours">
+      <tr><th>City</th><th>Lunch</th><th>Dinner</th><th>Closed</th></tr>
+      <tr><td class="city">Amsterdam</td><td>Tue–Sun 12:00</td><td>Daily 17:00 – 22:00/22:30</td><td>Mon lunch</td></tr>
+      <tr><td class="city">Den Haag</td><td>Tue–Sun 12:00</td><td>Daily 17:00 – 22:00/22:30</td><td>Mon lunch</td></tr>
+      <tr><td class="city">Eindhoven</td><td>Thu–Sun 12:00–16:00</td><td>Daily 17:00 – 22:00/22:30</td><td>Mon–Wed lunch*</td></tr>
+      <tr><td class="city">Rotterdam</td><td>Tue–Sun 12:00–15:00</td><td>Daily 16:30 – 22:00/22:30</td><td>Mon lunch</td></tr>
+      <tr><td class="city">Maastricht</td><td>Wed–Sun from 12:00</td><td>Tue from 16:00 · until 22:00</td><td>Monday</td></tr>
+    </table>
+  </div>
+  <p class="hours-note">* Eindhoven private group lunch possible Mon–Wed from 15 persons. The assistant answers per-location questions precisely — try it.</p>
+</section>
+
+<section class="testguide" id="testguide">
+  <div class="sec-head" style="padding-top:clamp(48px,7vw,88px)">
+    <h2 class="serif">How to test · 测试指引</h2>
+    <div class="rule"></div>
+    <span class="zh-sub">点击任意问题卡片即可复制，然后粘贴到右下角聊天窗发送</span>
+  </div>
+  <p class="tg-intro" style="margin-top:0">
+    Open the chat bubble (bottom-right), pick a language, and paste any of these.
+    <b>Each card shows what a correct answer must contain.</b>
+  </p>
+  <div class="tg-grid" style="max-width:1080px;margin:0 auto">
+    <div class="tg-card" data-copy="Wat zijn jullie openingstijden in Eindhoven?">
+      <div class="label">Opening hours · Dutch</div>
+      <div class="q">"Wat zijn jullie openingstijden in Eindhoven?"</div>
+      <div class="expect">✓ lunch do–zo 12:00–16:00 (ma–wo dicht, behalve groepen 15+) · diner tot 22:00/22:30</div>
+      <div class="copied">✓ Gekopieerd / Copied — plak in de chat</div>
+    </div>
+    <div class="tg-card" data-copy="Wat is het annuleringsbeleid voor een groep van 60 personen?">
+      <div class="label">Group policy · Dutch</div>
+      <div class="q">"Wat is het annuleringsbeleid voor een groep van 60 personen?"</div>
+      <div class="expect">✓ 50–80 tier: 30% aanbetaling · &gt;30 dagen volledige terugbetaling · &lt;7 dagen 80%</div>
+      <div class="copied">✓ Gekopieerd / Copied</div>
+    </div>
+    <div class="tg-card" data-copy="我对花生过敏，你们的厨房能处理过敏吗？">
+      <div class="label">Allergy · 中文</div>
+      <div class="q">"我对花生过敏，你们的厨房能处理过敏吗？"</div>
+      <div class="expect">✓ 厨房灵活可调整、预订和到店时告知 · 不会编造过敏原清单</div>
+      <div class="copied">✓ 已复制 — 粘贴到聊天窗</div>
+    </div>
+    <div class="tg-card" data-copy="I'd like to book a table for 4 on Saturday evening">
+      <div class="label">Reservation · English</div>
+      <div class="q">"I'd like to book a table for 4 on Saturday evening"</div>
+      <div class="expect">✓ friendly confirmation + the booking link (umami-restaurant.com/bookings)</div>
+      <div class="copied">✓ Copied</div>
+    </div>
+    <div class="tg-card" data-copy="Hebben jullie gestoomde zeevruchten of een seafood bar?">
+      <div class="label">Signature · Dutch</div>
+      <div class="q">"Hebben jullie gestoomde zeevruchten of een seafood bar?"</div>
+      <div class="expect">✓ Steamed Seafood Bar in Eindhoven, Den Haag &amp; Amsterdam + Fruits de Mer</div>
+      <div class="copied">✓ Gekopieerd</div>
+    </div>
+    <div class="tg-card" data-copy="Bieden jullie iets bijzonders aan voor senioren?">
+      <div class="label">Offer · Dutch</div>
+      <div class="q">"Bieden jullie iets bijzonders aan voor senioren?"</div>
+      <div class="expect">✓ Senior Social Dining Lunch Deal — Den Haag, 55+, €25, two courses</div>
+      <div class="copied">✓ Gekopieerd</div>
+    </div>
+  </div>
+  <p class="tg-foot" style="padding-bottom:clamp(48px,7vw,88px)">
+    🌐 Also try the language selector inside the chat (EN · NL · DE · FR · ES · 中文) — ask the same question in different languages.
+  </p>
+</section>
+
+<footer>
+  <div class="f1">UMAMI by Han — pilot demo</div>
+  <div style="margin-top:8px">powered by <b style="color:var(--umami-orange-soft)">NexifyAI</b><span class="sep">·</span>2-month pilot<span class="sep">·</span>this page is a preview hosted at nexifyai.org</div>
+</footer>
+
+<script>
+  // Click-to-copy for the test-guide cards.
+  document.querySelectorAll('.tg-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const text = card.getAttribute('data-copy') || '';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      card.classList.add('copied');
+      setTimeout(() => card.classList.remove('copied'), 1600);
+    });
+  });
+</script>
+
+<!-- NexifyAI live widget — the exact embed that will go on umami-restaurant.com -->
+<script src="https://nexifyai-agent-production.up.railway.app/widget/widget.js"
+        data-tenant="umami-by-han"
+        data-api-base="https://nexifyai-agent-production.up.railway.app"
+        data-mode="live"
+        async></script>
+
+</body>
+</html>
