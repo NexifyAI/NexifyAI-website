@@ -402,73 +402,6 @@ h1,h2,h3,p{margin:0;}
   color:var(--color-text-faint);padding:.4rem .9rem .2rem;
 }
 
-#nx-chatbot-bubble {
-  position: fixed;bottom: 24px;right: 24px;width: 60px;height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
-  box-shadow: 0 4px 20px color-mix(in oklab, var(--color-primary) 40%, transparent);
-  cursor: pointer;display: flex;align-items: center;justify-content: center;
-  z-index: 99999;transition: transform 0.2s ease, box-shadow 0.2s ease;
-  font-family: var(--font-body);border: none;
-}
-#nx-chatbot-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 28px color-mix(in oklab, var(--color-primary) 50%, transparent); }
-#nx-chatbot-bubble svg { width: 28px;height: 28px;color: white;}
-#nx-chatbot-window {
-  position: fixed;bottom: 96px;right: 24px;width: 380px;height: 560px;
-  max-height: calc(100vh - 120px);background: var(--color-surface);
-  border-radius: 16px;border: 1px solid var(--color-border);
-  box-shadow: 0 12px 48px rgba(0,0,0,0.15);display: none;flex-direction: column;
-  overflow: hidden;z-index: 99999;font-family: var(--font-body);
-  animation: nxSlideUp 0.3s ease;
-}
-#nx-chatbot-window.open { display: flex; }
-@keyframes nxSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.nx-chat-header {
-  padding: 14px 20px;
-  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
-  color: var(--color-text-inverse);display: flex;align-items: center;justify-content: space-between;
-}
-.nx-chat-header-title { font-weight: 600;font-size: 15px;display: flex;align-items: center;gap: 8px;}
-.nx-chat-header-status { width: 8px;height: 8px;background: #b7ffb7;border-radius: 50%;animation: nxPulse 2s infinite;}
-@keyframes nxPulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(183,255,183,0.6); } 50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(183,255,183,0); } }
-.nx-chat-close { background: none;border: none;color: white;font-size: 20px;cursor: pointer;padding: 0 4px;opacity: 0.85;line-height: 1;width: 28px;height: 28px;display: grid;place-items: center;border-radius: 50%;}
-.nx-chat-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
-.nx-chat-messages { flex: 1;overflow-y: auto;padding: 16px;background: var(--color-surface-2);display: flex;flex-direction: column;gap: 10px;}
-.nx-chat-messages::-webkit-scrollbar { width: 6px; }
-.nx-chat-messages::-webkit-scrollbar-thumb { background: var(--color-border);border-radius: 3px;}
-.nx-msg { max-width: 85%;padding: 10px 14px;border-radius: 14px;font-size: 14px;line-height: 1.5;word-wrap: break-word;animation: nxMsgIn 0.3s ease both;}
-@keyframes nxMsgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-.nx-msg.bot { background: var(--color-surface);color: var(--color-text);border: 1px solid var(--color-border);border-bottom-left-radius: 4px;align-self: flex-start;}
-.nx-msg.user {
-  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 70%, var(--color-accent)));
-  color: var(--color-text-inverse);border-bottom-right-radius: 4px;align-self: flex-end;}
-.nx-typing {
-  display: flex;gap: 4px;padding: 10px 14px;background: var(--color-surface);
-  border: 1px solid var(--color-border);border-radius: 14px;border-bottom-left-radius: 4px;
-  align-self: flex-start;width: fit-content;
-}
-.nx-typing span { width: 7px;height: 7px;background: var(--color-text-faint);border-radius: 50%;animation: nxTyping 1.3s infinite;}
-.nx-typing span:nth-child(2) { animation-delay: 0.2s; }
-.nx-typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes nxTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
-.nx-chat-input-area { padding: 12px 16px;background: var(--color-surface);border-top: 1px solid var(--color-divider);display: flex;gap: 8px;}
-.nx-chat-input {
-  flex: 1;padding: 10px 14px;border: 1px solid var(--color-border);border-radius: 20px;font-size: 14px;outline: none;font-family: inherit;background: var(--color-surface);color: var(--color-text);transition: border-color 0.2s;}
-.nx-chat-input:focus { border-color: var(--color-primary); }
-.nx-chat-input::placeholder { color: var(--color-text-faint); }
-.nx-chat-send {
-  width: 40px;height: 40px;border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary), color-mix(in oklab, var(--color-primary) 65%, var(--color-accent)));
-  border: none;cursor: pointer;display: flex;align-items: center;justify-content: center;color: white;
-  transition: opacity 0.2s, transform 0.15s;flex-shrink: 0;
-}
-.nx-chat-send:hover { transform: scale(1.05); }
-.nx-chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.nx-chat-send svg { width: 18px; height: 18px; }
-.nx-powered { text-align: center;font-size: 11px;color: var(--color-text-faint);padding: 6px;background: var(--color-surface);border-top: 1px solid var(--color-divider);}
-.nx-powered a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
-
-/* Footer */
 .site-footer{background:var(--color-surface);border-top:1px solid var(--color-border);margin-top:var(--space-20);}
 .footer-main{padding:var(--space-16) 0 var(--space-10);}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--space-10);}
@@ -507,7 +440,6 @@ h1,h2,h3,p{margin:0;}
   .form-card{padding:var(--space-6);}
   .login-card{padding:var(--space-8) var(--space-6);}
   .cta-card{padding:var(--space-10) var(--space-6);}
-  #nx-chatbot-window{width:calc(100vw - 32px);right:16px;left:16px;height:70vh;}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
@@ -676,32 +608,6 @@ function handleLogin(e) {
   </div>
 </footer>
 
-
-<button id="nx-chatbot-bubble" aria-label="Open chat">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-  </svg>
-</button>
-
-<div id="nx-chatbot-window">
-  <div class="nx-chat-header">
-    <div class="nx-chat-header-title">
-      <span class="nx-chat-header-status"></span>
-      Nexify AI Assistant
-    </div>
-    <button class="nx-chat-close" id="nx-chat-close" aria-label="Close chat">&times;</button>
-  </div>
-  <div class="nx-chat-messages" id="nx-chat-messages"></div>
-  <div class="nx-chat-input-area">
-    <input type="text" class="nx-chat-input" id="nx-chat-input" placeholder="Type your message..." autocomplete="off" />
-    <button class="nx-chat-send" id="nx-chat-send" aria-label="Send">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-      </svg>
-    </button>
-  </div>
-  <div class="nx-powered">Powered by <a href="https://nexifyai.org" target="_blank">Nexify AI</a></div>
-</div>
 
 <script>
 /* ===== i18n data ===== */
@@ -1210,211 +1116,6 @@ const copy = {
 })();
 
 /* ===== Chatbot Widget ===== */
-(function(){
-  'use strict';
-  const API_URL = atob('aHR0cHM6Ly9jaGF0Lm5leGlmeWFpLm9yZw==');
-  const bubble = document.getElementById('nx-chatbot-bubble');
-  const windowEl = document.getElementById('nx-chatbot-window');
-  const closeBtn = document.getElementById('nx-chat-close');
-  const messagesEl = document.getElementById('nx-chat-messages');
-  const inputEl = document.getElementById('nx-chat-input');
-  const sendBtn = document.getElementById('nx-chat-send');
-
-  let isOpen = false;
-  let messages = [];
-  let collectedLead = { industry: null, companyName: null, contactName: null, email: null, needsDescription: null };
-  let leadSubmitted = false;
-  let currentStep = 0;
-  let userLang = 'en';
-  let langLocked = false;
-  let messageCount = 0;
-
-  const greetings = {
-    en: "Hi there! \ud83d\udc4b I'm the Nexify AI assistant. I can help you learn about our smart customer service solutions and even book a demo for you. What brings you in today?",
-    nl: "Hallo! \ud83d\udc4b Ik ben de Nexify AI-assistent. Ik kan je helpen met alles over onze slimme klantenservice oplossingen en zelfs een demo inplannen. Waar kan ik je mee helpen?",
-    fr: "Bonjour ! \ud83d\udc4b Je suis l'assistant Nexify AI. Je peux vous renseigner sur nos solutions de service client intelligent et m\u00eame r\u00e9server une d\u00e9mo. Comment puis-je vous aider ?"
-  };
-
-  function detectLanguage() {
-    const lang = (navigator.language || 'en').toLowerCase();
-    if (lang.startsWith('nl')) return 'nl';
-    if (lang.startsWith('fr')) return 'fr';
-    return 'en';
-  }
-
-  function getGreeting() { return greetings[detectLanguage()] || greetings.en; }
-
-  function toggleChat() {
-    isOpen = !isOpen;
-    windowEl.classList.toggle('open', isOpen);
-    if (isOpen) { inputEl.focus(); if (messages.length === 0) addBotMessage(getGreeting()); }
-  }
-
-  function addUserMessage(text) {
-    const msg = document.createElement('div'); msg.className = 'nx-msg user'; msg.textContent = text;
-    messagesEl.appendChild(msg); messages.push({ role: 'user', content: text }); scrollToBottom();
-  }
-  function addBotMessage(text) {
-    const msg = document.createElement('div'); msg.className = 'nx-msg bot'; msg.textContent = text;
-    messagesEl.appendChild(msg); messages.push({ role: 'assistant', content: text }); scrollToBottom();
-  }
-  function showTyping() {
-    const t = document.createElement('div'); t.className = 'nx-typing'; t.id = 'nx-typing-indicator';
-    t.innerHTML = '<span></span><span></span><span></span>'; messagesEl.appendChild(t); scrollToBottom();
-  }
-  function hideTyping() { const t = document.getElementById('nx-typing-indicator'); if(t) t.remove(); }
-  function scrollToBottom() { messagesEl.scrollTop = messagesEl.scrollHeight; }
-
-  const leadQuestions = [
-    { key:'industry', q:{en:"Great! To better help you, could you tell me what industry your business is in?",nl:"Perfect! Om je beter te kunnen helpen, in welke branche zit je bedrijf?",fr:"Parfait ! Pour mieux vous aider, pourriez-vous me dire dans quel secteur vous exercez ?"}},
-    { key:'companyName', q:{en:"Got it. And what's your company name?",nl:"Begrepen. En wat is de naam van je bedrijf?",fr:"Compris. Et quel est le nom de votre entreprise ?"}},
-    { key:'contactName', q:{en:"Thanks! And your name, please?",nl:"Dankjewel! En jouw naam?",fr:"Merci ! Et votre nom, s'il vous pla\u00eet ?"}},
-    { key:'email', q:{en:"Perfect. What's your email address so we can send you the info and follow up?",nl:"Perfect. Wat is je e-mailadres? Dan sturen we de informatie direct op.",fr:"Parfait. Quelle est votre adresse e-mail pour que nous puissions vous envoyer les informations ?"}},
-    { key:'needsDescription', q:{en:"Last question \u2014 briefly, what are your main needs or challenges with customer service?",nl:"Laatste vraag \u2014 kort gezegd, wat zijn je belangrijkste behoeften of uitdagingen op het gebied van klantenservice?",fr:"Derni\u00e8re question \u2014 bri\u00e8vement, quels sont vos principaux besoins ou d\u00e9fis en mati\u00e8re de service client ?"}}
-  ];
-
-  const thankYouMessages = {
-    en: "Thank you so much for your interest! \ud83c\udf89 I've noted everything down. Our team will review your request and get back to you within 24 hours. In the meantime, feel free to ask me anything about Nexify AI!",
-    nl: "Bedankt voor je interesse! \ud83c\udf89 Ik heb alles genoteerd. Ons team bekijkt je aanvraag en neemt binnen 24 uur contact met je op. Ondertussen kun me altijd alles vragen over Nexify AI!",
-    fr: "Merci beaucoup pour votre int\u00e9r\u00eat ! \ud83c\udf89 J'ai tout not\u00e9. Notre \u00e9quipe examinera votre demande et vous recontactera sous 24 heures. En attendant, n'h\u00e9sitez pas \u00e0 me poser des questions sur Nexify AI !"
-  };
-
-  function detectUserLang(text) {
-    if (langLocked) return userLang;
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text.trim())) return userLang;
-    const dutch = /(hallo|goedendag|dank|je|wij|ons|bedrijf|klant|reservering|tafel|alstublieft|sorry|nee|ja|graag)/i.test(text);
-    const french = /(bonjour|merci|vous|nous|entreprise|client|r\u00e9servation|table|bonsoir|s'il vous pla\u00eet|oui|non|d'accord|bon)/i.test(text);
-    let detected = 'en';
-    if (dutch) detected = 'nl';
-    else if (french) detected = 'fr';
-    if (detected !== 'en') userLang = detected;
-    messageCount++;
-    if (messageCount >= 2) langLocked = true;
-    return userLang;
-  }
-
-  function getLocalResponse(userMessage) {
-    userLang = detectUserLang(userMessage);
-    if (currentStep === 0) {
-      return { reply: leadQuestions[0].q[userLang], shouldAdvance: true };
-    }
-    const currentQ = leadQuestions[currentStep - 1];
-    if (currentQ && collectedLead[currentQ.key] === null) {
-      collectedLead[currentQ.key] = userMessage.trim();
-    }
-    if (currentStep < leadQuestions.length) {
-      return { reply: leadQuestions[currentStep].q[userLang], shouldAdvance: true };
-    }
-    leadSubmitted = true;
-    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
-    leads.push({ ...collectedLead, timestamp: new Date().toISOString(), source: window.location.href });
-    localStorage.setItem('nexify_leads', JSON.stringify(leads));
-    return { reply: thankYouMessages[userLang], shouldAdvance: false, complete: true };
-  }
-
-  async function callAI(userMessage) {
-    if (!API_URL) {
-      await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
-      const result = getLocalResponse(userMessage);
-      if (result.shouldAdvance) currentStep++;
-      return result.reply;
-    }
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages, collectedLead, brandName: 'Nexify AI' }),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (!response.ok) throw new Error('API call failed');
-      const data = await response.json();
-      if (data.collectedLead) collectedLead = { ...collectedLead, ...data.collectedLead };
-      if (data.leadComplete && !leadSubmitted) { leadSubmitted = true; submitLead(data.collectedLead); }
-      return data.reply;
-    } catch (error) {
-      clearTimeout(timeoutId);
-      const result = getLocalResponse(userMessage);
-      if (result.shouldAdvance) currentStep++;
-      return result.reply;
-    }
-  }
-
-  function submitLead(leadData) {
-    const leads = JSON.parse(localStorage.getItem('nexify_leads') || '[]');
-    leads.push({ ...leadData, timestamp: new Date().toISOString(), source: window.location.href, userAgent: navigator.userAgent });
-    localStorage.setItem('nexify_leads', JSON.stringify(leads));
-  }
-
-  async function sendMessage() {
-    const text = inputEl.value.trim(); if (!text) return;
-    inputEl.value = ''; sendBtn.disabled = true;
-    addUserMessage(text); showTyping();
-    try { const reply = await callAI(text); hideTyping(); addBotMessage(reply); }
-    catch(e) { hideTyping(); addBotMessage('Sorry, something went wrong. Please try again.'); }
-    finally { sendBtn.disabled = false; inputEl.focus(); }
-  }
-
-  async function sendUserMessage(text) {
-    if (!text) return;
-    sendBtn.disabled = true; addUserMessage(text); showTyping();
-    const reply = await callAI(text); hideTyping(); addBotMessage(reply);
-    sendBtn.disabled = false; if (isOpen) inputEl.focus();
-  }
-
-  async function startDemoFlow() {
-    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
-    const lang = detectLanguage();
-    const demoMessages = {
-      en: "I'd like to book a demo",
-      nl: "Ik wil een demo boeken",
-      fr: "Je voudrais r\u00e9server une d\u00e9mo"
-    };
-    if (messages.length <= 1) {
-      if (messages.length === 1 && messages[0].role === 'assistant') { messagesEl.removeChild(messagesEl.lastElementChild); messages.pop(); }
-      sendUserMessage(demoMessages[lang] || demoMessages.en);
-    } else { inputEl.focus(); }
-  }
-
-  async function startPilotFlow() {
-    if (!isOpen) { toggleChat(); await new Promise(r => setTimeout(r, 100)); }
-    const lang = detectLanguage();
-    const pilotMessages = {
-      en: "I'm interested in joining the pilot program",
-      nl: "Ik ben ge\u00efnteresseerd in het pilotprogramma",
-      fr: "Je suis int\u00e9ress\u00e9 par le programme pilote"
-    };
-    collectedLead.pilotApplication = true;
-    if (messages.length <= 1) {
-      if (messages.length === 1 && messages[0].role === 'assistant') { messagesEl.removeChild(messagesEl.lastElementChild); messages.pop(); }
-      sendUserMessage(pilotMessages[lang] || pilotMessages.en);
-    } else { inputEl.focus(); }
-  }
-
-  bubble.addEventListener('click', toggleChat);
-  closeBtn.addEventListener('click', toggleChat);
-  sendBtn.addEventListener('click', sendMessage);
-  inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
-
-  document.querySelectorAll('[data-start-pilot]').forEach(btn => {
-    btn.addEventListener('click', (e) => { e.preventDefault(); startPilotFlow(); });
-  });
-  document.querySelectorAll('[data-start-demo]').forEach(btn => {
-    btn.addEventListener('click', (e) => { e.preventDefault(); startDemoFlow(); });
-  });
-
-  window.NexifyChatbot = {
-    open: () => { if (!isOpen) toggleChat(); },
-    close: () => { if (isOpen) toggleChat(); },
-    startDemo: startDemoFlow,
-    startPilot: startPilotFlow,
-    sendMessage: sendUserMessage,
-    getLead: () => collectedLead,
-    getMessages: () => messages
-  };
-})();
 
 
 /* Mobile dropdown toggle */
@@ -1456,5 +1157,7 @@ document.querySelectorAll('.nav-item > .nav-link').forEach(btn => {
   } catch(e) {}
 })();
 </script>
+<!-- NexifyAI live assistant (SaaS widget, nexifyai-demo tenant; same chat-bubble icon, site green) -->
+<script src="https://nexifyai-agent-production.up.railway.app/widget/widget.js" data-tenant="nexifyai-demo" data-api-base="https://nexifyai-agent-production.up.railway.app" data-mode="live" async></script>
 </body>
 </html>

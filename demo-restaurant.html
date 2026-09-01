@@ -380,10 +380,6 @@
   }
 
   /* Chatbot custom style overrides for restaurant */
-  #nexify-chatbot-bubble {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-gold)) !important;
-    box-shadow: 0 4px 20px rgba(196, 30, 58, 0.4) !important;
-  }
 </style>
 </head>
 <body>
@@ -400,7 +396,7 @@
     <li><a href="#info">营业时间</a></li>
     <li><a href="#contact">联系方式</a></li>
   </ul>
-  <button class="nav-reserve-btn" onclick="document.getElementById('nexify-chatbot-bubble').click()">立即订座</button>
+  <button class="nav-reserve-btn" onclick="nexifyOpenWidget()">立即订座</button>
 </nav>
 
 <!-- Hero Section -->
@@ -409,7 +405,7 @@
   <p class="subtitle english">GOLDEN DRAGON</p>
   <p class="tagline">正宗粤菜 · 匠心传承 · 自1998年</p>
   <div class="hero-buttons">
-    <button class="btn-primary" onclick="document.getElementById('nexify-chatbot-bubble').click()">🥢 在线订座</button>
+    <button class="btn-primary" onclick="nexifyOpenWidget()">🥢 在线订座</button>
     <a href="#signature" class="btn-outline">查看菜单</a>
   </div>
   <div class="scroll-hint">向下滚动 ↓</div>
@@ -537,33 +533,12 @@
 <!-- Chatbot Widget - Restaurant Persona -->
 <script>
   // Restaurant config
-  const restaurantConfig = {
-    restaurantName: "金龙轩 Golden Dragon",
-    cuisineType: "正宗粤菜 Cantonese Cuisine",
-    address: "Kruisplein 123, 3012 CC Rotterdam",
-    phone: "+31 10 123 4567",
-    openingHours: "周一至周日 11:30 - 22:00（最后点单 21:30）。午市点心：11:30 - 16:00",
-    priceRange: "人均 €25-40",
-    deliveryPlatforms: "Uber Eats、Thuisbezorgd、以及微信小程序",
-    specialties: "北京烤鸭（需提前24小时预订）、港式点心、海鲜火锅、宫保鸡丁、麻婆豆腐、糖醋排骨、各类海鲜",
-    languages: "中文（普通话/粤语）、英文、荷兰文",
-    parkingInfo: "Kruisplein 停车场，步行2分钟。消费满€50可报销1小时停车费。",
-    privateRooms: "设有3个包厢，可容纳6-20人，有最低消费要求，欢迎咨询预订",
-    additionalInfo: "支持微信支付、支付宝、银行卡及现金。免费WiFi提供。承接宴席、团建、年夜饭等团体活动。"
-  };
-
-  // Load chatbot dynamically
-  (function() {
-    const script = document.createElement('script');
-    script.src = 'nexify-chatbot.js';
-    script.setAttribute('data-api-url', 'https://chat.nexifyai.org');
-    script.setAttribute('data-brand', '金龙轩');
-    script.setAttribute('data-persona', 'restaurant');
-    script.setAttribute('data-persona-config', JSON.stringify(restaurantConfig));
-    script.setAttribute('data-greeting', '您好！欢迎光临金龙轩 🐲 我是您的AI客服小金龙，有什么可以帮您？订座、菜单咨询、外卖信息都可以问我~');
-    document.head.appendChild(script);
-  })();
 </script>
 
+<script>
+function nexifyOpenWidget(){var h=document.getElementById('nexify-widget-host');if(h&&h.shadowRoot){var l=h.shadowRoot.querySelector('.nex-launcher');if(l)l.click();}}
+</script>
+<!-- NexifyAI live assistant (SaaS widget, nexifyai-demo tenant) -->
+<script src="https://nexifyai-agent-production.up.railway.app/widget/widget.js" data-tenant="nexifyai-demo" data-api-base="https://nexifyai-agent-production.up.railway.app" data-mode="live" async></script>
 </body>
 </html>
