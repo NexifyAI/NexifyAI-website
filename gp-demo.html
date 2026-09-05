@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Huisartsen Delfgauw — Digitale assistent (demo)</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    /*
+      GP demo page v2 (2026-09-02) — sales-room experience, not a QA checklist.
+      The page mocks the practice's own website shell so the client sees the
+      assistant in-situ on "their" site. Host-page styles only; the widget is
+      Shadow-DOM isolated from all of this.
+      Hosted copy for nexifyai.org/gp-demo.html: loads the production widget
+      bundle so updates roll out automatically. Deliberately does NOT embed the
+      marketing site's own sales bot — this page should read as the practice's
+      site, not ours. noindex: this is a client-facing demo, not a public page.
+    */
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; background: #f4f8fa; color: #1f2937; line-height: 1.6;
+    }
+    .nl-block { display: block; }
+    .en { display: none; }
+    body.show-en .nl-block { display: none; }
+    body.show-en .en { display: block; }
+
+    /* ---- mock practice-site header ---- */
+    .site-header {
+      background: #0e7490; color: #fff; padding: 14px 24px;
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    }
+    .site-header .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
+    .site-header nav { margin-left: auto; display: flex; gap: 16px; flex-wrap: wrap; }
+    .site-header nav a { color: #d9f1f7; text-decoration: none; font-size: 14px; }
+    .site-header nav a:hover { color: #fff; }
+    .langbar { display: flex; gap: 6px; }
+    .langbar button {
+      font-size: 12px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 6px; background: transparent; color: #fff; cursor: pointer;
+    }
+    .langbar button.cur { background: #fff; color: #0e7490; border-color: #fff; }
+
+    .hero {
+      max-width: 860px; margin: 0 auto; padding: 40px 24px 10px;
+    }
+    .hero h1 { font-size: 26px; margin: 0 0 8px; color: #0e7490; }
+    .hero p.sub { font-size: 15px; color: #4b5563; margin: 0 0 6px; }
+    .hero .badge {
+      display: inline-block; background: #e6f3f6; color: #0e7490; font-size: 11px;
+      padding: 2px 9px; border-radius: 999px; font-weight: 600; margin-bottom: 10px;
+    }
+
+    /* ---- three-pillar strip ---- */
+    .pillars {
+      max-width: 860px; margin: 18px auto 0; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;
+    }
+    .pillar {
+      background: #fff; border: 1px solid #dbe4ea; border-radius: 10px; padding: 14px 16px;
+    }
+    .pillar .ico { font-size: 20px; }
+    .pillar h3 { margin: 6px 0 4px; font-size: 14.5px; color: #0e7490; }
+    .pillar p { margin: 0; font-size: 13px; color: #4b5563; }
+
+    /* ---- try-it cards ---- */
+    .try {
+      max-width: 860px; margin: 22px auto 0; padding: 0 24px;
+    }
+    .try h2 { font-size: 17px; color: #0e7490; margin: 0 0 10px; }
+    .card {
+      background: #fff; border: 1px solid #dbe4ea; border-left: 4px solid #0e7490;
+      border-radius: 10px; padding: 12px 16px; margin: 10px 0;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .card .txt { flex: 1; min-width: 200px; }
+    .card .q { font-size: 14.5px; font-weight: 600; margin: 0; }
+    .card .why { font-size: 12.5px; color: #6b7280; margin: 2px 0 0; }
+    .card button {
+      font-size: 12.5px; padding: 6px 12px; border: 1px solid #0e7490; color: #0e7490;
+      background: #fff; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    }
+    .card button:hover { background: #0e7490; color: #fff; }
+    .card.safety { border-left-color: #dc2626; }
+    .card.safety button { border-color: #b91c1c; color: #b91c1c; }
+    .card.safety button:hover { background: #b91c1c; color: #fff; }
+
+    /* ---- emergency block ---- */
+    .note {
+      background: #fff; border: 1px solid #dbe4ea; border-radius: 10px;
+      padding: 14px 18px; margin: 14px 0; font-size: 14px;
+    }
+    .spoedbox {
+      max-width: 860px; margin: 22px auto 0; padding: 0 24px;
+    }
+    .spoed {
+      border-left: 4px solid #dc2626; background: #fef2f2; border-color: #fecaca;
+    }
+    .spoed strong { color: #b91c1c; }
+
+    /* ---- collapsible tech notes ---- */
+    .tech {
+      max-width: 860px; margin: 26px auto 60px; padding: 0 24px;
+    }
+    .tech details { font-size: 13.5px; color: #4b5563; }
+    .tech summary { cursor: pointer; color: #0e7490; font-weight: 600; }
+    .tech ul { margin: 8px 0; padding-left: 20px; }
+    .tech li { margin: 4px 0; }
+    .tech .modes a {
+      font-size: 12.5px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 6px;
+      text-decoration: none; color: #0e7490; background: #fff; margin-right: 6px;
+    }
+    .tech .modes a.cur { background: #0e7490; color: #fff; border-color: #0e7490; }
+    .tech code { background: #eef2f5; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+  </style>
+</head>
+<body>
+  <!-- ==== mock practice-website shell ==== -->
+  <header class="site-header">
+    <span class="brand">Huisartsen Delfgauw</span>
+    <nav>
+      <a href="#">Home</a><a href="#">Team</a><a href="#">Afspraak</a><a href="#">Contact</a>
+    </nav>
+    <div class="langbar">
+      <button id="btn-nl" class="cur" type="button">NL</button>
+      <button id="btn-en" type="button">EN</button>
+    </div>
+  </header>
+
+  <!-- ============ NEDERLANDS ============ -->
+  <div class="nl-block">
+    <section class="hero">
+      <span class="badge">DEMO · digitale assistent</span>
+      <h1>Welkom bij Huisartsen Delfgauw</h1>
+      <p class="sub">Laan der Zeven Linden 167, 2645 HV Delfgauw — uw huisartsenpraktijk in Delfgauw.</p>
+      <p class="sub">Heeft u een vraag over de praktijk? Klik rechtsonder op de bel en <strong>vraag het gewoon</strong> — de assistent antwoordt direct, dag en nacht.</p>
+    </section>
+
+    <section class="pillars">
+      <div class="pillar"><div class="ico">💬</div><h3>Direct antwoord, 24/7</h3><p>Openingstijden, afspraken, herhaalrecepten — de meestgestelde vragen worden beantwoord zonder dat iemand hoeft te bellen.</p></div>
+      <div class="pillar"><div class="ico">✅</div><h3>Alleen antwoorden die ú goedkeurt</h3><p>De assistent antwoordt uitsluitend met inhoud uit de kennisbank van de praktijk — geen verzonnen antwoorden, geen medisch advies.</p></div>
+      <div class="pillar"><div class="ico">🛡️</div><h3>Veilig &amp; EU-conform</h3><p>AVG/GDPR-conform, EU-verwerking, AI-openbaarheid en een ingebouwde spoedherkenning die altijd verwijst naar 112, optie 1 of de Spoedpost.</p></div>
+      <div class="pillar"><div class="ico">👤</div><h3>Toch liever een mens?</h3><p>In het venster kunt u een terugbelverzoek achterlaten: de praktijk ontvangt uw vraag met een korte samenvatting van dit gesprek en belt u terug.</p></div>
+    </section>
+
+    <section class="try">
+      <h2>Probeer het zelf</h2>
+      <div class="card">
+        <div class="txt"><p class="q">"Wat zijn jullie openingstijden?"</p><p class="why">Gemak: veelgestelde vraag direct beantwoord, met de echte praktijkgegevens.</p></div>
+        <button type="button" data-copy="Wat zijn jullie openingstijden?">Kopieer &amp; vraag →</button>
+      </div>
+      <div class="card">
+        <div class="txt"><p class="q">"Hoe maak ik een afspraak?"</p><p class="why">Kanaalkeuze: verwijst naar de Uw Zorg Online app én het terugbelsysteem — met directe knop.</p></div>
+        <button type="button" data-copy="Hoe maak ik een afspraak?">Kopieer &amp; vraag →</button>
+      </div>
+      <div class="card safety">
+        <div class="txt"><p class="q">"Ik heb plotseling pijn op mijn borst"</p><p class="why">Veiligheid: bij spoedwoorden stopt de assistent met informatie en verwijst direct door — 112, optie 1, Spoedpost Delft.</p></div>
+        <button type="button" data-copy="Ik heb plotseling pijn op mijn borst">Kopieer &amp; vraag →</button>
+      </div>
+      <p style="font-size:12.5px;color:#6b7280;">Tip: de assistent antwoordt ook in het Engels — en de demoversie reageert op uw eigen vragen over afspraken, recepten, inschrijven, uitslagen en spoed.</p>
+    </section>
+
+    <section class="spoedbox">
+      <div class="note spoed">
+        <strong>Belangrijk — spoed.</strong> Deze assistent is een informatiehulp en geeft
+        <strong>geen medisch advies</strong>. Bij een spoedgeval: bel <strong>112</strong>.
+        Overdag kunt u de spoedlijn van de praktijk kiezen (optie 1). Buiten kantoortijden:
+        Spoedpost Delft, <strong>(015) 251 19 30</strong>.
+      </div>
+    </section>
+
+    <section class="tech">
+      <details>
+        <summary>Voor technici — over deze demo</summary>
+        <div class="note" style="margin-top:10px;">
+          In <strong>mock</strong>-modus (standaard) draait de widget op lokale scriptantwoorden
+          met trefwoordherkenning — er is geen backend nodig en er verlaat geen enkele gegevens
+          uw browser. In <strong>live</strong>-modus antwoordt de assistent met de echte
+          kennisbank (beschikbaar na livegang: tenant-configuratie, domeinverificatie en
+          kennisopname).
+          <div class="modes" style="margin-top:8px;">
+            <a href="?mode=mock" class="cur" id="m-mock">mock (script, geen backend)</a>
+            <a href="?mode=live" id="m-live">live (echte kennisbank — volgt na opstart)</a>
+          </div>
+          <ul>
+            <li>Klik op de bel (rechtsonder) om het gespreksvenster te openen.</li>
+            <li>De AI-aanduiding staat altijd bovenin het venster en kan niet worden gesloten.</li>
+            <li>Schakel de taal (NL/EN) — de teksten wisselen direct.</li>
+            <li>Het gesprek onthoudt uw sessie (meerdere vragen na elkaar werkt).</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <!-- ============ ENGLISH ============ -->
+  <div class="en">
+    <section class="hero">
+      <span class="badge">DEMO · digital assistant</span>
+      <h1>Welcome to Huisartsen Delfgauw</h1>
+      <p class="sub">Laan der Zeven Linden 167, 2645 HV Delfgauw — your GP practice in Delfgauw.</p>
+      <p class="sub">Have a question about the practice? Click the bubble at the bottom-right and <strong>just ask</strong> — the assistant answers instantly, day and night.</p>
+    </section>
+
+    <section class="pillars">
+      <div class="pillar"><div class="ico">💬</div><h3>Instant answers, 24/7</h3><p>Opening hours, appointments, repeat prescriptions — the most common questions answered without anyone having to call.</p></div>
+      <div class="pillar"><div class="ico">✅</div><h3>Only answers you approve</h3><p>The assistant answers exclusively from the practice's own knowledge base — no invented answers, no medical advice.</p></div>
+      <div class="pillar"><div class="ico">🛡️</div><h3>Safe &amp; EU-compliant</h3><p>GDPR-compliant, EU data processing, AI disclosure, and built-in emergency recognition that always refers to 112, option 1 or the out-of-hours post.</p></div>
+      <div class="pillar"><div class="ico">👤</div><h3>Prefer a human?</h3><p>Leave a call-back request in the window: the practice receives your question with a short summary of this conversation and calls you back.</p></div>
+    </section>
+
+    <section class="try">
+      <h2>Try it yourself</h2>
+      <div class="card">
+        <div class="txt"><p class="q">"What are your opening hours?"</p><p class="why">Convenience: a top question answered instantly, with the real practice details.</p></div>
+        <button type="button" data-copy="What are your opening hours?">Copy &amp; ask →</button>
+      </div>
+      <div class="card">
+        <div class="txt"><p class="q">"How do I make an appointment?"</p><p class="why">Channel guidance: refers to the Uw Zorg Online app and the call-back system — with a direct button.</p></div>
+        <button type="button" data-copy="How do I make an appointment?">Copy &amp; ask →</button>
+      </div>
+      <div class="card safety">
+        <div class="txt"><p class="q">"I have sudden chest pain"</p><p class="why">Safety: on emergency wording the assistant stops informing and refers immediately — 112, option 1, Spoedpost Delft.</p></div>
+        <button type="button" data-copy="I have sudden chest pain">Copy &amp; ask →</button>
+      </div>
+      <p style="font-size:12.5px;color:#6b7280;">Tip: the assistant also answers in Dutch — and the demo responds to your own questions about appointments, prescriptions, registration, results and emergencies.</p>
+    </section>
+
+    <section class="spoedbox">
+      <div class="note spoed">
+        <strong>Important — emergencies.</strong> This assistant provides practice information
+        and does <strong>not give medical advice</strong>. In an emergency call <strong>112</strong>.
+        During office hours choose the practice emergency line (option 1). Out of hours:
+        Spoedpost Delft, <strong>(015) 251 19 30</strong>.
+      </div>
+    </section>
+
+    <section class="tech">
+      <details>
+        <summary>For technicians — about this demo</summary>
+        <div class="note" style="margin-top:10px;">
+          In <strong>mock</strong> mode (default) the widget runs on local scripted replies with
+          keyword recognition — no backend needed, no data leaves your browser. In
+          <strong>live</strong> mode the assistant answers from the real knowledge base
+          (available after go-live: tenant configuration, domain verification and knowledge
+          ingestion).
+          <div class="modes" style="margin-top:8px;">
+            <a href="?mode=mock" class="cur">mock (scripted, no backend)</a>
+            <a href="?mode=live">live (real knowledge base — available after go-live)</a>
+          </div>
+          <ul>
+            <li>Click the bubble (bottom-right) to open the chat panel.</li>
+            <li>The AI disclosure bar is always visible at the top and cannot be closed.</li>
+            <li>Switch the language (NL/EN) — chrome text updates instantly.</li>
+            <li>The conversation keeps its session across turns (multi-turn works).</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <!--
+    HOSTED COPY on nexifyai.org — loads the production widget bundle so GP mock
+    profile updates roll out automatically. Mock mode: no backend calls, no data
+    leaves the visitor's browser.
+
+    This page deliberately does NOT embed the marketing site's own sales bot
+    (every other page carries the nexifyai-demo widget bottom-right): this page
+    must read as the practice's own site during a client demo.
+
+    Live mode (?mode=live) additionally needs: tenant `huisartsen-delfgauw`
+    seeded, nexifyai.org whitelisted in its allowed_domains, and the knowledge
+    base ingested — before flipping the default to live.
+  -->
+  <script src="https://nexifyai-agent-production.up.railway.app/widget/widget.js"
+          data-tenant="huisartsen-delfgauw"
+          data-api-base="https://nexifyai-agent-production.up.railway.app"
+          data-mode="mock" async></script>
+
+  <script>
+    // Display-only helpers: NL/EN page toggle, copy-to-clipboard cards, mode link state.
+    (function () {
+      var btnNl = document.getElementById('btn-nl');
+      var btnEn = document.getElementById('btn-en');
+      btnNl.addEventListener('click', function () {
+        document.body.classList.remove('show-en');
+        btnNl.classList.add('cur'); btnEn.classList.remove('cur');
+      });
+      btnEn.addEventListener('click', function () {
+        document.body.classList.add('show-en');
+        btnEn.classList.add('cur'); btnNl.classList.remove('cur');
+      });
+
+      // Copy & ask: put the example question on the visitor's clipboard so they
+      // can paste it into the chat. (We deliberately do NOT auto-send into the
+      // widget — the visitor should see the answer appear as *their* question.)
+      document.querySelectorAll('[data-copy]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var q = b.getAttribute('data-copy');
+          var done = function () { b.textContent = '✓ ' + (document.body.classList.contains('show-en') ? 'Copied' : 'Gekopieerd'); setTimeout(function () { b.textContent = b.getAttribute('data-label'); }, 1600); };
+          b.setAttribute('data-label', b.textContent.replace(/^✓\s*/, ''));
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(q).then(done, done);
+          } else { done(); }
+        });
+      });
+
+      try {
+        var mode = new URL(location.href).searchParams.get('mode') || 'mock';
+        document.querySelectorAll('.tech .modes a').forEach(function (a) {
+          var m = a.getAttribute('href').indexOf('live') !== -1 ? 'live' : 'mock';
+          a.classList.toggle('cur', m === mode);
+        });
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+</body>
+</html>
