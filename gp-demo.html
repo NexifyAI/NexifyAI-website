@@ -7,14 +7,13 @@
   <meta name="robots" content="noindex" />
   <style>
     /*
-      GP demo page v2 (2026-09-02) — sales-room experience, not a QA checklist.
-      The page mocks the practice's own website shell so the client sees the
-      assistant in-situ on "their" site. Host-page styles only; the widget is
-      Shadow-DOM isolated from all of this.
-      Hosted copy for nexifyai.org/gp-demo.html: loads the production widget
-      bundle so updates roll out automatically. Deliberately does NOT embed the
-      marketing site's own sales bot — this page should read as the practice's
-      site, not ours. noindex: this is a client-facing demo, not a public page.
+      GP demo page v3 (2026-09-09) — conversion-first demo landing page.
+      Two goals only: (1) get the visitor to actually test the widget,
+      (2) invite high-intent visitors to e-mail their own practice materials
+      for a dedicated test. No forms, no info dumps, no dead nav links.
+      Live mode: answers from the real GP knowledge base (tenant
+      huisartsen-delfgauw, nexifyai.org whitelisted). Host-page styles only;
+      the widget is Shadow-DOM isolated from all of this.
     */
     * { box-sizing: border-box; }
     body {
@@ -26,102 +25,124 @@
     body.show-en .nl-block { display: none; }
     body.show-en .en { display: block; }
 
-    /* ---- mock practice-site header ---- */
+    /* ---- minimal header: identity + language, no exits ---- */
     .site-header {
-      background: #0e7490; color: #fff; padding: 14px 24px;
-      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+      background: #0e7490; color: #fff; padding: 12px 24px;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     }
-    .site-header .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
-    .site-header nav { margin-left: auto; display: flex; gap: 16px; flex-wrap: wrap; }
-    .site-header nav a { color: #d9f1f7; text-decoration: none; font-size: 14px; }
-    .site-header nav a:hover { color: #fff; }
-    .langbar { display: flex; gap: 6px; }
+    .site-header .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.2px; }
+    .site-header .by { font-size: 12px; color: #cdeaf1; }
+    .langbar { margin-left: auto; display: flex; gap: 6px; }
     .langbar button {
       font-size: 12px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.5);
       border-radius: 6px; background: transparent; color: #fff; cursor: pointer;
     }
     .langbar button.cur { background: #fff; color: #0e7490; border-color: #fff; }
 
-    .hero {
-      max-width: 860px; margin: 0 auto; padding: 40px 24px 10px;
-    }
-    .hero h1 { font-size: 26px; margin: 0 0 8px; color: #0e7490; }
-    .hero p.sub { font-size: 15px; color: #4b5563; margin: 0 0 6px; }
+    /* ---- hero: what / bounds / two CTAs, all above the fold ---- */
+    .hero { max-width: 760px; margin: 0 auto; padding: 44px 24px 6px; }
     .hero .badge {
-      display: inline-block; background: #e6f3f6; color: #0e7490; font-size: 11px;
-      padding: 2px 9px; border-radius: 999px; font-weight: 600; margin-bottom: 10px;
+      display: inline-block; background: #e6f3f6; color: #0e7490; font-size: 11.5px;
+      padding: 3px 10px; border-radius: 999px; font-weight: 600; margin-bottom: 12px;
     }
+    .hero h1 { font-size: 28px; margin: 0 0 10px; color: #0e7490; line-height: 1.25; }
+    .hero p.sub { font-size: 15px; color: #374151; margin: 0 0 8px; }
+    .hero p.bounds { font-size: 13.5px; color: #6b7280; margin: 6px 0 18px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      display: inline-block; background: #0e7490; color: #fff; border: none;
+      font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 8px;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-primary:hover { background: #0c637c; }
+    .btn-secondary {
+      display: inline-block; background: #fff; color: #0e7490; border: 1px solid #0e7490;
+      font-size: 14px; font-weight: 600; padding: 11px 18px; border-radius: 8px;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-secondary:hover { background: #e6f3f6; }
+    .cta-note { font-size: 12.5px; color: #6b7280; margin: 10px 0 0; }
 
-    /* ---- three-pillar strip ---- */
-    .pillars {
-      max-width: 860px; margin: 18px auto 0; padding: 0 24px;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;
+    /* ---- trust strip: four short signals, right under the CTAs ---- */
+    .trust {
+      max-width: 760px; margin: 18px auto 0; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 8px;
     }
-    .pillar {
-      background: #fff; border: 1px solid #dbe4ea; border-radius: 10px; padding: 14px 16px;
+    .trust .t {
+      background: #fff; border: 1px solid #dbe4ea; border-radius: 8px;
+      padding: 9px 12px; font-size: 12.5px; color: #374151; font-weight: 600;
+      display: flex; align-items: center; gap: 7px;
     }
-    .pillar .ico { font-size: 20px; }
-    .pillar h3 { margin: 6px 0 4px; font-size: 14.5px; color: #0e7490; }
-    .pillar p { margin: 0; font-size: 13px; color: #4b5563; }
+    .trust .t.safety { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
 
-    /* ---- try-it cards ---- */
-    .try {
-      max-width: 860px; margin: 22px auto 0; padding: 0 24px;
-    }
-    .try h2 { font-size: 17px; color: #0e7490; margin: 0 0 10px; }
-    .card {
+    /* ---- try-it: clickable questions, copy + auto-open ---- */
+    .try { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
+    .try h2 { font-size: 17px; color: #0e7490; margin: 0 0 4px; }
+    .try .hint { font-size: 13px; color: #6b7280; margin: 0 0 12px; }
+    .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; }
+    .q {
       background: #fff; border: 1px solid #dbe4ea; border-left: 4px solid #0e7490;
-      border-radius: 10px; padding: 12px 16px; margin: 10px 0;
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left;
+      font: inherit; font-size: 14px; font-weight: 600; color: #1f2937;
+      display: flex; flex-direction: column; gap: 3px;
     }
-    .card .txt { flex: 1; min-width: 200px; }
-    .card .q { font-size: 14.5px; font-weight: 600; margin: 0; }
-    .card .why { font-size: 12.5px; color: #6b7280; margin: 2px 0 0; }
-    .card button {
-      font-size: 12.5px; padding: 6px 12px; border: 1px solid #0e7490; color: #0e7490;
-      background: #fff; border-radius: 999px; cursor: pointer; white-space: nowrap;
-    }
-    .card button:hover { background: #0e7490; color: #fff; }
-    .card.safety { border-left-color: #dc2626; }
-    .card.safety button { border-color: #b91c1c; color: #b91c1c; }
-    .card.safety button:hover { background: #b91c1c; color: #fff; }
+    .q:hover { border-color: #0e7490; background: #f0f8fa; }
+    .q .why { font-size: 12px; font-weight: 400; color: #6b7280; }
+    .q.safety { border-left-color: #dc2626; }
+    .q.safety:hover { border-color: #b91c1c; background: #fef5f5; }
+    .q.safety .why { color: #9f1239; }
+    .try .free { font-size: 12.5px; color: #6b7280; margin: 12px 0 0; }
 
-    /* ---- emergency block ---- */
+    /* ---- emergency block (medical seriousness, unchanged in kind) ---- */
     .note {
       background: #fff; border: 1px solid #dbe4ea; border-radius: 10px;
       padding: 14px 18px; margin: 14px 0; font-size: 14px;
     }
-    .spoedbox {
-      max-width: 860px; margin: 22px auto 0; padding: 0 24px;
-    }
-    .spoed {
-      border-left: 4px solid #dc2626; background: #fef2f2; border-color: #fecaca;
-    }
+    .spoedbox { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
+    .spoed { border-left: 4px solid #dc2626; background: #fef2f2; border-color: #fecaca; }
     .spoed strong { color: #b91c1c; }
 
-    /* ---- collapsible tech notes ---- */
-    .tech {
-      max-width: 860px; margin: 26px auto 60px; padding: 0 24px;
+    /* ---- e-mail invitation: the second conversion path ---- */
+    .mailblock { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
+    .mailcard {
+      background: #fff; border: 1px solid #cfe0e7; border-radius: 12px;
+      padding: 22px 24px;
     }
+    .mailcard h2 { font-size: 18px; color: #0e7490; margin: 0 0 8px; }
+    .mailcard p { font-size: 14px; color: #374151; margin: 0 0 8px; }
+    .mailcard p.low { font-size: 12.5px; color: #6b7280; }
+    .steps { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 8px; }
+    .steps li { font-size: 13.5px; color: #374151; display: flex; gap: 10px; }
+    .steps .n {
+      flex: none; width: 22px; height: 22px; border-radius: 50%;
+      background: #e6f3f6; color: #0e7490; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+
+    /* ---- collapsible tech notes + footer ---- */
+    .tech { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
     .tech details { font-size: 13.5px; color: #4b5563; }
     .tech summary { cursor: pointer; color: #0e7490; font-weight: 600; }
     .tech ul { margin: 8px 0; padding-left: 20px; }
     .tech li { margin: 4px 0; }
-    .tech .modes a {
-      font-size: 12.5px; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 6px;
-      text-decoration: none; color: #0e7490; background: #fff; margin-right: 6px;
-    }
-    .tech .modes a.cur { background: #0e7490; color: #fff; border-color: #0e7490; }
     .tech code { background: #eef2f5; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+    footer {
+      max-width: 760px; margin: 20px auto 70px; padding: 0 24px;
+      font-size: 12.5px; color: #6b7280;
+    }
+    footer a { color: #0e7490; }
+
+    @media (max-width: 560px) {
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { text-align: center; }
+    }
   </style>
 </head>
 <body>
-  <!-- ==== mock practice-website shell ==== -->
+  <!-- ==== minimal header: identity + language. No nav = no exits. ==== -->
   <header class="site-header">
     <span class="brand">Huisartsen Delfgauw</span>
-    <nav>
-      <a href="/">Home</a><a href="#">Team</a><a href="#">Afspraak</a><a href="#">Contact</a>
-    </nav>
+    <span class="by">demo · Nexify AI</span>
     <div class="langbar">
       <button id="btn-nl" class="cur" type="button">NL</button>
       <button id="btn-en" type="button">EN</button>
@@ -131,34 +152,41 @@
   <!-- ============ NEDERLANDS ============ -->
   <div class="nl-block">
     <section class="hero">
-      <span class="badge">DEMO · digitale assistent</span>
-      <h1>Welkom bij Huisartsen Delfgauw</h1>
-      <p class="sub">Laan der Zeven Linden 167, 2645 HV Delfgauw — uw huisartsenpraktijk in Delfgauw.</p>
-      <p class="sub">Heeft u een vraag over de praktijk? Klik rechtsonder op de bel en <strong>vraag het gewoon</strong> — de assistent antwoordt direct, dag en nacht.</p>
+      <span class="badge">DEMO · voorbereid met de openbare informatie van uw praktijk</span>
+      <h1>De digitale assistent voor uw huisartsenpraktijk</h1>
+      <p class="sub">Beantwoordt patiëntenvragen over openingstijden, afspraken, herhaalrecepten
+      en uitslagen — <strong>24/7</strong>, met antwoorden die ú hebt goedgekeurd. Minder telefoondruk,
+      en de telefoon blijft vrij voor patiënten die u echt nodig hebben.</p>
+      <p class="bounds">De assistent geeft <strong>geen medisch advies</strong>. Bij spoedwoorden
+      (borstpijn, beroerte-verschijnselen) verwijst hij direct door: 112, spoedlijn optie 1 of Spoedpost Delft.</p>
+      <div class="cta-row">
+        <button class="btn-primary" type="button" data-open-demo>▶ Start de demo — het venster opent rechtsonder</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Praktijktest%20digitale%20assistent%20%E2%80%94%20Huisartsen%20Delfgauw">Testen met úw praktijkgegevens →</a>
+      </div>
+      <p class="cta-note">Deze demo draait op de echte kennisbank: de antwoorden komen uit de openbare
+      informatie van huisartsendelfgauw.uwartsonline.nl. Er worden geen patiëntgegevens opgeslagen.</p>
     </section>
 
-    <section class="pillars">
-      <div class="pillar"><div class="ico">💬</div><h3>Direct antwoord, 24/7</h3><p>Openingstijden, afspraken, herhaalrecepten — de meestgestelde vragen worden beantwoord zonder dat iemand hoeft te bellen.</p></div>
-      <div class="pillar"><div class="ico">✅</div><h3>Alleen antwoorden die ú goedkeurt</h3><p>De assistent antwoordt uitsluitend met inhoud uit de kennisbank van de praktijk — geen verzonnen antwoorden, geen medisch advies.</p></div>
-      <div class="pillar"><div class="ico">🛡️</div><h3>Veilig &amp; EU-conform</h3><p>AVG/GDPR-conform, EU-verwerking, AI-openbaarheid en een ingebouwde spoedherkenning die altijd verwijst naar 112, optie 1 of de Spoedpost.</p></div>
-      <div class="pillar"><div class="ico">👤</div><h3>Toch liever een mens?</h3><p>In het venster kunt u een terugbelverzoek achterlaten: de praktijk ontvangt uw vraag samen met het volledige gesprek (dat u vooraf kunt inzien) en belt u terug.</p></div>
+    <section class="trust">
+      <div class="t">✅ Alleen antwoorden uit jullie kennisbank</div>
+      <div class="t">🚫 Geen medisch advies</div>
+      <div class="t">🛡️ AVG · verwerking binnen de EU</div>
+      <div class="t safety">🚨 Spoedherkenning → direct 112</div>
     </section>
 
     <section class="try">
-      <h2>Probeer het zelf</h2>
-      <div class="card">
-        <div class="txt"><p class="q">"Wat zijn jullie openingstijden?"</p><p class="why">Gemak: veelgestelde vraag direct beantwoord, met de echte praktijkgegevens.</p></div>
-        <button type="button" data-copy="Wat zijn jullie openingstijden?">Kopieer &amp; vraag →</button>
+      <h2>Probeer deze vragen</h2>
+      <p class="hint">Klik op een vraag — hij wordt gekopieerd en het venster opent. Plak en verzend,
+      of typ gewoon uw eigen vraag. Probeer er meerdere: dit is een echte scenarioschat.</p>
+      <div class="qgrid">
+        <button class="q" type="button" data-copy="Wat zijn jullie openingstijden?">Wat zijn jullie openingstijden?<span class="why">Veelgestelde vraag, direct beantwoord.</span></button>
+        <button class="q" type="button" data-copy="Hoe maak ik een afspraak?">Hoe maak ik een afspraak?<span class="why">Verwijst naar Uw Zorg Online én het terugbelsysteem.</span></button>
+        <button class="q" type="button" data-copy="Hoe vraag ik een herhaalrecept aan?">Hoe vraag ik een herhaalrecept aan?<span class="why">De 12.00-regel correct uitgelegd.</span></button>
+        <button class="q" type="button" data-copy="Wanneer kan ik de uitslag van mijn bloedonderzoek horen?">Wanneer hoor ik mijn uitslag?<span class="why">Uitslagen telefonisch, 14.00–15.00 uur.</span></button>
+        <button class="q" type="button" data-copy="Kan ik mij inschrijven bij de praktijk?">Kan ik mij inschrijven?<span class="why">Alleen bewoners van Delfgauw, via ION.</span></button>
+        <button class="q safety" type="button" data-copy="Ik heb plotseling pijn op mijn borst">Ik heb plotseling pijn op mijn borst<span class="why">Spoed: de assistent stopt en verwijst direct door.</span></button>
       </div>
-      <div class="card">
-        <div class="txt"><p class="q">"Hoe maak ik een afspraak?"</p><p class="why">Kanaalkeuze: verwijst naar de Uw Zorg Online app én het terugbelsysteem — met directe knop.</p></div>
-        <button type="button" data-copy="Hoe maak ik een afspraak?">Kopieer &amp; vraag →</button>
-      </div>
-      <div class="card safety">
-        <div class="txt"><p class="q">"Ik heb plotseling pijn op mijn borst"</p><p class="why">Veiligheid: bij spoedwoorden stopt de assistent met informatie en verwijst direct door — 112, optie 1, Spoedpost Delft.</p></div>
-        <button type="button" data-copy="Ik heb plotseling pijn op mijn borst">Kopieer &amp; vraag →</button>
-      </div>
-      <p style="font-size:12.5px;color:#6b7280;">Tip: de assistent antwoordt ook in het Engels — en de demoversie reageert op uw eigen vragen over afspraken, recepten, inschrijven, uitslagen en spoed.</p>
+      <p class="free">De assistent antwoordt ook in het Engels — schakel rechtsboven van taal.</p>
     </section>
 
     <section class="spoedbox">
@@ -170,61 +198,87 @@
       </div>
     </section>
 
+    <section class="mailblock">
+      <div class="mailcard">
+        <h2>Testen met de gegevens van úw praktijk</h2>
+        <p>Deze demo is gebouwd op de openbare informatie van uw website. Wilt u zien hoe de assistent
+        antwoordt op <em>jullie</em> meestgestelde vragen? Stuur ons uw materiaal en wij bouwen een
+        eigen testomgeving voor Huisartsen Delfgauw.</p>
+        <p class="low">Denk aan: veelgestelde vragen, aanvraagformulieren, instructies voor herhaalrecepten
+        of de patiëntenportaal. PDF, Word, koppelingen of screenshots — alles mag. Het hoeft niet compleet:
+        stuur wat u heeft, wij doen de rest.</p>
+        <ol class="steps">
+          <li><span class="n">1</span><span>U mailt uw materiaal naar <strong>hello@nexifyai.org</strong></span></li>
+          <li><span class="n">2</span><span>Binnen 2 werkdagen staat uw eigen test online — met alleen úw goedgekeurde inhoud</span></li>
+          <li><span class="n">3</span><span>Samen doen we de praktijktest; na uw akkoord verzorgen wij de livegang op uw website</span></li>
+        </ol>
+        <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Praktijktest%20digitale%20assistent%20%E2%80%94%20Huisartsen%20Delfgauw&body=Beste%20Nexify%2C%0A%0AHierbij%20stuur%20ik%20materiaal%20van%20onze%20praktijk%20op%20voor%20een%20eigen%20test%3A%0A%0A%5Bbijlagen%3A%20FAQ%2C%20formulieren%2C%20instructies%2C%20screenshots%2E%2E%2E%5D">✉ Mail uw materiaal — hello@nexifyai.org</a>
+      </div>
+    </section>
+
     <section class="tech">
       <details>
         <summary>Voor technici — over deze demo</summary>
         <div class="note" style="margin-top:10px;">
-          In <strong>mock</strong>-modus (standaard) draait de widget op lokale scriptantwoorden
-          met trefwoordherkenning — er is geen backend nodig en er verlaat geen enkele gegevens
-          uw browser. In <strong>live</strong>-modus antwoordt de assistent met de echte
-          kennisbank (beschikbaar na livegang: tenant-configuratie, domeinverificatie en
-          kennisopname).
-          <div class="modes" style="margin-top:8px;">
-            <a href="?mode=mock" class="cur" id="m-mock">mock (script, geen backend)</a>
-            <a href="?mode=live" id="m-live">live (echte kennisbank — volgt na opstart)</a>
-          </div>
+          Deze pagina draait in <strong>live</strong>-modus: de assistent antwoordt met de echte
+          kennisbank (tenant-configuratie, domeinverificatie en kennisopname zijn afgerond).
+          Met <code>?mode=mock</code> draait de widget op lokale scriptantwoorden zonder backend.
           <ul>
             <li>Klik op de bel (rechtsonder) om het gespreksvenster te openen.</li>
             <li>De AI-aanduiding staat altijd bovenin het venster en kan niet worden gesloten.</li>
-            <li>Schakel de taal (NL/EN) — de teksten wisselen direct.</li>
-            <li>Het gesprek onthoudt uw sessie (meerdere vragen na elkaar werkt).</li>
+            <li>Bij spoed-trefwoorden komt een vaste doorverwijzing (112 / optie 1 / Spoedpost) —
+            geen LLM-antwoord.</li>
+            <li>Het gesprek onthoudt uw sessie; meerdere vragen na elkaar werkt.</li>
           </ul>
         </div>
       </details>
     </section>
+
+    <footer>
+      Deze testpagina is opgesteld door <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · In deze demo worden geen
+      patiëntgegevens opgeslagen.
+    </footer>
   </div>
 
   <!-- ============ ENGLISH ============ -->
   <div class="en">
     <section class="hero">
-      <span class="badge">DEMO · digital assistant</span>
-      <h1>Welcome to Huisartsen Delfgauw</h1>
-      <p class="sub">Laan der Zeven Linden 167, 2645 HV Delfgauw — your GP practice in Delfgauw.</p>
-      <p class="sub">Have a question about the practice? Click the bubble at the bottom-right and <strong>just ask</strong> — the assistant answers instantly, day and night.</p>
+      <span class="badge">DEMO · built on your practice's public information</span>
+      <h1>The digital assistant for your GP practice</h1>
+      <p class="sub">Answers patient questions about opening hours, appointments, repeat
+      prescriptions and results — <strong>24/7</strong>, using only answers you have approved.
+      Less phone pressure, and the line stays free for the patients who need you.</p>
+      <p class="bounds">The assistant gives <strong>no medical advice</strong>. On emergency wording
+      (chest pain, stroke symptoms) it refers immediately: 112, emergency line option 1, or the out-of-hours post.</p>
+      <div class="cta-row">
+        <button class="btn-primary" type="button" data-open-demo>▶ Start the demo — the window opens bottom-right</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Practice%20test%20digital%20assistant%20%E2%80%94%20Huisartsen%20Delfgauw">Test with your own practice data →</a>
+      </div>
+      <p class="cta-note">This demo runs on the real knowledge base: answers come from the public
+      information of huisartsendelfgauw.uwartsonline.nl. No patient data is stored.</p>
     </section>
 
-    <section class="pillars">
-      <div class="pillar"><div class="ico">💬</div><h3>Instant answers, 24/7</h3><p>Opening hours, appointments, repeat prescriptions — the most common questions answered without anyone having to call.</p></div>
-      <div class="pillar"><div class="ico">✅</div><h3>Only answers you approve</h3><p>The assistant answers exclusively from the practice's own knowledge base — no invented answers, no medical advice.</p></div>
-      <div class="pillar"><div class="ico">🛡️</div><h3>Safe &amp; EU-compliant</h3><p>GDPR-compliant, EU data processing, AI disclosure, and built-in emergency recognition that always refers to 112, option 1 or the out-of-hours post.</p></div>
-      <div class="pillar"><div class="ico">👤</div><h3>Prefer a human?</h3><p>Leave a call-back request in the window: the practice receives your question together with the full conversation (which you can review beforehand) and calls you back.</p></div>
+    <section class="trust">
+      <div class="t">✅ Only answers from your knowledge base</div>
+      <div class="t">🚫 No medical advice</div>
+      <div class="t">🛡️ GDPR · EU processing</div>
+      <div class="t safety">🚨 Emergency recognition → straight to 112</div>
     </section>
 
     <section class="try">
-      <h2>Try it yourself</h2>
-      <div class="card">
-        <div class="txt"><p class="q">"What are your opening hours?"</p><p class="why">Convenience: a top question answered instantly, with the real practice details.</p></div>
-        <button type="button" data-copy="What are your opening hours?">Copy &amp; ask →</button>
+      <h2>Try these questions</h2>
+      <p class="hint">Click a question — it is copied to your clipboard and the window opens.
+      Paste and send, or simply type your own. Try several: this is a real scenario test.</p>
+      <div class="qgrid">
+        <button class="q" type="button" data-copy="What are your opening hours?">What are your opening hours?<span class="why">Top question, answered instantly.</span></button>
+        <button class="q" type="button" data-copy="How do I make an appointment?">How do I make an appointment?<span class="why">Refers to Uw Zorg Online and the call-back system.</span></button>
+        <button class="q" type="button" data-copy="How do I request a repeat prescription?">How do I request a repeat prescription?<span class="why">The 12.00 deadline explained correctly.</span></button>
+        <button class="q" type="button" data-copy="When can I hear the results of my blood test?">When do I hear my results?<span class="why">Results by phone, 14.00–15.00.</span></button>
+        <button class="q" type="button" data-copy="Can I register with the practice?">Can I register with the practice?<span class="why">Delfgauw residents only, via ION.</span></button>
+        <button class="q safety" type="button" data-copy="I have sudden chest pain">I have sudden chest pain<span class="why">Emergency: the assistant stops and refers immediately.</span></button>
       </div>
-      <div class="card">
-        <div class="txt"><p class="q">"How do I make an appointment?"</p><p class="why">Channel guidance: refers to the Uw Zorg Online app and the call-back system — with a direct button.</p></div>
-        <button type="button" data-copy="How do I make an appointment?">Copy &amp; ask →</button>
-      </div>
-      <div class="card safety">
-        <div class="txt"><p class="q">"I have sudden chest pain"</p><p class="why">Safety: on emergency wording the assistant stops informing and refers immediately — 112, option 1, Spoedpost Delft.</p></div>
-        <button type="button" data-copy="I have sudden chest pain">Copy &amp; ask →</button>
-      </div>
-      <p style="font-size:12.5px;color:#6b7280;">Tip: the assistant also answers in Dutch — and the demo responds to your own questions about appointments, prescriptions, registration, results and emergencies.</p>
+      <p class="free">The assistant also answers in Dutch — switch language top-right.</p>
     </section>
 
     <section class="spoedbox">
@@ -236,42 +290,54 @@
       </div>
     </section>
 
+    <section class="mailblock">
+      <div class="mailcard">
+        <h2>Test with your practice's own data</h2>
+        <p>This demo is built on your website's public information. Want to see how the assistant
+        handles <em>your</em> most frequently asked questions? Send us your materials and we will
+        build a dedicated test environment for Huisartsen Delfgauw.</p>
+        <p class="low">Think of: FAQs, request forms, repeat-prescription instructions, or patient-portal
+        guidance. PDF, Word, links or screenshots — anything works. It doesn't need to be complete:
+        send what you have, we do the rest.</p>
+        <ol class="steps">
+          <li><span class="n">1</span><span>You e-mail your materials to <strong>hello@nexifyai.org</strong></span></li>
+          <li><span class="n">2</span><span>Within 2 working days your own test is online — containing only content you approved</span></li>
+          <li><span class="n">3</span><span>We run the practice test together; after your approval we handle go-live on your website</span></li>
+        </ol>
+        <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Practice%20test%20digital%20assistant%20%E2%80%94%20Huisartsen%20Delfgauw&body=Dear%20Nexify%2C%0A%0APlease%20find%20attached%20materials%20from%20our%20practice%20for%20a%20dedicated%20test%3A%0A%0A%5Battachments%3A%20FAQs%2C%20forms%2C%20instructions%2C%20screenshots...%5D">✉ E-mail your materials — hello@nexifyai.org</a>
+      </div>
+    </section>
+
     <section class="tech">
       <details>
         <summary>For technicians — about this demo</summary>
         <div class="note" style="margin-top:10px;">
-          In <strong>mock</strong> mode (default) the widget runs on local scripted replies with
-          keyword recognition — no backend needed, no data leaves your browser. In
-          <strong>live</strong> mode the assistant answers from the real knowledge base
-          (available after go-live: tenant configuration, domain verification and knowledge
-          ingestion).
-          <div class="modes" style="margin-top:8px;">
-            <a href="?mode=mock" class="cur">mock (scripted, no backend)</a>
-            <a href="?mode=live">live (real knowledge base — available after go-live)</a>
-          </div>
+          This page runs in <strong>live</strong> mode: the assistant answers from the real
+          knowledge base (tenant configuration, domain verification and knowledge ingestion
+          are complete). With <code>?mode=mock</code> the widget runs on local scripted replies
+          without a backend.
           <ul>
             <li>Click the bubble (bottom-right) to open the chat panel.</li>
             <li>The AI disclosure bar is always visible at the top and cannot be closed.</li>
-            <li>Switch the language (NL/EN) — chrome text updates instantly.</li>
+            <li>On emergency keywords a fixed referral appears (112 / option 1 / out-of-hours
+            post) — never an LLM answer.</li>
             <li>The conversation keeps its session across turns (multi-turn works).</li>
           </ul>
         </div>
       </details>
     </section>
+
+    <footer>
+      This test page was prepared by <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · No patient data is stored in this demo.
+    </footer>
   </div>
 
   <!--
-    HOSTED COPY on nexifyai.org — loads the production widget bundle so GP mock
-    profile updates roll out automatically. Mock mode: no backend calls, no data
-    leaves the visitor's browser.
-
-    This page deliberately does NOT embed the marketing site's own sales bot
-    (every other page carries the nexifyai-demo widget bottom-right): this page
-    must read as the practice's own site during a client demo.
-
-    Live mode (?mode=live) additionally needs: tenant `huisartsen-delfgauw`
-    seeded, nexifyai.org whitelisted in its allowed_domains, and the knowledge
-    base ingested — before flipping the default to live.
+    HOSTED COPY on nexifyai.org — loads the production widget bundle so GP profile
+    updates roll out automatically. Live mode: real knowledge base, tenant
+    `huisartsen-delfgauw`, nexifyai.org whitelisted, knowledge ingested (2026-09-08).
+    This page deliberately carries no other nav or sales bot: single goal, no exits.
   -->
   <script src="https://nexifyai-agent-production.up.railway.app/widget/widget.js"
           data-tenant="huisartsen-delfgauw"
@@ -279,7 +345,8 @@
           data-mode="live" async></script>
 
   <script>
-    // Display-only helpers: NL/EN page toggle, copy-to-clipboard cards, mode link state.
+    // Display-only helpers: NL/EN toggle, question chips (copy + auto-open widget),
+    // hero CTA (open widget). The widget is async — retry the launcher lookup briefly.
     (function () {
       var btnNl = document.getElementById('btn-nl');
       var btnEn = document.getElementById('btn-en');
@@ -292,27 +359,49 @@
         btnEn.classList.add('cur'); btnNl.classList.remove('cur');
       });
 
-      // Copy & ask: put the example question on the visitor's clipboard so they
-      // can paste it into the chat. (We deliberately do NOT auto-send into the
-      // widget — the visitor should see the answer appear as *their* question.)
+      // The widget mounts a shadow-DOM host as a direct child of <body>; the launcher
+      // button inside it is the toggle. Find it, click it, retry while it loads.
+      function withLauncher(cb, tries) {
+        var hosts = document.body.children;
+        for (var i = 0; i < hosts.length; i++) {
+          var sr = hosts[i].shadowRoot;
+          if (sr) {
+            var l = sr.querySelector('.nex-launcher');
+            if (l) { cb(l); return; }
+          }
+        }
+        if (tries > 0) setTimeout(function () { withLauncher(cb, tries - 1); }, 300);
+      }
+      function openWidget() { withLauncher(function (l) { l.click(); }, 12); }
+
+      document.querySelectorAll('[data-open-demo]').forEach(function (b) {
+        b.addEventListener('click', openWidget);
+      });
+
+      // Question chips: copy the question, open the widget, confirm on the chip.
+      // (We deliberately do NOT auto-send — the visitor sees the answer appear as
+      // *their* question, which is the honest demo.)
       document.querySelectorAll('[data-copy]').forEach(function (b) {
         b.addEventListener('click', function () {
           var q = b.getAttribute('data-copy');
-          var done = function () { b.textContent = '✓ ' + (document.body.classList.contains('show-en') ? 'Copied' : 'Gekopieerd'); setTimeout(function () { b.textContent = b.getAttribute('data-label'); }, 1600); };
-          b.setAttribute('data-label', b.textContent.replace(/^✓\s*/, ''));
+          var en = document.body.classList.contains('show-en');
+          var done = function () {
+            var old = b.querySelector('.why') ? b.querySelector('.why').textContent : '';
+            b.style.borderColor = '#0e7490';
+            b.setAttribute('data-why', old);
+            if (b.querySelector('.why')) b.querySelector('.why').textContent =
+              en ? '✓ Copied — paste it in the window (Ctrl+V)' : '✓ Gekopieerd — plak in het venster (Ctrl+V)';
+            setTimeout(function () {
+              b.style.borderColor = '';
+              if (b.querySelector('.why')) b.querySelector('.why').textContent = b.getAttribute('data-why') || old;
+            }, 2200);
+          };
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(q).then(done, done);
           } else { done(); }
+          openWidget();
         });
       });
-
-      try {
-        var mode = new URL(location.href).searchParams.get('mode') || 'mock';
-        document.querySelectorAll('.tech .modes a').forEach(function (a) {
-          var m = a.getAttribute('href').indexOf('live') !== -1 ? 'live' : 'mock';
-          a.classList.toggle('cur', m === mode);
-        });
-      } catch (e) { /* ignore */ }
     })();
   </script>
 </body>
