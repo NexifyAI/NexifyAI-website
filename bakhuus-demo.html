@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bakhuus Landweert — Digitale assistent (demo)</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    /*
+      Bakhuus Landweert demo page (2026-09-12) — modeled on gp-demo.html v3.
+      Two goals only: (1) get the visitor (shop owner / staff) to actually test
+      the widget, (2) invite them to go live on bakhuuslandweert.nl.
+      Live mode: answers from the real Bakhuus knowledge base (tenant
+      bakhuus-landweert, 37 punten uit menu/allergenen/acties/openingstijden;
+      nexifyai.org whitelisted als testhost). Host-page styles only; the
+      widget is Shadow-DOM isolated from all of this.
+    */
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; background: #fffbeb; color: #292524; line-height: 1.6;
+    }
+    .nl-block { display: block; }
+    .en { display: none; }
+    body.show-en .nl-block { display: none; }
+    body.show-en .en { display: block; }
+
+    /* ---- minimal header: identity + language, no exits ---- */
+    .site-header {
+      background: #1c1917; color: #fff; padding: 12px 24px;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .site-header .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.2px; }
+    .site-header .by { font-size: 12px; color: #d97706; }
+    .langbar { margin-left: auto; display: flex; gap: 6px; }
+    .langbar button {
+      font-size: 12px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 6px; background: transparent; color: #fff; cursor: pointer;
+    }
+    .langbar button.cur { background: #d97706; color: #fff; border-color: #d97706; }
+
+    /* ---- hero ---- */
+    .hero { max-width: 760px; margin: 0 auto; padding: 44px 24px 6px; }
+    .hero .badge {
+      display: inline-block; background: #fef3c7; color: #92400e; font-size: 11.5px;
+      padding: 3px 10px; border-radius: 999px; font-weight: 600; margin-bottom: 12px;
+    }
+    .hero h1 { font-size: 28px; margin: 0 0 10px; color: #92400e; line-height: 1.25; }
+    .hero p.sub { font-size: 15px; color: #44403c; margin: 0 0 8px; }
+    .hero p.bounds { font-size: 13.5px; color: #78716c; margin: 6px 0 18px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      display: inline-block; background: #d97706; color: #fff; border: none;
+      font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 8px;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-primary:hover { background: #b45309; }
+    .btn-secondary {
+      display: inline-block; background: #fff; color: #92400e; border: 1px solid #d97706;
+      font-size: 14px; font-weight: 600; padding: 11px 18px; border-radius: 8px;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-secondary:hover { background: #fef3c7; }
+    .cta-note { font-size: 12.5px; color: #78716c; margin: 10px 0 0; }
+
+    /* ---- trust strip ---- */
+    .trust {
+      max-width: 760px; margin: 18px auto 0; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 8px;
+    }
+    .trust .t {
+      background: #fff; border: 1px solid #fde68a; border-radius: 8px;
+      padding: 9px 12px; font-size: 12.5px; color: #44403c; font-weight: 600;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .trust .t.order { border-color: #bbf7d0; background: #f0fdf4; color: #15803d; }
+
+    /* ---- try-it: clickable questions, copy + auto-open ---- */
+    .try { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
+    .try h2 { font-size: 17px; color: #92400e; margin: 0 0 4px; }
+    .try .hint { font-size: 13px; color: #78716c; margin: 0 0 12px; }
+    .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; }
+    .q {
+      background: #fff; border: 1px solid #fde68a; border-left: 4px solid #d97706;
+      border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left;
+      font: inherit; font-size: 14px; font-weight: 600; color: #292524;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .q:hover { border-color: #d97706; background: #fffbeb; }
+    .q .why { font-size: 12px; font-weight: 400; color: #78716c; }
+    .q.order { border-left-color: #16a34a; }
+    .q.order:hover { border-color: #16a34a; background: #f0fdf4; }
+    .q.order .why { color: #15803d; }
+    .try .free { font-size: 12.5px; color: #78716c; margin: 12px 0 0; }
+
+    /* ---- notes ---- */
+    .note {
+      background: #fff; border: 1px solid #fde68a; border-radius: 10px;
+      padding: 14px 18px; margin: 14px 0; font-size: 14px;
+    }
+    .allergbox { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
+    .allerg { border-left: 4px solid #d97706; background: #fef3c7; border-color: #fcd34d; }
+    .allerg strong { color: #92400e; }
+
+    /* ---- go-live invitation ---- */
+    .mailblock { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
+    .mailcard {
+      background: #fff; border: 1px solid #fcd34d; border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .mailcard h2 { font-size: 18px; color: #92400e; margin: 0 0 8px; }
+    .mailcard p { font-size: 14px; color: #44403c; margin: 0 0 8px; }
+    .mailcard p.low { font-size: 12.5px; color: #78716c; }
+    .steps { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 8px; }
+    .steps li { font-size: 13.5px; color: #44403c; display: flex; gap: 10px; }
+    .steps .n {
+      flex: none; width: 22px; height: 22px; border-radius: 50%;
+      background: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+
+    /* ---- collapsible tech notes + footer ---- */
+    .tech { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
+    .tech details { font-size: 13.5px; color: #57534e; }
+    .tech summary { cursor: pointer; color: #92400e; font-weight: 600; }
+    .tech ul { margin: 8px 0; padding-left: 20px; }
+    .tech li { margin: 4px 0; }
+    .tech code { background: #f5f5f4; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+    footer {
+      max-width: 760px; margin: 20px auto 70px; padding: 0 24px;
+      font-size: 12.5px; color: #78716c;
+    }
+    footer a { color: #92400e; }
+
+    @media (max-width: 560px) {
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ==== minimal header: identity + language. No nav = no exits. ==== -->
+  <header class="site-header">
+    <span class="brand">🍟 Bakhuus Landweert</span>
+    <span class="by">demo · Nexify AI</span>
+    <div class="langbar">
+      <button id="btn-nl" class="cur" type="button">NL</button>
+      <button id="btn-en" type="button">EN</button>
+    </div>
+  </header>
+
+  <!-- ============ NEDERLANDS ============ -->
+  <div class="nl-block">
+    <section class="hero">
+      <span class="badge">DEMO · gebouwd op de informatie van uw eigen website en menu</span>
+      <h1>De digitale assistent voor uw snackbar</h1>
+      <p class="sub">Beantwoordt klantvragen over <strong>openingstijden, het menu met prijzen,
+      allergenen en halal</strong>, en deze week acties — <strong>24/7</strong>, met antwoorden
+      die ú hebt goedgekeurd. Bestellingen worden direct doorgezet naar uw online
+      bestelpagina. Minder telefoondruk, en de telefoon blijft vrij voor wat echt telt.</p>
+      <p class="bounds">De assistent is een informatiehulp: hij adviseert nooit over allergenen
+      of dieet zonder uw menu, en verwijst klanten bij twijfel door naar uw telefoon:
+      <strong>0478 580 480</strong>.</p>
+      <div class="cta-row">
+        <button class="btn-primary" type="button" data-open-demo>▶ Start de demo — het venster opent rechtsonder</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Bakhuus%20Landweert">Chatbot op bakhuuslandweert.nl plaatsen →</a>
+      </div>
+      <p class="cta-note">Deze demo draait op de echte kennisbank: 37 punten uit uw menu, allergenentabel,
+      acties en openingstijden. Er worden geen klantgegevens opgeslagen.</p>
+    </section>
+
+    <section class="trust">
+      <div class="t">✅ Alleen antwoorden uit jullie kennisbank</div>
+      <div class="t">🥜 Allergenen uit eigen menu</div>
+      <div class="t">🛡️ AVG · geen opslag klantgegevens</div>
+      <div class="t order">🛒 Bestellen → direct naar online bestellen</div>
+    </section>
+
+    <section class="try">
+      <h2>Probeer deze vragen</h2>
+      <p class="hint">Klik op een vraag — hij wordt gekopieerd en het venster opent. Plak en verzend,
+      of typ gewoon uw eigen vraag. Probeer er meerdere: dit is een echte scenarioschat.</p>
+      <div class="qgrid">
+        <button class="q" type="button" data-copy="Wat zijn jullie openingstijden?">Wat zijn jullie openingstijden?<span class="why">Veelgestelde vraag, direct beantwoord.</span></button>
+        <button class="q" type="button" data-copy="Ik heb glutenallergie, wat kan ik eten?">Ik heb glutenallergie, wat kan ik eten?<span class="why">Glutenvrije opties met prijzen uit het menu.</span></button>
+        <button class="q" type="button" data-copy="Is jullie kip halal?">Is jullie kip halal?<span class="why">Halal-snacks correct uit de allergenentabel.</span></button>
+        <button class="q order" type="button" data-copy="Ik wil vanavond een bestelling afhalen voor 4 personen">Ik wil vanavond afhalen voor 4 personen<span class="why">Herkennt de bestelling → knop naar online bestellen.</span></button>
+        <button class="q" type="button" data-copy="Wat zijn de acties van deze week?">Wat zijn de acties van deze week?<span class="why">De actuele weekacties met prijzen.</span></button>
+        <button class="q" type="button" data-copy="Wat kost een gezinszak friet?">Wat kost een gezinszak friet?<span class="why">Menuprijzen, ook voor de grote zakken.</span></button>
+      </div>
+      <p class="free">De assistent antwoordt ook in het Engels — schakel rechtsboven van taal.</p>
+    </section>
+
+    <section class="allergbox">
+      <div class="note allerg">
+        <strong>Over allergenen.</strong> De assistent noemt alleen allergenen die in úw
+        allergenentabel staan, en adviseert klanten altijd om hun allergie bij het bestellen
+        door te geven. Bij serieuze allergievragen verwijst hij naar de telefoon:
+        <strong>0478 580 480</strong>.
+      </div>
+    </section>
+
+    <section class="mailblock">
+      <div class="mailcard">
+        <h2>Live op bakhuuslandweert.nl</h2>
+        <p>Deze demo draait volledig op de informatie van uw eigen site. Tevreden over wat u ziet?
+        Wij plaatsen de assistent op uw website — één klein stukje code, dezelfde antwoorden
+        als in deze demo, en altijd up-to-date wanneer uw menu of acties wijzigen.</p>
+        <p class="low">Menuwijziging? Nieuwe actie? Stuur het ons en de assistent is binnen enkele
+        minuten bijgewerkt. U hoeft zelf niets te doen.</p>
+        <ol class="steps">
+          <li><span class="n">1</span><span>U mailt ons dat u wilt starten — <strong>hello@nexifyai.org</strong></span></li>
+          <li><span class="n">2</span><span>Wij verzorgen de koppeling met uw website (via Hisight) en de definitieve check</span></li>
+          <li><span class="n">3</span><span>De assistent staat live voor uw klanten — 24/7, in het Nederlands en Engels</span></li>
+        </ol>
+        <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Bakhuus%20Landweert&body=Beste%20Nexify%2C%0A%0AWij%20willen%20graag%20de%20chatbot%20op%20bakhuuslandweert.nl%20laten%20plaatsen%2E%0A%0AGroet%2C%0ABakhuus%20Landweert">✉ Mail ons — hello@nexifyai.org</a>
+      </div>
+    </section>
+
+    <section class="tech">
+      <details>
+        <summary>Over deze demo — hoe het werkt</summary>
+        <div class="note" style="margin-top:10px;">
+          <p style="margin:0 0 8px;">Deze demo draait <strong>live</strong>: de antwoorden komen
+          uit de echte kennisbank, opgebouwd uit uw website, menukaart en allergenentabel.
+          U stelt een vraag, de assistent zoekt in die kennisbank en antwoordt alleen met wat daar staat.</p>
+          <ul>
+            <li>Bovenaan het venster staat altijd de melding dat u met een AI-assistent chatt.</li>
+            <li>Bij bestelintentie komt een directe knop naar uw online bestelpagina (alleen afhalen).</li>
+            <li>Vragen over andere bedrijven beantwoordt de assistent niet — uw kennisbank blijft van ú.</li>
+            <li>Het gesprek onthoudt uw sessie: u kunt meerdere vragen na elkaar stellen.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      Deze testpagina is opgesteld door <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · In deze demo worden geen
+      klantgegevens opgeslagen.
+    </footer>
+  </div>
+
+  <!-- ============ ENGLISH ============ -->
+  <div class="en">
+    <section class="hero">
+      <span class="badge">DEMO · built on your own website and menu information</span>
+      <h1>The digital assistant for your snack bar</h1>
+      <p class="sub">Answers customer questions about <strong>opening hours, the menu with prices,
+      allergens and halal</strong>, and this week's deals — <strong>24/7</strong>, using only answers
+      you have approved. Orders are passed straight to your online ordering page. Less phone
+      pressure, and the line stays free for what matters.</p>
+      <p class="bounds">The assistant is an information aid: it never advises about allergies
+      beyond your menu, and refers customers to your phone when in doubt:
+      <strong>0478 580 480</strong>.</p>
+      <div class="cta-row">
+        <button class="btn-primary" type="button" data-open-demo>▶ Start the demo — the window opens bottom-right</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Bakhuus%20Landweert">Put the chatbot on bakhuuslandweert.nl →</a>
+      </div>
+      <p class="cta-note">This demo runs on the real knowledge base: 37 points from your menu,
+      allergen table, deals and opening hours. No customer data is stored.</p>
+    </section>
+
+    <section class="trust">
+      <div class="t">✅ Only answers from your knowledge base</div>
+      <div class="t">🥜 Allergens from your own menu</div>
+      <div class="t">🛡️ GDPR · no customer-data storage</div>
+      <div class="t order">🛒 Ordering → straight to online ordering</div>
+    </section>
+
+    <section class="try">
+      <h2>Try these questions</h2>
+      <p class="hint">Click a question — it is copied to your clipboard and the window opens.
+      Paste and send, or simply type your own. Try several: this is a real scenario test.</p>
+      <div class="qgrid">
+        <button class="q" type="button" data-copy="What are your opening hours?">What are your opening hours?<span class="why">Top question, answered instantly.</span></button>
+        <button class="q" type="button" data-copy="Do you deliver?">Do you deliver?<span class="why">Pickup-only, explained politely in English.</span></button>
+        <button class="q" type="button" data-copy="Do you have gluten-free snacks?">Do you have gluten-free snacks?<span class="why">Gluten-free options with prices from the menu.</span></button>
+        <button class="q order" type="button" data-copy="I want to pick up an order tonight for 4 people">I want to pick up an order tonight<span class="why">Order recognised → button to online ordering.</span></button>
+        <button class="q" type="button" data-copy="What are this week's deals?">What are this week's deals?<span class="why">Current deals with prices.</span></button>
+        <button class="q" type="button" data-copy="How much is a family portion of fries?">How much is a family portion of fries?<span class="why">Menu prices, including the big bags.</span></button>
+      </div>
+      <p class="free">The assistant also answers in Dutch — switch language top-right.</p>
+    </section>
+
+    <section class="allergbox">
+      <div class="note allerg">
+        <strong>About allergens.</strong> The assistant only mentions allergens listed in your
+        own allergen table, and always tells customers to mention their allergy when ordering.
+        For serious allergy questions it refers to the phone: <strong>0478 580 480</strong>.
+      </div>
+    </section>
+
+    <section class="mailblock">
+      <div class="mailcard">
+        <h2>Go live on bakhuuslandweert.nl</h2>
+        <p>This demo runs entirely on your own site's information. Happy with what you see?
+        We place the assistant on your website — one small piece of code, the same answers as
+        in this demo, always up to date when your menu or deals change.</p>
+        <p class="low">Menu change? New deal? Send it over and the assistant is updated within
+        minutes. You don't have to do anything yourself.</p>
+        <ol class="steps">
+          <li><span class="n">1</span><span>You e-mail us to get started — <strong>hello@nexifyai.org</strong></span></li>
+          <li><span class="n">2</span><span>We handle the connection with your website (via Hisight) and the final check</span></li>
+          <li><span class="n">3</span><span>The assistant is live for your customers — 24/7, in Dutch and English</span></li>
+        </ol>
+        <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Bakhuus%20Landweert&body=Dear%20Nexify%2C%0A%0AWe%20would%20like%20to%20have%20the%20chatbot%20placed%20on%20bakhuuslandweert%2Enl%2E%0A%0ARegards%2C%0ABakhuus%20Landweert">✉ E-mail us — hello@nexifyai.org</a>
+      </div>
+    </section>
+
+    <section class="tech">
+      <details>
+        <summary>About this demo — how it works</summary>
+        <div class="note" style="margin-top:10px;">
+          <p style="margin:0 0 8px;">This demo runs <strong>live</strong>: the answers come from
+          the real knowledge base, built from your website, menu card and allergen table.
+          You ask a question, the assistant searches that knowledge base and answers only
+          with what is in it.</p>
+          <ul>
+            <li>The bar at the top of the window always states that you are chatting with an AI assistant.</li>
+            <li>On order intent a direct button to your online ordering page appears (pickup only).</li>
+            <li>Questions about other businesses are not answered — your knowledge base stays yours.</li>
+            <li>The conversation keeps its session: you can ask several questions in a row.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      This test page was prepared by <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · No customer data is stored in this demo.
+    </footer>
+  </div>
+
+  <!--
+    HOSTED COPY on nexifyai.org — loads the production widget bundle so Bakhuus config
+    updates roll out automatically. Live mode: real knowledge base, tenant
+    `bakhuus-landweert`, nexifyai.org whitelisted, knowledge ingested (2026-09-11).
+    This page deliberately carries no other nav or sales bot: single goal, no exits.
+  -->
+  <script src="https://agent.nexifyai.org/widget/widget.js"
+          data-tenant="bakhuus-landweert"
+          data-api-base="https://agent.nexifyai.org"
+          data-mode="live" async></script>
+
+  <script>
+    // Display-only helpers: NL/EN toggle, question chips (copy + auto-open widget),
+    // hero CTA (open widget). The widget is async — retry the launcher lookup briefly.
+    (function () {
+      var btnNl = document.getElementById('btn-nl');
+      var btnEn = document.getElementById('btn-en');
+      btnNl.addEventListener('click', function () {
+        document.body.classList.remove('show-en');
+        btnNl.classList.add('cur'); btnEn.classList.remove('cur');
+      });
+      btnEn.addEventListener('click', function () {
+        document.body.classList.add('show-en');
+        btnEn.classList.add('cur'); btnNl.classList.remove('cur');
+      });
+
+      // The widget mounts a shadow-DOM host as a direct child of <body>; the launcher
+      // button inside it is the toggle. Find it, click it, retry while it loads.
+      function withLauncher(cb, tries) {
+        var hosts = document.body.children;
+        for (var i = 0; i < hosts.length; i++) {
+          var sr = hosts[i].shadowRoot;
+          if (sr) {
+            var l = sr.querySelector('.nex-launcher');
+            if (l) { cb(l); return; }
+          }
+        }
+        if (tries > 0) setTimeout(function () { withLauncher(cb, tries - 1); }, 300);
+      }
+      function openWidget() { withLauncher(function (l) { l.click(); }, 12); }
+
+      document.querySelectorAll('[data-open-demo]').forEach(function (b) {
+        b.addEventListener('click', openWidget);
+      });
+
+      // Question chips: copy the question, open the widget, confirm on the chip.
+      // (We deliberately do NOT auto-send — the visitor sees the answer appear as
+      // *their* question, which is the honest demo.)
+      document.querySelectorAll('[data-copy]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var q = b.getAttribute('data-copy');
+          var en = document.body.classList.contains('show-en');
+          var done = function () {
+            var old = b.querySelector('.why') ? b.querySelector('.why').textContent : '';
+            b.style.borderColor = '#d97706';
+            b.setAttribute('data-why', old);
+            if (b.querySelector('.why')) b.querySelector('.why').textContent =
+              en ? '✓ Copied — paste it in the window (Ctrl+V)' : '✓ Gekopieerd — plak in het venster (Ctrl+V)';
+            setTimeout(function () {
+              b.style.borderColor = '';
+              if (b.querySelector('.why')) b.querySelector('.why').textContent = b.getAttribute('data-why') || old;
+            }, 2200);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(q).then(done, done);
+          } else { done(); }
+          openWidget();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
