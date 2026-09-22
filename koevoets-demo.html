@@ -7,120 +7,122 @@
   <meta name="robots" content="noindex" />
   <style>
     /*
-      Koevoets Legal demo page (2026-09-22) — first law-firm tenant.
-      Focus: LEAD CAPTURE. The pitch is not "answers questions" but "turns
-      anonymous visitors into contact moments": case-related answers invite
-      the "Terugbelverzoek aanvragen" button; each request lands in the
-      firm's own queue (with the full conversation) instead of evaporating.
-      Live mode: real knowledge base, tenant koevoets-legal (29 punten uit
-      de eigen website + klachtenregeling; nexifyai.org whitelisted als
-      testhost). Host-page styles only; the widget is Shadow-DOM isolated.
+      Koevoets Legal demo page (v2, 2026-09-22) — first law-firm tenant.
+      Lead-capture pitch in FOUR pain scenarios an advocatenpraktijk actually
+      recognizes (night-time arrest questions, the recurring fee question,
+      anonymous visitors leaving no trace, foreign family in detention).
+      Style matches koevoetslegal.eu (WordPress/Divi global colors):
+      primary #ed7d31 · secondary #2ea3f2 · headings #000 · body #4f4f4f ·
+      Open Sans/Arial. Live mode: tenant koevoets-legal, real knowledge base.
     */
     * { box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f4f6f9; color: #1f2937; margin: 0; line-height: 1.55;
+      font-family: "Open Sans", Arial, Helvetica, sans-serif;
+      background: #fff; color: #4f4f4f; margin: 0; line-height: 1.6;
     }
-    h1, h2 { font-family: Georgia, "Times New Roman", serif; }
+    h1, h2 { color: #000; font-family: inherit; }
     .site-header {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      padding: 12px 24px; background: #1e3a5f; color: #fff;
+      padding: 14px 24px; background: #fff; border-bottom: 1px solid #eee;
     }
-    .site-header .brand { font-weight: 700; font-family: Georgia, serif; font-size: 16px; }
-    .site-header .by { font-size: 12px; color: #b8c7da; }
-    .langbar { margin-left: auto; display: flex; gap: 4px; }
+    .site-header .brand { font-weight: 700; color: #000; font-size: 16px; }
+    .site-header .brand span { color: #ed7d31; }
+    .site-header .by { font-size: 12.5px; color: #9a9a9a; }
+    .langbar { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+    .langbar .lbl { font-size: 12px; color: #9a9a9a; margin-right: 2px; }
     .langbar button {
-      border: 1px solid #b8c7da; background: transparent; color: #e7edf4;
-      font: inherit; font-size: 12px; padding: 3px 10px; border-radius: 6px; cursor: pointer;
+      border: 1px solid #ddd; background: #fff; color: #4f4f4f;
+      font: inherit; font-size: 13px; font-weight: 600; padding: 4px 12px;
+      border-radius: 4px; cursor: pointer;
     }
-    .langbar button.cur { background: #fff; color: #1e3a5f; border-color: #fff; font-weight: 700; }
+    .langbar button.cur { background: #ed7d31; color: #fff; border-color: #ed7d31; }
 
     /* Default view = NL; .show-en on body swaps blocks */
     body .en { display: none; }
     body.show-en .nl-block { display: none; }
     body.show-en .en { display: block; }
 
-    .hero { max-width: 760px; margin: 34px auto 0; padding: 0 24px; }
+    .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+    .hero { margin-top: 36px; }
     .badge {
-      display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.4px;
-      background: #e3eaf3; color: #1e3a5f; border: 1px solid #c5d3e4;
+      display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.4px;
+      background: #fdf1e7; color: #c05f11; border: 1px solid #f3cfb2;
       padding: 4px 10px; border-radius: 999px; margin-bottom: 14px;
     }
-    .hero h1 { font-size: 30px; line-height: 1.25; color: #16283d; margin: 0 0 12px; }
-    .hero .sub { font-size: 15.5px; color: #374151; margin: 0 0 12px; }
-    .hero .bounds { font-size: 13.5px; color: #5b6b7d; margin: 0 0 18px; }
-    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .hero h1 { font-size: 27px; line-height: 1.3; margin: 0 0 10px; }
+    .hero .sub { font-size: 15.5px; margin: 0 0 16px; }
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
     .btn-primary, .btn-secondary {
-      font: inherit; font-size: 14.5px; font-weight: 600; text-decoration: none;
-      border-radius: 9px; padding: 11px 18px; cursor: pointer; border: none;
+      font: inherit; font-size: 14.5px; font-weight: 700; text-decoration: none;
+      border-radius: 4px; padding: 11px 18px; cursor: pointer; border: none;
     }
-    .btn-primary { background: #1e3a5f; color: #fff; }
-    .btn-primary:hover { background: #16283d; }
-    .btn-secondary { background: #fff; color: #1e3a5f; border: 1px solid #9fb2c8; }
-    .cta-note { font-size: 12.5px; color: #5b6b7d; margin: 0; }
+    .btn-primary { background: #ed7d31; color: #fff; }
+    .btn-primary:hover { background: #d96c1f; }
+    .btn-secondary { background: #fff; color: #ed7d31; border: 1px solid #ed7d31; }
+    .cta-note { font-size: 12.5px; color: #9a9a9a; margin: 0; }
 
-    .trust { max-width: 760px; margin: 22px auto 0; padding: 0 24px; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .t {
-      background: #fff; border: 1px solid #dbe2ea; border-radius: 10px;
-      padding: 11px 14px; font-size: 13.5px; color: #374151;
+    .pains { margin: 34px auto 0; }
+    .pains h2, .try h2 { font-size: 19px; margin: 0 0 14px; }
+    .pgrid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .pain {
+      background: #fff; border: 1px solid #eee; border-top: 3px solid #ed7d31;
+      border-radius: 6px; padding: 14px 16px;
     }
-    .t.lead { border-left: 4px solid #b08d3e; }
-    .t.lead strong { color: #7c6120; }
+    .pain .p { font-size: 14.5px; font-weight: 700; color: #000; margin: 0 0 6px; }
+    .pain .s { font-size: 13.5px; margin: 0; }
+    .pain .s b { color: #c05f11; }
 
-    .try { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
-    .try h2 { font-size: 17px; color: #16283d; margin: 0 0 4px; }
-    .try .hint { font-size: 13px; color: #5b6b7d; margin: 0 0 12px; }
-    .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; }
+    .try { margin: 34px auto 0; }
+    .try .hint { font-size: 13px; color: #9a9a9a; margin: 0 0 12px; }
+    .qgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 10px; }
     .q {
-      background: #fff; border: 1px solid #dbe2ea; border-left: 4px solid #1e3a5f;
-      border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left;
-      font: inherit; font-size: 14px; font-weight: 600; color: #1f2937;
+      background: #fff; border: 1px solid #ddd; border-left: 3px solid #2ea3f2;
+      border-radius: 6px; padding: 11px 14px; cursor: pointer; text-align: left;
+      font: inherit; font-size: 14px; font-weight: 600; color: #000;
       display: flex; flex-direction: column; gap: 3px;
     }
-    .q:hover { border-color: #1e3a5f; background: #eef2f7; }
-    .q .why { font-size: 12px; font-weight: 400; color: #5b6b7d; }
-    .q.lead { border-left-color: #b08d3e; }
-    .q.lead:hover { border-color: #b08d3e; background: #faf6ec; }
-    .q.lead .why { color: #7c6120; }
-    .try .free { font-size: 12.5px; color: #5b6b7d; margin: 12px 0 0; }
+    .q:hover { border-color: #2ea3f2; background: #f5fbff; }
+    .q .why { font-size: 12px; font-weight: 400; color: #9a9a9a; }
+    .q.lead { border-left-color: #ed7d31; }
+    .q.lead:hover { border-color: #ed7d31; background: #fdf7f2; }
+    .q.lead .why { color: #c05f11; }
+    .try .free { font-size: 12.5px; color: #9a9a9a; margin: 12px 0 0; }
 
-    /* ---- lead flow section (the pitch) ---- */
-    .leadbox { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
     .leadcard {
-      background: #fff; border: 1px solid #cbb98a; border-radius: 12px;
-      padding: 22px 24px;
+      background: #fff; border: 1px solid #f3cfb2; border-radius: 6px;
+      padding: 18px 20px; margin: 30px auto 0;
     }
-    .leadcard h2 { font-size: 18px; color: #16283d; margin: 0 0 8px; }
-    .leadcard p { font-size: 14px; color: #374151; margin: 0 0 8px; }
-    .steps { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 8px; }
-    .steps li { font-size: 13.5px; color: #374151; display: flex; gap: 10px; }
+    .leadcard h2 { font-size: 18px; margin: 0 0 10px; }
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+    .steps li { font-size: 14px; display: flex; gap: 10px; }
     .steps .n {
       flex: none; width: 22px; height: 22px; border-radius: 50%;
-      background: #f3ebd7; color: #7c6120; font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      background: #fdf1e7; color: #c05f11; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
     }
+    .leadcard .low { font-size: 12.5px; color: #9a9a9a; margin: 12px 0 0; }
 
     .note {
-      background: #fff; border: 1px solid #dbe2ea; border-radius: 10px;
-      padding: 14px 18px; margin: 14px 0; font-size: 14px;
+      background: #f7f7f7; border-left: 3px solid #2ea3f2;
+      padding: 12px 16px; margin: 18px auto 0; font-size: 13.5px; border-radius: 0 6px 6px 0;
     }
-    .note.law { border-left: 4px solid #1e3a5f; border-color: #c5d3e4; }
-    .note.law strong { color: #16283d; }
+    .note strong { color: #000; }
 
-    .mailblock { max-width: 760px; margin: 26px auto 0; padding: 0 24px; }
-    .mailcard { background: #fff; border: 1px solid #c5d3e4; border-radius: 12px; padding: 22px 24px; }
-    .mailcard h2 { font-size: 18px; color: #16283d; margin: 0 0 8px; }
-    .mailcard p { font-size: 14px; color: #374151; margin: 0 0 8px; }
-    .mailcard p.low { font-size: 12.5px; color: #5b6b7d; }
+    .mailcard {
+      background: #fff; border: 1px solid #eee; border-top: 3px solid #2ea3f2;
+      border-radius: 6px; padding: 18px 20px; margin: 30px auto 0;
+    }
+    .mailcard h2 { font-size: 18px; margin: 0 0 8px; }
+    .mailcard p { font-size: 14px; margin: 0 0 12px; }
 
-    .tech { max-width: 760px; margin: 24px auto 0; padding: 0 24px; }
-    .tech details { font-size: 13.5px; color: #4b5563; }
-    .tech summary { cursor: pointer; color: #1e3a5f; font-weight: 600; }
+    .tech { margin: 24px auto 0; }
+    .tech details { font-size: 13px; }
+    .tech summary { cursor: pointer; color: #2ea3f2; font-weight: 600; }
     .tech ul { margin: 8px 0; padding-left: 20px; }
     .tech li { margin: 4px 0; }
-    .tech code { background: #eef2f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
-    footer { max-width: 760px; margin: 20px auto 70px; padding: 0 24px; font-size: 12.5px; color: #5b6b7d; }
-    footer a { color: #1e3a5f; }
+    .tech code { background: #f7f7f7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+    footer { margin: 26px auto 70px; font-size: 12.5px; color: #9a9a9a; }
+    footer a { color: #ed7d31; }
 
     @media (max-width: 560px) {
       .cta-row { flex-direction: column; align-items: stretch; }
@@ -129,252 +131,233 @@
   </style>
 </head>
 <body>
-  <!-- ==== minimal header: identity + language. No nav = no exits. ==== -->
   <header class="site-header">
-    <span class="brand">⚖️ Koevoets Legal</span>
+    <span class="brand">⚖️ koevoets <span>legal</span></span>
     <span class="by">demo · Nexify AI</span>
     <div class="langbar">
+      <span class="lbl">Taal:</span>
       <button id="btn-nl" class="cur" type="button">NL</button>
       <button id="btn-en" type="button">EN</button>
     </div>
   </header>
 
-  <!-- ============ NEDERLANDS ============ -->
+  <!-- ============ NEDERLANDS (default) ============ -->
   <div class="nl-block">
-    <section class="hero">
-      <span class="badge">DEMO · gebouwd op de informatie van uw eigen website</span>
-      <h1>Van anonieme bezoeker naar contactmoment</h1>
-      <p class="sub">Bezoekers van uw website stellen vragen — vaak buiten kantooruren, vaak met een
-      eigen kwestie. De digitale assistent beantwoordt ze <strong>24/7</strong> over het kantoor, de
-      specialisaties, de tarieven en de klachtenregeling, en nodigt bij elke zaakgerelateerde vraag
-      actief uit een <strong>terugbelverzoek</strong> achter te laten: telefoonnummer + vraag +
-      het volledige gesprek, direct in uw eigen wachtrij. Geen lead die stil verdwijnt.</p>
-      <p class="bounds">De assistent is een informatiehulp en conversierekruiter: hij geeft nooit
-      juridisch advies of zaakinschattingen, en verwijst bij elke eigen kwestie door naar het
-      terugbelverzoek, uw contactformulier of <strong>info@koevoetslegal.eu</strong>.</p>
+    <section class="hero wrap">
+      <span class="badge">DEMO · gebouwd op uw eigen website</span>
+      <h1>Uw volgende cliënt stelde zijn vraag vannacht om 23:40</h1>
+      <p class="sub">Bezoekers van koevoetslegal.eu stellen vragen buiten kantooruren — en
+      vertrekken stil. Deze assistent antwoordt <strong>24/7</strong> (NL/EN) en zet elk
+      contact om in een <strong>terugbelverzoek</strong> in uw eigen wachtrij.</p>
       <div class="cta-row">
-        <button class="btn-primary" type="button" data-open-demo>▶ Start de demo — het venster opent rechtsonder</button>
-        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal">Chatbot op koevoetslegal.eu plaatsen →</a>
+        <button class="btn-primary" type="button" data-open-demo>▶ Probeer de demo — rechtsonder</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal">Plaats hem op koevoetslegal.eu →</a>
       </div>
-      <p class="cta-note">Deze demo draait live op de echte kennisbank: 31 punten uit uw eigen website
-      en klachtenregeling. Bezoekersgegevens uit terugbelverzoeken gaan uitsluitend naar uw eigen
-      wachtrij — niet naar de AI.</p>
+      <p class="cta-note">Live op uw eigen kennisbank · er worden geen klantgegevens bewaard</p>
     </section>
 
-    <section class="trust">
-      <div class="t">✅ Alleen antwoorden uit uw eigen kennisbank</div>
-      <div class="t lead"><strong>📋 Terugbelverzoek = lead</strong> — telefoonnummer + vraag + gesprek in uw wachtrij</div>
-      <div class="t">🛡️ AVG · telefoonnummers gaan niet naar de AI, alleen naar uw queue</div>
-      <div class="t">⚖️ Geen juridisch advies — altijd doorverwijzing naar het kantoor</div>
+    <section class="pains wrap">
+      <h2>Herkent u dit?</h2>
+      <div class="pgrid">
+        <div class="pain">
+          <p class="p">🌙 &ldquo;Mijn zoon is vannacht opgepakt — wat nu?&rdquo;</p>
+          <p class="s">Precies op het moment dat niemand opneemt. De assistent herkent spoed en
+          brengt de bezoeker <b>direct naar een contactmoment</b>.</p>
+        </div>
+        <div class="pain">
+          <p class="p">💶 &ldquo;Wat kost een strafzaak?&rdquo;</p>
+          <p class="s">Dezelfde vraag, elke week. De assistent antwoordt <b>direct en foutloos</b> —
+          uit uw eigen tarievenpagina (€295 vast, toevoeging mogelijk).</p>
+        </div>
+        <div class="pain">
+          <p class="p">🤐 De anonieme bezoeker die stil vertrekt</p>
+          <p class="s">Nu zonder spoor. Bij elke zaakvraag nodigt de assistent uit tot
+          <b>terugbelverzoek</b>: telefoonnummer, vraag en het hele gesprek in uw wachtrij.</p>
+        </div>
+        <div class="pain">
+          <p class="p">🌍 Familie in het buitenland, detentie in Nederland</p>
+          <p class="s">Uw specialisatie sinds 2002 — de assistent legt het ook
+          <b>in het Engels</b> uit, dag en nacht.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="try">
+    <section class="try wrap">
       <h2>Probeer deze vragen</h2>
-      <p class="hint">Klik op een vraag — hij wordt gekopieerd en het venster opent. Plak en verzend,
-      of typ gewoon uw eigen vraag. Let op wat er bij zaakvragen gebeurt: de assistent nodigt uit tot
-      een terugbelverzoek.</p>
+      <p class="hint">Klik = gekopieerd, venster opent rechtsonder. Of typ uw eigen vraag.</p>
       <div class="qgrid">
-        <button class="q" type="button" data-copy="Wat kost een strafzaak bij jullie?">Wat kost een strafzaak bij jullie?<span class="why">Tarieven, vast bedrag, toevoeging.</span></button>
-        <button class="q" type="button" data-copy="Waarmee helpt Koevoets Legal?">Waarmee helpt Koevoets Legal?<span class="why">Specialisaties en kernwaarden.</span></button>
-        <button class="q" type="button" data-copy="Wie is de advocaat en hoeveel ervaring heeft hij?">Wie is de advocaat?<span class="why">Achtergrond: sinds 1997, Szegedi, Hiddema.</span></button>
-        <button class="q lead" type="button" data-copy="Kan ik deze zaak winnen denk je?">Kan ik deze zaak winnen?<span class="why">Geen advies — wél een uitnodiging tot terugbelverzoek.</span></button>
-        <button class="q lead" type="button" data-copy="Mijn familielid zit in detentie, wat nu?">Mijn familielid zit in detentie, wat nu?<span class="why">Spoed → direct naar contactmoment.</span></button>
-        <button class="q lead" type="button" data-copy="Ik wil een intake aanvragen">Ik wil een intake aanvragen<span class="why">Aanmelding → terugbelverzoek / contactformulier.</span></button>
+        <button class="q" type="button" data-copy="Wat kost een strafzaak bij jullie?">Wat kost een strafzaak?<span class="why">Tarieven · toevoeging</span></button>
+        <button class="q" type="button" data-copy="Waarmee helpt Koevoets Legal?">Waarmee helpt Koevoets Legal?<span class="why">Specialisaties</span></button>
+        <button class="q" type="button" data-copy="Wie is de advocaat en hoeveel ervaring heeft hij?">Wie is de advocaat?<span class="why">Sinds 1997</span></button>
+        <button class="q lead" type="button" data-copy="Kan ik deze zaak winnen denk je?">Kan ik deze zaak winnen?<span class="why">Geen advies — wél een terugbelverzoek</span></button>
+        <button class="q lead" type="button" data-copy="Mijn familielid zit in detentie, wat nu?">Mijn familielid zit in detentie<span class="why">Spoed → contactmoment</span></button>
+        <button class="q lead" type="button" data-copy="Ik wil een intake aanvragen">Ik wil een intake aanvragen<span class="why">Aanmelding → terugbelverzoek</span></button>
       </div>
-      <p class="free">De assistent antwoordt ook in het Engels — schakel rechtsboven van taal.
-      En klik in het chatvenster op de knop <strong>“Terugbelverzoek aanvragen”</strong> om de
-      lead-opname zelf te ervaren.</p>
+      <p class="free">Klik in het venster ook eens op de knop <strong>&ldquo;Terugbelverzoek aanvragen&rdquo;</strong> —
+      zo ervaart u de lead-opname zelf.</p>
     </section>
 
-    <section class="leadbox">
+    <section class="wrap">
       <div class="leadcard">
         <h2>Zo wordt een chat een lead</h2>
-        <p>Een bezoeker met een eigen kwestie hoeft niets in te vullen op een contactpagina die hij
-        misschien nooit vindt. Het gesprek zelf is het formulier:</p>
         <ol class="steps">
-          <li><span class="n">1</span><span>De bezoeker stelt zijn vraag in de chat — 24/7, in het Nederlands of Engels.</span></li>
-          <li><span class="n">2</span><span>Bij elke zaakgerelateerde vraag nodigt de assistent uit op <strong>“Terugbelverzoek aanvragen”</strong> (de knop staat ook altijd zichtbaar in het venster).</span></li>
-          <li><span class="n">3</span><span>De bezoeker laat telefoonnummer + vraag achter; het volledige gesprek gaat mee — hij hoeft zich niet te herhalen.</span></li>
-          <li><span class="n">4</span><span>Het verzoek staat in uw eigen wachtrij (dashboard). U belt terug op het moment dat het u uitkomt.</span></li>
+          <li><span class="n">1</span><span>De bezoeker stelt zijn vraag — 24/7, NL of EN.</span></li>
+          <li><span class="n">2</span><span>De assistent nodigt uit op <strong>&ldquo;Terugbelverzoek aanvragen&rdquo;</strong> (de knop staat ook altijd in het venster).</span></li>
+          <li><span class="n">3</span><span>Telefoonnummer + vraag + het volledige gesprek staan in <strong>uw eigen wachtrij</strong>. U belt terug wanneer het u uitkomt.</span></li>
         </ol>
-        <p class="low">Telefoonnummer en vraag worden uitsluitend in uw wachtrij bewaard (7 dagen,
-        daarna automatisch verwijderd) — ze worden niet naar de AI gestuurd, niet geanalyseerd en
-        niet gedeeld.</p>
+        <p class="low">Telefoonnummers gaan uitsluitend naar uw eigen wachtrij (7 dagen bewaard) — nooit naar de AI.</p>
+      </div>
+      <div class="note">
+        <strong>Geen juridisch advies — nooit.</strong> De assistent informeert over het kantoor, de
+        tarieven en de aanmelding, en verwijst elke eigen kwestie door: terugbelverzoek,
+        contactformulier of info@koevoetslegal.eu. Dat blijft uw werk.
       </div>
     </section>
 
-    <section class="leadbox">
-      <div class="note law">
-        <strong>Over juridisch advies.</strong> De assistent geeft bewust geen juridisch advies en
-        geen inschatting van zaken of kansen — dat is uw werk. Hij informeert over het kantoor,
-        de tarieven en de aanmelding, en brengt de bezoeker daarna naar ú: via het terugbelverzoek,
-        het contactformulier op koevoetslegal.eu of info@koevoetslegal.eu. Bij spoed (arrestatie,
-        detentie) verwijst hij altijd direct door.
-      </div>
-    </section>
-
-    <section class="mailblock">
+    <section class="wrap">
       <div class="mailcard">
-        <h2>Live op koevoetslegal.eu</h2>
-        <p>Deze demo draait volledig op de informatie van uw eigen site. Tevreden over wat u ziet?
-        Wij plaatsen de assistent op uw website — één klein stukje code (uw WordPress-site
-        ondersteunt dit), dezelfde antwoorden als in deze demo, en terugbelverzoeken die voortaan
-        bij u binnenkomen in plaats van weg te lekken.</p>
-        <p class="low">Site-aanpassing of nieuwe tarieven? Stuur het ons en de assistent is binnen
-        enkele minuten bijgewerkt. U hoeft zelf niets te doen.</p>
-        <ol class="steps">
-          <li><span class="n">1</span><span>U mailt ons dat u wilt starten — <strong>hello@nexifyai.org</strong></span></li>
-          <li><span class="n">2</span><span>Wij verzorgen de koppeling met uw WordPress-site en de definitieve check</span></li>
-          <li><span class="n">3</span><span>De assistent staat live voor uw bezoekers — 24/7, in het Nederlands en Engels, leads in uw wachtrij</span></li>
-        </ol>
+        <h2>Live op koevoetslegal.eu?</h2>
+        <p>Eén regel code op uw WordPress-site en de assistent staat live — dezelfde antwoorden
+        als in deze demo. Tijdens de proefperiode kosteloos.</p>
         <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal&body=Beste%20Nexify%2C%0A%0AWij%20willen%20graag%20de%20chatbot%20op%20koevoetslegal%2Eeu%20laten%20plaatsen%2E%0A%0AGroet%2C%0AKoevoets%20Legal">✉ Mail ons — hello@nexifyai.org</a>
       </div>
     </section>
 
-    <section class="tech">
+    <section class="tech wrap">
       <details>
-        <summary>Over deze demo — hoe het werkt</summary>
-        <div class="note" style="margin-top:10px;">
-          <p style="margin:0 0 8px;">Deze demo draait <strong>live</strong>: de antwoorden komen
-          uit de echte kennisbank, opgebouwd uit uw eigen website (home, strafrecht &amp;
-          dienstverlening, tarieven, vreemdelingendetentie, contact) en uw klachtenregeling.</p>
-          <ul>
-            <li>Bovenaan het venster staat altijd de melding dat u met een AI-assistent chatt.</li>
-            <li>De knop <code>Terugbelverzoek aanvragen</code> staat permanent in het venster; vragen met zaakintentie nodigen er extra toe uit.</li>
-            <li>Een terugbelverzoek stuurt telefoonnummer, vraag en het volledige gesprek mee — de bezoeker ziet vooraf precies wat wordt verstuurd.</li>
-            <li>Vragen over andere kantoren of bedrijven beantwoordt de assistent niet — uw kennisbank blijft van ú.</li>
-            <li>Er worden geen chatgesprekken opgeslagen voor analyse; terugbelverzoeken worden na 7 dagen automatisch verwijderd.</li>
-          </ul>
-        </div>
+        <summary>Over deze demo</summary>
+        <ul>
+          <li>Deze demo draait <strong>live</strong> op de echte kennisbank (31 punten uit uw eigen website en klachtenregeling).</li>
+          <li>Bovenaan het venster staat altijd de AI-melding; vragen over andere kantoren worden niet beantwoord.</li>
+          <li>Een terugbelverzoek stuurt telefoonnummer, vraag en het gesprek mee — de bezoeker ziet vooraf wat wordt verstuurd; na 7 dagen automatisch verwijderd.</li>
+        </ul>
       </details>
     </section>
 
-    <footer>
-      Deze testpagina is opgesteld door <a href="https://nexifyai.org">Nexify AI</a> ·
-      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · In deze demo worden geen
-      klantgegevens bewaard.
+    <footer class="wrap">
+      Testpagina door <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · geen klantgegevens bewaard
     </footer>
   </div>
 
   <!-- ============ ENGLISH ============ -->
   <div class="en">
-    <section class="hero">
-      <span class="badge">DEMO · built on your own website's information</span>
-      <h1>From anonymous visitor to contact moment</h1>
-      <p class="sub">Visitors to your website ask questions — often outside office hours, often with
-      a matter of their own. The digital assistant answers them <strong>24/7</strong> about the
-      firm, the specialisations, the fees and the complaints procedure, and on every case-related
-      question actively invites them to leave a <strong>call-back request</strong>: phone number +
-      question + the full conversation, straight into your own queue. No lead quietly disappears.</p>
-      <p class="bounds">The assistant is an information aid and a conversion scout: it never gives
-      legal advice or case assessments, and refers every personal matter to the call-back request,
-      your contact form or <strong>info@koevoetslegal.eu</strong>.</p>
+    <section class="hero wrap">
+      <span class="badge">DEMO · built on your own website</span>
+      <h1>Your next client asked their question last night, 11:40 pm</h1>
+      <p class="sub">Visitors of koevoetslegal.eu ask questions outside office hours — and leave
+      silently. This assistant answers <strong>24/7</strong> (Dutch/English) and turns every
+      contact into a <strong>call-back request</strong> in your own queue.</p>
       <div class="cta-row">
-        <button class="btn-primary" type="button" data-open-demo>▶ Start the demo — the window opens bottom-right</button>
-        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal">Put the chatbot on koevoetslegal.eu →</a>
+        <button class="btn-primary" type="button" data-open-demo>▶ Try the demo — bottom-right</button>
+        <a class="btn-secondary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal">Put it on koevoetslegal.eu →</a>
       </div>
-      <p class="cta-note">This demo runs live on the real knowledge base: 31 points from your own
-      website and complaints procedure. Call-back details go only to your own queue — never to the AI.</p>
+      <p class="cta-note">Runs live on your own knowledge base · no customer data is kept</p>
     </section>
 
-    <section class="trust">
-      <div class="t">✅ Only answers from your own knowledge base</div>
-      <div class="t lead"><strong>📋 Call-back = lead</strong> — phone + question + conversation in your queue</div>
-      <div class="t">🛡️ GDPR · phone numbers never go to the AI, only to your queue</div>
-      <div class="t">⚖️ No legal advice — always a referral to the firm</div>
+    <section class="pains wrap">
+      <h2>Sound familiar?</h2>
+      <div class="pgrid">
+        <div class="pain">
+          <p class="p">🌙 &ldquo;My son was arrested tonight — what now?&rdquo;</p>
+          <p class="s">Exactly when nobody answers. The assistant recognises urgency and brings
+          the visitor <b>straight to a contact moment</b>.</p>
+        </div>
+        <div class="pain">
+          <p class="p">💶 &ldquo;What does a criminal case cost?&rdquo;</p>
+          <p class="s">The same question, every week. The assistant answers <b>instantly and
+          correctly</b> — from your own fees page (€295 fixed, legal aid possible).</p>
+        </div>
+        <div class="pain">
+          <p class="p">🤐 The anonymous visitor who leaves silently</p>
+          <p class="s">Until now, without a trace. On every case question the assistant invites a
+          <b>call-back request</b>: phone number, question and the full conversation in your queue.</p>
+        </div>
+        <div class="pain">
+          <p class="p">🌍 Family abroad, detention in the Netherlands</p>
+          <p class="s">Your specialism since 2002 — the assistant explains it
+          <b>in English too</b>, day and night.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="try">
+    <section class="try wrap">
       <h2>Try these questions</h2>
-      <p class="hint">Click a question — it is copied to your clipboard and the window opens.
-      Paste and send, or simply type your own. Watch what happens on case questions: the assistant
-      invites a call-back request.</p>
+      <p class="hint">Click = copied, window opens bottom-right. Or type your own question.</p>
       <div class="qgrid">
-        <button class="q" type="button" data-copy="What does a criminal case cost?">What does a criminal case cost?<span class="why">Fees, fixed fee, legal aid.</span></button>
-        <button class="q" type="button" data-copy="What does Koevoets Legal help with?">What does Koevoets Legal help with?<span class="why">Specialisations and core values.</span></button>
-        <button class="q" type="button" data-copy="Who is the lawyer?">Who is the lawyer?<span class="why">Background: since 1997, Szegedi, Hiddema.</span></button>
-        <button class="q lead" type="button" data-copy="Can I win this case, you think?">Can I win this case?<span class="why">No advice — but an invitation to a call-back.</span></button>
-        <button class="q lead" type="button" data-copy="My relative is in detention, what now?">My relative is in detention<span class="why">Urgent → straight to a contact moment.</span></button>
-        <button class="q lead" type="button" data-copy="I would like to request an intake">I would like to request an intake<span class="why">Submission → call-back / contact form.</span></button>
+        <button class="q" type="button" data-copy="What does a criminal case cost?">What does a criminal case cost?<span class="why">Fees · legal aid</span></button>
+        <button class="q" type="button" data-copy="What does Koevoets Legal help with?">What does Koevoets Legal help with?<span class="why">Specialisms</span></button>
+        <button class="q" type="button" data-copy="Who is the lawyer?">Who is the lawyer?<span class="why">Since 1997</span></button>
+        <button class="q lead" type="button" data-copy="Can I win this case, you think?">Can I win this case?<span class="why">No advice — but a call-back</span></button>
+        <button class="q lead" type="button" data-copy="My relative is in detention, what now?">My relative is in detention<span class="why">Urgent → contact moment</span></button>
+        <button class="q lead" type="button" data-copy="I would like to request an intake">I would like an intake<span class="why">Submission → call-back</span></button>
       </div>
-      <p class="free">The assistant also answers in Dutch — switch language top-right.
-      And click the <strong>“Request a call back”</strong> button inside the chat window to
-      experience the lead capture itself.</p>
+      <p class="free">Also click the <strong>&ldquo;Request a call back&rdquo;</strong> button in the
+      window — experience the lead capture yourself.</p>
     </section>
 
-    <section class="leadbox">
+    <section class="wrap">
       <div class="leadcard">
         <h2>How a chat becomes a lead</h2>
-        <p>A visitor with a real matter shouldn't have to find a contact page they may never see.
-        The conversation itself is the form:</p>
         <ol class="steps">
-          <li><span class="n">1</span><span>The visitor asks their question in the chat — 24/7, in Dutch or English.</span></li>
-          <li><span class="n">2</span><span>On every case-related question the assistant invites them to <strong>“Request a call back”</strong> (the button is also permanently visible in the window).</span></li>
-          <li><span class="n">3</span><span>The visitor leaves a phone number + question; the full conversation is attached — no repeating themselves.</span></li>
-          <li><span class="n">4</span><span>The request sits in your own queue (dashboard). You call back when it suits you.</span></li>
+          <li><span class="n">1</span><span>The visitor asks their question — 24/7, Dutch or English.</span></li>
+          <li><span class="n">2</span><span>The assistant invites them to <strong>&ldquo;Request a call back&rdquo;</strong> (the button is also permanently in the window).</span></li>
+          <li><span class="n">3</span><span>Phone number + question + the full conversation land in <strong>your own queue</strong>. You call back when it suits you.</span></li>
         </ol>
-        <p class="low">Phone number and question are kept only in your queue (7 days, then
-        automatically deleted) — they are never sent to the AI, analysed, or shared.</p>
+        <p class="low">Phone numbers go only to your own queue (kept 7 days) — never to the AI.</p>
+      </div>
+      <div class="note">
+        <strong>No legal advice — ever.</strong> The assistant informs about the firm, the fees and
+        how to submit a case, and refers every personal matter to you: call-back request, contact
+        form or info@koevoetslegal.eu.
       </div>
     </section>
 
-    <section class="leadbox">
-      <div class="note law">
-        <strong>About legal advice.</strong> The assistant deliberately gives no legal advice and no
-        assessment of cases or chances — that is your work. It informs about the firm, the fees and
-        how to submit a case, then brings the visitor to you: via the call-back request, the contact
-        form on koevoetslegal.eu or info@koevoetslegal.eu. In urgent situations (arrest, detention)
-        it always refers directly.
-      </div>
-    </section>
-
-    <section class="mailblock">
+    <section class="wrap">
       <div class="mailcard">
-        <h2>Go live on koevoetslegal.eu</h2>
-        <p>This demo runs entirely on your own site's information. Happy with what you see?
-        We place the assistant on your website — one small piece of code (your WordPress site
-        supports this), the same answers as in this demo, and call-back requests that now land
-        with you instead of leaking away.</p>
-        <p class="low">Site change or new fees? Send it over and the assistant is updated within
-        minutes. You don't have to do anything yourself.</p>
-        <ol class="steps">
-          <li><span class="n">1</span><span>You e-mail us to get started — <strong>hello@nexifyai.org</strong></span></li>
-          <li><span class="n">2</span><span>We handle the connection with your WordPress site and the final check</span></li>
-          <li><span class="n">3</span><span>The assistant is live for your visitors — 24/7, in Dutch and English, leads in your queue</span></li>
-        </ol>
+        <h2>Go live on koevoetslegal.eu?</h2>
+        <p>One line of code on your WordPress site and the assistant is live — the same answers
+        as in this demo. Free during the trial period.</p>
         <a class="btn-primary" href="mailto:hello@nexifyai.org?subject=Livegang%20chatbot%20%E2%80%94%20Koevoets%20Legal&body=Dear%20Nexify%2C%0A%0AWe%20would%20like%20to%20have%20the%20chatbot%20placed%20on%20koevoetslegal%2Eeu%2E%0A%0ARegards%2C%0AKoevoets%20Legal">✉ E-mail us — hello@nexifyai.org</a>
       </div>
     </section>
 
-    <section class="tech">
+    <section class="tech wrap">
       <details>
-        <summary>About this demo — how it works</summary>
-        <div class="note" style="margin-top:10px;">
-          <p style="margin:0 0 8px;">This demo runs <strong>live</strong>: the answers come from
-          the real knowledge base, built from your own website (home, criminal law &amp; services,
-          fees, immigration detention, contact) and your complaints procedure.</p>
-          <ul>
-            <li>The bar at the top of the window always states that you are chatting with an AI assistant.</li>
-            <li>The <code>Request a call back</code> button is permanently in the window; case-intent questions additionally invite it.</li>
-            <li>A call-back request includes phone number, question and the full conversation — the visitor sees exactly what will be sent beforehand.</li>
-            <li>Questions about other firms or businesses are not answered — your knowledge base stays yours.</li>
-            <li>No chat conversations are stored for analysis; call-back requests are deleted automatically after 7 days.</li>
-          </ul>
-        </div>
+        <summary>About this demo</summary>
+        <ul>
+          <li>This demo runs <strong>live</strong> on the real knowledge base (31 points from your own website and complaints procedure).</li>
+          <li>The AI notice stays on top of the window; questions about other firms are not answered.</li>
+          <li>A call-back request sends phone number, question and the conversation — the visitor sees what will be sent; deleted automatically after 7 days.</li>
+        </ul>
       </details>
     </section>
 
-    <footer>
-      This test page was prepared by <a href="https://nexifyai.org">Nexify AI</a> ·
-      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · No customer data is kept in this demo.
+    <footer class="wrap">
+      Test page by <a href="https://nexifyai.org">Nexify AI</a> ·
+      <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a> · no customer data is kept
     </footer>
   </div>
 
   <!--
-    HOSTED COPY on nexifyai.org — loads the production widget bundle so Koevoets config
+    Force the widget UI to Dutch on this demo page. The widget otherwise follows
+    the VISITOR's browser language, so a reviewer with an English browser sees an
+    English greeting and concludes the page "isn't Dutch". Display-only override;
+    chat replies still follow the language the visitor types in.
+  -->
+  <script>
+    (function () {
+      try {
+        Object.defineProperty(navigator, 'languages', { get: function () { return ['nl']; } });
+        Object.defineProperty(navigator, 'language', { get: function () { return 'nl'; } });
+      } catch (e) { /* older browsers: widget falls back to tenant default (nl) */ }
+    })();
+  </script>
+
+  <!--
+    HOSTED COPY on nexifyai.org — production widget bundle so Koevoets config
     updates roll out automatically. Live mode: real knowledge base, tenant
-    `koevoets-legal`, nexifyai.org whitelisted, knowledge ingested (2026-09-22).
-    This page deliberately carries no other nav or sales bot: single goal, no exits.
+    `koevoets-legal`, nexifyai.org whitelisted. No nav, no sales bot: one goal.
   -->
   <script src="https://agent.nexifyai.org/widget/widget.js"
           data-tenant="koevoets-legal"
@@ -424,7 +407,7 @@
           var en = document.body.classList.contains('show-en');
           var done = function () {
             var old = b.querySelector('.why') ? b.querySelector('.why').textContent : '';
-            b.style.borderColor = '#1e3a5f';
+            b.style.borderColor = '#ed7d31';
             b.setAttribute('data-why', old);
             if (b.querySelector('.why')) b.querySelector('.why').textContent =
               en ? '✓ Copied — paste it in the window (Ctrl+V)' : '✓ Gekopieerd — plak in het venster (Ctrl+V)';
