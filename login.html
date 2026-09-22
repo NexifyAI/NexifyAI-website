@@ -533,23 +533,13 @@ h1,h2,h3,p{margin:0;}
         </div>
         <h2 data-i18n="loginTitle">Sign In</h2>
         <p class="sub" data-i18n="loginSubtitle">Access your Nexify AI dashboard.</p>
-        
-        <form onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="login-email" data-i18n="loginEmail">Email</label>
-            <input type="email" id="login-email" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label for="login-password" data-i18n="loginPassword">Password</label>
-            <input type="password" id="login-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
-          </div>
-          <button type="submit" class="btn btn-primary" data-i18n="loginBtn">Sign In</button>
-        </form>
-        
+
+        <a class="btn btn-primary login-cta" href="https://agent.nexifyai.org/admin" data-i18n="loginBtn">Go to the dashboard</a>
+
         <div class="login-notice" data-i18n="loginNotice">
-          <strong>Dashboard coming soon</strong> &mdash; contact us for early access.
+          <strong>Dashboard is live</strong> &mdash; sign in with email, password and your authenticator code.
         </div>
-        
+
         <div class="login-footer-links">
           <a href="/contact" data-i18n="loginContact">Contact support</a>
           <span style="margin:0 .5rem;">&middot;</span>
@@ -561,10 +551,9 @@ h1,h2,h3,p{margin:0;}
 </main>
 
 <script>
-function handleLogin(e) {
-  e.preventDefault();
-  alert('Dashboard is coming soon! Please contact us for early access.');
-}
+/* WP-2.5: the real sign-in form lives in the admin SPA (agent.nexifyai.org/admin).
+   This page is a branded entry point only — cookies are SameSite=Lax, so a
+   cross-site form login would not work by design. */
 </script>
 
 
@@ -721,9 +710,9 @@ const copy = {
     "loginSubtitle": "Access your Nexify AI dashboard.",
     "loginEmail": "Email",
     "loginPassword": "Password",
-    "loginBtn": "Sign In",
-    "loginNoticeTitle": "Dashboard coming soon",
-    "loginNotice": "We’re building the customer dashboard. <strong>Contact us for early access.</strong>",
+    "loginBtn": "Go to the dashboard",
+    "loginNoticeTitle": "Dashboard is live",
+    "loginNotice": "<strong>Dashboard is live</strong> — sign in with email, password and your authenticator code.",
     "loginContact": "Contact support",
     "loginBack": "Back to home",
     footerAbout:'About Us',
@@ -863,9 +852,9 @@ const copy = {
     "loginSubtitle": "Toegang tot je Nexify AI dashboard.",
     "loginEmail": "E-mail",
     "loginPassword": "Wachtwoord",
-    "loginBtn": "Inloggen",
-    "loginNoticeTitle": "Dashboard komt eraan",
-    "loginNotice": "We zijn het klantdashboard aan het bouwen. <strong>Neem contact op voor vroege toegang.</strong>",
+    "loginBtn": "Naar het dashboard",
+    "loginNoticeTitle": "Dashboard is live",
+    "loginNotice": "<strong>Dashboard is live</strong> — log in met e-mail, wachtwoord en je authenticatorcode.",
     "loginContact": "Contact opnemen",
     "loginBack": "Terug naar home",
     footerAbout:'Over ons',
@@ -1005,9 +994,9 @@ const copy = {
     "loginSubtitle": "Accédez à votre tableau de bord Nexify AI.",
     "loginEmail": "E-mail",
     "loginPassword": "Mot de passe",
-    "loginBtn": "Se connecter",
-    "loginNoticeTitle": "Tableau de bord bientôt disponible",
-    "loginNotice": "Nous sommes en train de construire le tableau de bord client. <strong>Contactez-nous pour un accès anticipé.</strong>",
+    "loginBtn": "Aller au tableau de bord",
+    "loginNoticeTitle": "Tableau de bord disponible",
+    "loginNotice": "<strong>Le tableau de bord est disponible</strong> — connectez-vous avec votre e-mail, mot de passe et code d'authentification.",
     "loginContact": "Contacter le support",
     "loginBack": "Retour à l'accueil",
     footerAbout:'À propos',
