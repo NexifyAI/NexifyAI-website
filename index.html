@@ -613,13 +613,7 @@ h1,h2,h3,p{margin:0;}
           <a href="/solutions-beauty-salons" data-i18n="navSolSalon">Beauty & Salons</a>
         </div>
       </div>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navDemo">See It in Action <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/demo" data-i18n="navDemoLive">Live Demo</a>
-          <a href="/demo-phone" data-i18n="navDemoPhone">Phone Demo</a>
-        </div>
-      </div>
+      <a href="/demo" data-i18n="navDemo">Demo</a>
       <div class="nav-item">
         <button class="nav-link" data-i18n="navPricing">Pricing <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="dropdown">
@@ -629,8 +623,6 @@ h1,h2,h3,p{margin:0;}
         </div>
       </div>
       <a href="/pilot-results" data-i18n="navResults">Results</a>
-      <a href="/about" data-i18n="navAbout">About</a>
-      <a href="/contact" data-i18n="navContact">Contact</a>
       <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
       <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
@@ -651,13 +643,90 @@ h1,h2,h3,p{margin:0;}
 <!-- ========== Hero ========== -->
 <section class="hero">
   <div class="container">
-    <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">AI Customer Service Agent</span></div>
-    <h1 data-i18n="heroTitle">Flawless service, even when you can't be everywhere.</h1>
-    <p class="hero-copy" data-i18n="heroCopy">Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.</p>
+    <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">AI Customer Service Agent &mdash; 100% Self-Serve</span></div>
+    <h1 data-i18n="heroTitle">Your AI assistant, live in minutes &mdash; not weeks.</h1>
+    <p class="hero-copy" data-i18n="heroCopy">No backend setup. No waiting on sales or IT. Chat with our AI to build yours, confirm by email, and paste one line of code. You're in full control.</p>
     <div class="hero-actions">
-      <a href="https://agent.nexifyai.org/onboarding?from=hero" id="btn-start-trial" class="btn btn-primary" data-i18n="heroCtaTrial">Get Started Free</a>
-      <a href="/demo" id="btn-book-demo" class="btn btn-secondary" data-i18n="heroCtaPrimary">Book Demo</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=hero" id="btn-start-trial" class="btn btn-primary" data-i18n="heroCtaTrial">&#9889; Get Started Free</a>
+      <a href="#how" id="btn-book-demo" class="btn btn-secondary" data-i18n="heroHowCta">See how it works</a>
       <a href="/pricing-subscription" class="btn btn-secondary" data-i18n="heroCtaSecondary">View Pricing</a>
+    </div>
+    <div class="hero-trust">
+      <span data-i18n="heroTrust1">&#10003; 100% Self-Serve</span>
+      <span data-i18n="heroTrust2">&#10003; Zero Backend Integration</span>
+      <span data-i18n="heroTrust3">&#10003; Full Control &mdash; Live in Minutes</span>
+    </div>
+    <p class="hero-data" data-i18n="heroData">Ready in 3 minutes &middot; 14-day free trial &middot; No credit card</p>
+  </div>
+</section>
+
+<section class="values" id="preview" style="padding-top:0;">
+  <div class="container">
+    <div class="spv-wrap">
+      <div class="spv">
+        <div class="spv-bar"><i style="background:#e2695e"></i><i style="background:#e9b949"></i><i style="background:#58bf71"></i><span data-i18n="pvBar">Build your assistant &mdash; live conversation</span></div>
+        <div class="spv-body">
+          <div class="spv-chat">
+            <div class="spv-msg spv-user" data-i18n="pvUser">We're Bistro Zomer, a cozy bistro in Utrecht. Warm tone, please &mdash; and our color is #7C3AED.</div>
+            <div class="spv-msg spv-bot" data-i18n="pvBot">Lovely! I've created your assistant: warm and welcoming, answering in your voice, in 30+ languages. Where should bookings go?</div>
+          </div>
+          <div class="spv-draft">
+            <h4 data-i18n="pvDraft">Your draft</h4>
+            <div class="spv-chip"><span data-i18n="pvName">Name</span><b>Bistro Zomer</b></div>
+            <div class="spv-chip"><span data-i18n="pvTone">Tone</span><b data-i18n="pvWarm">Warm &amp; friendly</b></div>
+            <div class="spv-chip"><span data-i18n="pvColor">Color</span><b>#7C3AED</b></div>
+            <div class="spv-chip"><span data-i18n="pvBooking">Booking</span><b data-i18n="pvReady">&#10003; Ready</b></div>
+          </div>
+        </div>
+      </div>
+      <p class="spv-cap" data-i18n="pvCaption">A real first minute &mdash; the assistant is built while you chat. Restaurant shown as an example; yours will fit your business and your languages.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 3-Step Autonomous Setup ========== -->
+<section class="values" id="how">
+  <div class="container">
+    <div class="sim-head" style="margin-bottom:var(--space-6);">
+      <h2 data-i18n="howTitle">Launch it yourself &mdash; in three steps</h2>
+      <p data-i18n="howSub">No project team, no integration sprint. The whole flow is yours, on your schedule.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <h3 data-i18n="how1T">&#128172; Chat to configure</h3>
+        <p data-i18n="how1B">Tell our AI about your business &mdash; name, tone, brand color, booking method. It builds the assistant with you, in your language.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <h3 data-i18n="how2T">&#9993;&#65039; One click to claim</h3>
+        <p data-i18n="how2B">We email you a magic link. Click to confirm &mdash; your account, workspace and 14-day free trial are created instantly.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <h3 data-i18n="how3T">&#128203; Paste one line, go live</h3>
+        <p data-i18n="how3B">Copy the embed snippet into your site. Your branded assistant answers customers the same day.</p>
+      </div>
+    </div>
+    <div class="cmp">
+      <div class="cmp-col cmp-old">
+        <h3 data-i18n="cmpOldT">&#10060; The old way</h3>
+        <ul>
+          <li data-i18n="cmpOld1">Weeks of IT tickets and API specs</li>
+          <li data-i18n="cmpOld2">A backend integration project</li>
+          <li data-i18n="cmpOld3">Waiting on vendor onboarding</li>
+          <li data-i18n="cmpOld4">Support requests for every change</li>
+        </ul>
+      </div>
+      <div class="cmp-col cmp-new">
+        <h3 data-i18n="cmpNewT">&#9989; Your way (NexifyAI)</h3>
+        <ul>
+          <li data-i18n="cmpNew1">100% self-directed setup</li>
+          <li data-i18n="cmpNew2">Zero backend integration</li>
+          <li data-i18n="cmpNew3">Live in minutes, on your schedule</li>
+          <li data-i18n="cmpNew4">Full control &mdash; you configure everything</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -674,29 +743,50 @@ h1,h2,h3,p{margin:0;}
         <div class="value-icon">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
         </div>
-        <h3 class="value-title" data-i18n="solRestTitle">Restaurants</h3>
+        <h3 class="value-title"><a href="/solutions-restaurants" data-i18n="solRestTitle" style="color:inherit;text-decoration:none;">Restaurants</a></h3>
         <p class="value-desc" data-i18n="solRestDesc">Automated reservations, order-taking and menu inquiries across chat, phone and email.</p>
       </div>
       <div class="value-card" data-color="blue">
         <div class="value-icon">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
         </div>
-        <h3 class="value-title" data-i18n="solDocTitle">General Practice</h3>
+        <h3 class="value-title"><a href="/solutions-general-practice" data-i18n="solDocTitle" style="color:inherit;text-decoration:none;">General Practice</a></h3>
         <p class="value-desc" data-i18n="solDocDesc">Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.</p>
       </div>
       <div class="value-card" data-color="amber">
         <div class="value-icon">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
         </div>
-        <h3 class="value-title" data-i18n="solLawTitle">Law Firms</h3>
+        <h3 class="value-title"><a href="/solutions-law-firms" data-i18n="solLawTitle" style="color:inherit;text-decoration:none;">Law Firms</a></h3>
         <p class="value-desc" data-i18n="solLawDesc">Intake screening, consultation booking and document requests handled instantly.</p>
       </div>
       <div class="value-card" data-color="green">
         <div class="value-icon">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"></path><path d="M9 21V12h6v9"></path></svg>
         </div>
-        <h3 class="value-title" data-i18n="solRealTitle">Real Estate Agencies</h3>
+        <h3 class="value-title"><a href="/solutions-real-estate" data-i18n="solRealTitle" style="color:inherit;text-decoration:none;">Real Estate Agencies</a></h3>
         <p class="value-desc" data-i18n="solRealDesc">Viewing requests, listing questions and lead qualification, day and night.</p>
+      </div>
+      <div class="value-card" data-color="blue">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
+        </div>
+        <h3 class="value-title"><a href="/solutions-physiotherapy" data-i18n="solPhysioTitle" style="color:inherit;text-decoration:none;">Physiotherapy</a></h3>
+        <p class="value-desc" data-i18n="solPhysioDesc">Appointment booking, intake questions and exercise FAQs &mdash; answered around the clock.</p>
+      </div>
+      <div class="value-card" data-color="green">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
+        </div>
+        <h3 class="value-title"><a href="/solutions-dentists" data-i18n="solDentistTitle" style="color:inherit;text-decoration:none;">Dentists</a></h3>
+        <p class="value-desc" data-i18n="solDentistDesc">Scheduling, reminder FAQs and insurance questions handled instantly, in every patient's language.</p>
+      </div>
+      <div class="value-card" data-color="amber">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
+        </div>
+        <h3 class="value-title"><a href="/solutions-beauty-salons" data-i18n="solSalonTitle" style="color:inherit;text-decoration:none;">Beauty &amp; Salons</a></h3>
+        <p class="value-desc" data-i18n="solSalonDesc">Booking requests, service questions and opening-hours answers &mdash; even after closing time.</p>
       </div>
     </div>
   </div>
@@ -707,7 +797,7 @@ h1,h2,h3,p{margin:0;}
   <div class="container">
     <div class="sim-head">
       <h2 data-i18n="simTitle">See it in action</h2>
-      <p data-i18n="simSub">A multilingual restaurant booking—handled across chat, phone and email, around the clock, in the customer's own language.</p>
+      <p data-i18n="simSub">Built by a business owner in minutes — no developers. Shown here for a restaurant; yours will speak your voice and your customers' languages.</p>
     </div>
 
     <div class="sim-controls">
@@ -784,6 +874,8 @@ h1,h2,h3,p{margin:0;}
         </div>
         <h3 class="value-title" data-i18n="modelMonthlyTitle">Monthly Subscription</h3>
         <p class="value-desc" data-i18n="modelMonthlyDesc">A fixed monthly fee covering usage, updates and support — predictable budgeting.</p>
+        <p class="value-price" data-i18n="mPrice1"></p>
+        <p style="margin:.35rem 0 0;font-size:.85rem"><a href="/pricing-subscription" data-i18n="mLink1" style="color:inherit;font-weight:600"></a></p>
       </div>
       <div class="value-card" data-color="blue">
         <div class="value-icon">
@@ -791,6 +883,8 @@ h1,h2,h3,p{margin:0;}
         </div>
         <h3 class="value-title" data-i18n="modelPayTitle">Pay As You Use</h3>
         <p class="value-desc" data-i18n="modelPayDesc">Only pay for actual conversations handled — ideal for testing or seasonal demand.</p>
+        <p class="value-price" data-i18n="mPrice2"></p>
+        <p style="margin:.35rem 0 0;font-size:.85rem"><a href="/pricing-payg" data-i18n="mLink2" style="color:inherit;font-weight:600"></a></p>
       </div>
       <div class="value-card" data-color="amber">
         <div class="value-icon">
@@ -798,50 +892,43 @@ h1,h2,h3,p{margin:0;}
         </div>
         <h3 class="value-title" data-i18n="modelCustomTitle">Fully Customized</h3>
         <p class="value-desc" data-i18n="modelCustomDesc">Tailored workflows, integrations and pricing built around your specific business needs.</p>
+        <p class="value-price" data-i18n="mPrice3"></p>
+        <p style="margin:.35rem 0 0;font-size:.85rem"><a href="/pricing-custom" data-i18n="mLink3" style="color:inherit;font-weight:600"></a></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== Pilot Program ========== -->
-<section class="values" id="cases">
-  <div class="container" style="text-align:center;">
-    <div class="sim-head" style="margin-bottom:var(--space-8);">
-      <h2 data-i18n="pilotTitle">Pilot Program</h2>
-      <p data-i18n="pilotSub" style="margin-top:var(--space-3);">We're working with a select group of businesses to shape the future of AI customer service. Limited spots available.</p>
-    </div>
-    <div class="values-grid" style="grid-template-columns:repeat(3,1fr);margin-top:var(--space-8);text-align:left;">
-      <div class="value-card" data-color="green">
-        <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18M3 15h18M6 19h12M8 3h8l2 8H6l2-8z"></path></svg>
-        </div>
-        <h3 class="value-title" data-i18n="pilotRestTitle">Local Restaurant Group</h3>
-        <p class="value-desc" data-i18n="pilotRestDesc">Multilingual reservation &amp; order handling across 3 locations in Amsterdam. Launching Q3 2026.</p>
-        <div class="pilot-badge" data-i18n="pilotStatus">Pilot · In Progress</div>
-      </div>
-      <div class="value-card" data-color="blue">
-        <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path><path d="M4 20a8 8 0 0 1 16 0"></path></svg>
-        </div>
-        <h3 class="value-title" data-i18n="pilotClinicTitle">General Practice Clinic</h3>
-        <p class="value-desc" data-i18n="pilotClinicDesc">Dutch &amp; English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.</p>
-        <div class="pilot-badge" data-i18n="pilotStatus">Pilot · In Progress</div>
-      </div>
-      <div class="value-card" data-color="amber">
-        <div class="value-icon">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5z"></path><path d="M3 8v8l9 5 9-5V8"></path></svg>
-        </div>
-        <h3 class="value-title" data-i18n="pilotLawTitle">Small Law Firm</h3>
-        <p class="value-desc" data-i18n="pilotLawDesc">Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.</p>
-        <div class="pilot-badge pilot-upcoming" data-i18n="pilotUpcoming">Pilot · Starting Soon</div>
-      </div>
-    </div>
-    <a href="https://agent.nexifyai.org/onboarding?from=page" id="btn-pilot" class="btn btn-primary" data-i18n="pilotCta" style="margin-top:var(--space-8);display:inline-flex;">&#9889; Start Free</a>
-  </div>
-</section>
+
 
 
 <!-- ========== Footer ========== -->
+<!-- ========== FAQ ========== -->
+<section class="values" id="faq">
+  <div class="container">
+    <div class="sim-head" style="margin-bottom:var(--space-6);">
+      <h2 data-i18n="faqTitle">Questions, answered</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><h3 data-i18n="faq1Q">How long does setup really take?</h3><p data-i18n="faq1A">About three minutes of chatting. The AI builds your assistant as you describe your business; the email confirmation and embed snippet take two more clicks.</p></div>
+      <div class="faq-item"><h3 data-i18n="faq2Q">Do I need technical skills or a developer?</h3><p data-i18n="faq2A">No. If you can paste one line of code into your website &mdash; or forward it to whoever manages your site &mdash; you're done. There is no backend integration.</p></div>
+      <div class="faq-item"><h3 data-i18n="faq3Q">What happens after the 14-day trial?</h3><p data-i18n="faq3A">You pick a plan: a fixed monthly subscription or pay-per-conversation. No credit card is required to start, and nothing is charged automatically.</p></div>
+      <div class="faq-item"><h3 data-i18n="faq4Q">What about privacy and AI rules?</h3><p data-i18n="faq4A">Conversations are archived in the EU with automated PII redaction and fixed retention. The assistant always identifies itself as AI, and you confirm your own compliance responsibilities before going live.</p></div>
+      <div class="faq-item"><h3 data-i18n="faq5Q">Can it really speak my customers' languages?</h3><p data-i18n="faq5A">Yes &mdash; 30+, including Dutch, French, German, Spanish and English. It detects the customer's language automatically and answers in kind.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="nex-final-cta">
+  <style>.nex-final-cta{padding:4rem 1.5rem;background:var(--color-bg-alt,rgba(45,170,88,.06));border-top:1px solid rgba(127,127,127,.14)}.nex-final-cta .nfc-inner{max-width:720px;margin:0 auto;text-align:center}.nex-final-cta h2{font-size:1.6rem;line-height:1.25;margin:0 0 1rem}.nex-final-cta .nfc-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.85rem 1.9rem;border-radius:999px;background:var(--color-primary,#2daa58);color:#fff;font-weight:600;text-decoration:none}.nex-final-cta .nfc-btn:hover{opacity:.92}.nex-final-cta .nfc-trust{margin:1rem 0 .35rem;font-size:.92rem;color:var(--color-text-muted,#5b6b66)}.nex-final-cta .nfc-sub{margin:.15rem 0 0;font-size:.82rem;color:var(--color-text-muted,#5b6b66)}</style>
+  <div class="nfc-inner">
+    <h2 data-i18n="nexCtaTitle">Ready to launch your own assistant?</h2>
+    <a class="nfc-btn" href="https://agent.nexifyai.org/onboarding?from=cta" data-i18n="nexCtaBtn">&#9889; Get Started Free</a>
+    <p class="nfc-trust"><span data-i18n="nexCtaT1">&#10003; 100% Self-Serve</span> &middot; <span data-i18n="nexCtaT2">&#10003; Zero Backend Integration</span> &middot; <span data-i18n="nexCtaT3">&#10003; Full Control &mdash; Live in Minutes</span></p>
+    <p class="nfc-sub" data-i18n="nexCtaReady">Ready in 3 minutes &middot; 14-day free trial &middot; No credit card</p>
+  </div>
+</section>
+
 <footer class="site-footer">
   <div class="container footer-main">
     <div class="footer-grid">
@@ -891,55 +978,106 @@ h1,h2,h3,p{margin:0;}
 /* ===== UI copy (header/hero/values) ===== */
 const copy = {
   en: {
+    nexCtaReady:'Ready in 3 minutes · 14-day free trial · No credit card',
+    nexCtaT3:'✓ Full Control — Live in Minutes',
+    nexCtaT2:'✓ Zero Backend Integration',
+    nexCtaT1:'✓ 100% Self-Serve',
+    nexCtaBtn:'⚡ Get Started Free',
+    nexCtaTitle:'Ready to launch your own assistant?',
+    faq5A:'Yes — 30+, including Dutch, French, German, Spanish and English. It detects the customer\'s language automatically and answers in kind.',
+    faq5Q:'Can it really speak my customers\' languages?',
+    faq4A:'Conversations are archived in the EU with automated PII redaction and fixed retention. The assistant always identifies itself as AI, and you confirm your own compliance responsibilities before going live.',
+    faq4Q:'What about privacy and AI rules?',
+    faq3A:'You pick a plan: a fixed monthly subscription or pay-per-conversation. No credit card is required to start, and nothing is charged automatically.',
+    faq3Q:'What happens after the 14-day trial?',
+    faq2A:'No. If you can paste one line of code into your website — or forward it to whoever manages your site — you\'re done. There is no backend integration.',
+    faq2Q:'Do I need technical skills or a developer?',
+    faq1A:'About three minutes of chatting. The AI builds your assistant as you describe your business; the email confirmation and embed snippet take two more clicks.',
+    faq1Q:'How long does setup really take?',
+    faqTitle:'Questions, answered',
+    mLink3:'Request a quote →',
+    mLink2:'See pay-as-you-use →',
+    mLink1:'See subscription plans →',
+    mPrice3:'Tailored quote',
+    mPrice2:'€0.45 per conversation',
+    mPrice1:'From €199 / month',
+    solSalonDesc:'Booking requests, service questions and opening-hours answers — even after closing time.',
+    solSalonTitle:'Beauty & Salons',
+    solDentistDesc:'Scheduling, reminder FAQs and insurance questions handled instantly, in every patient\'s language.',
+    solDentistTitle:'Dentists',
+    solPhysioDesc:'Appointment booking, intake questions and exercise FAQs — answered around the clock.',
+    solPhysioTitle:'Physiotherapy',
+    cmpNew4:'Full control — you configure everything',
+    cmpNew3:'Live in minutes, on your schedule',
+    cmpNew2:'Zero backend integration',
+    cmpNew1:'100% self-directed setup',
+    cmpNewT:'✅ Your way (NexifyAI)',
+    cmpOld4:'Support requests for every change',
+    cmpOld3:'Waiting on vendor onboarding',
+    cmpOld2:'A backend integration project',
+    cmpOld1:'Weeks of IT tickets and API specs',
+    cmpOldT:'❌ The old way',
+    how3B:'Copy the embed snippet into your site. Your branded assistant answers customers the same day.',
+    how3T:'📋 Paste one line, go live',
+    how2B:'We email you a magic link. Click to confirm — your account, workspace and 14-day free trial are created instantly.',
+    how2T:'✉️ One click to claim',
+    how1B:'Tell our AI about your business — name, tone, brand color, booking method. It builds the assistant with you, in your language.',
+    how1T:'💬 Chat to configure',
+    howSub:'No project team, no integration sprint. The whole flow is yours, on your schedule.',
+    howTitle:'Launch it yourself — in three steps',
+    pvCaption:'A real first minute — the assistant is built while you chat. Restaurant shown as an example; yours will fit your business and your languages.',
+    pvReady:'✓ Ready',
+    pvBooking:'Booking',
+    pvColor:'Color',
+    pvWarm:'Warm & friendly',
+    pvTone:'Tone',
+    pvName:'Name',
+    pvDraft:'Your draft',
+    pvBot:'Lovely! I\'ve created your assistant: warm and welcoming, answering in your voice, in 30+ languages. Where should bookings go?',
+    pvUser:'We\'re Bistro Zomer, a cozy bistro in Utrecht. Warm tone, please — and our color is #7C3AED.',
+    pvBar:'Build your assistant — live conversation',
+    heroData:'Ready in 3 minutes · 14-day free trial · No credit card',
+    heroTrust3:'✓ Full Control — Live in Minutes',
+    heroTrust2:'✓ Zero Backend Integration',
+    heroTrust1:'✓ 100% Self-Serve',
+    heroHowCta:'See how it works',
     footerResults:'Results',
     navResults:'Results',
     footerSignIn:'Sign in',
     navSignIn:'Sign in',
-    navSolutions:'Solutions', navPlatform:'Service Model', navAbout:'About', navContact:'Contact',
-    heroEyebrow:'AI Customer Service Agent',
-    heroTitle:"Flawless service, even when you can't be everywhere.",
-    heroCopy:"Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.",
-    heroCtaPrimary:'Book Demo', heroCtaSecondary:'View Pricing',
-    heroCtaTrial:'Get Started Free', navStartTrial:'⚡ Get Started Free', footerStartTrial:'⚡ Get Started Free',
-    solTitle:'Industry Solutions', solSub:'Tailored AI customer service solutions for service-heavy industries.',
-    solRestTitle:'Restaurants', solRestDesc:'Automated reservations, order-taking and menu inquiries across chat, phone and email.',
-    solDocTitle:'General Practice', solDocDesc:'Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.',
-    solLawTitle:'Law Firms', solLawDesc:'Intake screening, consultation booking and document requests handled instantly.',
-    solRealTitle:'Real Estate Agencies', solRealDesc:'Viewing requests, listing questions and lead qualification, day and night.',
-    simTitle:'See it in action', simSub:"A multilingual restaurant booking—handled across chat, phone and email, around the clock, in the customer's own language.",
-    tabChat:'Chat', tabCall:'Phone', tabEmail:'Email',
-    stat1:'Response time', stat2:'Always available', stat3:'Languages',
-    modelTitle:'Service Model', modelSub:'Flexible pricing that fits your business, from pilot to scale.',
-    modelMonthlyTitle:'Monthly Subscription', modelMonthlyDesc:'A fixed monthly fee covering usage, updates and support — predictable budgeting.',
-    modelPayTitle:'Pay As You Use', modelPayDesc:'Only pay for actual conversations handled — ideal for testing or seasonal demand.',
-    modelCustomTitle:'Fully Customized', modelCustomDesc:'Tailored workflows, integrations and pricing built around your specific business needs.',
-    pilotTitle:'Pilot Program', pilotSub:"We're working with a select group of businesses to shape the future of AI customer service. Limited spots available.",
-    pilotRestTitle:'Local Restaurant Group', pilotRestDesc:'Multilingual reservation & order handling across 3 locations in Amsterdam. Launching Q3 2026.',
-    pilotClinicTitle:'General Practice Clinic', pilotClinicDesc:'Dutch & English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.',
-    pilotLawTitle:'Small Law Firm', pilotLawDesc:'Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.',
-    pilotStatus:'Pilot · In Progress', pilotUpcoming:'Pilot · Starting Soon',
-    pilotCta:'⚡ Start Free',
+    navSolutions:'Solutions\', navPlatform:\'Service Model\', navAbout:\'About\', navContact:\'Contact',
+    heroEyebrow:'AI Customer Service Agent — 100% Self-Serve',
+    heroTitle:'Your AI assistant, live in minutes — not weeks.',
+    heroCopy:'No backend setup. No waiting on sales or IT. Chat with our AI to build yours, confirm by email, and paste one line of code. You\'re in full control.\', heroCtaSecondary:\'View Pricing',
+    heroCtaTrial:'⚡ Get Started Free\', navStartTrial:\'⚡ Get Started Free\', footerStartTrial:\'⚡ Get Started Free',
+    solTitle:'Industry Solutions\', solSub:\'Tailored AI customer service solutions for service-heavy industries.',
+    solRestTitle:'Restaurants\', solRestDesc:\'Automated reservations, order-taking and menu inquiries across chat, phone and email.',
+    solDocTitle:'General Practice\', solDocDesc:\'Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.',
+    solLawTitle:'Law Firms\', solLawDesc:\'Intake screening, consultation booking and document requests handled instantly.',
+    solRealTitle:'Real Estate Agencies\', solRealDesc:\'Viewing requests, listing questions and lead qualification, day and night.',
+    simTitle:'See it in action\', simSub:\'Built by a business owner in minutes — no developers. Shown here for a restaurant; yours will speak your voice and your customers\' languages.',
+    tabChat:'Chat\', tabCall:\'Phone\', tabEmail:\'Email',
+    stat1:'Response time\', stat2:\'Always available\', stat3:\'Languages',
+    modelTitle:'Simple pricing\', modelSub:\'Start free for 14 days, then pick the model that fits your business.',
+    modelMonthlyTitle:'Monthly Subscription\', modelMonthlyDesc:\'A fixed monthly fee covering usage, updates and support — predictable budgeting.',
+    modelPayTitle:'Pay As You Use\', modelPayDesc:\'Only pay for actual conversations handled — ideal for testing or seasonal demand.',
+    modelCustomTitle:'Fully Customized\', modelCustomDesc:\'Tailored workflows, integrations and pricing built around your specific business needs.',
     footerTagline:'24/7 AI customer service for European SMEs.',
     footerProduct:'Product',
     footerSolutions:'Industry Solutions',
     footerDemo:'See It in Action',
     footerPricing:'Pricing',
-    footerPilot:'Pilot Program',
     footerCompany:'Company',
     footerAbout:'About Us',
     footerContact:'Contact',
     footerLegal:'Legal',
     footerPrivacy:'Privacy Policy',
     footerTerms:'Terms of Service',
-    navPilot:'Pilot',
     navSolutions:'Solutions'
   ,
     footerPhoneDemo:'Phone Demo',
-    footerPilotResults:'Pilot Results',
     navDemoLive:'Live Demo',
     navDemoPhone:'Phone Demo',
-    navPilotApply:'Apply',
-    navPilotResults:'Results',
     navPriceCustom:'Custom',
     navPricePayg:'Pay As You Use',
     navPriceSub:'Subscription',
@@ -948,59 +1086,110 @@ const copy = {
     navSolRE:'Real Estate',
     navSolRestaurants:'Restaurants'
   ,
-    navDemo:'See It in Action',
+    navDemo:'Demo',
     navPricing:'Pricing'
   },
   nl: {
+    nexCtaReady:'Klaar in 3 minuten · 14 dagen gratis · Geen creditcard',
+    nexCtaT3:'✓ Volledige controle — live binnen enkele minuten',
+    nexCtaT2:'✓ Geen backend-integratie',
+    nexCtaT1:'✓ 100% zelfstandig',
+    nexCtaBtn:'⚡ Gratis Beginnen',
+    nexCtaTitle:'Klaar om uw eigen assistent te lanceren?',
+    faq5A:'Ja — 30+, waaronder Nederlands, Frans, Duits, Spaans en Engels. Hij herkent de taal van de klant automatisch en antwoordt in die taal.',
+    faq5Q:'Spreekt hij echt de talen van mijn klanten?',
+    faq4A:'Gesprekken worden in de EU gearchiveerd met automatische PII-maskering en vaste bewaartermijnen. De assistente meldt zich altijd als AI, en u bevestigt uw eigen nalevingsverantwoordelijkheden vóór livegang.',
+    faq4Q:'Hoe zit het met privacy en AI-regels?',
+    faq3A:'U kiest een plan: vast maandabonnement of betalen per gesprek. Geen creditcard nodig om te starten; er wordt niets automatisch afgeschreven.',
+    faq3Q:'Wat gebeurt er na de 14-daagse proef?',
+    faq2A:'Nee. Als u één regel code in uw website kunt plakken — of doorstuurt naar wie uw site beheert — bent u klaar. Er is geen backend-integratie.',
+    faq2Q:'Heb ik technische kennis of een developer nodig?',
+    faq1A:'Ongeveer drie minuten chatten. De AI bouwt uw assistent terwijl u uw bedrijf beschrijft; de e-mailbevestiging en embed-code kosten twee klikken meer.',
+    faq1Q:'Hoe lang duurt de setup echt?',
+    faqTitle:'Vragen, beantwoord',
+    mLink3:'Vraag een offerte aan →',
+    mLink2:'Bekijk betalen-per-gebruik →',
+    mLink1:'Bekijk abonnementen →',
+    mPrice3:'Maatwerk-offerte',
+    mPrice2:'€ 0,45 per gesprek',
+    mPrice1:'Vanaf € 199 / maand',
+    solSalonDesc:'Boekingsverzoeken, servicevragen en openingstijden — ook na sluitingstijd.',
+    solSalonTitle:'Schoonheid & Salons',
+    solDentistDesc:'Planning, herinneringen en verzekervragen direct afgehandeld, in de taal van elke patiënt.',
+    solDentistTitle:'Tandartsen',
+    solPhysioDesc:'Afspraken, intakevragen en oefen-FAQ — dag en nacht beantwoord.',
+    solPhysioTitle:'Fysiotherapie',
+    cmpNew4:'Volledige controle — u configureert alles',
+    cmpNew3:'Live binnen enkele minuten, op uw schema',
+    cmpNew2:'Nul backend-integratie',
+    cmpNew1:'100% zelfstandige setup',
+    cmpNewT:'✅ Uw weg (NexifyAI)',
+    cmpOld4:'Supportverzoek bij elke wijziging',
+    cmpOld3:'Wachten op de leverancier',
+    cmpOld2:'Een backend-integratieproject',
+    cmpOld1:'Weken aan IT-tickets en API-specificaties',
+    cmpOldT:'❌ De oude weg',
+    how3B:'Kopieer de embed-code naar uw site. Uw assistent met eigen merk beantwoordt klanten dezelfde dag nog.',
+    how3T:'📋 Plak één regel, ga live',
+    how2B:'Wij e-mailen u een magic link. Klik om te bevestigen — uw account, werkruimte en 14 dagen gratis proef worden direct aangemaakt.',
+    how2T:'✉️ Eén klik om te claimen',
+    how1B:'Vertel onze AI over uw bedrijf — naam, toon, merkkleur, boekingswijze. Hij bouwt de assistent met u mee, in uw taal.',
+    how1T:'💬 Chatten om te configureren',
+    howSub:'Geen projectteam, geen integratiesprint. Het hele proces is van u, op uw schema.',
+    howTitle:'Lanceer het zelf — in drie stappen',
+    pvCaption:'Een echte eerste minuut — de assistent wordt gebouwd ter u chat. Restaurant als voorbeeld; de uwe past bij uw bedrijf en uw talen.',
+    pvReady:'✓ Klaar',
+    pvBooking:'Boeken',
+    pvColor:'Kleur',
+    pvWarm:'Warm & vriendelijk',
+    pvTone:'Toon',
+    pvName:'Naam',
+    pvDraft:'Uw concept',
+    pvBot:'Prachtig! Ik heb uw assistent gemaakt: warm en verwelkomend, in uw stem, in 30+ talen. Waar moeten reserveringen naartoe?',
+    pvUser:'Wij zijn Bistro Zomer, een gezellige bistro in Utrecht. Graag een warme toon — en onze kleur is #7C3AED.',
+    pvBar:'Bouw uw assistent — live gesprek',
+    heroData:'Klaar in 3 minuten · 14 dagen gratis · Geen creditcard',
+    heroTrust3:'✓ Volledige controle — live binnen enkele minuten',
+    heroTrust2:'✓ Geen backend-integratie',
+    heroTrust1:'✓ 100% zelfstandig',
+    heroHowCta:'Zie hoe het werkt',
     footerResults:'Resultaten',
     navResults:'Resultaten',
     footerSignIn:'Inloggen',
     navSignIn:'Inloggen',
-    navSolutions:'Oplossingen', navPlatform:'Servicemodel', navAbout:'Over ons', navContact:'Contact',
-    heroEyebrow:'AI Klantenservice Agent',
-    heroTitle:'Vlekkeloze service, zelfs als u er niet bent.',
-    heroCopy:'Elke oproep beantwoord, elke waardevolle bestelling vastgelegd, uw standaarden 24/7 gehandhaafd. Probeer het één keer en u wilt nooit meer terug.',
-    heroCtaPrimary:'Demo Boeken', heroCtaSecondary:'Bekijk Prijzen',
-    heroCtaTrial:'Gratis Beginnen', navStartTrial:'⚡ Gratis Beginnen', footerStartTrial:'⚡ Gratis Beginnen',
-    solTitle:'Branche-oplossingen', solSub:'Op maat gemaakte AI-klantenservice voor dienstverlenende sectoren.',
-    solRestTitle:'Restaurants', solRestDesc:'Geautomatiseerde reserveringen, orders en menuvragen via chat, telefoon en e-mail.',
-    solDocTitle:'Huisartsenpraktijk', solDocDesc:'Afspraken plannen, triage-FAQ\'s en follow-ups zonder extra baliepersoneel.',
-    solLawTitle:'Advocatenkantoren', solLawDesc:'Intake, afspraken maken en documentverzoeken direct afgehandeld.',
-    solRealTitle:'Makelaars', solRealDesc:'Bezichtigingsverzoeken, vragen over aanbod en leadkwalificatie, dag en nacht.',
-    simTitle:'Zie het in actie', simSub:'Een meertalige restaurantreservering—via chat, telefoon en e-mail, dag en nacht, in de taal van de klant.',
-    tabChat:'Chat', tabCall:'Telefoon', tabEmail:'E-mail',
-    stat1:'Reactietijd', stat2:'Altijd beschikbaar', stat3:'Talen',
-    modelTitle:'Servicemodel', modelSub:'Flexibele prijzen die passen bij uw bedrijf, van pilot tot schaal.',
-    modelMonthlyTitle:'Maandelijks abonnement', modelMonthlyDesc:'Een vast maandelijks tarief inclusief gebruik, updates en support — voorspelbaar budget.',
-    modelPayTitle:'Betalen naar gebruik', modelPayDesc:'Alleen betalen voor daadwerkelijk afgehandelde gesprekken — ideaal om te testen of voor seizoensvraag.',
-    modelCustomTitle:'Volledig op maat', modelCustomDesc:'Op maat gemaakte workflows, integraties en prijzen afgestemd op uw specifieke behoeften.',
-    pilotTitle:'Pilotprogramma', pilotSub:'We werken met een selecte groep bedrijven samen om de toekomst van AI-klantenservice te vormen. Er zijn beperkte plekken beschikbaar.',
-    pilotRestTitle:'Lokale restaurantgroep', pilotRestDesc:'Meertalige reservering &amp; orderafhandeling op 3 locaties in Amsterdam. Lancering Q3 2026.',
-    pilotClinicTitle:'Huisartsenpraktijk', pilotClinicDesc:'Nederlandse &amp; Engelse afsprakenplanning, triage-FAQ\'s en nasluitings follow-up. Lancering Q3 2026.',
-    pilotLawTitle:'Klein advocatenkantoor', pilotLawDesc:'Intake screening, consultatie planning en documentverzoek triage in NL / EN / FR. Lancering Q4 2026.',
-    pilotStatus:'Pilot · Gestart', pilotUpcoming:'Pilot · Binnenkort',
-    pilotCta:'⚡ Gratis Beginnen',
+    navSolutions:'Oplossingen\', navPlatform:\'Servicemodel\', navAbout:\'Over ons\', navContact:\'Contact',
+    heroEyebrow:'AI-klantenserviceagent — 100% zelfstandig',
+    heroTitle:'Uw AI-assistent, live binnen enkele minuten — niet binnen weken.',
+    heroCopy:'Geen backend-setup. Niet wachten op sales of IT. Chat met onze AI om de uwe te bouwen, bevestig via e-mail en plak één regel code. U heeft volledige controle.\', heroCtaSecondary:\'Bekijk Prijzen',
+    heroCtaTrial:'⚡ Gratis Beginnen\', navStartTrial:\'⚡ Gratis Beginnen\', footerStartTrial:\'⚡ Gratis Beginnen',
+    solTitle:'Branche-oplossingen\', solSub:\'Op maat gemaakte AI-klantenservice voor dienstverlenende sectoren.',
+    solRestTitle:'Restaurants\', solRestDesc:\'Geautomatiseerde reserveringen, orders en menuvragen via chat, telefoon en e-mail.',
+    solDocTitle:'Huisartsenpraktijk\', solDocDesc:\'Afspraken plannen, triage-FAQ\'s en follow-ups zonder extra baliepersoneel.',
+    solLawTitle:'Advocatenkantoren\', solLawDesc:\'Intake, afspraken maken en documentverzoeken direct afgehandeld.',
+    solRealTitle:'Makelaars\', solRealDesc:\'Bezichtigingsverzoeken, vragen over aanbod en leadkwalificatie, dag en nacht.',
+    simTitle:'Zie het in actie\', simSub:\'Gebouwd door een ondernemer in enkele minuten — geen developers. Hier getoond voor een restaurant; de uwe spreekt uw stem en de talen van uw klanten.',
+    tabChat:'Chat\', tabCall:\'Telefoon\', tabEmail:\'E-mail',
+    stat1:'Reactietijd\', stat2:\'Altijd beschikbaar\', stat3:\'Talen',
+    modelTitle:'Eenvoudige prijzen\', modelSub:\'Begin 14 dagen gratis en kies daarna het model dat bij u past.',
+    modelMonthlyTitle:'Maandelijks abonnement\', modelMonthlyDesc:\'Een vast maandelijks tarief inclusief gebruik, updates en support — voorspelbaar budget.',
+    modelPayTitle:'Betalen naar gebruik\', modelPayDesc:\'Alleen betalen voor daadwerkelijk afgehandelde gesprekken — ideaal om te testen of voor seizoensvraag.',
+    modelCustomTitle:'Volledig op maat\', modelCustomDesc:\'Op maat gemaakte workflows, integraties en prijzen afgestemd op uw specifieke behoeften.',
     footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
     footerProduct:'Product',
     footerSolutions:'Branche-oplossingen',
     footerDemo:'Probeer het',
     footerPricing:'Prijzen',
-    footerPilot:'Pilotprogramma',
     footerCompany:'Bedrijf',
     footerAbout:'Over ons',
     footerContact:'Contact',
     footerLegal:'Juridisch',
     footerPrivacy:'Privacybeleid',
     footerTerms:'Servicevoorwaarden',
-    navPilot:'Pilot',
     navSolutions:'Oplossingen'
   ,
     footerPhoneDemo:'Telefoon Demo',
-    footerPilotResults:'Pilot Resultaten',
     navDemoLive:'Live Demo',
     navDemoPhone:'Telefoon Demo',
-    navPilotApply:'Aanmelden',
-    navPilotResults:'Resultaten',
     navPriceCustom:'Maatwerk',
     navPricePayg:'Betalen naar Gebruik',
     navPriceSub:'Abonnement',
@@ -1009,59 +1198,110 @@ const copy = {
     navSolRE:'Vastgoed',
     navSolRestaurants:'Restaurants'
   ,
-    navDemo:'Probeer het',
+    navDemo:'Demo',
     navPricing:'Prijzen'
   },
   fr: {
+    nexCtaReady:'Prêt en 3 minutes · essai gratuit de 14 jours · sans carte bancaire',
+    nexCtaT3:'✓ Contrôle total — en ligne en quelques minutes',
+    nexCtaT2:'✓ Zéro intégration backend',
+    nexCtaT1:'✓ 100 % en libre-service',
+    nexCtaBtn:'⚡ Commencer Gratuitement',
+    nexCtaTitle:'Prêt à lancer votre propre assistant ?',
+    faq5A:'Oui — plus de 30, dont le néerlandais, le français, l\'allemand, l\'espagnol et l\'anglais. Il détecte la langue du client et répond dans cette langue.',
+    faq5Q:'Parle-t-il vraiment les langues de mes clients ?',
+    faq4A:'Les conversations sont archivées dans l\'UE avec anonymisation automatique des données personnelles et une conservation fixe. L\'assistant se présente toujours comme une IA, et vous confirmez vos propres responsabilités de conformité avant la mise en ligne.',
+    faq4Q:'Qu\'en est-il de la confidentialité et des règles d\'IA ?',
+    faq3A:'Vous choisissez une formule : abonnement mensuel fixe ou paiement à la conversation. Aucune carte bancaire pour commencer, aucun prélèvement automatique.',
+    faq3Q:'Que se passe-t-il après l\'essai de 14 jours ?',
+    faq2A:'Non. Si vous savez coller une ligne de code dans votre site — ou la transmettre à celui qui le gère — c\'est fini. Aucune intégration backend.',
+    faq2Q:'Faut-il des compétences techniques ou un développeur ?',
+    faq1A:'Environ trois minutes de discussion. L\'IA construit votre assistant pendant que vous décrivez votre activité ; la confirmation par e-mail et le code d\'intégration ne demandent que deux clics de plus.',
+    faq1Q:'Combien de temps prend vraiment l\'installation ?',
+    faqTitle:'Questions, réponses',
+    mLink3:'Demander un devis →',
+    mLink2:'Voir le paiement à l\'usage →',
+    mLink1:'Voir les abonnements →',
+    mPrice3:'Devis sur mesure',
+    mPrice2:'0,45 € par conversation',
+    mPrice1:'À partir de 199 € / mois',
+    solSalonDesc:'Demandes de réservation, questions de services et horaires — même après la fermeture.',
+    solSalonTitle:'Beauté & Salons',
+    solDentistDesc:'Planification, rappels et questions d\'assurance traités instantanément, dans la langue de chaque patient.',
+    solDentistTitle:'Dentistes',
+    solPhysioDesc:'Prise de rendez-vous, questions d\'admission et FAQ exercices — répondues jour et nuit.',
+    solPhysioTitle:'Physiothérapie',
+    cmpNew4:'Contrôle total — vous configurez tout',
+    cmpNew3:'En ligne en quelques minutes, à votre rythme',
+    cmpNew2:'Zéro intégration backend',
+    cmpNew1:'Configuration 100 % autonome',
+    cmpNewT:'✅ Votre méthode (NexifyAI)',
+    cmpOld4:'Une demande d\'assistance à chaque changement',
+    cmpOld3:'Attendre l\'intégration du fournisseur',
+    cmpOld2:'Un projet d\'intégration backend',
+    cmpOld1:'Des semaines de tickets IT et de spécifications d\'API',
+    cmpOldT:'❌ L\'ancienne méthode',
+    how3B:'Copiez l\'extrait d\'intégration dans votre site. Votre assistant à votre marque répond à vos clients dès le jour même.',
+    how3T:'📋 Collez une ligne, en ligne',
+    how2B:'Nous vous envoyons un lien magique. Un clic pour confirmer — votre compte, votre espace et votre essai gratuit de 14 jours sont créés instantanément.',
+    how2T:'✉️ Un clic pour valider',
+    how1B:'Parlez de votre activité à notre IA — nom, ton, couleur de marque, mode de réservation. Elle construit l\'assistant avec vous, dans votre langue.',
+    how1T:'💬 Discutez pour configurer',
+    howSub:'Pas d\'équipe projet, pas de sprint d\'intégration. Tout le parcours est à vous, à votre rythme.',
+    howTitle:'Lancez-le vous-même — en trois étapes',
+    pvCaption:'Une vraie première minute — l\'assistant se construit pendant que vous discutez. Restaurant à titre d\'exemple ; le vôtre s\'adaptera à votre activité et à vos langues.',
+    pvReady:'✓ Prêt',
+    pvBooking:'Réservation',
+    pvColor:'Couleur',
+    pvWarm:'Chaleureux et amical',
+    pvTone:'Ton',
+    pvName:'Nom',
+    pvDraft:'Votre brouillon',
+    pvBot:'Magnifique ! J\'ai créé votre assistant : chaleureux et accueillant, dans votre voix, en 30+ langues. Où diriger les réservations ?',
+    pvUser:'Nous sommes Bistro Zomer, un bistro cosy à Utrecht. Un ton chaleureux, s\'il vous plaît — et notre couleur est #7C3AED.',
+    pvBar:'Construisez votre assistant — conversation en direct',
+    heroData:'Prêt en 3 minutes · essai gratuit de 14 jours · sans carte bancaire',
+    heroTrust3:'✓ Contrôle total — en ligne en quelques minutes',
+    heroTrust2:'✓ Zéro intégration backend',
+    heroTrust1:'✓ 100 % en libre-service',
+    heroHowCta:'Voir comment ça marche',
     footerResults:'Résultats',
     navResults:'Résultats',
     footerSignIn:'Se connecter',
     navSignIn:'Se connecter',
-    navSolutions:'Solutions', navPlatform:'Modèle de service', navAbout:'À propos', navContact:'Contact',
-    heroEyebrow:'Agent IA Service Client',
-    heroTitle:"Un service irréprochable, même quand vous n'êtes pas là.",
-    heroCopy:'Chaque appel trouve réponse, chaque commande importante est capturée, vos normes respectées 24h/24. Essayez une fois et vous ne reviendrez plus en arrière.',
-    heroCtaPrimary:'Réserver Démo', heroCtaSecondary:'Voir les Tarifs',
-    heroCtaTrial:'Commencer Gratuitement', navStartTrial:'⚡ Commencer Gratuitement', footerStartTrial:'⚡ Commencer Gratuitement',
+    navSolutions:'Solutions\', navPlatform:\'Modèle de service\', navAbout:\'À propos\', navContact:\'Contact',
+    heroEyebrow:'Agent de service client IA — 100 % en libre-service',
+    heroTitle:'Votre assistant IA, en ligne en quelques minutes — pas en quelques semaines.',
+    heroCopy:'Aucune configuration backend. Aucune attente commerciale ou informatique. Discutez avec notre IA pour construire la vôtre, confirmez par e-mail et collez une ligne de code. Vous gardez le contrôle total.\', heroCtaSecondary:\'Voir les Tarifs',
+    heroCtaTrial:'⚡ Commencer Gratuitement\', navStartTrial:\'⚡ Commencer Gratuitement\', footerStartTrial:\'⚡ Commencer Gratuitement',
     solTitle:'Solutions par secteur', solSub:"Service client IA sur mesure pour les secteurs à forte intensité de service.",
-    solRestTitle:'Restaurants', solRestDesc:'Réservations automatisées, prise de commandes et questions sur le menu via chat, téléphone et e-mail.',
-    solDocTitle:'Cabinets de médecine générale', solDocDesc:'Prise de rendez-vous, FAQ de triage et suivis sans personnel supplémentaire.',
-    solLawTitle:'Cabinets d\'avocats', solLawDesc:'Filtrage des demandes, prise de rendez-vous et demandes de documents traitées instantanément.',
-    solRealTitle:'Agences immobilières', solRealDesc:'Demandes de visite, questions sur les annonces et qualification des prospects, jour et nuit.',
-    simTitle:'Voir en action', simSub:'Une réservation multilingue—gérée par chat, téléphone et e-mail, jour et nuit, dans la langue du client.',
-    tabChat:'Chat', tabCall:'Téléphone', tabEmail:'E-mail',
-    stat1:'Temps de réponse', stat2:'Toujours disponible', stat3:'Langues',
-    modelTitle:'Modèle de service', modelSub:'Tarification flexible adaptée à votre entreprise, du pilote à l\'échelle.',
-    modelMonthlyTitle:'Abonnement mensuel', modelMonthlyDesc:'Un tarif mensuel fixe couvrant l\'utilisation, les mises à jour et le support — budget prévisible.',
-    modelPayTitle:'Paiement à l\'usage', modelPayDesc:'Ne payez que pour les conversations réellement gérées — idéal pour tester ou la demande saisonnière.',
-    modelCustomTitle:'Entièrement personnalisé', modelCustomDesc:'Flux de travail, intégrations et tarifs sur mesure adaptés à vos besoins spécifiques.',
-    pilotTitle:'Programme Pilote', pilotSub:"Nous travaillons avec un groupe sélectionné d'entreprises pour façonner l'avenir du service client IA. Places limitées disponibles.",
-    pilotRestTitle:'Groupe de restaurants local', pilotRestDesc:'Réservation multilingue &amp; gestion des commandes sur 3 sites à Amsterdam. Lancement T3 2026.',
-    pilotClinicTitle:'Cabinet de médecine générale', pilotClinicDesc:"Planification de rendez-vous en néerlandais &amp; anglais, FAQ de triage et suivi après les heures. Lancement T3 2026.",
-    pilotLawTitle:'Petit cabinet d\'avocats', pilotLawDesc:"Filtrage des dossiers, prise de rendez-vous et triage des demandes de documents en NL / EN / FR. Lancement T4 2026.",
-    pilotStatus:'Pilote · En cours', pilotUpcoming:'Pilote · Prochainement',
-    pilotCta:'⚡ Commencer Gratuitement',
+    solRestTitle:'Restaurants\', solRestDesc:\'Réservations automatisées, prise de commandes et questions sur le menu via chat, téléphone et e-mail.',
+    solDocTitle:'Cabinets de médecine générale\', solDocDesc:\'Prise de rendez-vous, FAQ de triage et suivis sans personnel supplémentaire.',
+    solLawTitle:'Cabinets d\'avocats\', solLawDesc:\'Filtrage des demandes, prise de rendez-vous et demandes de documents traitées instantanément.',
+    solRealTitle:'Agences immobilières\', solRealDesc:\'Demandes de visite, questions sur les annonces et qualification des prospects, jour et nuit.',
+    simTitle:'Voir en action\', simSub:\'Construit par un entrepreneur en quelques minutes — sans développeurs. Ici pour un restaurant ; le vôtre parlera votre voix et les langues de vos clients.',
+    tabChat:'Chat\', tabCall:\'Téléphone\', tabEmail:\'E-mail',
+    stat1:'Temps de réponse\', stat2:\'Toujours disponible\', stat3:\'Langues',
+    modelTitle:'Une tarification simple\', modelSub:\'Commencez gratuitement pendant 14 jours, puis choisissez le modèle qui vous convient.\',échelle.',
+    modelMonthlyTitle:'Abonnement mensuel\', modelMonthlyDesc:\'Un tarif mensuel fixe couvrant l\'utilisation, les mises à jour et le support — budget prévisible.',
+    modelPayTitle:'Paiement à l\'usage\', modelPayDesc:\'Ne payez que pour les conversations réellement gérées — idéal pour tester ou la demande saisonnière.',
+    modelCustomTitle:'Entièrement personnalisé\', modelCustomDesc:\'Flux de travail, intégrations et tarifs sur mesure adaptés à vos besoins spécifiques.',
     footerTagline:'Service client IA 24h/24 pour les PME européennes.',
     footerProduct:'Produit',
     footerSolutions:'Solutions secteur',
     footerDemo:'Essayez-le',
     footerPricing:'Tarifs',
-    footerPilot:'Programme Pilote',
     footerCompany:'Entreprise',
     footerAbout:'À propos',
     footerContact:'Contact',
     footerLegal:'Juridique',
     footerPrivacy:'Politique de confidentialité',
     footerTerms:"Conditions d'utilisation",
-    navPilot:'Pilote',
     navSolutions:'Solutions'
   ,
     footerPhoneDemo:'Démo Téléphonique',
-    footerPilotResults:'Résultats Pilote',
     navDemoLive:'Démo en direct',
     navDemoPhone:'Démo Téléphonique',
-    navPilotApply:'Postuler',
-    navPilotResults:'Résultats',
     navPriceCustom:'Sur mesure',
     navPricePayg:'Paiement à l\'usage',
     navPriceSub:'Abonnement',
@@ -1070,7 +1310,7 @@ const copy = {
     navSolRE:'Immobilier',
     navSolRestaurants:'Restaurants'
   ,
-    navDemo:'Essayez-le',
+    navDemo:'Démo',
     navPricing:'Tarifs'
   }
 };
@@ -1081,7 +1321,7 @@ const BOOK_DATE = '2026-07-18T20:00:00';
 const BOOK_END = '2026-07-18T22:00:00';
 const sim = {
   zh: {
-    label:'中文', code:'zh', cust:'顾客', agent:'Lina · 客服', roleUser:'顾客', roleBot:'Lina', custName:'李先生',
+    label:'中文\', code:\'zh\', cust:\'顾客\', agent:\'Lina · 客服\', roleUser:\'顾客\', roleBot:\'Lina\', custName:\'李先生',
     lines:[
       { who:'user', text:'你好，我想预订这周六晚上8点的4人桌。' },
       { who:'bot', text:'好的！周六晚8点，4人桌。请问预订人姓名？' },
@@ -1095,7 +1335,7 @@ const sim = {
     cal:{ title:'预订已确认', rest:'餐厅', date:'日期', party:'人数', name:'预订人', add:'添加到日历', dateStr:'7月18日(周六) · 20:00', partyStr:'4位' }
   },
   nl: {
-    label:'Nederlands', code:'nl', cust:'Klant', agent:'Lina · Agent', roleUser:'Klant', roleBot:'Lina', custName:'de Vries',
+    label:'Nederlands\', code:\'nl\', cust:\'Klant\', agent:\'Lina · Agent\', roleUser:\'Klant\', roleBot:\'Lina\', custName:\'de Vries',
     lines:[
       { who:'user', text:'Hallo, ik wil een tafel voor 4 op zaterdag om 20:00.' },
       { who:'bot', text:'Natuurlijk! Tafel voor 4, zaterdag 20:00. Op welke naam?' },
@@ -1109,7 +1349,7 @@ const sim = {
     cal:{ title:'Reservering bevestigd', rest:'Restaurant', date:'Datum', party:'Personen', name:'Naam', add:'Toevoegen aan agenda', dateStr:'Za 18 jul · 20:00', partyStr:'4 personen' }
   },
   es: {
-    label:'Español', code:'es', cust:'Cliente', agent:'Lina · Agente', roleUser:'Cliente', roleBot:'Lina', custName:'García',
+    label:'Español\', code:\'es\', cust:\'Cliente\', agent:\'Lina · Agente\', roleUser:\'Cliente\', roleBot:\'Lina\', custName:\'García',
     lines:[
       { who:'user', text:'Hola, quiero reservar mesa para 4 el sábado a las 20:00.' },
       { who:'bot', text:'¡Por supuesto! Mesa para 4, sábado 20:00. ¿A nombre de quién?' },
@@ -1123,7 +1363,7 @@ const sim = {
     cal:{ title:'Reserva confirmada', rest:'Restaurante', date:'Fecha', party:'Personas', name:'Nombre', add:'Añadir al calendario', dateStr:'Sáb 18 jul · 20:00', partyStr:'4 personas' }
   },
   en: {
-    label:'English', code:'en', cust:'Customer', agent:'Lina · Agent', roleUser:'Customer', roleBot:'Lina', custName:'Martinez',
+    label:'English\', code:\'en\', cust:\'Customer\', agent:\'Lina · Agent\', roleUser:\'Customer\', roleBot:\'Lina\', custName:\'Martinez',
     lines:[
       { who:'user', text:"Hi, I'd like to book a table for 4 this Saturday at 8pm." },
       { who:'bot', text:'Of course! Table for 4, Saturday 8:00 PM. May I have the name for the reservation?' },
@@ -1137,7 +1377,7 @@ const sim = {
     cal:{ title:'Reservation confirmed', rest:'Restaurant', date:'Date', party:'Party', name:'Name', add:'Add to Calendar', dateStr:'Sat, Jul 18 · 20:00', partyStr:'4 guests' }
   },
   fr: {
-    label:'Français', code:'fr', cust:'Client', agent:'Lina · Agent', roleUser:'Client', roleBot:'Lina', custName:'Dubois',
+    label:'Français\', code:\'fr\', cust:\'Client\', agent:\'Lina · Agent\', roleUser:\'Client\', roleBot:\'Lina\', custName:\'Dubois',
     lines:[
       { who:'user', text:'Bonjour, je voudrais réserver une table pour 4 samedi à 20h.' },
       { who:'bot', text:'Bien sûr ! Table pour 4, samedi 20h00. À quel nom ?' },
