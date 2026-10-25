@@ -606,13 +606,7 @@ h1,h2,h3,p{margin:0;}
           <a href="/solutions-beauty-salons" data-i18n="navSolSalon">Beauty & Salons</a>
         </div>
       </div>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navDemo">See It in Action <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/demo" data-i18n="navDemoLive">Live Demo</a>
-          <a href="/demo-phone" data-i18n="navDemoPhone">Phone Demo</a>
-        </div>
-      </div>
+      <a href="/demo" data-i18n="navDemo">Demo</a>
       <div class="nav-item">
         <button class="nav-link" data-i18n="navPricing">Pricing <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="dropdown">
@@ -622,8 +616,6 @@ h1,h2,h3,p{margin:0;}
         </div>
       </div>
       <a href="/pilot-results" data-i18n="navResults">Results</a>
-      <a href="/about" data-i18n="navAbout">About</a>
-      <a href="/contact" data-i18n="navContact">Contact</a>
       <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
       <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
@@ -909,7 +901,7 @@ const copy = {
     "navPilot": "Pilot",
     "navAbout": "About",
     "navContact": "Contact",
-    "navDemo": "See It in Action",
+    navDemo:'Demo',
     "navDemoLive": "Live Demo",
     "navDemoPhone": "Phone Demo",
     "navPricing": "Pricing",
@@ -1010,7 +1002,7 @@ const copy = {
     "navPilot": "Pilot",
     "navAbout": "Over ons",
     "navContact": "Contact",
-    "navDemo": "Probeer het",
+    navDemo:'Demo',
     "navDemoLive": "Live demo",
     "navDemoPhone": "Telefoondemo",
     "navPricing": "Prijzen",
@@ -1190,6 +1182,7 @@ setUiLanguage(uiLang);
     en: {t:'We use essential cookies and Google Fonts to run this site. By continuing, you agree to our <a href="/privacy" style="color:#78df97;text-decoration:underline;">Privacy Policy</a>.', b:'Got it'},
     nl: {t:'We gebruiken essenti\u00eble cookies en Google Fonts om deze site te laten werken. Door verder te gaan ga je akkoord met ons <a href="/privacy" style="color:#78df97;text-decoration:underline;">Privacybeleid</a>.', b:'Begrepen'},
     fr: {    solCtaBtn:'⚡ Commencer Gratuitement',
+    navDemo:'Démo',
     nexCtaReady:'Prêt en 3 minutes · essai gratuit de 14 jours · sans carte bancaire',
     nexCtaT3:'✓ Contrôle total — en ligne en quelques minutes',
     nexCtaT2:'✓ Zéro intégration backend',
