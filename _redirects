@@ -1,1 +1,4 @@
 /pilot-apply https://agent.nexifyai.org/onboarding?from=pilot 301
+/pricing-subscription /pricing 301
+/pricing-payg /pricing#payg 301
+/pricing-custom /pricing#custom 301
