@@ -1447,9 +1447,11 @@ document.querySelectorAll('.nav-item > .nav-link').forEach(btn => {
 
 
 let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+try { const savedTheme = localStorage.getItem('nexify_theme'); if (savedTheme) theme = savedTheme; } catch(e) {}
 const themeBtn = document.querySelector('[data-theme-toggle]');
 function renderTheme(){
   root.setAttribute('data-theme', theme);
+  try { localStorage.setItem('nexify_theme', theme); } catch(e) {}
 }
 if(themeBtn) themeBtn.addEventListener('click', ()=>{
   theme = theme === 'dark' ? 'light' : 'dark';
