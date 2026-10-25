@@ -582,6 +582,7 @@ h1,h2,h3,p{margin:0;}
   .nav-item.open > .nav-link svg{transform:rotate(180deg);}
 }
 </style>
+<style>.nav a.nav-cta{display:inline-flex;align-items:center;padding:.42rem 1.05rem;border-radius:999px;background:var(--color-primary,#2daa58);color:var(--color-bg,#fff);font-weight:600}.nav a.nav-cta:hover{color:var(--color-bg,#fff);opacity:.92}.nav a.nav-signin:hover{color:var(--color-primary)}@media(max-width:980px){.nav a.nav-cta{align-self:flex-start;margin:.35rem 0}}</style>
 </head>
 <body>
 
@@ -620,15 +621,11 @@ h1,h2,h3,p{margin:0;}
           <a href="/pricing-custom" data-i18n="navPriceCustom">Custom</a>
         </div>
       </div>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navPilot">Pilot <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/pilot-apply" data-i18n="navPilotApply">Apply</a>
-          <a href="/pilot-results" data-i18n="navPilotResults">Results</a>
-        </div>
-      </div>
+      <a href="/pilot-results" data-i18n="navResults">Results</a>
       <a href="/about" data-i18n="navAbout">About</a>
       <a href="/contact" data-i18n="navContact">Contact</a>
+      <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -828,7 +825,7 @@ h1,h2,h3,p{margin:0;}
     <div class="cta-card">
       <h2 data-i18n="solCtaTitle"></h2>
       <p data-i18n="solCtaSub"></p>
-      <a href="/pilot-apply" class="btn btn-secondary" data-i18n="solCtaBtn"></a>
+      <a href="https://agent.nexifyai.org/onboarding?from=solutions" class="btn btn-secondary" data-i18n="solCtaBtn">&#9889; Start Free</a>
     </div>
   </div>
 </section>
@@ -837,46 +834,55 @@ h1,h2,h3,p{margin:0;}
 
 
 <!-- ========== Footer ========== -->
+<section class="nex-final-cta">
+  <style>.nex-final-cta{padding:4rem 1.5rem;background:var(--color-bg-alt,rgba(45,170,88,.06));border-top:1px solid rgba(127,127,127,.14)}.nex-final-cta .nfc-inner{max-width:720px;margin:0 auto;text-align:center}.nex-final-cta h2{font-size:1.6rem;line-height:1.25;margin:0 0 1rem}.nex-final-cta .nfc-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.85rem 1.9rem;border-radius:999px;background:var(--color-primary,#2daa58);color:#fff;font-weight:600;text-decoration:none}.nex-final-cta .nfc-btn:hover{opacity:.92}.nex-final-cta .nfc-trust{margin:1rem 0 .35rem;font-size:.92rem;color:var(--color-text-muted,#5b6b66)}.nex-final-cta .nfc-sub{margin:.15rem 0 0;font-size:.82rem;color:var(--color-text-muted,#5b6b66)}</style>
+  <div class="nfc-inner">
+    <h2 data-i18n="nexCtaTitle">Ready to launch your own assistant?</h2>
+    <a class="nfc-btn" href="https://agent.nexifyai.org/onboarding?from=cta" data-i18n="nexCtaBtn">&#9889; Get Started Free</a>
+    <p class="nfc-trust"><span data-i18n="nexCtaT1">&#10003; 100% Self-Serve</span> &middot; <span data-i18n="nexCtaT2">&#10003; Zero Backend Integration</span> &middot; <span data-i18n="nexCtaT3">&#10003; Full Control &mdash; Live in Minutes</span></p>
+    <p class="nfc-sub" data-i18n="nexCtaReady">Ready in 3 minutes &middot; 14-day free trial &middot; No credit card</p>
+  </div>
+</section>
+
 <footer class="site-footer">
-  <div class="footer-main">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col footer-brand">
-          <div class="brand">
-            <span class="brand-logo-wrap"><img src="assets/logo/logo-horizontal-green.png" alt="Nexify AI" class="brand-logo logo-light" onerror="this.style.display='none'"><img src="assets/logo/logo-horizontal-light.png" alt="Nexify AI" class="brand-logo logo-dark" onerror="this.style.display='none'"></span>
-          </div>
-          <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
-        </div>
-              <div class="footer-col">
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand">
+          <span class="brand-logo-wrap"><img src="assets/logo/logo-horizontal-green.png" alt="Nexify AI" class="brand-logo logo-light" onerror="this.style.display='none'"><img src="assets/logo/logo-horizontal-light.png" alt="Nexify AI" class="brand-logo logo-dark" onerror="this.style.display='none'"></span>
+        </a>
+        <p data-i18n="footerTagline">24/7 AI customer service for European SMEs.</p>
+      </div>
+            <div class="footer-col">
         <h5 data-i18n="footerProduct">Product</h5>
         <ul>
+          <li><a href="https://agent.nexifyai.org/onboarding?from=footer" data-i18n="footerStartTrial">&#9889; Get Started Free</a></li>
+          <li><a href="https://agent.nexifyai.org/admin" data-i18n="footerSignIn">Sign in</a></li>
           <li><a href="/solutions-restaurants" data-i18n="footerSolutions">Industry Solutions</a></li>
           <li><a href="/demo" data-i18n="footerDemo">See It in Action</a></li>
           <li><a href="/demo-phone" data-i18n="footerPhoneDemo">Phone Demo</a></li>
           <li><a href="/pricing-subscription" data-i18n="footerPricing">Pricing</a></li>
-          <li><a href="/pilot-apply" data-i18n="footerPilot">Pilot Program</a></li>
-          <li><a href="/pilot-results" data-i18n="footerPilotResults">Pilot Results</a></li>
+          <li><a href="/pilot-results" data-i18n="footerResults">Results</a></li>
         </ul>
       </div>
-        <div class="footer-col">
-          <h5 data-i18n="footerCompany">Company</h5>
-          <ul>
-            <li><a href="/about" data-i18n="footerAbout">About Us</a></li>
-            <li><a href="/contact" data-i18n="footerContact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5 data-i18n="footerLegal">Legal</h5>
-          <ul>
-            <li><a href="/privacy" data-i18n="footerPrivacy">Privacy Policy</a></li>
-            <li><a href="/terms" data-i18n="footerTerms">Terms of Service</a></li>
-          </ul>
-        </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerCompany">Company</h5>
+        <ul>
+          <li><a href="/about" data-i18n="footerAbout">About Us</a></li>
+          <li><a href="/contact" data-i18n="footerContact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footerLegal">Legal</h5>
+        <ul>
+          <li><a href="/privacy" data-i18n="footerPrivacy">Privacy Policy</a></li>
+          <li><a href="/terms" data-i18n="footerTerms">Terms of Service</a></li>
+        </ul>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:var(--space-4);">
+    <div class="container footer-bottom-inner">
       <p>&copy; 2026 Nexify AI &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
     </div>
   </div>
@@ -888,6 +894,18 @@ h1,h2,h3,p{margin:0;}
 <script>
 const copy = {
   en: {
+    nexCtaReady:'Ready in 3 minutes · 14-day free trial · No credit card',
+    nexCtaT3:'✓ Full Control — Live in Minutes',
+    nexCtaT2:'✓ Zero Backend Integration',
+    nexCtaT1:'✓ 100% Self-Serve',
+    nexCtaBtn:'⚡ Get Started Free',
+    nexCtaTitle:'Ready to launch your own assistant?',
+    footerResults:'Results',
+    navResults:'Results',
+    footerSignIn:'Sign in',
+    navSignIn:'Sign in',
+    footerStartTrial:'⚡ Get Started Free',
+    navStartTrial:'⚡ Get Started Free',
     navSolutions:'Solutions',
     navPlatform:'Service Model',
     navPilot:'Pilot',
@@ -944,7 +962,7 @@ const copy = {
     solRoiDesc:'Real estate agencies using Nexify AI see a 50% increase in viewing bookings per agent. 24/7 instant response captures leads that would otherwise be lost, and agents spend more time on viewings instead of phone calls.',
     solCtaTitle:'Never miss a property lead again',
     solCtaSub:'Join our pilot program and turn every listing inquiry into a qualified lead — day and night. Free or heavily discounted for pilot partners.',
-    solCtaBtn:'Apply for Pilot',
+    solCtaBtn:'⚡ Start Free',
     footerTagline:'24/7 AI customer service for European SMEs.',
     footerProduct:'Product',
     footerSolutions:'Industry Solutions',
@@ -977,6 +995,18 @@ const copy = {
     navPricing:'Pricing'
   },
   nl: {
+    nexCtaReady:'Klaar in 3 minuten · 14 dagen gratis proberen · Geen creditcard',
+    nexCtaT3:'✓ Volledige controle — live binnen enkele minuten',
+    nexCtaT2:'✓ Geen backend-integratie',
+    nexCtaT1:'✓ 100% zelfstandig',
+    nexCtaBtn:'⚡ Gratis Beginnen',
+    nexCtaTitle:'Klaar om uw eigen assistent te lanceren?',
+    footerResults:'Resultaten',
+    navResults:'Resultaten',
+    footerSignIn:'Inloggen',
+    navSignIn:'Inloggen',
+    footerStartTrial:'⚡ Gratis Beginnen',
+    navStartTrial:'⚡ Gratis Beginnen',
     navSolutions:'Oplossingen',
     navPlatform:'Servicemodel',
     navPilot:'Pilot',
@@ -1033,7 +1063,7 @@ const copy = {
     solRoiDesc:'Makelaarskantoren met Nexify AI zien 50% meer bezichtigingsafspraken per makelaar. 24/7 directe reactie vangt leads die anders verloren zouden gaan, en makelaars besteden meer tijd aan bezichtigingen in plaats van telefoontjes.',
     solCtaTitle:'Mis nooit meer een vastgoedlead',
     solCtaSub:'Doe mee met ons pilotprogramma en verander elke listing-aanvraag in een gekwalificeerde lead — dag en nacht. Gratis of met flinke korting voor pilotpartners.',
-    solCtaBtn:'Meld je aan voor Pilot',
+    solCtaBtn:'⚡ Gratis Beginnen',
     footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
     footerProduct:'Product',
     footerSolutions:'Branche-oplossingen',
@@ -1066,6 +1096,18 @@ const copy = {
     navPricing:'Prijzen'
   },
   fr: {
+    nexCtaReady:'Prêt en 3 minutes · essai gratuit de 14 jours · sans carte bancaire',
+    nexCtaT3:'✓ Contrôle total — en ligne en quelques minutes',
+    nexCtaT2:'✓ Zéro intégration backend',
+    nexCtaT1:'✓ 100 % en libre-service',
+    nexCtaBtn:'⚡ Commencer Gratuitement',
+    nexCtaTitle:'Prêt à lancer votre propre assistant ?',
+    footerResults:'Résultats',
+    navResults:'Résultats',
+    footerSignIn:'Se connecter',
+    navSignIn:'Se connecter',
+    footerStartTrial:'⚡ Commencer Gratuitement',
+    navStartTrial:'⚡ Commencer Gratuitement',
     navSolutions:'Solutions',
     navPlatform:'Modèle de service',
     navPilot:'Pilote',
@@ -1122,7 +1164,7 @@ const copy = {
     solRoiDesc:'Les agences immobilières utilisant Nexify AI voient une augmentation de 50% des réservations de visite par agent. La réponse instantanée 24h/24 capte des prospects qui seraient autrement perdus, et les agents passent plus de temps en visites qu\'au téléphone.',
     solCtaTitle:'Ne manquez plus jamais de prospect immobilier',
     solCtaSub:'Rejoignez notre programme pilote et transformez chaque demande d\'annonce en prospect qualifié — jour et nuit. Gratuit ou fortement réduit pour les partenaires pilotes.',
-    solCtaBtn:'Postuler au Pilote',
+    solCtaBtn:'⚡ Commencer Gratuitement',
     footerTagline:'Service client IA 24h/24 pour les PME européennes.',
     footerProduct:'Produit',
     footerSolutions:'Solutions secteur',

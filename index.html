@@ -590,6 +590,7 @@ h1,h2,h3,p{margin:0;}
   .nav-item.open > .nav-link svg{transform:rotate(180deg);}
 }
 </style>
+<style>.nav a.nav-cta{display:inline-flex;align-items:center;padding:.42rem 1.05rem;border-radius:999px;background:var(--color-primary,#2daa58);color:var(--color-bg,#fff);font-weight:600}.nav a.nav-cta:hover{color:var(--color-bg,#fff);opacity:.92}.nav a.nav-signin:hover{color:var(--color-primary)}@media(max-width:980px){.nav a.nav-cta{align-self:flex-start;margin:.35rem 0}}</style>
 </head>
 <body>
 
@@ -627,16 +628,11 @@ h1,h2,h3,p{margin:0;}
           <a href="/pricing-custom" data-i18n="navPriceCustom">Custom</a>
         </div>
       </div>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navPilot">Pilot <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/pilot-apply" data-i18n="navPilotApply">Apply</a>
-          <a href="/pilot-results" data-i18n="navPilotResults">Results</a>
-        </div>
-      </div>
-      <a href="https://agent.nexifyai.org/onboarding" data-i18n="navStartTrial">Get Started Free</a>
+      <a href="/pilot-results" data-i18n="navResults">Results</a>
       <a href="/about" data-i18n="navAbout">About</a>
       <a href="/contact" data-i18n="navContact">Contact</a>
+      <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -659,7 +655,7 @@ h1,h2,h3,p{margin:0;}
     <h1 data-i18n="heroTitle">Flawless service, even when you can't be everywhere.</h1>
     <p class="hero-copy" data-i18n="heroCopy">Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.</p>
     <div class="hero-actions">
-      <a href="https://agent.nexifyai.org/onboarding" id="btn-start-trial" class="btn btn-primary" data-i18n="heroCtaTrial">Get Started Free</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=hero" id="btn-start-trial" class="btn btn-primary" data-i18n="heroCtaTrial">Get Started Free</a>
       <a href="/demo" id="btn-book-demo" class="btn btn-secondary" data-i18n="heroCtaPrimary">Book Demo</a>
       <a href="/pricing-subscription" class="btn btn-secondary" data-i18n="heroCtaSecondary">View Pricing</a>
     </div>
@@ -840,7 +836,7 @@ h1,h2,h3,p{margin:0;}
         <div class="pilot-badge pilot-upcoming" data-i18n="pilotUpcoming">Pilot · Starting Soon</div>
       </div>
     </div>
-    <a href="/pilot-apply" id="btn-pilot" class="btn btn-primary" data-i18n="pilotCta" style="margin-top:var(--space-8);display:inline-flex;">Apply for Pilot</a>
+    <a href="https://agent.nexifyai.org/onboarding?from=page" id="btn-pilot" class="btn btn-primary" data-i18n="pilotCta" style="margin-top:var(--space-8);display:inline-flex;">&#9889; Start Free</a>
   </div>
 </section>
 
@@ -858,13 +854,13 @@ h1,h2,h3,p{margin:0;}
             <div class="footer-col">
         <h5 data-i18n="footerProduct">Product</h5>
         <ul>
-          <li><a href="https://agent.nexifyai.org/onboarding" data-i18n="footerStartTrial">Get Started Free</a></li>
+          <li><a href="https://agent.nexifyai.org/onboarding?from=footer" data-i18n="footerStartTrial">&#9889; Get Started Free</a></li>
+          <li><a href="https://agent.nexifyai.org/admin" data-i18n="footerSignIn">Sign in</a></li>
           <li><a href="/solutions-restaurants" data-i18n="footerSolutions">Industry Solutions</a></li>
           <li><a href="/demo" data-i18n="footerDemo">See It in Action</a></li>
           <li><a href="/demo-phone" data-i18n="footerPhoneDemo">Phone Demo</a></li>
           <li><a href="/pricing-subscription" data-i18n="footerPricing">Pricing</a></li>
-          <li><a href="/pilot-apply" data-i18n="footerPilot">Pilot Program</a></li>
-          <li><a href="/pilot-results" data-i18n="footerPilotResults">Pilot Results</a></li>
+          <li><a href="/pilot-results" data-i18n="footerResults">Results</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -895,12 +891,16 @@ h1,h2,h3,p{margin:0;}
 /* ===== UI copy (header/hero/values) ===== */
 const copy = {
   en: {
+    footerResults:'Results',
+    navResults:'Results',
+    footerSignIn:'Sign in',
+    navSignIn:'Sign in',
     navSolutions:'Solutions', navPlatform:'Service Model', navAbout:'About', navContact:'Contact',
     heroEyebrow:'AI Customer Service Agent',
     heroTitle:"Flawless service, even when you can't be everywhere.",
     heroCopy:"Every call answered, every high-value order captured, your standards enforced 24/7. Try it once—you'll never go back.",
     heroCtaPrimary:'Book Demo', heroCtaSecondary:'View Pricing',
-    heroCtaTrial:'Get Started Free', navStartTrial:'Get Started Free', footerStartTrial:'Get Started Free',
+    heroCtaTrial:'Get Started Free', navStartTrial:'⚡ Get Started Free', footerStartTrial:'⚡ Get Started Free',
     solTitle:'Industry Solutions', solSub:'Tailored AI customer service solutions for service-heavy industries.',
     solRestTitle:'Restaurants', solRestDesc:'Automated reservations, order-taking and menu inquiries across chat, phone and email.',
     solDocTitle:'General Practice', solDocDesc:'Appointment scheduling, triage FAQs and follow-ups without adding front-desk staff.',
@@ -918,7 +918,7 @@ const copy = {
     pilotClinicTitle:'General Practice Clinic', pilotClinicDesc:'Dutch & English appointment scheduling, triage FAQs and after-hours follow-up. Launching Q3 2026.',
     pilotLawTitle:'Small Law Firm', pilotLawDesc:'Intake screening, consultation booking and document request triage in NL / EN / FR. Launching Q4 2026.',
     pilotStatus:'Pilot · In Progress', pilotUpcoming:'Pilot · Starting Soon',
-    pilotCta:'Apply for Pilot',
+    pilotCta:'⚡ Start Free',
     footerTagline:'24/7 AI customer service for European SMEs.',
     footerProduct:'Product',
     footerSolutions:'Industry Solutions',
@@ -952,12 +952,16 @@ const copy = {
     navPricing:'Pricing'
   },
   nl: {
+    footerResults:'Resultaten',
+    navResults:'Resultaten',
+    footerSignIn:'Inloggen',
+    navSignIn:'Inloggen',
     navSolutions:'Oplossingen', navPlatform:'Servicemodel', navAbout:'Over ons', navContact:'Contact',
     heroEyebrow:'AI Klantenservice Agent',
     heroTitle:'Vlekkeloze service, zelfs als u er niet bent.',
     heroCopy:'Elke oproep beantwoord, elke waardevolle bestelling vastgelegd, uw standaarden 24/7 gehandhaafd. Probeer het één keer en u wilt nooit meer terug.',
     heroCtaPrimary:'Demo Boeken', heroCtaSecondary:'Bekijk Prijzen',
-    heroCtaTrial:'Gratis Beginnen', navStartTrial:'Gratis Beginnen', footerStartTrial:'Gratis Beginnen',
+    heroCtaTrial:'Gratis Beginnen', navStartTrial:'⚡ Gratis Beginnen', footerStartTrial:'⚡ Gratis Beginnen',
     solTitle:'Branche-oplossingen', solSub:'Op maat gemaakte AI-klantenservice voor dienstverlenende sectoren.',
     solRestTitle:'Restaurants', solRestDesc:'Geautomatiseerde reserveringen, orders en menuvragen via chat, telefoon en e-mail.',
     solDocTitle:'Huisartsenpraktijk', solDocDesc:'Afspraken plannen, triage-FAQ\'s en follow-ups zonder extra baliepersoneel.',
@@ -975,7 +979,7 @@ const copy = {
     pilotClinicTitle:'Huisartsenpraktijk', pilotClinicDesc:'Nederlandse &amp; Engelse afsprakenplanning, triage-FAQ\'s en nasluitings follow-up. Lancering Q3 2026.',
     pilotLawTitle:'Klein advocatenkantoor', pilotLawDesc:'Intake screening, consultatie planning en documentverzoek triage in NL / EN / FR. Lancering Q4 2026.',
     pilotStatus:'Pilot · Gestart', pilotUpcoming:'Pilot · Binnenkort',
-    pilotCta:'Aanmelden voor pilot',
+    pilotCta:'⚡ Gratis Beginnen',
     footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
     footerProduct:'Product',
     footerSolutions:'Branche-oplossingen',
@@ -1009,12 +1013,16 @@ const copy = {
     navPricing:'Prijzen'
   },
   fr: {
+    footerResults:'Résultats',
+    navResults:'Résultats',
+    footerSignIn:'Se connecter',
+    navSignIn:'Se connecter',
     navSolutions:'Solutions', navPlatform:'Modèle de service', navAbout:'À propos', navContact:'Contact',
     heroEyebrow:'Agent IA Service Client',
     heroTitle:"Un service irréprochable, même quand vous n'êtes pas là.",
     heroCopy:'Chaque appel trouve réponse, chaque commande importante est capturée, vos normes respectées 24h/24. Essayez une fois et vous ne reviendrez plus en arrière.',
     heroCtaPrimary:'Réserver Démo', heroCtaSecondary:'Voir les Tarifs',
-    heroCtaTrial:'Commencer Gratuitement', navStartTrial:'Commencer Gratuitement', footerStartTrial:'Commencer Gratuitement',
+    heroCtaTrial:'Commencer Gratuitement', navStartTrial:'⚡ Commencer Gratuitement', footerStartTrial:'⚡ Commencer Gratuitement',
     solTitle:'Solutions par secteur', solSub:"Service client IA sur mesure pour les secteurs à forte intensité de service.",
     solRestTitle:'Restaurants', solRestDesc:'Réservations automatisées, prise de commandes et questions sur le menu via chat, téléphone et e-mail.',
     solDocTitle:'Cabinets de médecine générale', solDocDesc:'Prise de rendez-vous, FAQ de triage et suivis sans personnel supplémentaire.',
@@ -1032,7 +1040,7 @@ const copy = {
     pilotClinicTitle:'Cabinet de médecine générale', pilotClinicDesc:"Planification de rendez-vous en néerlandais &amp; anglais, FAQ de triage et suivi après les heures. Lancement T3 2026.",
     pilotLawTitle:'Petit cabinet d\'avocats', pilotLawDesc:"Filtrage des dossiers, prise de rendez-vous et triage des demandes de documents en NL / EN / FR. Lancement T4 2026.",
     pilotStatus:'Pilote · En cours', pilotUpcoming:'Pilote · Prochainement',
-    pilotCta:'Postuler au pilote',
+    pilotCta:'⚡ Commencer Gratuitement',
     footerTagline:'Service client IA 24h/24 pour les PME européennes.',
     footerProduct:'Produit',
     footerSolutions:'Solutions secteur',

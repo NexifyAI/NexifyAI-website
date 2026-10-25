@@ -463,6 +463,7 @@ h1,h2,h3,p{margin:0;}
   .nav-item.open > .nav-link svg{transform:rotate(180deg);}
 }
 </style>
+<style>.nav a.nav-cta{display:inline-flex;align-items:center;padding:.42rem 1.05rem;border-radius:999px;background:var(--color-primary,#2daa58);color:var(--color-bg,#fff);font-weight:600}.nav a.nav-cta:hover{color:var(--color-bg,#fff);opacity:.92}.nav a.nav-signin:hover{color:var(--color-primary)}@media(max-width:980px){.nav a.nav-cta{align-self:flex-start;margin:.35rem 0}}</style>
 </head>
 <body>
 
@@ -499,15 +500,11 @@ h1,h2,h3,p{margin:0;}
           <a href="/pricing-custom" data-i18n="navPriceCustom">Custom</a>
         </div>
       </div>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navPilot">Pilot <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/pilot-apply" data-i18n="navPilotApply">Apply</a>
-          <a href="/pilot-results" data-i18n="navPilotResults">Results</a>
-        </div>
-      </div>
+      <a href="/pilot-results" data-i18n="navResults">Results</a>
       <a href="/about" data-i18n="navAbout">About</a>
       <a href="/contact" data-i18n="navContact">Contact</a>
+      <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -535,7 +532,7 @@ h1,h2,h3,p{margin:0;}
         <p class="sub" data-i18n="loginSubtitle">Access your Nexify AI dashboard.</p>
 
         <a class="btn btn-primary login-cta" href="https://agent.nexifyai.org/admin" data-i18n="loginBtn">Go to the dashboard</a>
-        <a class="btn btn-secondary login-cta" href="https://agent.nexifyai.org/onboarding" data-i18n="loginRegister">Create a free account</a>
+        <a class="btn btn-secondary login-cta" href="https://agent.nexifyai.org/onboarding?from=login" data-i18n="loginRegister">Create a free account</a>
 
         <div class="login-notice" data-i18n="loginNotice">
           <strong>Dashboard is live</strong> &mdash; sign in with email, password and your authenticator code.
@@ -570,12 +567,13 @@ h1,h2,h3,p{margin:0;}
             <div class="footer-col">
         <h5 data-i18n="footerProduct">Product</h5>
         <ul>
+          <li><a href="https://agent.nexifyai.org/onboarding?from=footer" data-i18n="footerStartTrial">&#9889; Get Started Free</a></li>
+          <li><a href="https://agent.nexifyai.org/admin" data-i18n="footerSignIn">Sign in</a></li>
           <li><a href="/solutions-restaurants" data-i18n="footerSolutions">Industry Solutions</a></li>
           <li><a href="/demo" data-i18n="footerDemo">See It in Action</a></li>
           <li><a href="/demo-phone" data-i18n="footerPhoneDemo">Phone Demo</a></li>
           <li><a href="/pricing-subscription" data-i18n="footerPricing">Pricing</a></li>
-          <li><a href="/pilot-apply" data-i18n="footerPilot">Pilot Program</a></li>
-          <li><a href="/pilot-results" data-i18n="footerPilotResults">Pilot Results</a></li>
+          <li><a href="/pilot-results" data-i18n="footerResults">Results</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -606,6 +604,12 @@ h1,h2,h3,p{margin:0;}
 /* ===== i18n data ===== */
 const copy = {
   "en": {
+    footerResults:'Results',
+    navResults:'Results',
+    footerSignIn:'Sign in',
+    navSignIn:'Sign in',
+    footerStartTrial:'⚡ Get Started Free',
+    navStartTrial:'⚡ Get Started Free',
     "navHome": "Home",
     "navSolutions": "Solutions",
     "navDemo": "See It in Action",
@@ -749,6 +753,12 @@ const copy = {
     "navSolRestaurants": "Restaurants"
   },
   "nl": {
+    footerResults:'Resultaten',
+    navResults:'Resultaten',
+    footerSignIn:'Inloggen',
+    navSignIn:'Inloggen',
+    footerStartTrial:'⚡ Gratis Beginnen',
+    navStartTrial:'⚡ Gratis Beginnen',
     "navHome": "Home",
     "navSolutions": "Oplossingen",
     "navDemo": "Probeer het",
@@ -892,6 +902,12 @@ const copy = {
     "navSolRestaurants": "Restaurants"
   },
   "fr": {
+    footerResults:'Résultats',
+    navResults:'Résultats',
+    footerSignIn:'Se connecter',
+    navSignIn:'Se connecter',
+    footerStartTrial:'⚡ Commencer Gratuitement',
+    navStartTrial:'⚡ Commencer Gratuitement',
     "navHome": "Accueil",
     "navSolutions": "Solutions",
     "navDemo": "Essayez-le",

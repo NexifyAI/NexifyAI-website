@@ -197,6 +197,7 @@ h1,h2,h3,p{margin:0;}
   .theme-btn,.menu-btn{min-height:38px;width:38px;}
   .btn{min-height:44px;padding:.8rem 1.2rem;}
   </style>
+<style>.nav a.nav-cta{display:inline-flex;align-items:center;padding:.42rem 1.05rem;border-radius:999px;background:var(--color-primary,#2daa58);color:var(--color-bg,#fff);font-weight:600}.nav a.nav-cta:hover{color:var(--color-bg,#fff);opacity:.92}.nav a.nav-signin:hover{color:var(--color-primary)}@media(max-width:980px){.nav a.nav-cta{align-self:flex-start;margin:.35rem 0}}</style>
 </head>
 <body>
 
@@ -212,6 +213,8 @@ h1,h2,h3,p{margin:0;}
       <a href="/pricing-subscription" data-i18n="navPricing">Pricing</a>
       <a href="/about" data-i18n="navAbout">About</a>
       <a href="/contact" data-i18n="navContact">Contact</a>
+      <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
+      <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
     <div class="actions">
       <div class="lang-switcher" role="group" aria-label="Language">
@@ -245,6 +248,7 @@ h1,h2,h3,p{margin:0;}
   <div class="footer-main">
     <div class="container">
       <div class="footer-bottom">
+        <p style="margin-bottom:.5rem"><a href="https://agent.nexifyai.org/onboarding?from=footer" data-i18n="footerStartTrial">&#9889; Get Started Free</a></p>
         <p>&copy; 2026 Nexify AI &middot; The Hague, Netherlands &middot; <a href="mailto:hello@nexifyai.org">hello@nexifyai.org</a></p>
       </div>
     </div>
@@ -254,6 +258,8 @@ h1,h2,h3,p{margin:0;}
 <script>
 const copy = {
   "en": {
+    navSignIn:'Sign in',
+    navStartTrial:'⚡ Get Started Free',
     "navAbout": "About",
     "navContact": "Contact",
     "navDemo": "See It in Action",
@@ -266,6 +272,8 @@ const copy = {
     "nfTitle": "Page not found"
   },
   "nl": {
+    navSignIn:'Inloggen',
+    navStartTrial:'⚡ Gratis Beginnen',
     "navAbout": "Over ons",
     "navContact": "Contact",
     "navDemo": "Probeer het",
@@ -278,6 +286,8 @@ const copy = {
     "nfTitle": "Pagina niet gevonden"
   },
   "fr": {
+    navSignIn:'Se connecter',
+    navStartTrial:'⚡ Commencer Gratuitement',
     "navAbout": "À propos",
     "navContact": "Contact",
     "navDemo": "Essayez-le",
