@@ -2,3 +2,15 @@
 /pricing-subscription /pricing 301
 /pricing-payg /pricing#payg 301
 /pricing-custom /pricing#custom 301
+/solutions-restaurants /solutions#restaurants 301
+/solutions-general-practice /solutions#general-practice 301
+/solutions-law-firms /solutions#law-firms 301
+/solutions-real-estate /solutions#real-estate 301
+/solutions-physiotherapy /solutions#physiotherapy 301
+/solutions-dentists /solutions#dentists 301
+/solutions-beauty-salons /solutions#beauty-salons 301
+/contact /about#contact 301
+/demo-phone /demo#phone 301
+/demo-restaurant /demo 301
+/login https://agent.nexifyai.org/admin 301
+/pilot-results /#stories 301
