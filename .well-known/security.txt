@@ -1,0 +1,4 @@
+Contact: mailto:hello@nexifyai.org
+Expires: 2027-12-31T23:59:00.000Z
+Preferred-Languages: en, nl, fr
+Canonical: https://nexifyai.org/.well-known/security.txt
