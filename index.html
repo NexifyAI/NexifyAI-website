@@ -1077,7 +1077,10 @@ const copy = {
     navSolGP:'General Practice',
     navSolLaw:'Law Firms',
     navSolRE:'Real Estate',
-    navSolRestaurants:'Restaurants'
+    navSolRestaurants:'Restaurants',
+    navSolPhysio:'Physiotherapy',
+    navSolDentist:'Dentists',
+    navSolSalon:'Beauty & Salons'
   ,
     navDemo:'Demo',
     navPricing:'Pricing'
@@ -1189,7 +1192,10 @@ const copy = {
     navSolGP:'Huisartsenpraktijk',
     navSolLaw:'Advocaten',
     navSolRE:'Vastgoed',
-    navSolRestaurants:'Restaurants'
+    navSolRestaurants:'Restaurants',
+    navSolPhysio:'Fysiotherapie',
+    navSolDentist:'Tandartsen',
+    navSolSalon:'Schoonheid & Salons'
   ,
     navDemo:'Demo',
     navPricing:'Prijzen'
@@ -1229,9 +1235,9 @@ const copy = {
     cmpNew2:'Zéro intégration backend',
     cmpNew1:'Configuration 100 % autonome',
     cmpNewT:'✅ Votre méthode (NexifyAI)',
-    cmpOld4:'Une demande d'assistance à chaque changement',
-    cmpOld3:'Attendre l'intégration du fournisseur',
-    cmpOld2:'Un projet d'intégration backend',
+    cmpOld4:'Une demande d\'assistance à chaque changement',
+    cmpOld3:'Attendre l\'intégration du fournisseur',
+    cmpOld2:'Un projet d\'intégration backend',
     cmpOld1:'Des semaines de tickets IT et de spécifications d\'API',
     cmpOldT:'❌ L\'ancienne méthode',
     how3B:'Copiez l\'extrait d\'intégration dans votre site. Votre assistant à votre marque répond à vos clients dès le jour même.',
@@ -1242,7 +1248,7 @@ const copy = {
     how1T:'💬 Discutez pour configurer',
     howSub:'Pas d\'équipe projet, pas de sprint d\'intégration. Tout le parcours est à vous, à votre rythme.',
     howTitle:'Lancez-le vous-même — en trois étapes',
-    pvCaption:'Une vraie première minute — l'assistant se construit pendant que vous discutez. Restaurant à titre d\'exemple ; le vôtre s\'adaptera à votre activité et à vos langues.',
+    pvCaption:'Une vraie première minute — l\'assistant se construit pendant que vous discutez. Restaurant à titre d\'exemple ; le vôtre s\'adaptera à votre activité et à vos langues.',
     pvReady:'✓ Prêt',
     pvBooking:'Réservation',
     pvColor:'Couleur',
@@ -1275,7 +1281,7 @@ const copy = {
     simTitle:'Voir en action', simSub:'Construit par un entrepreneur en quelques minutes — sans développeurs. Ici pour un restaurant ; le vôtre parlera votre voix et les langues de vos clients.',
     tabChat:'Chat', tabCall:'Téléphone', tabEmail:'E-mail',
     stat1:'Temps de réponse', stat2:'Toujours disponible', stat3:'Langues',
-    modelTitle:'Une tarification simple', modelSub:'Commencez gratuitement pendant 14 jours, puis choisissez le modèle qui vous convient.',échelle.',
+    modelTitle:'Une tarification simple', modelSub:'Commencez gratuitement pendant 14 jours, puis choisissez le modèle qui vous convient.',
     modelMonthlyTitle:'Abonnement mensuel', modelMonthlyDesc:'Un tarif mensuel fixe couvrant l\'utilisation, les mises à jour et le support — budget prévisible.',
     modelPayTitle:'Paiement à l\'usage', modelPayDesc:'Ne payez que pour les conversations réellement gérées — idéal pour tester ou la demande saisonnière.',
     modelCustomTitle:'Entièrement personnalisé', modelCustomDesc:'Flux de travail, intégrations et tarifs sur mesure adaptés à vos besoins spécifiques.',
@@ -1301,7 +1307,10 @@ const copy = {
     navSolGP:'Médecine Générale',
     navSolLaw:'Cabinets Juridiques',
     navSolRE:'Immobilier',
-    navSolRestaurants:'Restaurants'
+    navSolRestaurants:'Restaurants',
+    navSolPhysio:'Physiothérapie',
+    navSolDentist:'Dentistes',
+    navSolSalon:'Beauté & Salons'
   ,
     navDemo:'Démo',
     navPricing:'Tarifs'
@@ -1407,6 +1416,7 @@ function setUiLanguage(lang){
   try { localStorage.setItem('nexify_lang', lang); } catch(e){}
 }
 langButtons.forEach(btn => btn.addEventListener('click', () => setUiLanguage(btn.dataset.lang)));
+setUiLanguage(uiLang); // apply saved language on load (buttons + <html lang> + copy)
 
 if(menuToggleBtn && navElement) {
   menuToggleBtn.addEventListener('click', (e)=>{
