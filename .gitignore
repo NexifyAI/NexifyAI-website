@@ -1,1 +1,15 @@
 .internal/
+第三方评审/
+site-redesign-plan-*.md
+__pycache__/
+*.pyc
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
+*.swp
+*.swo
