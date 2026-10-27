@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Subscription Plans — Nexify AI. Fixed monthly pricing from €199/month. Starter and Growth plans with full features and support.">
-<link rel="canonical" href="https://nexifyai.org/pricing-subscription">
+  <meta name="description" content="Simple transparent pricing — subscription plans from €199/month, pay-as-you-use from €0.45 per conversation, and custom solutions. Start free for 30 days, no credit card.">
+<link rel="canonical" href="https://nexifyai.org/pricing">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Nexify AI">
-<meta property="og:title" content="Subscription Plans &mdash; Nexify AI">
-<meta property="og:description" content="Subscription Plans — Nexify AI. Fixed monthly pricing from €199/month. Starter and Growth plans with full features and support.">
-<meta property="og:url" content="https://nexifyai.org/pricing-subscription">
+<meta property="og:title" content="Pricing &mdash; Nexify AI">
+<meta property="og:description" content="Simple transparent pricing — subscription plans from €199/month, pay-as-you-use from €0.45 per conversation, and custom solutions. Start free for 30 days, no credit card.">
+<meta property="og:url" content="https://nexifyai.org/pricing">
 <meta property="og:image" content="https://nexifyai.org/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Subscription Plans &mdash; Nexify AI">
-<meta name="twitter:description" content="Subscription Plans — Nexify AI. Fixed monthly pricing from €199/month. Starter and Growth plans with full features and support.">
+<meta name="twitter:title" content="Pricing &mdash; Nexify AI">
+<meta name="twitter:description" content="Simple transparent pricing — subscription plans from €199/month, pay-as-you-use from €0.45 per conversation, and custom solutions. Start free for 30 days, no credit card.">
 
 <title>Pricing &mdash; Nexify AI</title>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -474,28 +474,10 @@ h1,h2,h3,p{margin:0;}
       <span class="brand-logo-wrap"><img src="assets/logo/logo-horizontal-green.png" alt="Nexify AI" class="brand-logo logo-light" onerror="this.style.display='none'"><img src="assets/logo/logo-horizontal-light.png" alt="Nexify AI" class="brand-logo logo-dark" onerror="this.style.display='none'"></span>
     </a>
         <nav class="nav" id="site-nav">
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navSolutions">Solutions <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/solutions-restaurants" data-i18n="navSolRestaurants">Restaurants</a>
-          <a href="/solutions-general-practice" data-i18n="navSolGP">General Practice</a>
-          <a href="/solutions-law-firms" data-i18n="navSolLaw">Law Firms</a>
-          <a href="/solutions-real-estate" data-i18n="navSolRE">Real Estate</a>
-          <a href="/solutions-physiotherapy" data-i18n="navSolPhysio">Physiotherapy</a>
-          <a href="/solutions-dentists" data-i18n="navSolDentist">Dentists</a>
-          <a href="/solutions-beauty-salons" data-i18n="navSolSalon">Beauty & Salons</a>
-        </div>
-      </div>
+      <a href="/solutions" data-i18n="navSolutionsLink">Solutions</a>
       <a href="/demo" data-i18n="navDemo">Demo</a>
-      <div class="nav-item">
-        <button class="nav-link" data-i18n="navPricing">Pricing <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="dropdown">
-          <a href="/pricing-subscription" data-i18n="navPriceSub">Subscription</a>
-          <a href="/pricing-payg" data-i18n="navPricePayg">Pay As You Use</a>
-          <a href="#custom" data-i18n="navPriceCustom">Custom</a>
-        </div>
-      </div>
-      <a href="/pilot-results" data-i18n="navResults">Results</a>
+      <a href="/pricing" data-i18n="navPricing">Pricing</a>
+      <a href="/about" data-i18n="navAbout">About</a>
       <a href="https://agent.nexifyai.org/admin" class="nav-signin" data-i18n="navSignIn">Sign in</a>
       <a href="https://agent.nexifyai.org/onboarding?from=nav" class="nav-cta" data-i18n="navStartTrial">&#9889; Get Started Free</a>
     </nav>
@@ -772,18 +754,16 @@ h1,h2,h3,p{margin:0;}
         <ul>
           <li><a href="https://agent.nexifyai.org/onboarding?from=footer" data-i18n="footerStartTrial">&#9889; Get Started Free</a></li>
           <li><a href="https://agent.nexifyai.org/admin" data-i18n="footerSignIn">Sign in</a></li>
-          <li><a href="/solutions-restaurants" data-i18n="footerSolutions">Industry Solutions</a></li>
+          <li><a href="/solutions" data-i18n="footerSolutions">Industry Solutions</a></li>
           <li><a href="/demo" data-i18n="footerDemo">See It in Action</a></li>
-          <li><a href="/demo-phone" data-i18n="footerPhoneDemo">Phone Demo</a></li>
-          <li><a href="/pricing-subscription" data-i18n="footerPricing">Pricing</a></li>
-          <li><a href="/pilot-results" data-i18n="footerResults">Results</a></li>
-        </ul>
+                    <li><a href="/pricing-subscription" data-i18n="footerPricing">Pricing</a></li>
+                  </ul>
       </div>
       <div class="footer-col">
         <h5 data-i18n="footerCompany">Company</h5>
         <ul>
           <li><a href="/about" data-i18n="footerAbout">About Us</a></li>
-          <li><a href="/contact" data-i18n="footerContact">Contact</a></li>
+          <li><a href="/about#contact" data-i18n="footerContact">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -823,7 +803,7 @@ const copy = {
     navSolutions:'Solutions',
     navDemo:'Demo',
     navPricing:'Service Model',
-    navAbout:'About',
+    navAbout:'About', navSolutionsLink:'Solutions',
     navPilot:'Pilot',
     navContact:'Contact',
     footerTagline:'24/7 AI customer service for European SMEs.',
@@ -963,7 +943,7 @@ const copy = {
     navSolutions:'Oplossingen',
     navDemo:'Demo',
     navPricing:'Servicemodel',
-    navAbout:'Over ons',
+    navAbout:'Over ons', navSolutionsLink:'Oplossingen',
     navPilot:'Pilot',
     navContact:'Contact',
     footerTagline:'24/7 AI-klantenservice voor Europees MKB.',
@@ -1103,7 +1083,7 @@ const copy = {
     navSolutions:'Solutions',
     navDemo:'Démo',
     navPricing:'Modèle de service',
-    navAbout:'À propos',
+    navAbout:'À propos', navSolutionsLink:'Solutions',
     navPilot:'Pilote',
     navContact:'Contact',
     footerTagline:'Service client IA 24h/24 pour les PME européennes.',
