@@ -18,14 +18,19 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Nexify AI","url":"https://nexifyai.org/","logo":"https://nexifyai.org/logo.png","description":"24/7 AI customer service agent for European SMEs handling chat, phone, and email in 30+ languages.","email":"hello@nexifyai.org","address":{"@type":"PostalAddress","addressLocality":"The Hague","addressCountry":"NL"},"identifier":{"@type":"PropertyValue","name":"KVK","value":"42114767"}}
 </script>
 
+<style>
+@font-face{font-family:'Satoshi';src:url('/assets/fonts/Satoshi-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/assets/fonts/Satoshi-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/assets/fonts/Satoshi-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Satoshi';src:url('/assets/fonts/Satoshi-Black.woff2') format('woff2');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Zodiak';src:url('/assets/fonts/Zodiak-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Zodiak';src:url('/assets/fonts/Zodiak-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+</style>
 <title>Nexify AI - Smart Customer Service</title>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,700&f[]=satoshi@400,500,700,900&display=swap">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,700&f[]=satoshi@400,500,700,900&display=swap">
 
 <style>
 :root, [data-theme="light"] {
@@ -1737,33 +1742,24 @@ setUiLanguage('en');
 runScenario();
 </script>
 
-<div id="nx-cookie-banner" style="position:fixed;left:16px;right:16px;bottom:16px;max-width:640px;margin:0 auto;background:#153122;color:#f7fff8;padding:16px 20px;border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.25);z-index:9999;display:none;font-family:inherit;font-size:.9rem;line-height:1.5;">
-  <span id="nx-cookie-text">We use essential cookies and Google Fonts to run this site. By continuing, you agree to our <a href="/privacy" style="color:#78df97;text-decoration:underline;">Privacy Policy</a>.</span>
-  <button id="nx-cookie-accept" style="margin-left:12px;background:#2daa58;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap;">Got it</button>
-</div>
+
+<!-- NexifyAI live assistant (SaaS widget, nexifyai-demo tenant; same chat-bubble icon, site green) -->
+<!-- NexifyAI assistant: injected on first user interaction (leaner load, no third-party JS until engaged) -->
 <script>
 (function(){
-  var TXT = {
-    en: {t:'We use essential cookies and Google Fonts to run this site. By continuing, you agree to our <a href="/privacy" style="color:#78df97;text-decoration:underline;">Privacy Policy</a>.', b:'Got it'},
-    nl: {t:'We gebruiken essenti\u00eble cookies en Google Fonts om deze site te laten werken. Door verder te gaan ga je akkoord met ons <a href="/privacy" style="color:#78df97;text-decoration:underline;">Privacybeleid</a>.', b:'Begrepen'},
-    fr: {t:'Nous utilisons des cookies essentiels et Google Fonts pour faire fonctionner ce site. En continuant, vous acceptez notre <a href="/privacy" style="color:#78df97;text-decoration:underline;">politique de confidentialit\u00e9</a>.', b:'Compris'}
-  };
-  try {
-    if (localStorage.getItem('nexify_cookie_ack')) return;
-    var lang = (localStorage.getItem('nexify_lang') || navigator.language || 'en').slice(0,2);
-    if (!TXT[lang]) lang = 'en';
-    var el = document.getElementById('nx-cookie-banner');
-    document.getElementById('nx-cookie-text').innerHTML = TXT[lang].t;
-    document.getElementById('nx-cookie-accept').textContent = TXT[lang].b;
-    el.style.display = 'block';
-    document.getElementById('nx-cookie-accept').addEventListener('click', function(){
-      localStorage.setItem('nexify_cookie_ack', '1');
-      el.style.display = 'none';
-    });
-  } catch(e) {}
+  var done=false;
+  function inject(){
+    if(done)return;done=true;
+    var s=document.createElement("script");
+    s.src="https://agent.nexifyai.org/widget/widget.js";s.async=true;
+    s.setAttribute("data-tenant","nexifyai-demo");
+    s.setAttribute("data-api-base","https://agent.nexifyai.org");
+    s.setAttribute("data-mode","live");
+    document.body.appendChild(s);
+    ["pointerdown","keydown","touchstart"].forEach(function(ev){removeEventListener(ev,inject);});
+  }
+  ["pointerdown","keydown","touchstart"].forEach(function(ev){addEventListener(ev,inject,{passive:true});});
 })();
 </script>
-<!-- NexifyAI live assistant (SaaS widget, nexifyai-demo tenant; same chat-bubble icon, site green) -->
-<script src="https://agent.nexifyai.org/widget/widget.js" data-tenant="nexifyai-demo" data-api-base="https://agent.nexifyai.org" data-mode="live" async></script>
 </body>
 </html>
