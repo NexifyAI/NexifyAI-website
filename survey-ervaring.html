@@ -30,6 +30,10 @@
   .brand{font-weight:800;font-size:1.05rem;color:var(--color-ink);text-decoration:none;display:flex;align-items:center;gap:8px}
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--color-primary);display:inline-block}
   .lang{font-size:.85rem;color:var(--color-muted);text-decoration:none}
+  .hdr-right{display:flex;align-items:center;gap:12px}
+  .langbtn{font:inherit;font-size:.85rem;font-weight:600;color:#059669;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:999px;padding:4px 14px;cursor:pointer}
+  .langbtn:hover{background:#d1fae5}
+  @media(max-width:520px){.hdr-right .lang{display:none}}
 
   .hero{padding:44px 0 24px;text-align:center}
   .hero h1{font-size:var(--text-xl);margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
@@ -84,7 +88,10 @@
 <header>
   <div class="wrap">
     <a class="brand" href="https://nexifyai.org/"><span class="dot"></span>Nexify AI</a>
-    <span class="lang">Onderzoek · RSM EMBA</span>
+    <div class="hdr-right">
+      <span class="lang">Onderzoek · RSM EMBA</span>
+      <button type="button" class="langbtn" lang="en" aria-label="Switch to English" onclick="toggleLang()">English</button>
+    </div>
   </div>
 </header>
 
@@ -294,6 +301,204 @@
   //    bijv. 'https://nexifyai-survey.<jouw-subdomein>.workers.dev'  of  'https://survey.nexifyai.org'
   const API_URL = 'https://nexifyai-survey.yuanxin0222.workers.dev';
 
+  // ── Taal / language ──────────────────────────────────────────────────────
+  // Dutch is the source text in the HTML. EN maps each Dutch string to its English version.
+  // Option *values* stay Dutch in both languages, so the stored data stays comparable.
+  const EN = {
+    // header / entry page
+    "Onderzoek · RSM EMBA": "Research · RSM EMBA",
+    "3 minuten · geen verkoop": "3 minutes · no sales pitch",
+    "Deel jouw": "Share your",
+    "laatste": "last",
+    "ervaring": "experience",
+    "Geen mening gevraagd — alleen wat er": "No opinions asked — only what",
+    "gebeurd is": "actually happened",
+    ". Kies hieronder welke ervaring je wilt delen.": ". Choose below which experience you want to share.",
+    "Jouw laatste klus-ervaring": "Your last experience with a handyman",
+    "Schilder, klusjesman, monteur gezocht of gehuurd?": "Looked for or hired a painter, handyman or technician?",
+    "Hoeveel bedrijven heb je benaderd?": "How many businesses did you approach?",
+    "Wie reageerde niet — en wat deed je toen?": "Who didn't reply — and what did you do then?",
+    "Stuurde je foto's van de klus?": "Did you send photos of the job?",
+    "Start — klus ervaring (3 min)": "Start — handyman experience (3 min)",
+    "Jouw laatste tandarts-contact": "Your last contact with a dentist",
+    "Afspraak, controle, spoed of aanmelding als nieuwe patiënt?": "Appointment, check-up, emergency, or signing up as a new patient?",
+    "Kon je meteen iemand bereiken?": "Could you reach someone straight away?",
+    "Hoe lang duurde het voordat het geregeld was?": "How long did it take to get it sorted?",
+    "Spoed 's avonds — wat doe je dan?": "An emergency in the evening — what do you do then?",
+    "Start — tandarts ervaring (3 min)": "Start — dentist experience (3 min)",
+    "Hoe werkt het?": "How does it work?",
+    "Kies een ervaring hierboven — korte meerkeuzevragen, allemaal over de": "Pick an experience above — short multiple-choice questions, all about the",
+    "laste keer": "last time",
+    "Je vult je naam in; e-mail en telefoon hoeven niet.": "You fill in your name; e-mail and phone are optional.",
+    "Je antwoorden worden uitsluitend gebruikt voor onderzoek (RSM EMBA-project) — geen marketing, geen verkoop.": "Your answers are used solely for research (RSM EMBA project) — no marketing, no sales.",
+    // footer
+    "Nexify AI · customer research · vragen? Mail ons via het": "Nexify AI · customer research · questions? Email us via the",
+    "contactformulier": "contact form",
+    "Privacyverklaring": "Privacy statement",
+    // shared
+    "← terug": "← back",
+    "Over de": "About the",
+    "LASTE": "LAST",
+    "keer — niet wat je zou willen.": "time — not what you would want.",
+    "Ja": "Yes",
+    "Ja, maar langer dan een jaar geleden": "Yes, but longer than a year ago",
+    "Nee, nooit": "No, never",
+    "2. Wat was het eerste wat je deed toen de behoefte er was?": "2. What was the first thing you did once you had the need?",
+    "Google gezocht": "Googled it",
+    "Anders": "Other",
+    "Telefoon": "Phone",
+    "(optioneel)": "(optional)",
+    "Naam (verplicht)": "Name (required)",
+    "E-mail (optioneel)": "E-mail (optional)",
+    "Telefoon (optioneel)": "Phone (optional)",
+    "11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? Laat je naam achter (verplicht). E-mail of telefoon mag, maar hoeft niet.": "11. May I contact you for a short chat (15 min) about your experience? Leave your name (required). E-mail or phone is welcome, but not needed.",
+    "10. Mag ik contact opnemen voor een kort gesprek (15 min)? Laat je naam achter (verplicht). E-mail of telefoon mag, maar hoeft niet.": "10. May I contact you for a short chat (15 min)? Leave your name (required). E-mail or phone is welcome, but not needed.",
+    "Je antwoorden worden alleen gebruikt voor onderzoek (RSM EMBA-project). Geen marketing, geen verkoop.": "Your answers are only used for research (RSM EMBA project). No marketing, no sales.",
+    "Versturen": "Send",
+    // Form A — klus
+    "Jouw laatste ervaring met een schilder of klusjesman": "Your last experience with a painter or handyman",
+    "1. Heb je in de afgelopen 12 maanden een schilder of vergelijkbare vakman gezocht?": "1. In the past 12 months, did you look for a painter or similar tradesperson?",
+    "Via kennissen of familie gevraagd": "Asked friends or family",
+    "Een bekend bedrijf gebeld": "Called a company I already knew",
+    "Op een platform geplaatst (bijv. Werkspot)": "Posted on a platform (e.g. Werkspot)",
+    "3. Hoeveel bedrijven of vakmensen heb je in totaal benaderd voor die klus?": "3. How many businesses or tradespeople did you approach in total for that job?",
+    "7 of meer": "7 or more",
+    "4. Hoe nam je contact op?": "4. How did you get in touch?",
+    "(kies wat van toepassing is)": "(tick all that apply)",
+    "Websiteformulier": "Website form",
+    "Via kennissen of familie": "Through friends or family",
+    "5. Hoeveel daarvan reageerden niet, of pas na lange tijd?": "5. How many of them didn't reply, or only after a long time?",
+    "Niemand — iedereen reageerde": "None — everyone replied",
+    "Weet niet meer": "Can't remember",
+    "6. Wat deed je bij een vakman die niet reageerde?": "6. What did you do about a tradesperson who didn't reply?",
+    "Naar het volgende bedrijf": "Moved on to the next company",
+    "Via een platform geprobeerd": "Tried a platform",
+    "Opnieuw gebeld of bericht gestuurd": "Called again or sent a message",
+    "Klus uitgesteld of geannuleerd": "Postponed or cancelled the job",
+    "7. Heb je foto's van de klus verstuurd (bijv. via WhatsApp)?": "7. Did you send photos of the job (e.g. via WhatsApp)?",
+    "Ja, met foto's": "Yes, with photos",
+    "Nee, alleen tekst": "No, text only",
+    "Nee, het ging allemaal via telefoon": "No, it was all done by phone",
+    "8. Heeft iemand een offerte gegeven op basis van alleen foto's — zonder langs te komen?": "8. Did anyone give a quote based on photos alone — without coming by?",
+    "Ja — offerte op basis van foto's": "Yes — a quote based on photos",
+    "Nee — iedereen wilde langskomen": "No — everyone wanted to come by",
+    "Gemengd": "Mixed",
+    "9. Had die klus met een verzekering te maken?": "9. Did that job involve an insurance claim?",
+    "Ja — verliep soepel": "Yes — it went smoothly",
+    "Ja — ingewikkeld of traag": "Yes — it was complicated or slow",
+    "Geen verzekering": "No insurance",
+    "Weet niet": "Don't know",
+    "10. Vertel kort wat er gebeurde — wat ging goed, wat niet?": "10. Briefly, what happened — what went well, what didn't?",
+    "Bijvoorbeeld: hoe lang duurde het, wie reageerde niet...": "For example: how long it took, who didn't reply...",
+    // Form B — tandarts
+    "Jouw laatste bezoek- of contactpoging met de tandarts": "Your last visit to, or attempt to contact, the dentist",
+    "1. Heb je in de afgelopen 12 maanden contact gehad met een tandartspraktijk?": "1. In the past 12 months, have you been in touch with a dental practice?",
+    "De praktijk direct gebeld": "Called the practice straight away",
+    "Website van de praktijk geprobeerd": "Tried the practice's website",
+    "3. Waarom ging dat?": "3. What was it for?",
+    "Controle of gewone afspraak": "Check-up or regular appointment",
+    "Spoed (bijv. kiespijn)": "Emergency (e.g. toothache)",
+    "Aanmelden als nieuwe patiënt": "Signing up as a new patient",
+    "Website": "Website",
+    "Persoonlijk langsgaan": "Went in person",
+    "5. Kon je meteen iemand bereiken?": "5. Could you reach someone straight away?",
+    "Ja, direct": "Yes, straight away",
+    "Nee — moest meerdere keren bellen": "No — had to call several times",
+    "Nee — niemand nam op": "No — nobody picked up",
+    "Alleen op vaste tijden bellen (bijv. 08:00–12:00)": "Could only call at set times (e.g. 08:00–12:00)",
+    "6. Hoe lang duurde het voordat je iemand sprak of een afspraak had?": "6. How long before you spoke to someone or had an appointment?",
+    "Dezelfde dag": "The same day",
+    "2–3 dagen": "2–3 days",
+    "Een week of langer": "A week or longer",
+    "Meer dan twee weken": "More than two weeks",
+    "7. Had je ooit spoed 's avonds of in het weekend? Wat deed je toen?": "7. Did you ever have an emergency in the evening or at the weekend? What did you do then?",
+    "Geen spoed gehad": "Never had an emergency",
+    "De 0900-spoedlijn gebeld": "Called the 0900 emergency line",
+    "Gewacht tot de volgende openingsdag": "Waited until the next opening day",
+    "8. Heb je ooit getwijfeld of een rekening of betaalverzoek van de praktijk echt was?": "8. Did you ever doubt whether an invoice or payment request from the practice was genuine?",
+    "Ja, heb er aan getwijfeld": "Yes, I doubted it",
+    "Ik ontvang geen rekeningen via e-mail of link": "I don't receive invoices by e-mail or link",
+    "9. Vertel kort wat er gebeurde — wat ging goed, wat niet?": "9. Briefly, what happened — what went well, what didn't?",
+    "Bijvoorbeeld: hoe lang je moest wachten, hoe het werd opgelost...": "For example: how long you had to wait, how it got resolved..."
+  };
+
+  // messages shown after a submit attempt: [Dutch, English] (built from the question numbers where needed)
+  const MSG = {
+    gate:    ['Bedankt — deze vragenlijst is bedoeld voor mensen met een ervaring in de afgelopen 12 maanden. Je hoeft niets verder in te vullen.',
+               'Thank you — this questionnaire is for people with an experience from the past 12 months. You don\'t need to fill in anything else.'],
+    name:    ['Vul nog je naam in bij de laatste vraag. E-mail en telefoon hoeven niet.',
+               'Please fill in your name at the last question. E-mail and phone are optional.'],
+    setup:   ['De vragenlijst wordt nog ingesteld — probeer het later opnieuw.',
+               'The questionnaire is still being set up — please try again later.'],
+    sent:    ['Bedankt! Je antwoorden zijn verstuurd. 🙏',
+               'Thank you! Your answers have been sent. 🙏'],
+    status:  s => ['Er ging iets mis (' + s + '). Probeer het opnieuw.',
+                   'Something went wrong (' + s + '). Please try again.'],
+    offline: ['Geen verbinding — controleer je internet en probeer opnieuw.',
+               'No connection — check your internet and try again.'],
+    missing1: n => ['Vraag ' + n + ' is nog niet ingevuld. Kies de optie die het beste past.',
+                    'Question ' + n + ' is not filled in yet. Pick the option that fits best.'],
+    missingN: l => ['Nog niet alles is ingevuld — vragen ' + l + ' ontbreken. Kies bij elke vraag de optie die het beste past.',
+                    'Not everything is filled in yet — questions ' + l + ' are missing. Pick the option that fits best at every question.']
+  };
+  const BTN = { idle: ['Versturen', 'Send'], sending: ['Versturen...', 'Sending...'], sent: ['Verzonden ✓', 'Sent ✓'] };
+
+  let lang = 'nl';
+  const txt = pair => pair[lang === 'en' ? 1 : 0];
+  const origText = new WeakMap();   // text node → Dutch original
+
+  function toggleLang(){ setLang(lang === 'en' ? 'nl' : 'en'); }
+
+  function setLang(which){
+    lang = which === 'en' ? 'en' : 'nl';
+    try { localStorage.setItem('survey-lang', lang); } catch (e) {}
+    applyLang();
+  }
+
+  // swap every translatable text node and placeholder in the page; keeps answers the respondent already gave
+  function applyLang(){
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const raw = n.nodeValue, key = raw.trim();
+      if (!key) continue;
+      if (lang === 'en') {
+        if (EN[key]) { if (!origText.has(n)) origText.set(n, raw); n.nodeValue = raw.replace(key, EN[key]); }
+      } else if (origText.has(n)) {
+        n.nodeValue = origText.get(n);
+      }
+    }
+    document.querySelectorAll('[placeholder]').forEach(el => {
+      if (lang === 'en') {
+        if (!el.dataset.phNl) el.dataset.phNl = el.getAttribute('placeholder');
+        if (EN[el.dataset.phNl]) el.setAttribute('placeholder', EN[el.dataset.phNl]);
+      } else if (el.dataset.phNl) {
+        el.setAttribute('placeholder', el.dataset.phNl);
+      }
+    });
+    document.querySelectorAll('.submit').forEach(b => { b.textContent = txt(BTN[b.dataset.state || 'idle']); });
+    // a message already on screen follows the language (messages that depend on the answers are rebuilt)
+    document.querySelectorAll('.msg').forEach(el => {
+      const s = shownMsg[el.id.slice(4)];
+      if (el.className === 'msg' || !s) return;
+      el.textContent = txt(s.again ? s.again() : s.pair);
+    });
+    document.documentElement.lang = lang;
+    document.title = lang === 'en' ? 'Share your experience — Nexify AI research' : 'Deel jouw ervaring — Nexify AI onderzoek';
+    document.querySelector('meta[name="description"]').setAttribute('content', lang === 'en'
+      ? 'Short questionnaire (3 min) about your last experience with a handyman or the dentist. No sales.'
+      : 'Korte vragenlijst (3 min) over jouw laatste ervaring met een klusjesman of de tandarts. Geen verkoop.');
+    const btn = document.querySelector('.langbtn');
+    btn.textContent = lang === 'en' ? 'Nederlands' : 'English';
+    btn.setAttribute('lang', lang === 'en' ? 'nl' : 'en');
+    btn.setAttribute('aria-label', lang === 'en' ? 'Wissel naar Nederlands' : 'Switch to English');
+  }
+
+  function setBtn(f, state){
+    const b = f.querySelector('.submit');
+    b.dataset.state = state;
+    b.textContent = txt(BTN[state]);
+  }
+
   function showForm(which){
     document.getElementById('entries').style.display = which ? 'none' : '';
     document.getElementById('form-klus').classList.toggle('active', which === 'klus');
@@ -324,7 +529,7 @@
     // gate: alleen "Ja" (binnen 12 maanden) gaat door
     if (answers.q1 && answers.q1 !== 'Ja') {
       f.querySelector('.submit').disabled = true;
-      showMsg(form, 'ok', 'Bedankt — deze vragenlijst is bedoeld voor mensen met een ervaring in de afgelopen 12 maanden. Je hoeft niets verder in te vullen.');
+      showMsg(form, 'ok', MSG.gate);
       // respondent may still correct the answer
       f.addEventListener('change', () => {
         f.querySelector('.submit').disabled = false;
@@ -335,9 +540,9 @@
 
     if (missing.length) {
       const list = missing.join(', ');
-      showMsg(form, 'err', missing.length === 1
-        ? 'Vraag ' + list + ' is nog niet ingevuld. Kies de optie die het beste past.'
-        : 'Nog niet alles is ingevuld — vragen ' + list + ' ontbreken. Kies bij elke vraag de optie die het beste past.');
+      // again: re-derives this message after a language switch
+      showMsg(form, 'err', missing.length === 1 ? MSG.missing1(list) : MSG.missingN(list),
+              () => missing.length === 1 ? MSG.missing1(list) : MSG.missingN(list));
       return false;
     }
 
@@ -348,45 +553,58 @@
 
     // the name is the only required contact field; e-mail and phone are optional
     if (!contact.name) {
-      showMsg(form, 'err', 'Vul nog je naam in bij de laatste vraag. E-mail en telefoon hoeven niet.');
+      showMsg(form, 'err', MSG.name);
       return false;
     }
 
-    const btn = f.querySelector('.submit');
-    btn.disabled = true; btn.textContent = 'Versturen...';
+    setBtn(f, 'sending');
+    f.querySelector('.submit').disabled = true;
     if (API_URL.includes('PASTE_')) {
-      showMsg(form, 'err', 'De vragenlijst wordt nog ingesteld — probeer het later opnieuw.');
-      btn.disabled = false; btn.textContent = 'Versturen';
+      showMsg(form, 'err', MSG.setup);
+      f.querySelector('.submit').disabled = false; setBtn(f, 'idle');
       return false;
     }
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ form, answers, contact })
+        body: JSON.stringify({ form, answers, contact, lang })
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.ok) {
         f.querySelectorAll('input,textarea').forEach(el => el.disabled = true);
-        showMsg(form, 'ok', 'Bedankt! Je antwoorden zijn verstuurd. 🙏');
-        btn.textContent = 'Verzonden ✓';
+        showMsg(form, 'ok', MSG.sent);
+        setBtn(f, 'sent');
       } else {
-        showMsg(form, 'err', 'Er ging iets mis (' + res.status + '). Probeer het opnieuw.');
-        btn.disabled = false; btn.textContent = 'Versturen';
+        showMsg(form, 'err', MSG.status(res.status), () => MSG.status(res.status));
+        f.querySelector('.submit').disabled = false; setBtn(f, 'idle');
       }
     } catch (e) {
-      showMsg(form, 'err', 'Geen verbinding — controleer je internet en probeer opnieuw.');
-      btn.disabled = false; btn.textContent = 'Versturen';
+      showMsg(form, 'err', MSG.offline);
+      f.querySelector('.submit').disabled = false; setBtn(f, 'idle');
     }
     return false;
   }
 
-  function showMsg(form, kind, text){
+  const shownMsg = {};   // form → the message currently on screen (pair, plus `again` when it is built from answers)
+
+  function showMsg(form, kind, pair, again){
     const el = document.getElementById('msg-' + form);
+    shownMsg[form] = { pair, again };
     el.className = 'msg ' + kind;
-    el.textContent = text;
+    el.textContent = txt(pair);
     el.scrollIntoView({block: 'nearest', behavior: 'smooth'});
   }
+
+  // ?lang=en|nl beats the remembered choice, which beats the browser language (Dutch browsers get Dutch)
+  (function initLang(){
+    let wanted = null;
+    try { wanted = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+    if (wanted !== 'en' && wanted !== 'nl') { try { wanted = localStorage.getItem('survey-lang'); } catch (e) {} }
+    if (wanted !== 'en' && wanted !== 'nl') wanted = (navigator.language || '').toLowerCase().startsWith('nl') ? 'nl' : 'en';
+    setLang(wanted);
+  })();
+</script>
 </script>
 </body>
 </html>
