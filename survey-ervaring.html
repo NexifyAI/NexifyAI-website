@@ -23,7 +23,7 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--color-bg);color:var(--color-ink);font:var(--text-base)/1.6 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
   a{color:#059669}
-  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px}
 
   header{background:#fff;border-bottom:1px solid var(--color-line);padding:16px 0}
   header .wrap{display:flex;align-items:center;justify-content:space-between}
@@ -31,33 +31,52 @@
   .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--color-primary);display:inline-block}
   .lang{font-size:.85rem;color:var(--color-muted);text-decoration:none}
 
-  .hero{padding:52px 0 28px;text-align:center}
+  .hero{padding:44px 0 24px;text-align:center}
   .hero h1{font-size:var(--text-xl);margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
   .hero p.lead{color:var(--color-muted);font-size:var(--text-lg);margin:0 auto 10px;max-width:620px}
-  .hero .pill{display:inline-block;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:999px;padding:4px 14px;font-size:.85rem;font-weight:600}
+  .hero .pill{display:inline-block;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:600;margin-bottom:12px}
 
-  .entries{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0 40px}
-  @media(max-width:700px){.entries{grid-template-columns:1fr}}
-  .card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
-  .card .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
-  .card.a .icon{background:#ecfdf5}
-  .card.b .icon{background:#ecfeff}
+  .entries{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:8px 0 36px}
+  @media(max-width:640px){.entries{grid-template-columns:1fr}}
+  .card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+  .card .icon{font-size:28px}
   .card h2{margin:0;font-size:var(--text-lg);font-weight:700}
   .card p{margin:0;color:var(--color-muted);font-size:.95rem}
   .card ul{margin:0;padding-left:18px;color:var(--color-muted);font-size:.9rem}
   .card li{margin:3px 0}
-  .card .btn{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--color-primary);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:10px;font-size:1rem;border:0;cursor:pointer;transition:transform .18s ease,background .18s ease}
-  .card .btn:hover{transform:translateY(-2px);background:#059669}
-  .card .btn:active{transform:translateY(0)}
+  .card .btn{margin-top:auto;background:var(--color-primary);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:10px;font-size:1rem;border:0;cursor:pointer;text-align:center;transition:background .18s ease}
+  .card .btn:hover{background:#059669}
 
-  .steps{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:22px 26px;margin-bottom:40px}
-  .steps h3{margin:0 0 10px;font-size:1rem}
-  .steps ol{margin:0;padding-left:20px;color:var(--color-muted);font-size:.92rem}
+  form.panel{display:none;background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:28px;margin-bottom:32px}
+  form.panel.active{display:block}
+  .backlink{background:none;border:0;color:var(--color-muted);cursor:pointer;font-size:.85rem;padding:0;margin-bottom:12px;text-decoration:underline}
+  form.panel h2{margin:0 0 4px;font-size:var(--text-lg)}
+  .desc{color:var(--color-muted);font-size:.9rem;margin:0 0 8px}
+  .q{margin:20px 0;border-bottom:1px solid var(--color-line);padding-bottom:16px}
+  .q:last-of-type{border-bottom:0}
+  .qt{font-weight:700;font-size:.97rem;margin-bottom:8px}
+  .q label{display:flex;gap:9px;align-items:flex-start;padding:5px 0;font-size:.95rem;cursor:pointer}
+  .q input[type=radio]{margin-top:4px;accent-color:var(--color-primary);flex:none}
+  .q textarea,.q input[type=text],.q input[type=email]{width:100%;border:1px solid var(--color-line);border-radius:8px;padding:10px 12px;font:inherit;font-size:.94rem;margin-top:4px}
+  .contact-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.contact-row{grid-template-columns:1fr}}
+  .consent{font-size:.84rem;color:var(--color-muted);font-style:italic;margin:14px 0}
+  .submit{width:100%;background:var(--color-primary);color:#fff;border:0;border-radius:10px;padding:14px;font-size:1.05rem;font-weight:700;cursor:pointer}
+  .submit:disabled{opacity:.55;cursor:wait}
+  .msg{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:.93rem}
+  .msg.ok{display:block;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+  .msg.err{display:block;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+  .hp{position:absolute;left:-9999px}
+
+  .steps{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:18px 24px;margin-bottom:36px}
+  .steps b{font-size:.95rem}
+  .steps ol{margin:8px 0 0;padding-left:20px;color:var(--color-muted);font-size:.9rem}
   .steps li{margin:4px 0}
 
   footer{border-top:1px solid var(--color-line);padding:26px 0 48px;color:var(--color-muted);font-size:.85rem}
   footer .wrap{display:flex;flex-direction:column;gap:6px}
   footer a{color:var(--color-muted)}
+  @media print{ .entries,.steps{display:none} }
 </style>
 </head>
 <body>
@@ -71,69 +90,287 @@
 
 <div class="wrap">
 
-  <section class="hero">
-    <span class="pill">3 minuten · anoniem mogelijk · geen verkoop</span>
-    <h1>Deel jouw <u>laatste</u> ervaring</h1>
-    <p class="lead">Geen mening gevraagd — alleen wat er <b>gebeurd is</b>. Kies hieronder welke ervaring je wilt delen.</p>
-  </section>
+  <div id="entries">
+    <section class="hero">
+      <span class="pill">3 minuten · anoniem mogelijk · geen verkoop</span>
+      <h1>Deel jouw <u>laatste</u> ervaring</h1>
+      <p class="lead">Geen mening gevraagd — alleen wat er <b>gebeurd is</b>. Kies hieronder welke ervaring je wilt delen.</p>
+    </section>
 
-  <section class="entries">
-    <div class="card a">
-      <div class="icon">🔨</div>
-      <h2>Jouw laatste klus-ervaring</h2>
-      <p>Schilder, klusjesman, monteur gezocht of gehuurd?</p>
-      <ul>
-        <li>Hoeveel bedrijven heb je benaderd?</li>
-        <li>Wie reageerde niet — en wat deed je toen?</li>
-        <li>Stuurde je foto's van de klus?</li>
-      </ul>
-      <button class="btn" onclick="go('klus')">Start — klus ervaring (3 min)</button>
-    </div>
+    <section class="entries">
+      <div class="card">
+        <div class="icon">🔨</div>
+        <h2>Jouw laatste klus-ervaring</h2>
+        <p>Schilder, klusjesman, monteur gezocht of gehuurd?</p>
+        <ul>
+          <li>Hoeveel bedrijven heb je benaderd?</li>
+          <li>Wie reageerde niet — en wat deed je toen?</li>
+          <li>Stuurde je foto's van de klus?</li>
+        </ul>
+        <button class="btn" onclick="showForm('klus')">Start — klus ervaring (3 min)</button>
+      </div>
 
-    <div class="card b">
-      <div class="icon">🦷</div>
-      <h2>Jouw laatste tandarts-contact</h2>
-      <p>Afspraak, controle, spoed of aanmelding als nieuwe patiënt?</p>
-      <ul>
-        <li>Kon je meteen iemand bereiken?</li>
-        <li>Hoe lang duurde het voordat het geregeld was?</li>
-        <li>Spoed 's avonds — wat doe je dan?</li>
-      </ul>
-      <button class="btn" onclick="go('tandarts')">Start — tandarts ervaring (3 min)</button>
-    </div>
-  </section>
+      <div class="card">
+        <div class="icon">🦷</div>
+        <h2>Jouw laatste tandarts-contact</h2>
+        <p>Afspraak, controle, spoed of aanmelding als nieuwe patiënt?</p>
+        <ul>
+          <li>Kon je meteen iemand bereiken?</li>
+          <li>Hoe lang duurde het voordat het geregeld was?</li>
+          <li>Spoed 's avonds — wat doe je dan?</li>
+        </ul>
+        <button class="btn" onclick="showForm('tandarts')">Start — tandarts ervaring (3 min)</button>
+      </div>
+    </section>
 
-  <section class="steps">
-    <h3>Hoe werkt het?</h3>
-    <ol>
-      <li>Kies een ervaring hierboven — je krijgt korte meerkeuzevragen, allemaal over de <b>laste keer</b>.</li>
-      <li>Alles mag anoniem; alleen als je wilt dat ik contact opneem, laat je gegevens achter.</li>
-      <li>Je antwoorden worden uitsluitend gebruikt voor onderzoek (RSM EMBAproject) — geen marketing, geen verkoop.</li>
-    </ol>
-  </section>
+    <section class="steps">
+      <b>Hoe werkt het?</b>
+      <ol>
+        <li>Kies een ervaring hierboven — korte meerkeuzevragen, allemaal over de <b>laste keer</b>.</li>
+        <li>Alles mag anoniem; alleen als je een gesprek wilt, laat je gegevens achter.</li>
+        <li>Je antwoorden worden uitsluitend gebruikt voor onderzoek (RSM EMBA-project) — geen marketing, geen verkoop.</li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- ==================== FORM A: KLUS ==================== -->
+  <form class="panel" id="form-klus" onsubmit="return submitSurvey(event,'klus')">
+    <button type="button" class="backlink" onclick="showForm(null)">← terug</button>
+    <h2>Jouw laatste ervaring met een schilder of klusjesman</h2>
+    <p class="desc">Over de <b>LASTE</b> keer — niet wat je zou willen.</p>
+
+    <div class="q"><div class="qt">1. Heb je in de afgelopen 12 maanden een schilder of vergelijkbare vakman gezocht?</div>
+      <label><input type="radio" name="q1" value="Ja" required>Ja</label>
+      <label><input type="radio" name="q1" value="Ja, maar langer dan een jaar geleden">Ja, maar langer dan een jaar geleden</label>
+      <label><input type="radio" name="q1" value="Nee, nooit">Nee, nooit</label></div>
+
+    <div class="q"><div class="qt">2. Wat was het eerste wat je deed toen de behoefte er was?</div>
+      <label><input type="radio" name="q2" value="Via kennissen/familie gevraagd">Via kennissen of familie gevraagd</label>
+      <label><input type="radio" name="q2" value="Google gezocht">Google gezocht</label>
+      <label><input type="radio" name="q2" value="Een bekend bedrijf gebeld">Een bekend bedrijf gebeld</label>
+      <label><input type="radio" name="q2" value="Op een platform geplaatst (bijv. Werkspot)">Op een platform geplaatst (bijv. Werkspot)</label>
+      <label><input type="radio" name="q2" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">3. Hoeveel bedrijven of vakmensen heb je in totaal benaderd voor die klus?</div>
+      <label><input type="radio" name="q3" value="1">1</label>
+      <label><input type="radio" name="q3" value="2–3">2–3</label>
+      <label><input type="radio" name="q3" value="4–6">4–6</label>
+      <label><input type="radio" name="q3" value="7 of meer">7 of meer</label></div>
+
+    <div class="q"><div class="qt">4. Hoe nam je contact op? <i>(kies wat van toepassing is)</i></div>
+      <label><input type="checkbox" name="q4" value="Telefoon">Telefoon</label>
+      <label><input type="checkbox" name="q4" value="WhatsApp">WhatsApp</label>
+      <label><input type="checkbox" name="q4" value="Werkspot of Zoofy">Werkspot of Zoofy</label>
+      <label><input type="checkbox" name="q4" value="Websiteformulier">Websiteformulier</label>
+      <label><input type="checkbox" name="q4" value="Via kennissen of familie">Via kennissen of familie</label>
+      <label><input type="checkbox" name="q4" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">5. Hoeveel daarvan reageerden niet, of pas na lange tijd?</div>
+      <label><input type="radio" name="q5" value="Niemand — iedereen reageerde">Niemand — iedereen reageerde</label>
+      <label><input type="radio" name="q5" value="1–2">1–2</label>
+      <label><input type="radio" name="q5" value="3–5">3–5</label>
+      <label><input type="radio" name="q5" value="Weet niet meer">Weet niet meer</label></div>
+
+    <div class="q"><div class="qt">6. Wat deed je bij een vakman die niet reageerde?</div>
+      <label><input type="radio" name="q6" value="Naar het volgende bedrijf">Naar het volgende bedrijf</label>
+      <label><input type="radio" name="q6" value="Via een platform geprobeerd">Via een platform geprobeerd</label>
+      <label><input type="radio" name="q6" value="Opnieuw gebeld of bericht gestuurd">Opnieuw gebeld of bericht gestuurd</label>
+      <label><input type="radio" name="q6" value="Klus uitgesteld of geannuleerd">Klus uitgesteld of geannuleerd</label></div>
+
+    <div class="q"><div class="qt">7. Heb je foto's van de klus verstuurd (bijv. via WhatsApp)?</div>
+      <label><input type="radio" name="q7" value="Ja, met foto's">Ja, met foto's</label>
+      <label><input type="radio" name="q7" value="Nee, alleen tekst">Nee, alleen tekst</label>
+      <label><input type="radio" name="q7" value="Nee, het ging allemaal via telefoon">Nee, het ging allemaal via telefoon</label></div>
+
+    <div class="q"><div class="qt">8. Heeft iemand een offerte gegeven op basis van alleen foto's — zonder langs te komen?</div>
+      <label><input type="radio" name="q8" value="Ja — offerte op basis van foto's">Ja — offerte op basis van foto's</label>
+      <label><input type="radio" name="q8" value="Nee — iedereen wilde langskomen">Nee — iedereen wilde langskomen</label>
+      <label><input type="radio" name="q8" value="Gemengd">Gemengd</label></div>
+
+    <div class="q"><div class="qt">9. Had die klus met een verzekering te maken?</div>
+      <label><input type="radio" name="q9" value="Ja — verliep soepel">Ja — verliep soepel</label>
+      <label><input type="radio" name="q9" value="Ja — ingewikkeld of traag">Ja — ingewikkeld of traag</label>
+      <label><input type="radio" name="q9" value="Geen verzekering">Geen verzekering</label>
+      <label><input type="radio" name="q9" value="Weet niet">Weet niet</label></div>
+
+    <div class="q"><div class="qt">10. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
+      <textarea name="q10" rows="4" placeholder="Bijvoorbeeld: hoe lang duurde het, wie reageerde niet..."></textarea></div>
+
+    <div class="q"><div class="qt">11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? <i>(optioneel)</i></div>
+      <div class="contact-row">
+        <input type="text" name="c_name" placeholder="Naam">
+        <input type="email" name="c_email" placeholder="E-mail">
+      </div>
+      <div style="margin-top:8px"><input type="text" name="c_phone" placeholder="Telefoon (optioneel)"></div></div>
+
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+    <div class="consent">Je antwoorden worden alleen gebruikt voor onderzoek (RSM EMBA-project). Geen marketing, geen verkoop.</div>
+    <div class="msg" id="msg-klus"></div>
+    <button class="submit" type="submit">Versturen</button>
+  </form>
+
+  <!-- ==================== FORM B: TANDARTS ==================== -->
+  <form class="panel" id="form-tandarts" onsubmit="return submitSurvey(event,'tandarts')">
+    <button type="button" class="backlink" onclick="showForm(null)">← terug</button>
+    <h2>Jouw laatste contact met de tandarts</h2>
+    <p class="desc">Over de <b>LASTE</b> keer — niet wat je zou willen.</p>
+
+    <div class="q"><div class="qt">1. Heb je in de afgelopen 12 maanden contact gehad met een tandartspraktijk?</div>
+      <label><input type="radio" name="q1" value="Ja">Ja</label>
+      <label><input type="radio" name="q1" value="Ja, maar langer dan een jaar geleden">Ja, maar langer dan een jaar geleden</label>
+      <label><input type="radio" name="q1" value="Nee, nooit">Nee, nooit</label></div>
+
+    <div class="q"><div class="qt">2. Wat was het eerste wat je deed toen de behoefte er was?</div>
+      <label><input type="radio" name="q2" value="Praktijk direct gebeld">De praktijk direct gebeld</label>
+      <label><input type="radio" name="q2" value="Google gezocht">Google gezocht</label>
+      <label><input type="radio" name="q2" value="Via kennissen of familie">Via kennissen of familie</label>
+      <label><input type="radio" name="q2" value="Website van de praktijk geprobeerd">Website van de praktijk geprobeerd</label>
+      <label><input type="radio" name="q2" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">3. Waarom ging dat?</div>
+      <label><input type="radio" name="q3" value="Controle of gewone afspraak">Controle of gewone afspraak</label>
+      <label><input type="radio" name="q3" value="Spoed (bijv. kiespijn)">Spoed (bijv. kiespijn)</label>
+      <label><input type="radio" name="q3" value="Aanmelden als nieuwe patiënt">Aanmelden als nieuwe patiënt</label>
+      <label><input type="radio" name="q3" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">4. Hoe nam je contact op?</div>
+      <label><input type="radio" name="q4" value="Telefoon">Telefoon</label>
+      <label><input type="radio" name="q4" value="Website">Website</label>
+      <label><input type="radio" name="q4" value="WhatsApp">WhatsApp</label>
+      <label><input type="radio" name="q4" value="E-mail">E-mail</label>
+      <label><input type="radio" name="q4" value="Persoonlijk langsgaan">Persoonlijk langsgaan</label></div>
+
+    <div class="q"><div class="qt">5. Kon je meteen iemand bereiken?</div>
+      <label><input type="radio" name="q5" value="Ja, direct">Ja, direct</label>
+      <label><input type="radio" name="q5" value="Nee — meerdere keren moeten bellen">Nee — moest meerdere keren bellen</label>
+      <label><input type="radio" name="q5" value="Nee — niemand nam op">Nee — niemand nam op</label>
+      <label><input type="radio" name="q5" value="Alleen op vaste tijden bellen (bijv. 08:00–12:00)">Alleen op vaste tijden bellen (bijv. 08:00–12:00)</label>
+      <label><input type="radio" name="q5" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">6. Hoe lang duurde het voordat je iemand sprak of een afspraak had?</div>
+      <label><input type="radio" name="q6" value="Dezelfde dag">Dezelfde dag</label>
+      <label><input type="radio" name="q6" value="2–3 dagen">2–3 dagen</label>
+      <label><input type="radio" name="q6" value="Een week of langer">Een week of langer</label>
+      <label><input type="radio" name="q6" value="Meer dan twee weken">Meer dan twee weken</label></div>
+
+    <div class="q"><div class="qt">7. Had je ooit spoed 's avonds of in het weekend? Wat deed je toen?</div>
+      <label><input type="radio" name="q7" value="Geen spoed gehad">Geen spoed gehad</label>
+      <label><input type="radio" name="q7" value="0900-spoedlijn gebeld">De 0900-spoedlijn gebeld</label>
+      <label><input type="radio" name="q7" value="Gewacht tot de volgende openingsdag">Gewacht tot de volgende openingsdag</label>
+      <label><input type="radio" name="q7" value="Anders">Anders</label></div>
+
+    <div class="q"><div class="qt">8. Heb je ooit getwijfeld of een rekening of betaalverzoek van de praktijk echt was?</div>
+      <label><input type="radio" name="q8" value="Ja, heb er aan getwijfeld">Ja, heb er aan getwijfeld</label>
+      <label><input type="radio" name="q8" value="Nee, nooit">Nee, nooit</label>
+      <label><input type="radio" name="q8" value="Ik ontvang geen rekeningen via e-mail of link">Ik ontvang geen rekeningen via e-mail of link</label></div>
+
+    <div class="q"><div class="qt">9. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
+      <textarea name="q9" rows="4" placeholder="Bijvoorbeeld: hoe lang je moest wachten, hoe het werd opgelost..."></textarea></div>
+
+    <div class="q"><div class="qt">10. Mag ik contact opnemen voor een kort gesprek (15 min)? <i>(optioneel)</i></div>
+      <div class="contact-row">
+        <input type="text" name="c_name" placeholder="Naam">
+        <input type="email" name="c_email" placeholder="E-mail">
+      </div>
+      <div style="margin-top:8px"><input type="text" name="c_phone" placeholder="Telefoon (optioneel)"></div></div>
+
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off">
+    <div class="consent">Je antwoorden worden alleen gebruikt voor onderzoek (RSM EMBA-project). Geen marketing, geen verkoop.</div>
+    <div class="msg" id="msg-tandarts"></div>
+    <button class="submit" type="submit">Versturen</button>
+  </form>
 
 </div>
 
 <footer>
   <div class="wrap">
-    <span>Nexify AI · customer research · vragen? Mail ons via het <a href="https://nexifyai.org/contact.html">contactformulier</a>.</span>
+    <span>Nexify AI · customer research · vragen? Mail ons via het <a href="https://nexifyai.org/contact">contactformulier</a>.</span>
     <span><a href="https://nexifyai.org/privacy.html">Privacyverklaring</a> · <a href="https://nexifyai.org/">nexifyai.org</a></span>
   </div>
 </footer>
 
 <script>
-  // ⚙️ ZET HIER DE TWEE TALLY-LINKS (van tally.so, "Open link" / share URL):
-  const TALLY = {
-    klus:     'https://tally.so/r/XXXXXXXX',   // Form A — Klus ervaring
-    tandarts: 'https://tally.so/r/XXXXXXXX'   // Form B — Tandarts ervaring
-  };
-  function go(which){
-    const url = TALLY[which] || '';
-    if(!url || url.includes('XXXXXXXX')){
-      alert('De vragenlijst wordt nog ingesteld — probeer het zo weer.');
-      return;
+  // ⚙️ Vul hier de survey-worker URL in na deploy:
+  //    bijv. 'https://nexifyai-survey.<jouw-subdomein>.workers.dev'  of  'https://survey.nexifyai.org'
+  const API_URL = 'https://nexifyai-survey.yuanxin0222.workers.dev';
+
+  function showForm(which){
+    document.getElementById('entries').style.display = which ? 'none' : '';
+    document.getElementById('form-klus').classList.toggle('active', which === 'klus');
+    document.getElementById('form-tandarts').classList.toggle('active', which === 'tandarts');
+    window.scrollTo({top: 0});
+  }
+
+  async function submitSurvey(ev, form){
+    ev.preventDefault();
+    const f = ev.target;
+    if (f.website && f.website.value) return false; // honeypot
+
+    const answers = {};
+    const missing = [];
+    for (let i = 1; i <= 9; i++) {
+      const sel = f.querySelector(`input[name="q${i}"]:checked`);
+      if (!sel) { missing.push(i); continue; }
+      // checkbox questions (klus q4) are multi-select: keep every checked value
+      answers['q'+i] = sel.type === 'checkbox'
+        ? [...f.querySelectorAll(`input[name="q${i}"]:checked`)].map(x => x.value).join(', ')
+        : sel.value;
     }
-    window.open(url, '_blank', 'noopener');
+    const openTa = f.querySelector('textarea[name="q10"]');
+    if (openTa && openTa.value.trim()) answers['q10'] = openTa.value.trim();
+
+    // gate: alleen "Ja..." gaat door
+    const gate = answers['q1'] || '';
+    if (gate && !gate.startsWith('Ja')) {
+      f.querySelector('.submit').disabled = true;
+      showMsg(form, 'ok', 'Bedankt — deze vragenlijst is bedoeld voor mensen met een recente ervaring. Je hoeft niets verder in te vullen.');
+      return false;
+    }
+
+    if (missing.length) {
+      showMsg(form, 'err', 'Nog niet alles is ingevuld — vraag ' + missing.join(', ') + ' ontbreekt. Kies de optie die het beste past.');
+      return false;
+    }
+
+    const contact = {};
+    if (f.c_name && f.c_name.value.trim())   contact.name  = f.c_name.value.trim();
+    if (f.c_email && f.c_email.value.trim()) contact.email = f.c_email.value.trim();
+    if (f.c_phone && f.c_phone.value.trim()) contact.phone = f.c_phone.value.trim();
+
+    const btn = f.querySelector('.submit');
+    btn.disabled = true; btn.textContent = 'Versturen...';
+    if (API_URL.includes('PASTE_')) {
+      showMsg(form, 'err', 'De vragenlijst wordt nog ingesteld — probeer het later opnieuw.');
+      btn.disabled = false; btn.textContent = 'Versturen';
+      return false;
+    }
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ form, answers, contact })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        f.querySelectorAll('input,textarea').forEach(el => el.disabled = true);
+        showMsg(form, 'ok', 'Bedankt! Je antwoorden zijn verstuurd. 🙏');
+        btn.textContent = 'Verzonden ✓';
+      } else {
+        showMsg(form, 'err', 'Er ging iets mis (' + res.status + '). Probeer het opnieuw.');
+        btn.disabled = false; btn.textContent = 'Versturen';
+      }
+    } catch (e) {
+      showMsg(form, 'err', 'Geen verbinding — controleer je internet en probeer opnieuw.');
+      btn.disabled = false; btn.textContent = 'Versturen';
+    }
+    return false;
+  }
+
+  function showMsg(form, kind, text){
+    const el = document.getElementById('msg-' + form);
+    el.className = 'msg ' + kind;
+    el.textContent = text;
+    el.scrollIntoView({block: 'nearest', behavior: 'smooth'});
   }
 </script>
 </body>
