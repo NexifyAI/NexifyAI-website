@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deel jouw ervaring — Nexify AI onderzoek</title>
+<meta name="description" content="Korte vragenlijst (3 min) over jouw laatste ervaring met een klusjesman of de tandarts. Anoniem mogelijk.">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root, [data-theme="light"] {
+    --text-base: clamp(1rem,.96rem+.1vw,1.1rem);
+    --text-lg: clamp(1.15rem,1rem+.6vw,1.45rem);
+    --text-xl: clamp(1.6rem,1.3rem+1vw,2.2rem);
+    --color-bg:#f8fafc;
+    --color-surface:#ffffff;
+    --color-surface-2:#f1f5f9;
+    --color-primary:#10b981;
+    --color-accent:#06b6d4;
+    --color-ink:#0f172a;
+    --color-muted:#64748b;
+    --color-line:#e2e8f0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--color-bg);color:var(--color-ink);font:var(--text-base)/1.6 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  a{color:#059669}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+  header{background:#fff;border-bottom:1px solid var(--color-line);padding:16px 0}
+  header .wrap{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:800;font-size:1.05rem;color:var(--color-ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--color-primary);display:inline-block}
+  .lang{font-size:.85rem;color:var(--color-muted);text-decoration:none}
+
+  .hero{padding:52px 0 28px;text-align:center}
+  .hero h1{font-size:var(--text-xl);margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+  .hero p.lead{color:var(--color-muted);font-size:var(--text-lg);margin:0 auto 10px;max-width:620px}
+  .hero .pill{display:inline-block;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:999px;padding:4px 14px;font-size:.85rem;font-weight:600}
+
+  .entries{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px 0 40px}
+  @media(max-width:700px){.entries{grid-template-columns:1fr}}
+  .card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+  .card .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .card.a .icon{background:#ecfdf5}
+  .card.b .icon{background:#ecfeff}
+  .card h2{margin:0;font-size:var(--text-lg);font-weight:700}
+  .card p{margin:0;color:var(--color-muted);font-size:.95rem}
+  .card ul{margin:0;padding-left:18px;color:var(--color-muted);font-size:.9rem}
+  .card li{margin:3px 0}
+  .card .btn{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--color-primary);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:10px;font-size:1rem;border:0;cursor:pointer;transition:transform .18s ease,background .18s ease}
+  .card .btn:hover{transform:translateY(-2px);background:#059669}
+  .card .btn:active{transform:translateY(0)}
+
+  .steps{background:var(--color-surface);border:1px solid var(--color-line);border-radius:16px;padding:22px 26px;margin-bottom:40px}
+  .steps h3{margin:0 0 10px;font-size:1rem}
+  .steps ol{margin:0;padding-left:20px;color:var(--color-muted);font-size:.92rem}
+  .steps li{margin:4px 0}
+
+  footer{border-top:1px solid var(--color-line);padding:26px 0 48px;color:var(--color-muted);font-size:.85rem}
+  footer .wrap{display:flex;flex-direction:column;gap:6px}
+  footer a{color:var(--color-muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="https://nexifyai.org/"><span class="dot"></span>Nexify AI</a>
+    <span class="lang">Onderzoek · RSM EMBA</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="pill">3 minuten · anoniem mogelijk · geen verkoop</span>
+    <h1>Deel jouw <u>laatste</u> ervaring</h1>
+    <p class="lead">Geen mening gevraagd — alleen wat er <b>gebeurd is</b>. Kies hieronder welke ervaring je wilt delen.</p>
+  </section>
+
+  <section class="entries">
+    <div class="card a">
+      <div class="icon">🔨</div>
+      <h2>Jouw laatste klus-ervaring</h2>
+      <p>Schilder, klusjesman, monteur gezocht of gehuurd?</p>
+      <ul>
+        <li>Hoeveel bedrijven heb je benaderd?</li>
+        <li>Wie reageerde niet — en wat deed je toen?</li>
+        <li>Stuurde je foto's van de klus?</li>
+      </ul>
+      <button class="btn" onclick="go('klus')">Start — klus ervaring (3 min)</button>
+    </div>
+
+    <div class="card b">
+      <div class="icon">🦷</div>
+      <h2>Jouw laatste tandarts-contact</h2>
+      <p>Afspraak, controle, spoed of aanmelding als nieuwe patiënt?</p>
+      <ul>
+        <li>Kon je meteen iemand bereiken?</li>
+        <li>Hoe lang duurde het voordat het geregeld was?</li>
+        <li>Spoed 's avonds — wat doe je dan?</li>
+      </ul>
+      <button class="btn" onclick="go('tandarts')">Start — tandarts ervaring (3 min)</button>
+    </div>
+  </section>
+
+  <section class="steps">
+    <h3>Hoe werkt het?</h3>
+    <ol>
+      <li>Kies een ervaring hierboven — je krijgt korte meerkeuzevragen, allemaal over de <b>laste keer</b>.</li>
+      <li>Alles mag anoniem; alleen als je wilt dat ik contact opneem, laat je gegevens achter.</li>
+      <li>Je antwoorden worden uitsluitend gebruikt voor onderzoek (RSM EMBAproject) — geen marketing, geen verkoop.</li>
+    </ol>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Nexify AI · customer research · vragen? Mail ons via het <a href="https://nexifyai.org/contact.html">contactformulier</a>.</span>
+    <span><a href="https://nexifyai.org/privacy.html">Privacyverklaring</a> · <a href="https://nexifyai.org/">nexifyai.org</a></span>
+  </div>
+</footer>
+
+<script>
+  // ⚙️ ZET HIER DE TWEE TALLY-LINKS (van tally.so, "Open link" / share URL):
+  const TALLY = {
+    klus:     'https://tally.so/r/XXXXXXXX',   // Form A — Klus ervaring
+    tandarts: 'https://tally.so/r/XXXXXXXX'   // Form B — Tandarts ervaring
+  };
+  function go(which){
+    const url = TALLY[which] || '';
+    if(!url || url.includes('XXXXXXXX')){
+      alert('De vragenlijst wordt nog ingesteld — probeer het zo weer.');
+      return;
+    }
+    window.open(url, '_blank', 'noopener');
+  }
+</script>
+</body>
+</html>
