@@ -140,7 +140,7 @@
     <p class="desc">Over de <b>LASTE</b> keer — niet wat je zou willen.</p>
 
     <div class="q"><div class="qt">1. Heb je in de afgelopen 12 maanden een schilder of vergelijkbare vakman gezocht?</div>
-      <label><input type="radio" name="q1" value="Ja" required>Ja</label>
+      <label><input type="radio" name="q1" value="Ja">Ja</label>
       <label><input type="radio" name="q1" value="Ja, maar langer dan een jaar geleden">Ja, maar langer dan een jaar geleden</label>
       <label><input type="radio" name="q1" value="Nee, nooit">Nee, nooit</label></div>
 
@@ -196,7 +196,7 @@
     <div class="q"><div class="qt">10. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
       <textarea name="q10" rows="4" placeholder="Bijvoorbeeld: hoe lang duurde het, wie reageerde niet..."></textarea></div>
 
-    <div class="q"><div class="qt">11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? <i>(optioneel)</i></div>
+    <div class="q"><div class="qt">11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? Zo ja, laat je naam en e-mail of telefoon achter. <i>(optioneel)</i></div>
       <div class="contact-row">
         <input type="text" name="c_name" placeholder="Naam">
         <input type="email" name="c_email" placeholder="E-mail">
@@ -212,7 +212,7 @@
   <!-- ==================== FORM B: TANDARTS ==================== -->
   <form class="panel" id="form-tandarts" onsubmit="return submitSurvey(event,'tandarts')">
     <button type="button" class="backlink" onclick="showForm(null)">← terug</button>
-    <h2>Jouw laatste contact met de tandarts</h2>
+    <h2>Jouw laatste bezoek- of contactpoging met de tandarts</h2>
     <p class="desc">Over de <b>LASTE</b> keer — niet wat je zou willen.</p>
 
     <div class="q"><div class="qt">1. Heb je in de afgelopen 12 maanden contact gehad met een tandartspraktijk?</div>
@@ -267,7 +267,7 @@
     <div class="q"><div class="qt">9. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
       <textarea name="q9" rows="4" placeholder="Bijvoorbeeld: hoe lang je moest wachten, hoe het werd opgelost..."></textarea></div>
 
-    <div class="q"><div class="qt">10. Mag ik contact opnemen voor een kort gesprek (15 min)? <i>(optioneel)</i></div>
+    <div class="q"><div class="qt">10. Mag ik contact opnemen voor een kort gesprek (15 min)? Zo ja, laat je naam en e-mail of telefoon achter. <i>(optioneel)</i></div>
       <div class="contact-row">
         <input type="text" name="c_name" placeholder="Naam">
         <input type="email" name="c_email" placeholder="E-mail">
@@ -308,27 +308,36 @@
 
     const answers = {};
     const missing = [];
-    for (let i = 1; i <= 9; i++) {
-      const sel = f.querySelector(`input[name="q${i}"]:checked`);
-      if (!sel) { missing.push(i); continue; }
+    // every choice question in this form is required (klus q1–q9, tandarts q1–q8)
+    const names = [...new Set([...f.querySelectorAll('input[type=radio],input[type=checkbox]')].map(el => el.name))]
+      .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+    for (const name of names) {
+      const checked = [...f.querySelectorAll(`input[name="${name}"]:checked`)];
+      if (!checked.length) { missing.push(name.slice(1)); continue; }
       // checkbox questions (klus q4) are multi-select: keep every checked value
-      answers['q'+i] = sel.type === 'checkbox'
-        ? [...f.querySelectorAll(`input[name="q${i}"]:checked`)].map(x => x.value).join(', ')
-        : sel.value;
+      answers[name] = checked.length > 1 ? checked.map(x => x.value).join(', ') : checked[0].value;
     }
-    const openTa = f.querySelector('textarea[name="q10"]');
-    if (openTa && openTa.value.trim()) answers['q10'] = openTa.value.trim();
+    // open story question (klus q10 / tandarts q9), optional
+    const openTa = f.querySelector('textarea');
+    if (openTa && openTa.value.trim()) answers[openTa.name] = openTa.value.trim();
 
-    // gate: alleen "Ja..." gaat door
-    const gate = answers['q1'] || '';
-    if (gate && !gate.startsWith('Ja')) {
+    // gate: alleen "Ja" (binnen 12 maanden) gaat door
+    if (answers.q1 && answers.q1 !== 'Ja') {
       f.querySelector('.submit').disabled = true;
-      showMsg(form, 'ok', 'Bedankt — deze vragenlijst is bedoeld voor mensen met een recente ervaring. Je hoeft niets verder in te vullen.');
+      showMsg(form, 'ok', 'Bedankt — deze vragenlijst is bedoeld voor mensen met een ervaring in de afgelopen 12 maanden. Je hoeft niets verder in te vullen.');
+      // respondent may still correct the answer
+      f.addEventListener('change', () => {
+        f.querySelector('.submit').disabled = false;
+        document.getElementById('msg-' + form).className = 'msg';
+      }, { once: true });
       return false;
     }
 
     if (missing.length) {
-      showMsg(form, 'err', 'Nog niet alles is ingevuld — vraag ' + missing.join(', ') + ' ontbreekt. Kies de optie die het beste past.');
+      const list = missing.join(', ');
+      showMsg(form, 'err', missing.length === 1
+        ? 'Vraag ' + list + ' is nog niet ingevuld. Kies de optie die het beste past.'
+        : 'Nog niet alles is ingevuld — vragen ' + list + ' ontbreken. Kies bij elke vraag de optie die het beste past.');
       return false;
     }
 
