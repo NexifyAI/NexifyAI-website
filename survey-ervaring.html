@@ -196,10 +196,10 @@
     <div class="q"><div class="qt">10. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
       <textarea name="q10" rows="4" placeholder="Bijvoorbeeld: hoe lang duurde het, wie reageerde niet..."></textarea></div>
 
-    <div class="q"><div class="qt">11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? Zo ja, laat je naam en e-mail of telefoon achter. <i>(optioneel)</i></div>
+    <div class="q"><div class="qt">11. Mag ik contact opnemen voor een kort gesprek (15 min) over je ervaring? Zo ja, laat je naam achter (e-mail of telefoon mag, maar hoeft niet). <i>(optioneel)</i></div>
       <div class="contact-row">
         <input type="text" name="c_name" placeholder="Naam">
-        <input type="email" name="c_email" placeholder="E-mail">
+        <input type="email" name="c_email" placeholder="E-mail (optioneel)">
       </div>
       <div style="margin-top:8px"><input type="text" name="c_phone" placeholder="Telefoon (optioneel)"></div></div>
 
@@ -267,10 +267,10 @@
     <div class="q"><div class="qt">9. Vertel kort wat er gebeurde — wat ging goed, wat niet? <i>(optioneel)</i></div>
       <textarea name="q9" rows="4" placeholder="Bijvoorbeeld: hoe lang je moest wachten, hoe het werd opgelost..."></textarea></div>
 
-    <div class="q"><div class="qt">10. Mag ik contact opnemen voor een kort gesprek (15 min)? Zo ja, laat je naam en e-mail of telefoon achter. <i>(optioneel)</i></div>
+    <div class="q"><div class="qt">10. Mag ik contact opnemen voor een kort gesprek (15 min)? Zo ja, laat je naam achter (e-mail of telefoon mag, maar hoeft niet). <i>(optioneel)</i></div>
       <div class="contact-row">
         <input type="text" name="c_name" placeholder="Naam">
-        <input type="email" name="c_email" placeholder="E-mail">
+        <input type="email" name="c_email" placeholder="E-mail (optioneel)">
       </div>
       <div style="margin-top:8px"><input type="text" name="c_phone" placeholder="Telefoon (optioneel)"></div></div>
 
@@ -345,6 +345,12 @@
     if (f.c_name && f.c_name.value.trim())   contact.name  = f.c_name.value.trim();
     if (f.c_email && f.c_email.value.trim()) contact.email = f.c_email.value.trim();
     if (f.c_phone && f.c_phone.value.trim()) contact.phone = f.c_phone.value.trim();
+
+    // the contact block is optional as a whole; if anything is filled in, the name is what's needed
+    if (!contact.name && (contact.email || contact.phone)) {
+      showMsg(form, 'err', 'Je hebt een e-mailadres of telefoonnummer ingevuld — vul dan ook je naam in. Wil je anoniem blijven? Laat deze velden dan leeg.');
+      return false;
+    }
 
     const btn = f.querySelector('.submit');
     btn.disabled = true; btn.textContent = 'Versturen...';
